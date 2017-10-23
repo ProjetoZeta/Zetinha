@@ -1,0 +1,63 @@
+======================================================================
+SISBP - Sistema de Controle de Bolsista e Pesquisador
+======================================================================
+- Deve ter um cadastro de bolsista onde o próprio poderá se cadastrar;
+- Deve ter uma área de pesquisa de bolsista;
+- Deve ter uma área Especificação da Bolsa, preenchido pela equipe do flávio;
+- Deve ter uma área de agenda dos bolsistas cadastrados, para pegar as informações de forma mais rápida. (2º momento) ou seja, transformar os dados do bolsista em uma agenda;
+- Deve manter um histórico de onde o bolsista passou ou seja, histórico dos projetos do bolsista deve ser mantido pelo sistema (3º momento);
+- Controle de entidade ou órgão; 
+- Controle de responsáveis de projeto;
+- Controle de relatórios; 
+- Controle de custos e aquisições; --futuro
+- Controle de atividades; --futuro
+
+Ata
+- Ao começar um processo, é criado um plano de trabalho: quem são os órgãso responsáveis, Título do projeto (tem as metas que geram as atividades que geram o cronograma que geram os relatórios que serão entregues no projeto), quem é o responsável, que assina o projeto, a vigencia do projeto. É uma proposta para o órgão onde tem o orçamento e o órgão decide se aceita ou não a proposta. 
+- o segundo documento é o plano de pesquisa individual do bolsista. É um documento onde tem o plano de trabalho e as atividades que o bolsista está e em cima da ativididade é gerado o plano de pesquisa individual do bolsista. Somente dessa atividade. 
+- abaixo disso tem todo o resto de documentação, tais como: 1º termo de compromisso, 2º declaração de recebimento de bolsa, 3º declaração de confiabilidade, 4º termo de declaração de sigilo, 5º declaração de residencia, e para servidor publico, tem mais uma declaração que é  declaração de recebimento de bolsa para servidor publico. 
+- Fabio escreve o plano de trabalho, o rafael valida e começa o prjeto. o cadu define o escopo e o fabio defini as atividades do plano de trabalho. 
+- O objetivo é ter um sistema que o Fabio preenche os campos de plano de trabalho e é gerado um relatório. Depois disso, vem o preenchimento do palno de pesquisa. Hoje o preenchimento de plano de pesquisa está sendo de responsabilidade do lider de projeto. 
+- Os planos de trabalho devem ser gravados em uma área e o termo de compromisso do bolsista em outra área, onde tem os dados do responsavel. depois as informações do bolsista que deverá ser cadastrado pelo próprio bolsista. A ideía é o bolsista manter os dados atualizados. Deixar essa responsabilidade para ele.  
+- se for atualização do bolsista, somente será mudada a vigencia. se for um novo bolsista, deve ser verificado qual atividade ele deve ser vinculado. O plano de pesquisa individual é gerado a partir das atividades do plano de trabalho. é definido a categoria do bolsista (pleno, senior a[5.500 até 7.000] ou b). sistema calcula em qual categoria o bolsista deve estáa  partir do valor combinado.
+- Foi questionado sobre os relatórios assinados, que são impressos e assinados pelo bolsista, se iria ser digitalizado e depois salvo no sistema. Fabio disse que hoje só tem salvo no sistema os relatórios, mas não sabe se eles foram assinados ou não. O fluxo acontece da seguinte maneira. imprime os relatórios, o bolsista assina, a equipe do fabio carimba como recebido e leva para o CDT. O CDT fica com os relatórios e entrega um documento carimbado como recebido e então esses documentos são procotolados e armazaenados numa pasta pelo fábio. Pode continuar dessa forma até gerar uma proposta de assinatura eletrônica. No momento a preocupação é gerar os relatórios e armazenar as informações me um sistema. Automatizar o processo de contrato dos bolsistas atual.
+- sobre o controle financeiro de pagamento dos bolsistas são feitos pelo CDT através de um sistema que integra com o SIAFI. 
+- Para a equipe da UNB, deverá modelar o sistema, para ser passado para 4 novos desenvolvedores. Desses, 2 estão em graduação na fase final. 
+- Sobre o cronograma do plano de trabalho, hoje é feito no word. As atividades podem sofrer alterações no cronograma, porém se a atividade tiver um bolsista vinculado, deve-se desvincular o bolsista para conseguir fazer um aditivo no projeto. e se ela for ampliada, basta ampliar dentro do projeto. Se a atividade for substituída no decorrer do projeto, deve-se desvincular o bolsista, remover a atividade, adicionar a nova atividade e vincular o bolsista novamente. 
+- não sabe como será o impacto do bolsista nas mudanças de atividades. pq tem impacto para o bolsista. A equipe da UNB deve bolar uma proposta para esse problema. 
+- Os dois desenvolvedores em gradução, tem mais facilidade em desenvolver em java. O Alessandro sugeriu que o sistema fosse feito em Paython, pois assim ele conseguiria auxiliar mais no projeto. Eles estão disponível a aprender a linguagem. o banco pode ser em postgre, ou sqlserver. 
+- Fábio ficou de enviar todos os documentos que faz parte do fluxo. 
+- O sistema poderia ficar dinâmico, caso novos campos de cadastro fossem solicitados, alterando o relatório e as informações do bolsista. 
+- Mesmo sendo pago pelo CDT, caso exista alteração no pagamento do bolsista, o Alessandro sugeriu que o Fábio tivesse essa visão. Fabio disse que isso seria futuro. O CDT é a parte orçamentária do projeto. porém toda a vez que precisa de informação, é preciso solicitar ao CDT. O Fabio faz um controle orçamentário com um cronograma financeiro onde tem divisão por rubricas por exemplo: a rubrica 339030 para maeriais de consumo (papel, borracha, toner, canetas), rubrica 449052 que é pra compra de equipamentos patrimoniados (monitor, armario, cadeira, CPU). Existe uma planilha com esse controle. Esse gerenciamento de aquisições e custos, pode ser feito futuramente. Seria parte do projeto.
+- O controle financeiro é pra saber até quando pode aumentar ou diminuir a equipe, equipamentos, para novos projetos, e quanto está sendo repassado e gasto. 
+- O prazo, é até o fim do ano, por causa dos bolsistas.
+- O CDT informou que cada atividade deve ter um bolsista. 1-1. Hoje eles entendem que pode ter um grupo de pesquisa na mesma atividade.
+- 
+
+
+problema
+- existem vários arquivos que devem ser preenchidos manualmente pelos bolsistas.
+- Os documentos ficam em repositorio e não em um uma base de dados. A pesquisa de bolsista não é eficaz. Não tem um mapeamento de bolsistas e nem que projeto participa.
+- para cada novo processo, deve ser preenchido todos os dados de todos os formulários de bolsista.
+- todo bolsista deve preencher repetidamente os dados em vários documentos.
+- pode ocorrer do usuario do rh preencher os dados do bolsista e o bolsista assinar sem perceber que há algo errado, como por exemplo a conta corrente dele está antiga. isso gera um desgaste para alterar esses dados. 
+- se for renovação o bolsista nao deveria preencher os dados novamente. somente manter atualizado (banco, email, telefone).
+- 
+
+
+Dúvida
+- como o fabio saberá que o bolsista alterou algum dado dele, com o sistema em andamento? por exemplo: o bolsista esta contrato, e resolve mudar a conta corrente. ele muda no sistema, e então vem a pergunta. Como o fábio saberá que deve pagar o bolsista na nova conta? 
+- sobre os relatórios, será gerado, impresso e assinado e então digitalizado e salvo no sistema?
+R: só quer salvar na base de dados. hoje não sei se ele assinou ou não. 
+
+Regra
+- Bolsistas de estudo, são bolsista em graduação e recebem até 880,00.
+- O primeiro documento a ser preenchido é Termo de Abertura;
+- O lider do projeto deve preencher a atividade do bolsista.  Ao salvar a atividade do bolsista, deve ser vinculado ao plano de trabalho. ja deve gerar o documento com o cronograma no plano de trabalho. então o fábio\andreia deve ser informado. 
+- se for servidor publico, é obrigatório preencher a declaração de recebimento de bolsa para servidor publico. 
+- As atividades podem sofrer alterações no cronograma, porém se a atividade tiver um bolsista vinculado, deve-se desvincular o bolsista para conseguir fazer um aditivo no projeto. 
+- Se a atividade deixar de existir, e tiver um bolsista vinculado é preciso desvincular o bolsista da atividade antes.
+- Deve ter um controle de bitsream para salvar as xerox dos documentos do bolsista.
+- O bolsista pode está ativo ou desativo;
+- O bolsista pode ser um pesquisador, Servidor público ou Empregado Público.
+- Se um bolsista alterar alguma informação e salvar, o sistema deve avisar aos administradores que houve alteração nos dados para confirmação.
