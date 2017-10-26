@@ -2,6 +2,6 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.felipe, name='felipe'),
-    url(r'^usuario$', views.fuck, name='fuck')
+    url(r'^$', views.WebLoader.main, name='Página Principal'),
+    url(r'^usuario$', views.WebLoader.user, name='Manter Usuário')
 ]
