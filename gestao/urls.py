@@ -1,7 +1,7 @@
 from django.conf.urls import url
-from . import views
+from gestao import views
 
 urlpatterns = [
-    url(r'^$', views.WebLoader.main, name='Página Principal'),
-    url(r'^usuario$', views.WebLoader.user, name='Manter Usuário')
+    url(r'^$', views.main, name='Página Principal'),
+    url(r'^usuario$', views.user, name='Manter Usuário')
 ]
