@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from gestao import views
+from administracao import views
 
 urlpatterns = [
     url(r'^$', views.main, name='Página Principal'),

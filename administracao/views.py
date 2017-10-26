@@ -1,15 +1,15 @@
 from django.template.loader import get_template
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
 
-from gestao.models import Entidade
-from gestao.forms import UserForm
+from administracao.models import Entidade
+from administracao.forms import UserForm
 
 # Create your views here.
 
 def main(request):
-    template = loader.get_template('gestao/main.html')
-    context = {}
-    return HttpResponse(template.render(context, request))
+    return render(request, 'administracao/main.html', {})
+
 
 def user(request):
     if request.method == 'POST':
@@ -17,6 +17,6 @@ def user(request):
         return HttpResponseRedirect('/contact/thanks/')
     else:
         form = UserForm()
-    template = get_template('gestao/usuario.html')
+    template = get_template('administracao/usuario.html')
     html = template.render({'form': form})
     return HttpResponse(html)
