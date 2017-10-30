@@ -5,22 +5,29 @@ from django.views.generic import ListView
 
 from administracao.models import Entidade
 from administracao.forms import UserForm
-from utils.views import translate_model
+from utils.views import get_data_for_generic_table
 
 from .models import Cargo
 from .models import Entidade
+
+from .forms import CargoForm, EntidadeForm
 
 # Create your views here.
 
 def main(request):
     return render(request, 'administracao/main.html', {})
 
-
 def cargo(request):
-    return render(request, 'administracao/generic-table.html', translate_model(Cargo))
+    return render(request, 'administracao/generic-table.html', {
+        'data': get_data_for_generic_table(Cargo),
+        'create_form': CargoForm()
+    })
 
 def entidade(request):
-    return render(request, 'administracao/generic-table.html', translate_model(Entidade))
+    return render(request, 'administracao/generic-table.html', {
+        'data': get_data_for_generic_table(Entidade),
+        'create_form': EntidadeForm()
+    })
 
 def user(request):
     if request.method == 'POST':
