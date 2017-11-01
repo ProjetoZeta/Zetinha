@@ -27,6 +27,7 @@
                 url: "https://cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json"
             }
         });
+        $('#myModal').modal({% if form.errors %}'show'{% else %}''{% endif %});
     });
     </script>
     <script src="//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"></script>
@@ -80,10 +81,9 @@
                     <h4 class="modal-title">Criar {{ data.model_name }}</h4>
                 </div>
                 <div class="modal-body">
-
-                    <form action="/url/to/submit/" method="post" class="form">
+                    <form action="" method="post" class="form">
                         {% csrf_token %}
-                        {% bootstrap_form create_form %}
+                        {% bootstrap_form form %}
                         {% buttons %}
                             <button type="submit" class="btn btn-primary">
                                 {% bootstrap_icon "star" %} Salvar

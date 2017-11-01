@@ -13,8 +13,14 @@ class Entidade(models.Model):
     de_endereco = models.CharField('Endereço', max_length=128, unique=True)
 
 class Cargo(models.Model):
-    no_cargo = models.CharField('Nome', max_length=32, unique=True)
+    no_cargo = models.CharField('Nome', max_length=6, unique=True)
     ic_ativo = models.BooleanField('Ativo')
+
+class Funcao(models.Model):
+    no_funcao = models.CharField('Nome', max_length=6, unique=True)
+    ic_ativo = models.BooleanField('Ativo')
+    class Meta:
+        verbose_name_plural = "funções"
 
 class Responsavel(models.Model):
     no_responsavel = models.CharField('Nome', max_length=32, unique=True)
@@ -24,4 +30,4 @@ class Responsavel(models.Model):
     ic_ativo = models.BooleanField('Ativo')
 
     class Meta:
-        verbose_name_plural = "responsaveis"
+        verbose_name_plural = "responsáveis"
