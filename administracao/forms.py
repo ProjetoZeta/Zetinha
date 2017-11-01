@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Cargo, Entidade, Funcao
+from .models import Cargo, Entidade, Funcao, Responsavel
 
 class UserForm(forms.Form):
     email = forms.EmailField()
@@ -11,14 +11,19 @@ class UserForm(forms.Form):
 class CargoForm(ModelForm):
     class Meta:
         model = Cargo
-        fields = ['no_cargo', 'ic_ativo']
+        fields = [f.name for f in Cargo._meta.get_fields()]
 
 class FuncaoForm(ModelForm):
     class Meta:
         model = Funcao
-        fields = ['no_funcao', 'ic_ativo']
+        fields = [f.name for f in Funcao._meta.get_fields()]
 
 class EntidadeForm(ModelForm):
     class Meta:
         model = Entidade
-        fields = ['co_entidade', 'no_entidade', 'sg_entidade', 'ic_ativo', 'cnpj', 'telefone', 'cep', 'nu_municipio', 'co_esfera', 'de_endereco']
+        fields = [f.name for f in Entidade._meta.get_fields()]
+
+class ResponsavelForm(ModelForm):
+    class Meta:
+        model = Responsavel
+        fields = [f.name for f in Responsavel._meta.get_fields()]

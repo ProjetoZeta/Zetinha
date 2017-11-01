@@ -1,18 +1,13 @@
 from django.template.loader import get_template
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import ListView
 
-from administracao.models import Entidade
 from administracao.forms import UserForm
 from utils.views import get_data_for_generic_table
 
-from .models import Cargo, Entidade, Funcao
+from .models import Cargo, Entidade, Funcao, Responsavel
 
-from .forms import CargoForm, EntidadeForm, FuncaoForm
-from django.views.generic.edit import CreateView
-from django.shortcuts import redirect
-from django.contrib import messages
+from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm
 
 # Create your views here.
 
@@ -24,8 +19,7 @@ def cargo(request):
         form = CargoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('cargo')
-    else:
+    elif request.method == 'GET':
         form = CargoForm()
     return render(request, 'administracao/generic-table.html', {
         'data': get_data_for_generic_table(Cargo),
@@ -37,8 +31,7 @@ def funcao(request):
         form = FuncaoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('funcao')
-    else:
+    elif request.method == 'GET':
         form = FuncaoForm()
     return render(request, 'administracao/generic-table.html', {
         'data': get_data_for_generic_table(Funcao),
@@ -46,9 +39,27 @@ def funcao(request):
     })
 
 def entidade(request):
+    if request.method == 'POST':
+        form = EntidadeForm(request.POST)
+        if form.is_valid():
+            form.save()
+    elif request.method == 'GET':
+        form = EntidadeForm()
     return render(request, 'administracao/generic-table.html', {
         'data': get_data_for_generic_table(Entidade),
-        'form': EntidadeForm()
+        'form': form
+    })
+
+def responsavel(request):
+    if request.method == 'POST':
+        form = ResponsavelForm(request.POST)
+        if form.is_valid():
+            form.save()
+    elif request.method == 'GET':
+        form = ResponsavelForm()
+    return render(request, 'administracao/generic-table.html', {
+        'data': get_data_for_generic_table(Responsavel),
+        'form': form
     })
 
 def user(request):

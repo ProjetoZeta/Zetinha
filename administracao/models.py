@@ -21,6 +21,7 @@ class Funcao(models.Model):
     ic_ativo = models.BooleanField('Ativo')
     class Meta:
         verbose_name_plural = "funções"
+        verbose_name = "função"
 
 class Responsavel(models.Model):
     no_responsavel = models.CharField('Nome', max_length=32, unique=True)
@@ -31,3 +32,4 @@ class Responsavel(models.Model):
 
     class Meta:
         verbose_name_plural = "responsáveis"
+        verbose_name = "responsável"

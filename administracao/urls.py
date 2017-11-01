@@ -6,5 +6,6 @@ urlpatterns = [
     url(r'^usuario$', views.user, name='user'),
     url(r'^cargo$', views.cargo, name='cargo'),
     url(r'^entidade$', views.entidade, name='entidade'),
-    url(r'^funcao$', views.funcao, name='funcao')
+    url(r'^funcao$', views.funcao, name='funcao'),
+    url(r'^responsavel$', views.responsavel, name='responsavel')
 ]

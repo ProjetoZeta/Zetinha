@@ -1,3 +1,4 @@
+
 '''
 get_data_for_generic_table([Model Object])
 
