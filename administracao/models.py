@@ -2,7 +2,11 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class Usuario(AbstractUser):
-    pass
+    no_completo = models.CharField('Nome completo', max_length=64, unique=True)
+    ic_ativo = models.BooleanField('Ativo', default=True)
+    ic_bolsista = models.BooleanField('Bolsista', default=True)
+    class Meta:
+        verbose_name = "usuário"
 
 class Entidade(models.Model):
     co_entidade = models.CharField('Código', max_length=32, unique=True)

@@ -2,12 +2,11 @@ from django.template.loader import get_template
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
-from administracao.forms import UserForm
 from utils.views import get_data_for_generic_table
 
-from .models import Cargo, Entidade, Funcao, Responsavel
+from .models import Cargo, Entidade, Funcao, Responsavel, Usuario
 
-from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm
+from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm
 
 # Create your views here.
 
@@ -62,12 +61,14 @@ def responsavel(request):
         'form': form
     })
 
-def user(request):
+def usuario(request):
     if request.method == 'POST':
-        form = UserForm(request.POST)
-        return HttpResponseRedirect('/contact/thanks/')
-    else:
-        form = UserForm()
-    template = get_template('administracao/usuario.html')
-    html = template.render({'form': form})
-    return HttpResponse(html)
+        form = UsuarioForm(request.POST)
+        if form.is_valid():
+            form.save()
+    elif request.method == 'GET':
+        form = UsuarioForm()
+    return render(request, 'administracao/generic-table.html', {
+        'data': get_data_for_generic_table(Usuario, fields=['email', 'no_completo', 'ic_ativo', 'ic_bolsista']),
+        'form': form
+    })

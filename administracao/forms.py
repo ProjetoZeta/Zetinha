@@ -1,12 +1,16 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Cargo, Entidade, Funcao, Responsavel
+from django.contrib.auth.forms import UserChangeForm
+from .models import Cargo, Entidade, Funcao, Responsavel, Usuario
 
-class UserForm(forms.Form):
-    email = forms.EmailField()
-    name = forms.CharField()
-    bolsista = forms.BooleanField()
-    ativo = forms.BooleanField()
+class UsuarioChangeForm(UserChangeForm):
+    class Meta(UserChangeForm.Meta):
+        model = Usuario
+
+class UsuarioForm(forms.Form):
+    class Meta:
+        model = Usuario
+        fields = ['email', 'no_completo', 'ic_ativo', 'ic_bolsista']
 
 class CargoForm(ModelForm):
     class Meta:
