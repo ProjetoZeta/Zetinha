@@ -6,8 +6,8 @@
     <tr>
         {% for item in data.labels %}
             <th>{{ item }}</th>
-
         {% endfor %}
+        <th>Ações</th>
     </tr>
     </thead>
 
@@ -17,6 +17,18 @@
         {% for attr in item %}
             <td>{{ attr }}</td>
         {% endfor %}
+        <td>
+            <div class="btn-group">
+                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+                    Editar
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Modificar</a></li>
+                    <li><a href="#">Excluir</a></li>
+                </ul>
+            </div>
+        </td>
     </tr>
     {% endfor %}
     </tbody>
