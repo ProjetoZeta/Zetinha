@@ -5,6 +5,7 @@ class Usuario(AbstractUser):
     no_completo = models.CharField('Nome completo', max_length=64, unique=True)
     ic_ativo = models.BooleanField('Ativo', default=True)
     ic_bolsista = models.BooleanField('Bolsista', default=True)
+    email = models.EmailField('Email', unique=True)
     class Meta:
         verbose_name = "usuário"
 

@@ -7,7 +7,7 @@ class UsuarioChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = Usuario
 
-class UsuarioForm(forms.Form):
+class UsuarioForm(ModelForm):
     class Meta:
         model = Usuario
         fields = ['email', 'no_completo', 'ic_ativo', 'ic_bolsista']
