@@ -2,6 +2,9 @@ from django.template.loader import get_template
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
+from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
+
 from utils.views import get_data_for_generic_table
 
 from .models import Cargo, Entidade, Funcao, Responsavel, Usuario
@@ -20,10 +23,17 @@ def cargo(request):
             form.save()
     elif request.method == 'GET':
         form = CargoForm()
+        
     return render(request, 'administracao/generic-table.html', {
         'data': get_data_for_generic_table(Cargo),
         'form': form
     })
+
+class CargoDelete(DeleteView):
+    model = Cargo
+    success_url = reverse_lazy('administracao:cargo')
+    def get_success_url(self):
+        return reverse('your_redirect_view')
 
 def funcao(request):
     if request.method == 'POST':
