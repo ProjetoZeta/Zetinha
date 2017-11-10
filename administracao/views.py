@@ -5,10 +5,7 @@ from django.shortcuts import render
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 
-from utils.views import get_data_for_generic_table
-
 from .models import Cargo, Entidade, Funcao, Responsavel, Usuario
-
 from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm
 
 # Create your views here.
@@ -23,9 +20,8 @@ def cargo(request):
             form.save()
     elif request.method == 'GET':
         form = CargoForm()
-        
     return render(request, 'administracao/generic-table.html', {
-        'data': get_data_for_generic_table(Cargo),
+        'data': Cargo.objects.all(),
         'form': form
     })
 
@@ -43,7 +39,7 @@ def funcao(request):
     elif request.method == 'GET':
         form = FuncaoForm()
     return render(request, 'administracao/generic-table.html', {
-        'data': get_data_for_generic_table(Funcao),
+        'data': Funcao.objects.all(),
         'form': form
     })
 
@@ -55,7 +51,7 @@ def entidade(request):
     elif request.method == 'GET':
         form = EntidadeForm()
     return render(request, 'administracao/generic-table.html', {
-        'data': get_data_for_generic_table(Entidade),
+        'data': Entidade.objects.all(),
         'form': form
     })
 
@@ -67,7 +63,7 @@ def responsavel(request):
     elif request.method == 'GET':
         form = ResponsavelForm()
     return render(request, 'administracao/generic-table.html', {
-        'data': get_data_for_generic_table(Responsavel),
+        'data': Responsavel.objects.all(),
         'form': form
     })
 
@@ -79,6 +75,6 @@ def usuario(request):
     elif request.method == 'GET':
         form = UsuarioForm()
     return render(request, 'administracao/generic-table.html', {
-        'data': get_data_for_generic_table(Usuario, fields=['email', 'no_completo', 'ic_ativo', 'ic_bolsista']),
+        'data': Usuario.objects.all(),
         'form': form
     })

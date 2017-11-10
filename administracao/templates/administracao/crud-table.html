@@ -1,6 +1,7 @@
 {% extends 'administracao/default.html' %}
 
 {% load static %}
+{% load verbose %}
 
 {# Load the tag library #}
 {% load bootstrap3 %}
@@ -38,7 +39,7 @@
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">
-                {{ data.model_name_plural }}
+                {% class_verbose_plural form.instance %}
             </h1>
         </div>
         <!-- /.col-lg-12 -->
@@ -78,7 +79,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Criar {{ data.model_name }}</h4>
+                    <h4 class="modal-title">Criar {% class_verbose form.instance %}</h4>
                 </div>
                 <div class="modal-body">
                     <form action="" method="post" class="form">
