@@ -1,6 +1,7 @@
 {% extends 'administracao/crud-table.html' %}
 {% load getattr %}
 {% load verbose %}
+{% load meta %}
 
 {% block records %}
 
@@ -25,10 +26,17 @@
                     Editar
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Modificar</a></li>
-                    <li><a href="#">Excluir</a></li>
-                </ul>
+                {% with item|model_name as name %}
+                    <ul class="dropdown-menu" role="menu">
+                        {% with name|add:"-editar" as path %}
+                            <li><a href="{% url path item.pk %}">Modificar</a></li>
+                        {% endwith %}
+                        {% with name|add:"-remover" as path %}
+                            <li><a href="{% url path item.pk %}">Excluir</a></li>
+                        {% endwith %}
+
+                    </ul>
+                {% endwith %}
             </div>
         </td>
     </tr>

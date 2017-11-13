@@ -28,7 +28,8 @@
                 url: "https://cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json"
             }
         });
-        $('#myModal').modal({% if form.errors %}'show'{% else %}''{% endif %});
+        $('#modal-create').modal({% if form.errors or form.is_edit %}'show'{% else %}''{% endif %});
+
     });
     </script>
     <script src="//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"></script>
@@ -50,7 +51,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                     <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">Novo</button>
+                     <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal-create">Novo</button>
                 </div>
                 <!-- /.panel-heading -->
 
@@ -72,14 +73,14 @@
     </div>
 
     <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
+    <div id="modal-create" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Criar {% class_verbose form.instance %}</h4>
+                    <h4 class="modal-title">{% if form.is_edit %}Modificar{% else %}Criar{% endif %} {% class_verbose form.instance %}</h4>
                 </div>
                 <div class="modal-body">
                     <form action="" method="post" class="form">

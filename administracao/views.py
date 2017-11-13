@@ -1,6 +1,6 @@
 from django.template.loader import get_template
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
@@ -13,68 +13,36 @@ from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, Usuario
 def main(request):
     return render(request, 'administracao/main.html', {})
 
-def cargo(request):
+def handler(model, request, pk, pkdelete):
+    if pkdelete:
+        item = globals()[model].objects.get(pk=pkdelete)
+        if item:
+            item.delete()
+        return redirect(model.lower())
     if request.method == 'POST':
-        form = CargoForm(request.POST)
-        if form.is_valid():
-            form.save()
+        form = globals()[model+'Form'](request.POST, instance=globals()[model].objects.get(pk=pk)) if pk else globals()[model+'Form'](request.POST)
+        if form.is_valid() and form.save():
+            return redirect(model.lower())
     elif request.method == 'GET':
-        form = CargoForm()
+        form = globals()[model+'Form'](instance=globals()[model].objects.get(pk=pk)) if pk else globals()[model+'Form']()
+    if pk:
+        form.is_edit = True
     return render(request, 'administracao/generic-table.html', {
-        'data': Cargo.objects.all(),
+        'data': globals()[model].objects.all(),
         'form': form
     })
 
-class CargoDelete(DeleteView):
-    model = Cargo
-    success_url = reverse_lazy('administracao:cargo')
-    def get_success_url(self):
-        return reverse('your_redirect_view')
+def cargo(request, pk=None, pkdelete=None):
+    return handler("Cargo", request, pk, pkdelete)
 
-def funcao(request):
-    if request.method == 'POST':
-        form = FuncaoForm(request.POST)
-        if form.is_valid():
-            form.save()
-    elif request.method == 'GET':
-        form = FuncaoForm()
-    return render(request, 'administracao/generic-table.html', {
-        'data': Funcao.objects.all(),
-        'form': form
-    })
+def funcao(request, pk=None, pkdelete=None):
+    return handler("Funcao", request, pk, pkdelete)
 
-def entidade(request):
-    if request.method == 'POST':
-        form = EntidadeForm(request.POST)
-        if form.is_valid():
-            form.save()
-    elif request.method == 'GET':
-        form = EntidadeForm()
-    return render(request, 'administracao/generic-table.html', {
-        'data': Entidade.objects.all(),
-        'form': form
-    })
+def entidade(request, pk=None, pkdelete=None):
+    return handler("Entidade", request, pk, pkdelete)
 
-def responsavel(request):
-    if request.method == 'POST':
-        form = ResponsavelForm(request.POST)
-        if form.is_valid():
-            form.save()
-    elif request.method == 'GET':
-        form = ResponsavelForm()
-    return render(request, 'administracao/generic-table.html', {
-        'data': Responsavel.objects.all(),
-        'form': form
-    })
+def responsavel(request, pk=None, pkdelete=None):
+    return handler("Responsavel", request, pk, pkdelete)
 
-def usuario(request):
-    if request.method == 'POST':
-        form = UsuarioForm(request.POST)
-        if form.is_valid():
-            form.save()
-    elif request.method == 'GET':
-        form = UsuarioForm()
-    return render(request, 'administracao/generic-table.html', {
-        'data': Usuario.objects.all(),
-        'form': form
-    })
+def usuario(request, pk=None, pkdelete=None):
+    return handler("Usuario", request, pk, pkdelete)

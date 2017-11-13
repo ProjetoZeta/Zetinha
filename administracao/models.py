@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.urlresolvers import reverse
 
 class Usuario(AbstractUser):
     no_completo = models.CharField('Nome completo', max_length=64, unique=True)
