@@ -27,7 +27,7 @@ def handler(model, request, pk, pkdelete):
         form = globals()[model+'Form'](instance=globals()[model].objects.get(pk=pk)) if pk else globals()[model+'Form']()
     if pk:
         form.is_edit = True
-    return render(request, 'administracao/generic-table.html', {
+    return render(request, 'administracao/bolsista.html', {
         'data': globals()[model].objects.all(),
         'form': form
     })
