@@ -1,0 +1,105 @@
+{% extends 'administracao/default.html' %}
+
+{% load static %}
+{% load verbose %}
+
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{% block css %}
+    <!-- DataTables CSS -->
+    <link href="{% static 'administracao/admin2/vendor/datatables-plugins/dataTables.bootstrap.css' %}" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="{% static 'administracao/admin2/vendor/datatables-responsive/dataTables.responsive.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block js %}
+    <!-- DataTables JavaScript -->
+    <script src="{% static 'administracao/admin2/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'administracao/admin2/vendor/datatables-plugins/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'administracao/admin2/vendor/datatables-responsive/dataTables.responsive.js' %}"></script>
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+            responsive: true,
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json"
+            }
+        });
+        $('#modal-create').modal({% if form.errors or form.is_edit %}'show'{% else %}''{% endif %});
+
+    });
+    </script>
+    <script src="//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                {% class_verbose_plural form.instance %}
+            </h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                     <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal-create">Novo</button>
+                </div>
+                <!-- /.panel-heading -->
+
+                <div class="panel-body">
+                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+
+                        {% block records %}
+                        {% endblock %}
+
+                    </table>
+                    <!-- /.table-responsive -->
+
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+    <!-- Modal -->
+    <div id="modal-create" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{% if form.is_edit %}Modificar{% else %}Criar{% endif %} {% class_verbose form.instance %}</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" class="form">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        {% buttons %}
+                            <button type="submit" class="btn btn-primary">
+                                {% bootstrap_icon "star" %} Salvar
+                            </button>
+                        {% endbuttons %}
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
