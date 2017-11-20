@@ -1,93 +1,162 @@
-{% extends 'administracao/skeleton.html' %}
+{% extends 'administracao/base.html' %}
+
+{% load static %}
+
+{% block sidebar %}
+
+    <div id="u360" class="ax_default">
+        <img id="u360_menu" class="img " src="{% static 'administracao/images/administrador/u41_menu.png' %}" alt="u360_menu"/>
+
+        <!-- Unnamed (Table) -->
+        <div id="u361" class="ax_default table">
+
+          <!-- Unnamed (Menu Item) -->
+          <div id="u362" class="ax_default table_cell">
+            <img id="u362_img" class="img " src="{% static 'administracao/images/administrador/u43.png' %}"/>
+            <!-- Unnamed () -->
+            <div id="u363" class="text" style="visibility: visible;">
+              <p><span style="font-family:'Verdana Negrito', 'Verdana Normal', 'Verdana';">Administração</span></p>
+            </div>
+          </div>
+
+          <!-- Unnamed (Menu Item) -->
+          <div id="u364" class="ax_default table_cell">
+            <img id="u364_img" class="img " src="{% static 'administracao/images/administrador/u45.png' %}"/>
+            <!-- Unnamed () -->
+            <div id="u365" class="text" style="visibility: visible;">
+              <p><span style="font-family:'Verdana Normal', 'Verdana';">Manter Usuário</span></p>
+            </div>
+          </div>
+
+          <!-- Unnamed (Menu Item) [footnote] -->
+          <div id="u364_ann" class="annotation"></div>
+
+          <!-- Unnamed (Menu Item) -->
+          <div id="u366" class="ax_default table_cell">
+            <img id="u366_img" class="img " src="{% static 'administracao/images/administrador/u45.png' %}"/>
+            <!-- Unnamed () -->
+            <div id="u367" class="text" style="visibility: visible;">
+              <p><span style="font-family:'Verdana Normal', 'Verdana';">Manter Função / Cargo</span></p>
+            </div>
+          </div>
+
+          <!-- Unnamed (Menu Item) -->
+          <div id="u368" class="ax_default table_cell">
+            <img id="u368_img" class="img " src="{% static 'administracao/images/administrador/u45.png' %}"/>
+            <!-- Unnamed () -->
+            <div id="u369" class="text" style="visibility: visible;">
+              <p><span style="font-family:'Verdana Normal', 'Verdana';">Manter Responsável</span></p>
+            </div>
+          </div>
+
+          <!-- Unnamed (Menu Item) -->
+          <div id="u370" class="ax_default table_cell">
+            <img id="u370_img" class="img " src="{% static 'administracao/images/administrador/u45.png' %}"/>
+            <!-- Unnamed () -->
+            <div id="u371" class="text" style="visibility: visible;">
+              <p><span style="font-family:'Verdana Normal', 'Verdana';">Manter Órgão/Instituição</span></p>
+            </div>
+          </div>
+
+          <!-- Unnamed (Menu Item) -->
+          <div id="u372" class="ax_default table_cell">
+            <img id="u372_img" class="img " src="{% static 'administracao/images/administrador/u43.png' %}"/>
+            <!-- Unnamed () -->
+            <div id="u373" class="text" style="visibility: visible;">
+              <p><span style="font-family:'Verdana Negrito', 'Verdana Normal', 'Verdana';">Gestão de Projetos</span></p>
+            </div>
+          </div>
+
+          <!-- Unnamed (Menu Item) -->
+          <div id="u374" class="ax_default table_cell">
+            <img id="u374_img" class="img " src="{% static 'administracao/images/administrador/u45.png' %}"/>
+            <!-- Unnamed () -->
+            <div id="u375" class="text" style="visibility: visible;">
+              <p><span style="font-family:'Verdana Normal', 'Verdana';">Manter Bolsistas / Pesquisadores</span></p>
+            </div>
+          </div>
+
+          <!-- Unnamed (Menu Item) -->
+          <div id="u376" class="ax_default table_cell">
+            <img id="u376_img" class="img " src="{% static 'administracao/images/administrador/u45.png' %}"/>
+            <!-- Unnamed () -->
+            <div id="u377" class="text" style="visibility: visible;">
+              <p><span style="font-family:'Verdana Normal', 'Verdana';">Manter Plano de Pesquisa Individual</span></p>
+            </div>
+          </div>
+
+          <!-- Unnamed (Menu Item) -->
+          <div id="u378" class="ax_default table_cell">
+            <img id="u378_img" class="img " src="{% static 'administracao/images/administrador/u45.png' %}"/>
+            <!-- Unnamed () -->
+            <div id="u379" class="text" style="visibility: visible;">
+              <p><span style="font-family:'Verdana Normal', 'Verdana';">Manter Projetos</span></p>
+            </div>
+          </div>
+
+          <!-- Unnamed (Menu Item) -->
+          <div id="u380" class="ax_default table_cell">
+            <img id="u380_img" class="img " src="{% static 'administracao/images/administrador/u61.png' %}"/>
+            <!-- Unnamed () -->
+            <div id="u381" class="text" style="visibility: visible;">
+              <p><span style="font-family:'Verdana Normal', 'Verdana';">Gerar Relatórios</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+{% endblock %}
 
 {% block nav %}
-    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="index.html">SisBP - Administração</a>
+
+    <!-- Unnamed (Group) -->
+      <div id="u354" class="ax_default">
+
+        <!-- Unnamed (Rectangle) -->
+        <div id="u355" class="ax_default shape">
+          <img id="u355_img" class="img " src="{% static 'administracao/images/exemplos/u2.png' %}"/>
+          <!-- Unnamed () -->
+          <div id="u356" class="text" style="visibility: visible;">
+            <p><span style="font-family:'Verdana Negrito', 'Verdana Normal', 'Verdana';">SISBP - Sistema de Controle de Bolsista e Pesquisador</span></p>
+          </div>
         </div>
-        <!-- /.navbar-header -->
 
-        <ul class="nav navbar-top-links navbar-right">
-            <!-- /.dropdown -->
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                    </li>
-                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    </li>
-                </ul>
-                <!-- /.dropdown-user -->
-            </li>
-            <!-- /.dropdown -->
-        </ul>
-        <!-- /.navbar-top-links -->
-
-        <div class="navbar-default sidebar" role="navigation">
-            <div class="sidebar-nav navbar-collapse">
-                <ul class="nav" id="side-menu">
-
-                    <li>
-                        <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Início </a>
-                    </li>
-
-                    <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> Administração<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="{% url 'usuario' %}">Usuários</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'funcao' %}">Funções</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'cargo' %}">Cargos</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'responsavel' %}">Responsáveis</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'entidade' %}">Orgãos/Instituições</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-
-                    <li>
-                        <a href="#"><i class="fa fa-bar-chart fa-fw"></i> Gestão de Projetos<span
-                                class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="panels-wells.html">Bolsistas/Pesquisadores</a>
-                            </li>
-                            <li>
-                                <a href="buttons.html">Plano de Pesquisa Individual</a>
-                            </li>
-                            <li>
-                                <a href="notifications.html">Projetos</a>
-                            </li>
-                            <li>
-                                <a href="typography.html">Relatórios</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-
-                </ul>
-            </div>
-            <!-- /.sidebar-collapse -->
+        <!-- Unnamed (Rectangle) -->
+        <div id="u357" class="ax_default shape">
+          <img id="u357_img" class="img " src="{% static 'administracao/images/exemplos/u4.png' %}"/>
+          <!-- Unnamed () -->
+          <div id="u358" class="text" style="display: none; visibility: hidden">
+            <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+          </div>
         </div>
-        <!-- /.navbar-static-side -->
-    </nav>
+      </div>
+
 {% endblock %}
+
+{% block breadcrumb %}
+
+     <!-- Unnamed (Group) -->
+      <div id="u585" class="ax_default">
+
+        <!-- Unnamed (Rectangle) -->
+        <div id="u586" class="ax_default shape">
+          <img id="u586_img" class="img " src="{% static 'administracao/images/exemplos/u4.png' %}"/>
+          <!-- Unnamed () -->
+          <div id="u587" class="text" style="visibility: visible;">
+            <p><span style="font-family:'Verdana Normal', 'Verdana';color:#0000FF;">&nbsp;&nbsp; Página Inicial</span><span style="font-family:'Verdana Normal', 'Verdana';"> / </span><span style="font-family:'Verdana Normal', 'Verdana';color:#0000FF;">Administrador</span><span style="font-family:'Verdana Normal', 'Verdana';color:#000000;"> / </span><span style="font-family:'Verdana Normal', 'Verdana';color:#0000FF;">Manter Cargo</span></p>
+          </div>
+        </div>
+
+        <!-- Unnamed (Paragraph) -->
+        <div id="u588" class="ax_default">
+          <img id="u588_img" class="img " src="{% static 'administracao/images/administrador/u68.png' %}"/>
+          <!-- Unnamed () -->
+          <div id="u589" class="text" style="visibility: visible;">
+            <p><span style="font-family:'Verdana Normal', 'Verdana';">X Sair</span></p>
+          </div>
+        </div>
+      </div>
+
+{% endblock %}
+
+

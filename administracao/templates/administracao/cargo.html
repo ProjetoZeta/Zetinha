@@ -1,520 +1,829 @@
-{% extends 'administracao/admin-crud.html' %}
+{% extends 'administracao/default.html' %}
 
 {% load static %}
 
 {% block css %}
-    <link href="{% static 'administracao/files/manter_cargo/styles.css' %}" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'administracao/files/cargo/styles.css' %}" type="text/css" rel="stylesheet"/>
 {% endblock %}
 
 {% block js %}
-    <script src="{% static 'administracao/files/manter_cargo/data.js' %}"></script>
+    <script src="{% static 'administracao/files/cargo/data.js' %}"></script>
 {% endblock %}
 
 
 {% block content %}
 
 
+<!-- painelResultadoCargo (Dynamic Panel) -->
+      <div id="u382" class="ax_default" data-label="painelResultadoCargo">
+        <div id="u382_state0" class="panel_state" data-label="State1">
+          <div id="u382_state0_content" class="panel_state_content">
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u383" class="ax_default box_1">
+              <img id="u383_img" class="img " src="{% static 'administracao/images/usuario/u192.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u384" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Negrito', 'Verdana Normal', 'Verdana';">NOME</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u385" class="ax_default box_1">
+              <img id="u385_img" class="img " src="{% static 'administracao/images/administrador/u79.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u386" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Negrito', 'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Item1 (Rectangle) -->
+            <div id="u387" class="ax_default box_1" data-label="Item1">
+              <img id="u387_img" class="img " src="{% static 'administracao/images/usuario/u198.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u388" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Chefe Imediato</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u389" class="ax_default box_1">
+              <img id="u389_img" class="img " src="{% static 'administracao/images/administrador/u87.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u390" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Shape) -->
+            <div id="u391" class="ax_default icon">
+              <img id="u391_img" class="img " src="{% static 'administracao/images/usuario/u204.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u392" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u393" class="ax_default">
+            </div>
+
+            <!-- Item2 (Rectangle) -->
+            <div id="u394" class="ax_default box_1" data-label="Item2">
+              <img id="u394_img" class="img " src="{% static 'administracao/images/usuario/u198.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u395" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Coordenador do Projeto</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u396" class="ax_default box_1">
+              <img id="u396_img" class="img " src="{% static 'administracao/images/administrador/u87.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u397" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Shape) -->
+            <div id="u398" class="ax_default icon">
+              <img id="u398_img" class="img " src="{% static 'administracao/images/usuario/u204.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u399" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Item1 (Rectangle) -->
+            <div id="u400" class="ax_default box_1" data-label="Item1">
+              <img id="u400_img" class="img " src="{% static 'administracao/images/usuario/u198.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u401" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Diretor(a) do Centro de Apoio ao Desenvolvimento</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u402" class="ax_default box_1">
+              <img id="u402_img" class="img " src="{% static 'administracao/images/administrador/u87.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u403" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Shape) -->
+            <div id="u404" class="ax_default icon">
+              <img id="u404_img" class="img " src="{% static 'administracao/images/usuario/u204.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u405" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Item2 (Rectangle) -->
+            <div id="u406" class="ax_default box_1" data-label="Item2">
+              <img id="u406_img" class="img " src="{% static 'administracao/images/usuario/u198.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u407" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Líder do Projeto</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u408" class="ax_default box_1">
+              <img id="u408_img" class="img " src="{% static 'administracao/images/administrador/u87.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u409" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Shape) -->
+            <div id="u410" class="ax_default icon">
+              <img id="u410_img" class="img " src="{% static 'administracao/images/usuario/u204.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u411" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Item1 (Rectangle) -->
+            <div id="u412" class="ax_default box_1" data-label="Item1">
+              <img id="u412_img" class="img " src="{% static 'administracao/images/usuario/u198.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u413" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Ordenador(a) de Despesa</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u414" class="ax_default box_1">
+              <img id="u414_img" class="img " src="{% static 'administracao/images/administrador/u87.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u415" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Shape) -->
+            <div id="u416" class="ax_default icon">
+              <img id="u416_img" class="img " src="{% static 'administracao/images/usuario/u204.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u417" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Item2 (Rectangle) -->
+            <div id="u418" class="ax_default box_1" data-label="Item2">
+              <img id="u418_img" class="img " src="{% static 'administracao/images/usuario/u198.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u419" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Pesquisador(a)</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u420" class="ax_default box_1">
+              <img id="u420_img" class="img " src="{% static 'administracao/images/administrador/u87.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u421" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Shape) -->
+            <div id="u422" class="ax_default icon">
+              <img id="u422_img" class="img " src="{% static 'administracao/images/usuario/u204.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u423" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Item2 (Rectangle) -->
+            <div id="u424" class="ax_default box_1" data-label="Item2">
+              <img id="u424_img" class="img " src="{% static 'administracao/images/usuario/u198.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u425" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Responsável pelo Gerenciamento do Projeto / CDT</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u426" class="ax_default box_1">
+              <img id="u426_img" class="img " src="{% static 'administracao/images/administrador/u87.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u427" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Shape) -->
+            <div id="u428" class="ax_default icon">
+              <img id="u428_img" class="img " src="{% static 'administracao/images/usuario/u204.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u429" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Item2 (Rectangle) -->
+            <div id="u430" class="ax_default box_1" data-label="Item2">
+              <img id="u430_img" class="img " src="{% static 'administracao/images/usuario/u198.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u431" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Responsável Técnico do Projeto / UNB</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u432" class="ax_default box_1">
+              <img id="u432_img" class="img " src="{% static 'administracao/images/administrador/u87.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u433" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Shape) -->
+            <div id="u434" class="ax_default icon">
+              <img id="u434_img" class="img " src="{% static 'administracao/images/usuario/u204.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u435" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Item2 (Rectangle) -->
+            <div id="u436" class="ax_default box_1" data-label="Item2">
+              <img id="u436_img" class="img " src="{% static 'administracao/images/usuario/u198.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u437" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Subdefensor(a) Público-Geral Federal</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u438" class="ax_default box_1">
+              <img id="u438_img" class="img " src="{% static 'administracao/images/administrador/u87.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u439" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Shape) -->
+            <div id="u440" class="ax_default icon">
+              <img id="u440_img" class="img " src="{% static 'administracao/images/usuario/u204.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u441" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Item2 (Rectangle) -->
+            <div id="u442" class="ax_default box_1" data-label="Item2">
+              <img id="u442_img" class="img " src="{% static 'administracao/images/usuario/u198.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u443" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Secretário(a) da STI / DPU</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u444" class="ax_default box_1">
+              <img id="u444_img" class="img " src="{% static 'administracao/images/administrador/u87.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u445" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Shape) -->
+            <div id="u446" class="ax_default icon">
+              <img id="u446_img" class="img " src="{% static 'administracao/images/usuario/u204.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u447" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u448" class="ax_default box_1">
+              <img id="u448_img" class="img " src="{% static 'administracao/images/cargo/u448.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u449" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Negrito', 'Verdana Normal', 'Verdana';">FUNÇÃO / CARGO</span></p>
+              </div>
+            </div>
+
+            <!-- Item1 (Rectangle) -->
+            <div id="u450" class="ax_default box_1" data-label="Item1">
+              <img id="u450_img" class="img " src="{% static 'administracao/images/cargo/item1_u450.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u451" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Cargo</span></p>
+              </div>
+            </div>
+
+            <!-- Item2 (Rectangle) -->
+            <div id="u452" class="ax_default box_1" data-label="Item2">
+              <img id="u452_img" class="img " src="{% static 'administracao/images/cargo/item1_u450.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u453" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Função</span></p>
+              </div>
+            </div>
+
+            <!-- Item1 (Rectangle) -->
+            <div id="u454" class="ax_default box_1" data-label="Item1">
+              <img id="u454_img" class="img " src="{% static 'administracao/images/cargo/item1_u450.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u455" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Cargo</span></p>
+              </div>
+            </div>
+
+            <!-- Item2 (Rectangle) -->
+            <div id="u456" class="ax_default box_1" data-label="Item2">
+              <img id="u456_img" class="img " src="{% static 'administracao/images/cargo/item1_u450.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u457" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Função</span></p>
+              </div>
+            </div>
+
+            <!-- Item1 (Rectangle) -->
+            <div id="u458" class="ax_default box_1" data-label="Item1">
+              <img id="u458_img" class="img " src="{% static 'administracao/images/cargo/item1_u450.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u459" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Cargo</span></p>
+              </div>
+            </div>
+
+            <!-- Item2 (Rectangle) -->
+            <div id="u460" class="ax_default box_1" data-label="Item2">
+              <img id="u460_img" class="img " src="{% static 'administracao/images/cargo/item1_u450.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u461" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Função</span></p>
+              </div>
+            </div>
+
+            <!-- Item2 (Rectangle) -->
+            <div id="u462" class="ax_default box_1" data-label="Item2">
+              <img id="u462_img" class="img " src="{% static 'administracao/images/cargo/item1_u450.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u463" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Cargo</span></p>
+              </div>
+            </div>
+
+            <!-- Item2 (Rectangle) -->
+            <div id="u464" class="ax_default box_1" data-label="Item2">
+              <img id="u464_img" class="img " src="{% static 'administracao/images/cargo/item1_u450.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u465" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Cargo</span></p>
+              </div>
+            </div>
+
+            <!-- Item2 (Rectangle) -->
+            <div id="u466" class="ax_default box_1" data-label="Item2">
+              <img id="u466_img" class="img " src="{% static 'administracao/images/cargo/item1_u450.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u467" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Cargo</span></p>
+              </div>
+            </div>
+
+            <!-- Item2 (Rectangle) -->
+            <div id="u468" class="ax_default box_1" data-label="Item2">
+              <img id="u468_img" class="img " src="{% static 'administracao/images/cargo/item1_u450.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u469" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Cargo</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u470" class="ax_default line">
+              <img id="u470_img" class="img " src="{% static 'administracao/images/cargo/u470.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u471" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u472" class="ax_default line">
+              <img id="u472_img" class="img " src="{% static 'administracao/images/cargo/u470.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u473" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u474" class="ax_default line">
+              <img id="u474_img" class="img " src="{% static 'administracao/images/cargo/u470.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u475" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u476" class="ax_default line">
+              <img id="u476_img" class="img " src="{% static 'administracao/images/cargo/u470.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u477" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u478" class="ax_default line">
+              <img id="u478_img" class="img " src="{% static 'administracao/images/cargo/u470.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u479" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u480" class="ax_default line">
+              <img id="u480_img" class="img " src="{% static 'administracao/images/cargo/u470.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u481" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u482" class="ax_default line">
+              <img id="u482_img" class="img " src="{% static 'administracao/images/cargo/u470.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u483" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u484" class="ax_default line">
+              <img id="u484_img" class="img " src="{% static 'administracao/images/cargo/u470.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u485" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u486" class="ax_default line">
+              <img id="u486_img" class="img " src="{% static 'administracao/images/cargo/u470.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u487" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="u382_state1" class="panel_state" data-label="State2" style="display: none; visibility: hidden;">
+          <div id="u382_state1_content" class="panel_state_content">
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u488" class="ax_default box_1">
+              <img id="u488_img" class="img " src="{% static 'administracao/images/usuario/u192.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u489" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Negrito', 'Verdana Normal', 'Verdana';">NOME</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u490" class="ax_default box_1">
+              <img id="u490_img" class="img " src="{% static 'administracao/images/administrador/u79.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u491" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Negrito', 'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Item1 (Rectangle) -->
+            <div id="u492" class="ax_default box_1" data-label="Item1">
+              <img id="u492_img" class="img " src="{% static 'administracao/images/usuario/u198.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u493" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Chefe Imediato</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u494" class="ax_default box_1">
+              <img id="u494_img" class="img " src="{% static 'administracao/images/administrador/u87.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u495" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Shape) -->
+            <div id="u496" class="ax_default icon">
+              <img id="u496_img" class="img " src="{% static 'administracao/images/usuario/u204.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u497" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u498" class="ax_default">
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u499" class="ax_default box_1">
+              <img id="u499_img" class="img " src="{% static 'administracao/images/cargo/u448.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u500" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Negrito', 'Verdana Normal', 'Verdana';">FUNÇÃO / CARGO</span></p>
+              </div>
+            </div>
+
+            <!-- Item1 (Rectangle) -->
+            <div id="u501" class="ax_default box_1" data-label="Item1">
+              <img id="u501_img" class="img " src="{% static 'administracao/images/cargo/item1_u450.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u502" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">Cargo</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u503" class="ax_default line">
+              <img id="u503_img" class="img " src="{% static 'administracao/images/cargo/u470.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u504" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Unnamed (Rectangle) -->
-      <div id="u590" class="ax_default shape">
-        <img id="u590_img" class="img " src="{% static 'administracao/images/manter_cargo/u590.png' %}"/>
+      <div id="u505" class="ax_default flow_shape">
+        <img id="u505_img" class="img " src="{% static 'administracao/images/usuario/u302.png' %}"/>
         <!-- Unnamed () -->
-        <div id="u591" class="text" style="display: none; visibility: hidden">
-          <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+        <div id="u506" class="text" style="visibility: visible;">
+          <p><span style="font-family:'Verdana Negrito Itálico', 'Verdana Normal', 'Verdana';">Manter Função / Cargo</span></p>
+        </div>
+      </div>
+
+      <!-- ModalNovo (Dynamic Panel) -->
+      <div id="u507" class="ax_default ax_default_hidden" data-label="ModalNovo" style="display: none; visibility: hidden">
+        <div id="u507_state0" class="panel_state" data-label="State1">
+          <div id="u507_state0_content" class="panel_state_content">
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u508" class="ax_default flow_shape">
+              <img id="u508_img" class="img " src="{% static 'administracao/images/cargo/u508.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u509" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u510" class="ax_default shape">
+              <img id="u510_img" class="img " src="{% static 'administracao/images/cargo/u510.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u511" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Group) -->
+            <div id="u512" class="ax_default">
+
+              <!-- Unnamed (Paragraph) -->
+              <div id="u513" class="ax_default">
+                <img id="u513_img" class="img " src="{% static 'administracao/images/cargo/u513.png' %}"/>
+                <!-- Unnamed () -->
+                <div id="u514" class="text" style="visibility: visible;">
+                  <p><span style="font-family:'Verdana Normal', 'Verdana';">Nome da Função ou Cargo</span><span style="font-family:'Verdana Normal', 'Verdana';color:#FF0000;">*</span><span style="font-family:'Verdana Normal', 'Verdana';">:</span></p>
+                </div>
+              </div>
+
+              <!-- inputCargo (Text Field) -->
+              <div id="u515" class="ax_default text_field" data-label="inputCargo">
+                <input id="u515_input" type="text" value="" class="text_sketch"/>
+              </div>
+
+              <!-- inputCargo (Text Field) [footnote] -->
+              <div id="u515_ann" class="annotation"></div>
+            </div>
+
+            <!-- Unnamed (Paragraph) -->
+            <div id="u516" class="ax_default">
+              <img id="u516_img" class="img " src="{% static 'administracao/images/cargo/u516.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u517" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Negrito', 'Verdana Normal', 'Verdana';text-decoration:underline;">Nova Função ou Cargo</span></p>
+              </div>
+            </div>
+
+            <!-- RadioFuncao (Radio Button) -->
+            <div id="u518" class="ax_default radio_button" data-label="RadioFuncao">
+              <label for="u518_input">
+                <!-- Unnamed () -->
+                <div id="u519" class="text" style="visibility: visible;">
+                  <p><span style="font-family:'Verdana Normal', 'Verdana';">Função</span></p>
+                </div>
+              </label>
+              <input id="u518_input" type="radio" value="radio" name="RadioFuncao_Cargo"/>
+            </div>
+
+            <!-- RadioCargo (Radio Button) -->
+            <div id="u520" class="ax_default radio_button" data-label="RadioCargo">
+              <label for="u520_input">
+                <!-- Unnamed () -->
+                <div id="u521" class="text" style="visibility: visible;">
+                  <p><span style="font-family:'Verdana Normal', 'Verdana';">Cargo</span></p>
+                </div>
+              </label>
+              <input id="u520_input" type="radio" value="radio" name="RadioFuncao_Cargo"/>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u522" class="ax_default primary_button">
+              <img id="u522_img" class="img " src="{% static 'administracao/images/exemplos/u6.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u523" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">SALVAR</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u524" class="ax_default primary_button">
+              <img id="u524_img" class="img " src="{% static 'administracao/images/exemplos/u6.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u525" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">VOLTAR</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="u507_state1" class="panel_state" data-label="State2" style="display: none; visibility: hidden;">
+          <div id="u507_state1_content" class="panel_state_content">
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u526" class="ax_default flow_shape">
+              <img id="u526_img" class="img " src="{% static 'administracao/images/cargo/u508.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u527" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u528" class="ax_default shape">
+              <img id="u528_img" class="img " src="{% static 'administracao/images/cargo/u510.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u529" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Group) -->
+            <div id="u530" class="ax_default">
+
+              <!-- Unnamed (Paragraph) -->
+              <div id="u531" class="ax_default">
+                <img id="u531_img" class="img " src="{% static 'administracao/images/cargo/u513.png' %}"/>
+                <!-- Unnamed () -->
+                <div id="u532" class="text" style="visibility: visible;">
+                  <p><span style="font-family:'Verdana Normal', 'Verdana';">Nome da Função ou Cargo</span><span style="font-family:'Verdana Normal', 'Verdana';color:#FF0000;">*</span><span style="font-family:'Verdana Normal', 'Verdana';">:</span></p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Unnamed (Paragraph) -->
+            <div id="u533" class="ax_default">
+              <img id="u533_img" class="img " src="{% static 'administracao/images/cargo/u516.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u534" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Negrito', 'Verdana Normal', 'Verdana';text-decoration:underline;">Nova Função ou Cargo</span></p>
+              </div>
+            </div>
+
+            <!-- RadioFuncao (Radio Button) -->
+            <div id="u535" class="ax_default radio_button" data-label="RadioFuncao">
+              <label for="u535_input">
+                <!-- Unnamed () -->
+                <div id="u536" class="text" style="visibility: visible;">
+                  <p><span style="font-family:'Verdana Normal', 'Verdana';">Função</span></p>
+                </div>
+              </label>
+              <input id="u535_input" type="radio" value="radio" name="RadioFuncao_Cargo"/>
+            </div>
+
+            <!-- RadioCargo (Radio Button) -->
+            <div id="u537" class="ax_default radio_button" data-label="RadioCargo">
+              <label for="u537_input">
+                <!-- Unnamed () -->
+                <div id="u538" class="text" style="visibility: visible;">
+                  <p><span style="font-family:'Verdana Normal', 'Verdana';">Cargo</span></p>
+                </div>
+              </label>
+              <input id="u537_input" type="radio" value="radio" name="RadioFuncao_Cargo" checked/>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u539" class="ax_default primary_button">
+              <img id="u539_img" class="img " src="{% static 'administracao/images/exemplos/u6.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u540" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">SALVAR</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u541" class="ax_default primary_button">
+              <img id="u541_img" class="img " src="{% static 'administracao/images/exemplos/u6.png' %}"/>
+              <!-- Unnamed () -->
+              <div id="u542" class="text" style="visibility: visible;">
+                <p><span style="font-family:'Verdana Normal', 'Verdana';">VOLTAR</span></p>
+              </div>
+            </div>
+
+            <!-- inputCargo (Text Field) -->
+            <div id="u543" class="ax_default text_field" data-label="inputCargo">
+              <input id="u543_input" type="text" value="Chefe Imediato" class="text_sketch"/>
+            </div>
+
+            <!-- inputCargo (Text Field) [footnote] -->
+            <div id="u543_ann" class="annotation"></div>
+          </div>
         </div>
       </div>
 
       <!-- Unnamed (Group) -->
-      <div id="u592" class="ax_default">
+      <div id="u544" class="ax_default">
 
-        <!-- Unnamed (Paragraph) -->
-        <div id="u593" class="ax_default">
-          <img id="u593_img" class="img " src="{% static 'administracao/images/cargo/u513.png' %}"/>
-          <!-- Unnamed () -->
-          <div id="u594" class="text" style="visibility: visible;">
-            <p><span style="font-family:'Verdana Normal', 'Verdana';">Nome da Função ou Cargo</span><span style="font-family:'Verdana Normal', 'Verdana';color:#FF0000;">*</span><span style="font-family:'Verdana Normal', 'Verdana';">:</span></p>
+        <!-- Unnamed (Group) -->
+        <div id="u545" class="ax_default">
+
+          <!-- Unnamed (Rectangle) -->
+          <div id="u546" class="ax_default shape">
+            <img id="u546_img" class="img " src="{% static 'administracao/images/exemplos/u4.png' %}"/>
+            <!-- Unnamed () -->
+            <div id="u547" class="text" style="visibility: visible;">
+              <p><span style="font-family:'Verdana Normal', 'Verdana';color:#0000FF;">&nbsp;&nbsp; Página Inicial</span><span style="font-family:'Verdana Normal', 'Verdana';"> / </span><span style="font-family:'Verdana Normal', 'Verdana';color:#0000FF;">Administrador</span><span style="font-family:'Verdana Normal', 'Verdana';color:#000000;"> / </span><span style="font-family:'Verdana Normal', 'Verdana';color:#0000FF;">Manter Função / Cargo</span></p>
+            </div>
+          </div>
+
+          <!-- Unnamed (Paragraph) -->
+          <div id="u548" class="ax_default">
+            <img id="u548_img" class="img " src="{% static 'administracao/images/administrador/u68.png' %}"/>
+            <!-- Unnamed () -->
+            <div id="u549" class="text" style="visibility: visible;">
+              <p><span style="font-family:'Verdana Normal', 'Verdana';">X Sair</span></p>
+            </div>
           </div>
         </div>
 
-        <!-- inputCargo (Text Field) -->
-        <div id="u595" class="ax_default text_field" data-label="inputCargo">
-          <input id="u595_input" type="text" value="" class="text_sketch"/>
-        </div>
-
-        <!-- inputCargo (Text Field) [footnote]
-        <div id="u595_ann" class="annotation"></div>-->
-      </div>
-
-      <!-- Unnamed (Paragraph) -->
-      <div id="u596" class="ax_default">
-        <img id="u596_img" class="img " src="{% static 'administracao/images/cargo/u516.png' %}"/>
-        <!-- Unnamed () -->
-        <div id="u597" class="text" style="visibility: visible;">
-          <p><span style="font-family:'Verdana Negrito', 'Verdana Normal', 'Verdana';text-decoration:underline;">Nova Função ou Cargo</span></p>
+        <!-- Unnamed (Hot Spot) -->
+        <div id="u550" class="ax_default">
         </div>
       </div>
 
-      <!-- Unnamed (Menu Administrador 2) -->
-
-      <!-- menu (Dynamic Panel) -->
-      <div id="u599" class="ax_default ax_default_hidden" data-label="menu" style="display: none; visibility: hidden">
-        <div id="u599_state0" class="panel_state" data-label="State1">
-          <div id="u599_state0_content" class="panel_state_content">
+      <!-- modalSalvar (Dynamic Panel) -->
+      <div id="u551" class="ax_default ax_default_hidden" data-label="modalSalvar" style="display: none; visibility: hidden">
+        <div id="u551_state0" class="panel_state" data-label="State1">
+          <div id="u551_state0_content" class="panel_state_content">
 
             <!-- Unnamed (Rectangle) -->
-            <div id="u600" class="ax_default box_1">
-              <img id="u600_img" class="img " src="{% static 'administracao/images/manter_cargo/u600.png' %}"/>
+            <div id="u552" class="ax_default box_1">
+              <img id="u552_img" class="img " src="{% static 'administracao/images/usuario/u338.png' %}"/>
               <!-- Unnamed () -->
-              <div id="u601" class="text" style="visibility: visible;">
-                <p><span>BOLSISTA</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u602" class="ax_default box_1">
-              <img id="u602_img" class="img " src="{% static 'administracao/images/manter_cargo/u602.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u603" class="text" style="visibility: visible;">
-                <p><span>Usuário</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u604" class="ax_default box_1">
-              <img id="u604_img" class="img " src="{% static 'administracao/images/manter_cargo/u600.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u605" class="text" style="visibility: visible;">
-                <p><span>ADMINISTRAÇÃO</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u606" class="ax_default box_1">
-              <img id="u606_img" class="img " src="{% static 'administracao/images/manter_cargo/u602.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u607" class="text" style="visibility: visible;">
-                <p><span>Cadastro</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Horizontal Line) -->
-            <div id="u608" class="ax_default line">
-              <img id="u608_img" class="img " src="{% static 'administracao/images/manter_cargo/u608.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u609" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Horizontal Line) -->
-            <div id="u610" class="ax_default line">
-              <img id="u610_img" class="img " src="{% static 'administracao/images/manter_cargo/u610.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u611" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u612" class="ax_default box_1">
-              <img id="u612_img" class="img " src="{% static 'administracao/images/manter_cargo/u602.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u613" class="text" style="visibility: visible;">
-                <p><span>Função / Cargo</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Horizontal Line) -->
-            <div id="u614" class="ax_default line">
-              <img id="u614_img" class="img " src="{% static 'administracao/images/manter_cargo/u608.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u615" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u616" class="ax_default box_1">
-              <img id="u616_img" class="img " src="{% static 'administracao/images/manter_cargo/u602.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u617" class="text" style="visibility: visible;">
-                <p><span>Responsável</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u618" class="ax_default box_1">
-              <img id="u618_img" class="img " src="{% static 'administracao/images/manter_cargo/u602.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u619" class="text" style="visibility: visible;">
-                <p><span>Órgão/Instituição</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Horizontal Line) -->
-            <div id="u620" class="ax_default line">
-              <img id="u620_img" class="img " src="{% static 'administracao/images/manter_cargo/u620.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u621" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Horizontal Line) -->
-            <div id="u622" class="ax_default line">
-              <img id="u622_img" class="img " src="{% static 'administracao/images/manter_cargo/u608.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u623" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u624" class="ax_default box_1">
-              <img id="u624_img" class="img " src="{% static 'administracao/images/manter_cargo/u602.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u625" class="text" style="visibility: visible;">
-                <p><span>Agenda</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Horizontal Line) -->
-            <div id="u626" class="ax_default line">
-              <img id="u626_img" class="img " src="{% static 'administracao/images/manter_cargo/u608.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u627" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u628" class="ax_default box_1">
-              <img id="u628_img" class="img " src="{% static 'administracao/images/manter_cargo/u600.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u629" class="text" style="visibility: visible;">
-                <p><span>PLANO DE TRABALHO</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u630" class="ax_default box_1">
-              <img id="u630_img" class="img " src="{% static 'administracao/images/manter_cargo/u602.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u631" class="text" style="visibility: visible;">
-                <p><span>Cadastrar Plano</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Horizontal Line) -->
-            <div id="u632" class="ax_default line">
-              <img id="u632_img" class="img " src="{% static 'administracao/images/manter_cargo/u620.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u633" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u634" class="ax_default box_1">
-              <img id="u634_img" class="img " src="{% static 'administracao/images/manter_cargo/u602.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u635" class="text" style="visibility: visible;">
-                <p><span>Cadastrar Atividade</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Horizontal Line) -->
-            <div id="u636" class="ax_default line">
-              <img id="u636_img" class="img " src="{% static 'administracao/images/manter_cargo/u608.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u637" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u638" class="ax_default box_1">
-              <img id="u638_img" class="img " src="{% static 'administracao/images/manter_cargo/u602.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u639" class="text" style="visibility: visible;">
-                <p><span>Pesquisar Plano</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Horizontal Line) -->
-            <div id="u640" class="ax_default line">
-              <img id="u640_img" class="img " src="{% static 'administracao/images/manter_cargo/u608.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u641" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u642" class="ax_default box_1">
-              <img id="u642_img" class="img " src="{% static 'administracao/images/manter_cargo/u600.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u643" class="text" style="visibility: visible;">
-                <p><span>RELATÓRIO</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u644" class="ax_default box_1">
-              <img id="u644_img" class="img " src="{% static 'administracao/images/manter_cargo/u602.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u645" class="text" style="visibility: visible;">
-                <p><span>Plano de Pesquisa Individual</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u646" class="ax_default box_1">
-              <img id="u646_img" class="img " src="{% static 'administracao/images/manter_cargo/u602.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u647" class="text" style="visibility: visible;">
-                <p><span>Termo de compromisso</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Horizontal Line) -->
-            <div id="u648" class="ax_default line">
-              <img id="u648_img" class="img " src="{% static 'administracao/images/manter_cargo/u608.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u649" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u650" class="ax_default box_1">
-              <img id="u650_img" class="img " src="{% static 'administracao/images/manter_cargo/u602.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u651" class="text" style="visibility: visible;">
-                <p><span>Declaração de Sigilo</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Horizontal Line) -->
-            <div id="u652" class="ax_default line">
-              <img id="u652_img" class="img " src="{% static 'administracao/images/manter_cargo/u608.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u653" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u654" class="ax_default box_1">
-              <img id="u654_img" class="img " src="{% static 'administracao/images/manter_cargo/u602.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u655" class="text" style="visibility: visible;">
-                <p><span>Declaração Ciência de Bolsa</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Horizontal Line) -->
-            <div id="u656" class="ax_default line">
-              <img id="u656_img" class="img " src="{% static 'administracao/images/manter_cargo/u608.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u657" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u658" class="ax_default box_1">
-              <img id="u658_img" class="img " src="{% static 'administracao/images/manter_cargo/u602.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u659" class="text" style="visibility: visible;">
-                <p><span>Declaração de Residência</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Horizontal Line) -->
-            <div id="u660" class="ax_default line">
-              <img id="u660_img" class="img " src="{% static 'administracao/images/manter_cargo/u608.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u661" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u662" class="ax_default box_1">
-              <img id="u662_img" class="img " src="{% static 'administracao/images/manter_cargo/u602.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u663" class="text" style="visibility: visible;">
-                <p><span>Declaração de Uso de Rede</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Horizontal Line) -->
-            <div id="u664" class="ax_default line">
-              <img id="u664_img" class="img " src="{% static 'administracao/images/manter_cargo/u608.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u665" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u666" class="ax_default box_1">
-              <img id="u666_img" class="img " src="{% static 'administracao/images/manter_cargo/u602.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u667" class="text" style="visibility: visible;">
-                <p><span>Declaração para Recebimento de Bolsa</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Horizontal Line) -->
-            <div id="u668" class="ax_default line">
-              <img id="u668_img" class="img " src="{% static 'administracao/images/manter_cargo/u608.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u669" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u670" class="ax_default box_1">
-              <img id="u670_img" class="img " src="{% static 'administracao/images/manter_cargo/u670.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u671" class="text" style="visibility: visible;">
-                <p><span>MENU</span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Horizontal Line) -->
-            <div id="u672" class="ax_default line">
-              <img id="u672_img" class="img " src="{% static 'administracao/images/manter_cargo/u620.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u673" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- btnMenu (Dynamic Panel) -->
-      <div id="u674" class="ax_default" data-label="btnMenu">
-        <div id="u674_state0" class="panel_state" data-label="show">
-          <div id="u674_state0_content" class="panel_state_content">
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u675" class="ax_default box_1">
-              <img id="u675_img" class="img " src="{% static 'administracao/images/manter_cargo/u675.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u676" class="text" style="display: none; visibility: hidden">
-                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Shape) -->
-            <div id="u677" class="ax_default icon">
-              <img id="u677_img" class="img " src="{% static 'administracao/images/manter_cargo/u677.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u678" class="text" style="display: none; visibility: hidden">
-                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Hot Spot) -->
-            <div id="u679" class="ax_default">
-            </div>
-          </div>
-        </div>
-        <div id="u674_state1" class="panel_state" data-label="hide" style="display: none; visibility: hidden;">
-          <div id="u674_state1_content" class="panel_state_content">
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u680" class="ax_default box_1">
-              <img id="u680_img" class="img " src="{% static 'administracao/images/manter_cargo/u675.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u681" class="text" style="display: none; visibility: hidden">
-                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Shape) -->
-            <div id="u682" class="ax_default icon">
-              <img id="u682_img" class="img " src="{% static 'administracao/images/manter_cargo/u682.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u683" class="text" style="display: none; visibility: hidden">
-                <p><span style="font-family:'Verdana Normal', 'Verdana';"></span></p>
-              </div>
-            </div>
-
-            <!-- Unnamed (Hot Spot) -->
-            <div id="u684" class="ax_default">
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- modal (Dynamic Panel) -->
-      <div id="u685" class="ax_default ax_default_hidden" data-label="modal" style="display: none; visibility: hidden">
-        <div id="u685_state0" class="panel_state" data-label="State1">
-          <div id="u685_state0_content" class="panel_state_content">
-
-            <!-- Unnamed (Rectangle) -->
-            <div id="u686" class="ax_default box_1">
-              <img id="u686_img" class="img " src="{% static 'administracao/images/manter_cargo/u686.png' %}"/>
-              <!-- Unnamed () -->
-              <div id="u687" class="text" style="visibility: visible;">
+              <div id="u553" class="text" style="visibility: visible;">
                 <p><span style="font-family:'Verdana Normal', 'Verdana';"><br></span></p><p><span style="font-family:'Verdana Normal', 'Verdana';">Dados salvos com sucesso!</span></p>
               </div>
             </div>
 
             <!-- Unnamed (Rectangle) -->
-            <div id="u688" class="ax_default primary_button">
-              <img id="u688_img" class="img " src="{% static 'administracao/images/usuario/u340.png' %}"/>
+            <div id="u554" class="ax_default primary_button">
+              <img id="u554_img" class="img " src="{% static 'administracao/images/usuario/u340.png' %}"/>
               <!-- Unnamed () -->
-              <div id="u689" class="text" style="visibility: visible;">
+              <div id="u555" class="text" style="visibility: visible;">
                 <p><span style="font-family:'Verdana Normal', 'Verdana';">OK</span></p>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- RadioFuncao (Radio Button) -->
-      <div id="u690" class="ax_default radio_button" data-label="RadioFuncao">
-        <label for="u690_input">
-          <!-- Unnamed () -->
-          <div id="u691" class="text" style="visibility: visible;">
-            <p><span style="font-family:'Verdana Normal', 'Verdana';">Função</span></p>
-          </div>
-        </label>
-        <input id="u690_input" type="radio" value="radio" name="RadioFuncao_Cargo"/>
-      </div>
-
-      <!-- RadioCargo (Radio Button) -->
-      <div id="u692" class="ax_default radio_button" data-label="RadioCargo">
-        <label for="u692_input">
-          <!-- Unnamed () -->
-          <div id="u693" class="text" style="visibility: visible;">
-            <p><span style="font-family:'Verdana Normal', 'Verdana';">Cargo</span></p>
-          </div>
-        </label>
-        <input id="u692_input" type="radio" value="radio" name="RadioFuncao_Cargo"/>
-      </div>
-
-      <!-- Unnamed (Rectangle) -->
-      <div id="u694" class="ax_default primary_button">
-        <img id="u694_img" class="img " src="{% static 'administracao/images/exemplos/u6.png' %}"/>
-        <!-- Unnamed () -->
-        <div id="u695" class="text" style="visibility: visible;">
-          <p><span style="font-family:'Verdana Normal', 'Verdana';">SALVAR</span></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (Rectangle) -->
-      <div id="u696" class="ax_default primary_button">
-        <img id="u696_img" class="img " src="{% static 'administracao/images/exemplos/u6.png' %}"/>
-        <!-- Unnamed () -->
-        <div id="u697" class="text" style="visibility: visible;">
-          <p><span style="font-family:'Verdana Normal', 'Verdana';">VOLTAR</span></p>
         </div>
       </div>
 
