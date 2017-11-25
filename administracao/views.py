@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 
-from .models import Cargo, Entidade, Funcao, Responsavel, Usuario
+from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario
 from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm
 
 # Create your views here.
