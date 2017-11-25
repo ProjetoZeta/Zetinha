@@ -11,7 +11,7 @@ from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, Usuario
 # Create your views here.
 
 def main(request):
-    return render(request, 'administracao/main.html', {})
+    return render(request, 'administracao/foo.html', {})
 
 def handler(model, request, pk, pkdelete):
     if pkdelete:
