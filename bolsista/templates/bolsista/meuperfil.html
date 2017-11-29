@@ -1,0 +1,165 @@
+{% extends 'bolsista/default.html' %}
+
+
+{% block css %}
+ <style type="text/css">
+ 	.the-legend {
+    border-style: none;
+
+    border-width: 0;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 0;
+}
+.the-fieldset {
+    border: 2px groove threedface #444;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
+}
+
+ </style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<form>
+  
+  
+</form>
+
+
+
+<form >
+    <fieldset class="well the-fieldset">
+        <legend class="the-legend"> Identificação do Bolsista</legend>
+    
+
+  <div class="form-group">
+    <label for="inputAddress">Nome Completo</label>
+    <input type="text" class="form-control" id="inputAddress" placeholder="Nome Completo">
+  </div>
+  <div class="form-group">
+    <label for="inputAddress2">Email</label>
+    <input type="email" class="form-control" id="inputAddress2" placeholder="email@email.com.br">
+  </div>
+
+   <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">CPF</label>
+      <input type="number" class="form-control" id="inputEmail4" placeholder="Somente Números">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Nº Identidade</label>
+      <input type="number" class="form-control" id="inputPassword4" placeholder="Somente Números">
+    </div>
+  </div>
+
+    <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Orgão Expeditor</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Ex: SSPDF">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Data de Nascimento</label>
+      <input type="number" class="form-control" id="inputPassword4" placeholder="dd/mm/aaaa">
+    </div>
+  </div>
+
+   <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Telefone</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Ex:(61)32164569">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Celular</label>
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Ex:(61)987654321">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Matrícula</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Ex:17/1234567">
+    </div>	
+	<div class="form-group col-md-6">
+      <label for="inputState">Vínculo</label>
+      <select id="inputState" class="form-control">
+        <option selected disabled>Escolha um...</option>
+        <option>Servidor Público - Professor</option>
+        <option>Servidor Público ou Empregado Público</option>
+        <option>Colaborador sem vínculo com o serviço</option>
+      </select>
+    </div>
+
+  </div>
+    </fieldset>
+
+
+    <fieldset class="well the-fieldset">
+        <legend class="the-legend"> Endereço</legend>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+      <label for="inputEmail4">Endereço</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Ex:(61)32164569">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Cidade</label>
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Brasília">
+    </div>
+  </div>
+
+  <div class="form-row">
+      <div class="form-group col-md-6">
+      <label for="inputEmail4">CEP</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Ex:(61)32164569">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">UF</label>
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Ex:(61)987654321">
+    </div>
+  </div>
+  
+    </fieldset>
+
+
+    <fieldset class="well the-fieldset">
+        <legend class="the-legend"> Dados Bancários</legend>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+      <label for="inputEmail4">Banco</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Ex:(61)32164569">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Conta</label>
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Brasília">
+    </div>
+  </div>
+
+  <div class="form-row">
+      <div class="form-group col-md-6">
+      <label for="inputEmail4">Agência</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Ex:(61)32164569">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputState">Tipo de Conta</label>
+      <select id="inputState" class="form-control">
+        <option selected disabled>Escolha um...</option>
+        <option>Conta Corrente Pessoa Física</option>
+        <option>Conta Corrente Pessoa Jurídica</option>
+        <option>Conta Poupança</option>
+        <option>Conta Conjunta</option>
+      </select>
+    </div>    
+  </div>
+  
+    </fieldset>
+
+  <button type="submit" class="btn btn-primary">Salvar</button>
+  <button type="submit" class="btn btn-primary">Cancelar</button>
+
+</form>
+{% endblock %}
