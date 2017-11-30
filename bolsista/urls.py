@@ -5,4 +5,6 @@ urlpatterns = [
     url(r'^$', views.main, name='main'),
 
     url(r'^meuperfil$', views.meuperfil, name='meuperfil'),
+
+    url(r'^visualizarprojeto$', views.visualizarprojeto, name='visualizarprojeto'),
 ]
