@@ -32,4 +32,4 @@ Como instalar?
 -------------
 
 > - sudo apt-get install python-pip
-> - pip install -r requirements.txt
+> - pip install -r requeriments.txt
