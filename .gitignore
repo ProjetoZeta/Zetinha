@@ -18,4 +18,5 @@ tests/.coverage
 build/
 tests/report/
 db.sqlite3
-*/migrations/*
+*/migrations/*.py
+!*/migrations/__init__.py
