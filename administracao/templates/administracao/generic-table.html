@@ -18,7 +18,15 @@
     {% for item in data %}
     <tr class="odd gradeX">
         {% for field in form.fields %}
-            <td>{{ item|getattr:field }}</td>
+            {% with item|getattr:field as value %}
+                <td>
+                {% if value|is_bool %}
+                    <input type="checkbox" {% if value %} checked {% endif %}>
+                {% else %}
+                    {{ value }}
+                {% endif %}
+                </td>
+            {% endwith %}
         {% endfor %}
         <td>
             <div class="btn-group">

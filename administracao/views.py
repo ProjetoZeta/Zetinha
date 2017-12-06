@@ -29,7 +29,8 @@ def handler(model, request, pk, pkdelete):
         form.is_edit = True
     return render(request, 'administracao/generic-table.html', {
         'data': globals()[model].objects.all(),
-        'form': form
+        'form': form,
+        'content_title': globals()[model]._meta.verbose_name_plural.title()
     })
 
 def cargo(request, pk=None, pkdelete=None):
