@@ -5,8 +5,8 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 
-from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista
-from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm
+from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento
+from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm
 
 # Create your views here.
 
@@ -56,7 +56,7 @@ def bolsista(request, pk=None, pkdelete=None):
         return redirect('bolsista')
     return render(request, 'administracao/generic-table-no-modals.html', {
         'data': Bolsista.objects.all(),
-        'form': BolsistaForm,
+        'form': BolsistaForm(),
         'content_title': 'Bolsistas'
     })
 
@@ -68,4 +68,15 @@ def bolsista_handle(request, pk=None, pkdelete=None):
     elif request.method == 'GET':
         form = BolsistaForm(instance=Bolsista.objects.get(pk=pk)) if pk else BolsistaForm()
 
-    return render(request, 'administracao/bolsista.html', {'content_title': 'Cadastrar Bolsistas / Pequisadores', 'form': form})
+    return render(request, 'administracao/bolsista.html', {
+        'content_title': 'Cadastrar Bolsistas / Pequisadores',
+        'form': form,
+        'formf': DocumentoForm()
+    })
+
+def upload_arquivo_bolsista(request):
+    if request.method == 'POST':
+        form = DocumentoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+    return redirect('bolsista')

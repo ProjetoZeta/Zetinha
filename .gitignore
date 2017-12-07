@@ -20,3 +20,5 @@ tests/report/
 db.sqlite3
 */migrations/*.py
 !*/migrations/__init__.py
+uploads/*
+!uploads/__init__.py

@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.core.urlresolvers import reverse
-from django import forms
+from datetime import datetime
 
 class Usuario(AbstractUser):
     no_completo = models.CharField('Nome completo', max_length=64, unique=True)
@@ -83,3 +82,22 @@ class Bolsista(models.Model):
 
     email_unb = models.EmailField('Email UnB', unique=True)
     telefone_local = models.CharField('Telefone Local', max_length=32)
+
+    def __str__(self):
+        return self.no_bolsista
+
+class Documento(models.Model):
+    TIPOS = (
+        ('1', 'Fotografia'),
+        ('2', 'Declaração'),
+        ('3', 'Documento pessoal')
+    )
+    bolsista = models.ForeignKey('Bolsista', on_delete=models.CASCADE)
+    tipo_documento = models.CharField('Tipo de Documento', max_length=1, choices=TIPOS, default='3')
+    no_documento = models.CharField('Descrição', max_length=32)
+    dt_cadastro = models.DateTimeField('Momento do Upload', default=datetime.now, blank=True)
+    arquivo = models.FileField(upload_to='uploads/')
+
+    def __str__(self):
+        return self.tipo_documento
+
