@@ -5,8 +5,8 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 
-from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario
-from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm
+from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista
+from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm
 
 # Create your views here.
 
@@ -48,5 +48,19 @@ def responsavel(request, pk=None, pkdelete=None):
 def usuario(request, pk=None, pkdelete=None):
     return handler("Usuario", request, pk, pkdelete)
 
-def bolsista_handle(request):
-    return render(request, 'administracao/bolsista.html', {'content_title': 'Cadastrar Bolsistas / Pequisadores'})
+def bolsista(request, pk=None, pkdelete=None):
+    return render(request, 'administracao/generic-table.html', {
+        'data': Bolsista.objects.all(),
+        'form': BolsistaForm,
+        'content_title': 'Bolsistas'
+    })
+
+def bolsista_handle(request, pk=None, pkdelete=None):
+    if request.method == 'POST':
+        form = BolsistaForm(request.POST, instance=Bolsista.objects.get(pk=pk)) if pk else BolsistaForm(request.POST)
+        if form.is_valid() and form.save():
+            return redirect('bolsista')
+    elif request.method == 'GET':
+        form = BolsistaForm(instance=Bolsista.objects.get(pk=pk)) if pk else BolsistaForm()
+
+    return render(request, 'administracao/bolsista.html', {'content_title': 'Cadastrar Bolsistas / Pequisadores', 'form': form})

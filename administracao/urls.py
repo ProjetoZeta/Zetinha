@@ -24,7 +24,8 @@ urlpatterns = [
     url(r'^usuario/(?P<pk>[0-9]+)/editar$', views.usuario, name='usuario-editar'),
     url(r'^usuario/(?P<pkdelete>[0-9]+)/remover$', views.usuario, name='usuario-remover'),
 
-    url(r'^bolsista/create$', views.bolsista_handle, name='usuario-criar'),
+    url(r'^bolsista$', views.bolsista, name='bolsista'),
+    url(r'^bolsista/novo$', views.bolsista_handle, name='bolsista-criar'),
 
 
 ]

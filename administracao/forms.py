@@ -1,6 +1,6 @@
 from django import forms
 from common.forms import BaseForm
-from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario
+from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista
 
 class UsuarioForm(BaseForm):
     preview = ['email', 'no_completo', 'ic_ativo', 'ic_bolsista']
@@ -31,3 +31,10 @@ class ResponsavelForm(BaseForm):
     class Meta:
         model = Responsavel
         fields = [f.name for f in Responsavel._meta.get_fields()]
+
+class BolsistaForm(BaseForm):
+    preview = ['no_bolsista', 'email', 'cpf', 'telefone', 'ic_ativo']
+    class Meta:
+        model = Bolsista
+        fields = [f.name for f in Bolsista._meta.get_fields()]
+

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.urlresolvers import reverse
+from django import forms
 
 class Usuario(AbstractUser):
     no_completo = models.CharField('Nome completo', max_length=64, unique=True)
@@ -45,4 +46,40 @@ class Responsavel(models.Model):
         verbose_name = "responsável"
 
 class Bolsista(models.Model):
-    pass
+    TIPOS_VINCULOS = (
+        ('1', 'Servidor Público - Professor'),
+        ('2', 'Servidor Público ou Empregado Público'),
+        ('3', 'Colaborador sem vínculo com o serviço')
+    )
+
+    UFS = (
+        ('DF', 'Distrito Federal'),
+        ('RJ', 'Rio de Janeiro'),
+        ('SP', 'São Paulo')
+    )
+
+    tipo_vinculo = models.CharField('Tipo de Vínculo', max_length=1, choices=TIPOS_VINCULOS, default='1')
+
+    no_bolsista = models.CharField('Nome', max_length=32, unique=True)
+    email = models.EmailField('Email', unique=True)
+    cpf = models.CharField('Nome', max_length=11, unique=True)
+    dt_nascimento = models.DateField('Data de Nascimento')
+    rg = models.CharField('RG', max_length=32, unique=True)
+    orgao_expedidor = models.CharField('Órgão Expedidor', max_length=32)
+    telefone = models.CharField('Telefone', max_length=32)
+    celular = models.CharField('Celular', max_length=32)
+    matricula = models.CharField('Matrícula', max_length=32, unique=True)
+    ic_ativo = models.BooleanField('Ativo')
+
+    endereco = models.CharField('Endereço', max_length=32)
+    cidade = models.CharField('Cidade', max_length=32)
+    cep = models.CharField('CEP', max_length=32, unique=True)
+    uf = models.CharField('UF', max_length=2, choices=UFS, default='1')
+
+    banco = models.CharField('Banco', max_length=32)
+    agencia = models.CharField('Agência', max_length=32)
+    tipo_conta = models.CharField('Tipo de Conta', max_length=32)
+    conta = models.CharField('Conta', max_length=32)
+
+    email_unb = models.EmailField('Email UnB', unique=True)
+    telefone_local = models.CharField('Telefone Local', max_length=32)
