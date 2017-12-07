@@ -47,3 +47,6 @@ def responsavel(request, pk=None, pkdelete=None):
 
 def usuario(request, pk=None, pkdelete=None):
     return handler("Usuario", request, pk, pkdelete)
+
+def bolsista_handle(request):
+    return render(request, 'administracao/bolsista.html', {'content_title': 'Cadastrar Bolsistas / Pequisadores'})

@@ -43,3 +43,6 @@ class Responsavel(models.Model):
     class Meta:
         verbose_name_plural = "responsáveis"
         verbose_name = "responsável"
+
+class Bolsista(models.Model):
+    pass
