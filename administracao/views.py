@@ -49,7 +49,12 @@ def usuario(request, pk=None, pkdelete=None):
     return handler("Usuario", request, pk, pkdelete)
 
 def bolsista(request, pk=None, pkdelete=None):
-    return render(request, 'administracao/generic-table.html', {
+    if pkdelete:
+        item = Bolsista.objects.get(pk=pkdelete)
+        if item:
+            item.delete()
+        return redirect('bolsista')
+    return render(request, 'administracao/generic-table-no-modals.html', {
         'data': Bolsista.objects.all(),
         'form': BolsistaForm,
         'content_title': 'Bolsistas'

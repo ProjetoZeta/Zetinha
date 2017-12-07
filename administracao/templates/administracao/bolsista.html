@@ -15,7 +15,7 @@
         }
 
         .form-group {
-            margin-bottom: 8px;
+            margin-bottom: 0px;
         }
 
         .form-group.required .control-label:after {
@@ -47,17 +47,19 @@
 {% block content %}
 
     <form class="form-horizontal" role="form" method="POST" action="">
-
+        {% csrf_token %}
         <fieldset class="well the-fieldset">
 
             <legend class="the-legend">Identificação do Bolsista</legend>
 
-            <div class="form-group required">
+            <div class="form-group required {% if form.tipo_vinculo.errors %}{{ "has-error" }}{% endif %}">
                 <label for="name" class="control-label col-sm-2">Tipo de Vínculo:</label>
                 <div class="col-sm-10">
                     {{ form.tipo_vinculo }}
+                    <div class="help-block">{{ form.tipo_vinculo.errors }}</div>
                 </div>
             </div>
+
 
             <!--<div class="form-row">
                 <div class="form-group">
@@ -74,63 +76,91 @@
                 </div>
             </div>-->
 
-            <div class="form-group required">
+            <div class="form-group required {% if form.no_bolsista.errors %}{{ "has-error" }}{% endif %}">
                 <label for="name" class="control-label col-sm-2">Nome:</label>
                 <div class="col-sm-10">
                     {{ form.no_bolsista }}
+                    <div class="help-block">{{ form.nome.errors }}</div>
                 </div>
             </div>
 
-            <div class="form-group required">
+            <div class="form-group required {% if form.email.errors %}{{ "has-error" }}{% endif %}">
                 <label for="name" class="control-label col-sm-2">E-mail:</label>
                 <div class="col-sm-10">
                     {{ form.email }}
+                    <div class="help-block">{{ form.email.errors }}</div>
                 </div>
             </div>
 
 
             <div class="form-group row required">
-                <label for="inputKey" class="col-md-2 control-label">CPF:</label>
-                <div class="col-md-4">
-                    {{ form.cpf }}
+                <div class="{% if form.cpf.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputKey" class="col-md-2 control-label">CPF:</label>
+                    <div class="col-md-4">
+                        {{ form.cpf }}
+                        <div class="help-block">{{ form.cpf.errors }}</div>
+                    </div>
                 </div>
-                <label for="inputValue" class="col-md-3 control-label">Data de Nascimento:</label>
-                <div class="col-md-3">
-                    {{ form.dt_nascimento }}
+                <div class="{% if form.dt_nascimento.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputValue" class="col-md-3 control-label">Data de Nascimento:</label>
+                    <div class="col-md-3">
+                        {{ form.dt_nascimento }}
+                        <div class="help-block">{{ form.dt_nascimento.errors }}</div>
+                    </div>
                 </div>
             </div>
 
             <div class="form-group row required">
-                <label for="inputKey" class="col-md-2 control-label">RG:</label>
-                <div class="col-md-4">
-                    {{ form.rg }}
+                <div class="{% if form.rg.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputKey" class="col-md-2 control-label">RG:</label>
+                    <div class="col-md-4">
+                        {{ form.rg }}
+                        <div class="help-block">{{ form.rg.errors }}</div>
+                    </div>
                 </div>
-                <label for="inputValue" class="col-md-3 control-label">Órgão Expedidor:</label>
-                <div class="col-md-3">
-                    {{ form.orgao_expedidor }}
+                <div class="{% if form.orgao_expedidor.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputValue" class="col-md-3 control-label">Órgão Expedidor:</label>
+                    <div class="col-md-3">
+                        {{ form.orgao_expedidor }}
+                        <div class="help-block">{{ form.orgao_expedidor.errors }}</div>
+                    </div>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label for="inputKey" class="col-md-2 control-label">Telefone:</label>
-                <div class="col-md-4">
-                    {{ form.telefone }}
+                <div class="{% if form.telefone.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputKey" class="col-md-2 control-label">Telefone:</label>
+                    <div class="col-md-4">
+                        {{ form.telefone }}
+                        <div class="help-block">{{ form.telefone.errors }}</div>
+                    </div>
                 </div>
-                <label for="inputValue" class="col-md-3 control-label">Celular:</label>
-                <div class="col-md-3">
-                    {{ form.celular }}
+
+                <div class="{% if form.celular.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputValue" class="col-md-3 control-label">Celular:</label>
+                    <div class="col-md-3">
+                        {{ form.celular }}
+                        <div class="help-block">{{ form.celular.errors }}</div>
+                    </div>
                 </div>
             </div>
 
 
-            <div class="form-group row">
-                <label for="inputKey" class="col-md-2 control-label">Matrícula:</label>
-                <div class="col-md-4">
-                    {{ form.matricula }}
+            <div class="form-group row ">
+                <div class="{% if form.matricula.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputKey" class="col-md-2 control-label">Matrícula:</label>
+                    <div class="col-md-4">
+                        {{ form.matricula }}
+                        <div class="help-block">{{ form.matricula.errors }}</div>
+                    </div>
                 </div>
-                <label for="inputValue" class="col-md-3 control-label">Ativo:</label>
-                <div class="col-md-1">
-                    {{ form.ic_ativo }}
+
+                <div class="{% if form.ic_ativo.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputValue" class="col-md-3 control-label">Ativo:</label>
+                    <div class="col-md-1">
+                        {{ form.ic_ativo }}
+                        <div class="help-block">{{ form.ic_ativo.errors }}</div>
+                    </div>
                 </div>
             </div>
 
@@ -141,24 +171,39 @@
 
             <legend class="the-legend">Endereço</legend>
             <div class="form-group row required">
-                <label for="inputKey" class="col-md-2 control-label">Endereço:</label>
-                <div class="col-md-4">
-                    {{ form.endereco }}
+                <div class="{% if form.endereco.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputKey" class="col-md-2 control-label">Endereço:</label>
+                    <div class="col-md-4">
+                        {{ form.endereco }}
+                        <div class="help-block">{{ form.endereco.errors }}</div>
+                    </div>
                 </div>
-                <label for="inputValue" class="col-md-2 control-label">Cidade:</label>
-                <div class="col-md-4">
-                    {{ form.cidade }}
+
+                <div class="{% if form.cidade.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputValue" class="col-md-2 control-label">Cidade:</label>
+                    <div class="col-md-4">
+                        {{ form.cidade }}
+                        <div class="help-block">{{ form.cidade.errors }}</div>
+                    </div>
                 </div>
             </div>
 
             <div class="form-group row required">
-                <label for="inputKey" class="col-md-2 control-label">CEP:</label>
-                <div class="col-md-4">
-                    {{ form.cep }}
+
+                <div class="{% if form.cep.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputKey" class="col-md-2 control-label">CEP:</label>
+                    <div class="col-md-4">
+                        {{ form.cep }}
+                        <div class="help-block">{{ form.cep.errors }}</div>
+                    </div>
                 </div>
-                <label for="inputValue" class="col-md-2 control-label">UF:</label>
-                <div class="col-md-4">
-                    {{ form.uf }}
+
+                <div class="{% if form.uf.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputValue" class="col-md-2 control-label">UF:</label>
+                    <div class="col-md-4">
+                        {{ form.uf }}
+                        <div class="help-block">{{ form.uf.errors }}</div>
+                    </div>
                 </div>
             </div>
 
@@ -168,24 +213,39 @@
 
             <legend class="the-legend">Dados Bancários</legend>
             <div class="form-group row required">
-                <label for="inputKey" class="col-md-2 control-label">Banco:</label>
-                <div class="col-md-4">
-                    {{ form.banco }}
+
+                <div class="{% if form.banco.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputKey" class="col-md-2 control-label">Banco:</label>
+                    <div class="col-md-4">
+                        {{ form.banco }}
+                        <div class="help-block">{{ form.banco.errors }}</div>
+                    </div>
                 </div>
-                <label for="inputValue" class="col-md-2 control-label">Agência:</label>
-                <div class="col-md-4">
-                    {{ form.agencia }}
+
+                <div class="{% if form.agencia.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputValue" class="col-md-2 control-label">Agência:</label>
+                    <div class="col-md-4">
+                        {{ form.agencia }}
+                        <div class="help-block">{{ form.agencia.errors }}</div>
+                    </div>
                 </div>
             </div>
 
             <div class="form-group row required">
-                <label for="inputKey" class="col-md-2 control-label">Tipo de Conta:</label>
-                <div class="col-md-4">
-                    {{ form.tipo_conta }}
+                <div class="{% if form.tipo_conta.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputKey" class="col-md-2 control-label">Tipo de Conta:</label>
+                    <div class="col-md-4">
+                        {{ form.tipo_conta }}
+                        <div class="help-block">{{ form.tipo_conta.errors }}</div>
+                    </div>
                 </div>
-                <label for="inputValue" class="col-md-2 control-label">Conta:</label>
-                <div class="col-md-4">
-                    {{ form.conta }}
+
+                <div class="{% if form.conta.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputValue" class="col-md-2 control-label">Conta:</label>
+                    <div class="col-md-4">
+                        {{ form.conta }}
+                        <div class="help-block">{{ form.conta.errors }}</div>
+                    </div>
                 </div>
             </div>
 
@@ -194,17 +254,19 @@
         <fieldset class="well">
 
             <legend class="the-legend">Dados de Acesso UnB</legend>
-            <div class="form-group">
+            <div class="form-group {% if form.email_unb.errors %}{{ "has-error" }}{% endif %}">
                 <label for="name" class="control-label col-sm-2">E-mail UnB</label>
                 <div class="col-sm-10">
                     {{ form.email_unb }}
+                    <div class="help-block">{{ form.email_unb.errors }}</div>
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group {% if form.telefone_local.errors %}{{ "has-error" }}{% endif %}">
                 <label for="name" class="control-label col-sm-2">Telefone Local</label>
                 <div class="col-sm-4">
                     {{ form.telefone_local }}
+                    <div class="help-block">{{ form.telefone_local.errors }}</div>
                 </div>
             </div>
 
@@ -220,7 +282,7 @@
 
 
         <button type="submit" class="btn btn-info">Salvar</button>
-        <button type="submit" class="btn btn-default">Voltar</button>
+        <a href="{% url 'bolsista' %}" class="btn btn-default">Voltar</a>
 
 
     </form>

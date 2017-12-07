@@ -76,7 +76,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sisbp.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -125,3 +124,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+DATE_INPUT_FORMATS = ('%d/%m/%Y','%Y-%m-%d')

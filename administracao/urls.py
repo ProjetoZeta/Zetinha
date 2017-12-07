@@ -26,6 +26,9 @@ urlpatterns = [
 
     url(r'^bolsista$', views.bolsista, name='bolsista'),
     url(r'^bolsista/novo$', views.bolsista_handle, name='bolsista-criar'),
+    url(r'^bolsista/(?P<pk>[0-9]+)/editar$', views.bolsista_handle, name='bolsista-editar'),
+    url(r'^bolsista/(?P<pkdelete>[0-9]+)/remover$', views.bolsista, name='bolsista-remover'),
+
 
 
 ]

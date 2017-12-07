@@ -1,6 +1,7 @@
 from django import forms
 from common.forms import BaseForm
 from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista
+from django.conf import settings
 
 class UsuarioForm(BaseForm):
     preview = ['email', 'no_completo', 'ic_ativo', 'ic_bolsista']
@@ -33,6 +34,8 @@ class ResponsavelForm(BaseForm):
         fields = [f.name for f in Responsavel._meta.get_fields()]
 
 class BolsistaForm(BaseForm):
+    DATE_INPUT_FORMATS = ('%d-%m-%Y', '%Y-%m-%d')
+    dt_nascimento = forms.DateField(input_formats=settings.DATE_INPUT_FORMATS)
     preview = ['no_bolsista', 'email', 'cpf', 'telefone', 'ic_ativo']
     class Meta:
         model = Bolsista
