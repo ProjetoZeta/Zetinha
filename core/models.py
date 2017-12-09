@@ -65,9 +65,9 @@ class Bolsista(models.Model):
     dt_nascimento = models.DateField('Data de Nascimento')
     rg = models.CharField('RG', max_length=32, unique=True)
     orgao_expedidor = models.CharField('Órgão Expedidor', max_length=32)
-    telefone = models.CharField('Telefone', max_length=32)
-    celular = models.CharField('Celular', max_length=32)
-    matricula = models.CharField('Matrícula', max_length=32, unique=True)
+    telefone = models.CharField('Telefone', max_length=32, blank=True)
+    celular = models.CharField('Celular', max_length=32, blank=True)
+    matricula = models.CharField('Matrícula', max_length=32, unique=True, blank=True)
     ic_ativo = models.BooleanField('Ativo')
 
     endereco = models.CharField('Endereço', max_length=32)
@@ -80,8 +80,8 @@ class Bolsista(models.Model):
     tipo_conta = models.CharField('Tipo de Conta', max_length=32)
     conta = models.CharField('Conta', max_length=32)
 
-    email_unb = models.EmailField('Email UnB', unique=True)
-    telefone_local = models.CharField('Telefone Local', max_length=32)
+    email_unb = models.EmailField('Email UnB', unique=True, blank=True)
+    telefone_local = models.CharField('Telefone Local', max_length=32, blank=True)
 
     def __str__(self):
         return self.no_bolsista
