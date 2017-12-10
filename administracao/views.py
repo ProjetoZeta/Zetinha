@@ -27,7 +27,7 @@ def handler(model, request, pk, pkdelete):
         form = globals()[model+'Form'](instance=globals()[model].objects.get(pk=pk)) if pk else globals()[model+'Form']()
     if pk:
         form.is_edit = True
-    return render(request, 'administracao/generic-table.html', {
+    return render(request, 'administracao/crud-withmodal.html', {
         'data': globals()[model].objects.all(),
         'form': form,
         'content_title': globals()[model]._meta.verbose_name_plural.title()
@@ -54,7 +54,7 @@ def bolsista(request, pk=None, pkdelete=None):
         if item:
             item.delete()
         return redirect('bolsista')
-    return render(request, 'administracao/generic-table-no-modals.html', {
+    return render(request, 'administracao/crud-bolsista.html', {
         'data': Bolsista.objects.all(),
         'form': BolsistaForm(),
         'content_title': 'Bolsistas'

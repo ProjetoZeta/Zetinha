@@ -1,0 +1,71 @@
+{% extends 'administracao/crud-table.html' %}
+
+{% load verbose %}
+
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{% block modal %}
+    <!-- Modal -->
+    <div id="modal-create" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{% if form.is_edit %}Modificar{% else %}
+                        Criar{% endif %} {% class_verbose form.instance %}</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" class="form">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        {% buttons %}
+                            <button type="submit" class="btn btn-primary">
+                                {% bootstrap_icon "star" %} Salvar
+                            </button>
+                        {% endbuttons %}
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block page-script %}
+    <script>
+        $(document).ready(function () {
+            {% block datatable-script %}
+            {% endblock %}
+
+            {% block modal-script %}
+            {% endblock %}
+
+
+            $('#dataTables-example').DataTable({
+                dom: 'Bfrtp',
+                buttons: [
+                    {
+                        text: '<i class="fa fa-plus" aria-hidden="true"></i>',
+                        action: function (e, dt, node, config) {
+                            $('#modal-create').modal('show');
+                        }
+                    }
+                ],
+                responsive: true,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json"
+                }
+            });
+            $('#modal-create').modal({% if form.errors or form.is_edit %}'show'{% else %}''{% endif %});
+
+        });
+    </script>
+{% endblock %}
