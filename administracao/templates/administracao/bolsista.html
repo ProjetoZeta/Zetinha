@@ -46,14 +46,13 @@
 
 {% endblock %}
 
-
-<script>
-    $(document).ready(function () {
-        $('#modal-file').modal({% if formf.errors %}'show'{% else %}''{% endif %}
-    );
-
-    });
-</script>
+{% block js %}
+    <script>
+        $(document).ready(function () {
+            $('#modal-file').modal({% if formf.errors %}'show'{% else %}''{% endif %});
+        });
+    </script>
+{% endblock %}
 
 {% block content %}
     <div class="col-md-9">
@@ -305,6 +304,20 @@
             {% for item in documentos %}
                 {{ documentos.pk }}
             {% endfor %}
+
+            <br>
+
+            <div>
+                <span><i class="fa fa-times" style="color: red" aria-hidden="true"></i></span>
+                <span><i class="fa fa-file-pdf-o" style="font-size: 20px" aria-hidden="true"></i></span>
+                <span><a href="">Lattes.pdf</a></span>
+            </div>
+
+            <div>
+                <span><i class="fa fa-times" style="color: red" aria-hidden="true"></i></span>
+                <span><i class="fa fa-file-word-o" style="font-size: 20px" aria-hidden="true"></i></span>
+                <span><a href="">Artigo.docx</a></span>
+            </div>
         </fieldset>
 
     </div>
