@@ -42,6 +42,23 @@
             padding: 10px;
         }
 
+        a.delete-file-x{
+            color: orangered;
+        }
+
+        a.delete-file-x:visited {
+            color: orangered;
+        }
+
+        td {
+            word-wrap: break-word;
+        }
+
+        .file-table {
+            table-layout: fixed;
+        }
+
+
     </style>
 
 {% endblock %}
@@ -307,21 +324,21 @@
 
             <br>
             <div>
-                <table>
+                <table class="table table-striped file-table">
                     <tr>
-                        <td class="col-sm-2"><i class="fa fa-times" aria-hidden="true"></i></td>
-                        <td class="col-sm-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></td>
-                        <td class="col-sm-8">Lattes.pdf</td>
+                        <td class="col-sm-2"><a href="#" class="delete-file-x"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                        <td class="col-sm-2"><i class="fa fa-file-word-o" aria-hidden="true"></i></td>
+                        <td class="col-sm-8">Artigo_energia.pdf</td>
                     </tr>
                     <tr>
-                        <td class="col-sm-2"><i class="fa fa-times" aria-hidden="true"></i></td>
-                        <td class="col-sm-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></td>
-                        <td class="col-sm-8">Lattes.pdf</td>
+                        <td class="col-sm-2"><a href="#" class="delete-file-x"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                        <td class="col-sm-2"><i class="fa fa-file-word-o" aria-hidden="true"></i></td>
+                        <td class="col-sm-8">Afdsf.pdf</td>
                     </tr>
                     <tr>
-                        <td class="col-sm-2"><i class="fa fa-times" aria-hidden="true"></i></td>
-                        <td class="col-sm-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></td>
-                        <td class="col-sm-8">Lattes.pdf</td>
+                        <td class="col-sm-2"><a href="#" class="delete-file-x"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                        <td class="col-sm-2"><i class="fa fa-file-word-o" aria-hidden="true"></i></td>
+                        <td class="col-sm-8">sfdsfdsafdsafdsafdsafdsafdsafdsa.pdf</td>
                     </tr>
                 </table>
             </div>
