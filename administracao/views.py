@@ -102,7 +102,10 @@ def handle_arquivo_bolsista(request, pk=None, pkdelete=None):
 
 def show_document(request, pk=None):
     if request.method == 'GET':
-        pass
+        return render(request, 'common/file-viewer.html', {
+            'content_title': 'Preview de arquivo',
+            'document': Documento.objects.get(pk=pk)
+        })
 
 def handle_projeto(request, pk=None, pkdelete=None):
     return render(request, 'administracao/projeto2.html', {
