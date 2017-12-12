@@ -50,12 +50,24 @@
             color: orangered;
         }
 
+        a.open-file {
+            color: #333;
+        }
+
+        a.open-file:visited {
+            color: #333;
+        }
+
         td {
             word-wrap: break-word;
         }
 
         .file-table {
             table-layout: fixed;
+        }
+
+        .file-icon{
+
         }
 
 
@@ -73,7 +85,7 @@
 
 {% block content %}
     <div class="col-md-9">
-        <form class="form-horizontal" role="form" method="POST" action="">
+        <form class="form-horizontal" role="form" method="POST" action="{% if pk %} {% url 'bolsista-editar' pk %} {% else %}{% url 'bolsista-criar' %}{% endif %}">
             {% csrf_token %}
             <fieldset class="well the-fieldset">
 
@@ -86,7 +98,6 @@
                         <div class="help-block">{{ form.tipo_vinculo.errors }}</div>
                     </div>
                 </div>
-
 
                 <!--<div class="form-row">
                     <div class="form-group">
@@ -300,11 +311,9 @@
 
             </fieldset>
 
-
-
-
             <button type="submit" class="btn btn-info">Salvar</button>
             <a href="{% url 'bolsista' %}" class="btn btn-default">Voltar</a>
+            <br><br>
 
 
         </form>
@@ -314,32 +323,22 @@
 
         <fieldset class="well the-fieldset opacity">
             <legend class="the-legend">Arquivos</legend>
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-file">Adicionar
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-file" {% if not pk %}disabled{% endif %}>Adicionar
             </button>
 
-            <br>
-            {% for item in documentos %}
-                {{ documentos.pk }}
-            {% endfor %}
-
-            <br>
+            <br><br>
             <div>
                 <table class="table table-striped file-table">
-                    <tr>
-                        <td class="col-sm-2"><a href="#" class="delete-file-x"><i class="fa fa-times" aria-hidden="true"></i></a></td>
-                        <td class="col-sm-2"><i class="fa fa-file-word-o" aria-hidden="true"></i></td>
-                        <td class="col-sm-8">Artigo_energia.pdf</td>
-                    </tr>
-                    <tr>
-                        <td class="col-sm-2"><a href="#" class="delete-file-x"><i class="fa fa-times" aria-hidden="true"></i></a></td>
-                        <td class="col-sm-2"><i class="fa fa-file-word-o" aria-hidden="true"></i></td>
-                        <td class="col-sm-8">Afdsf.pdf</td>
-                    </tr>
-                    <tr>
-                        <td class="col-sm-2"><a href="#" class="delete-file-x"><i class="fa fa-times" aria-hidden="true"></i></a></td>
-                        <td class="col-sm-2"><i class="fa fa-file-word-o" aria-hidden="true"></i></td>
-                        <td class="col-sm-8">sfdsfdsafdsafdsafdsafdsafdsafdsa.pdf</td>
-                    </tr>
+
+                    {% for document in documents %}
+                        <tr>
+                            <td class="col-sm-2"><a href="{% url 'remover-arquivo-bolsista' document.pk %}" class="delete-file-x" onclick="return confirm('Tem certeza? O arquivo será apagado permanentemente')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                            <td class="col-sm-2"><i class="fa fa-file-word-o file-icon" aria-hidden="true"></i></td>
+                            <td class="col-sm-8"><a href="#" class="open-file">{{ document.filename }}</a></td>
+                            <!--<td><img src="{{ document.arquivo.url }}" alt=""></td>-->
+                        </tr>
+                    {% endfor %}
+
                 </table>
             </div>
 
@@ -358,14 +357,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Juntar de Documento</h4>
+                    <h4 class="modal-title">Juntar Documento</h4>
                 </div>
                 <div class="modal-body">
                     <form action="{% url 'upload-arquivo-bolsista' %}" method="post" class="form" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {% bootstrap_form formf %}
 
-                        <input type="hidden" class="form-control" name="bolsista" id="id_bolsista" value="{{ pk }}">
+                        {% bootstrap_form formf %}
+                        <br>
                         {% buttons %}
                             <button type="submit" class="btn btn-primary">
                                 {% bootstrap_icon "star" %} Salvar

@@ -29,7 +29,8 @@ urlpatterns = [
     url(r'^bolsista/(?P<pk>[0-9]+)/editar$', views.bolsista_handle, name='bolsista-editar'),
     url(r'^bolsista/(?P<pkdelete>[0-9]+)/remover$', views.bolsista, name='bolsista-remover'),
 
-    url(r'^bolsista/arquivo_upload$', views.upload_arquivo_bolsista, name='upload-arquivo-bolsista'),
+    url(r'^bolsista/arquivo_upload$', views.handle_arquivo_bolsista, name='upload-arquivo-bolsista'),
+    url(r'^bolsista/arquivo/(?P<pkdelete>[0-9]+)/remover$', views.handle_arquivo_bolsista, name='remover-arquivo-bolsista'),
 
 
 ]

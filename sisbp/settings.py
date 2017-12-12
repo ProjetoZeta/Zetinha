@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'administracao',
     'bootstrap3',
     'common',
-    'bolsista'
+    'bolsista',
+    'django_cleanup'
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 DATE_INPUT_FORMATS = ('%d/%m/%Y','%Y-%m-%d')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+
+MEDIA_URL = '/uploads/'

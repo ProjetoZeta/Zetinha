@@ -76,7 +76,7 @@
                                         <li><a href="{% url path item.pk %}">Modificar</a></li>
                                     {% endwith %}
                                     {% with name|add:"-remover" as path %}
-                                        <li><a href="{% url path item.pk %}">Excluir</a></li>
+                                        <li><a href="{% url path item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
                                     {% endwith %}
 
                                 </ul>

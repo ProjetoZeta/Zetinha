@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from datetime import datetime
+from django.conf import settings
 
 class Usuario(AbstractUser):
     no_completo = models.CharField('Nome completo', max_length=64, unique=True)
@@ -96,7 +97,11 @@ class Documento(models.Model):
     tipo_documento = models.CharField('Tipo de Documento', max_length=1, choices=TIPOS, default='3')
     no_documento = models.CharField('Descrição', max_length=32)
     dt_cadastro = models.DateTimeField('Momento do Upload', default=datetime.now, blank=True)
-    arquivo = models.FileField(upload_to='uploads/')
+    arquivo = models.FileField()
+
+    @property
+    def filename(self):
+        return self.arquivo.name.replace(settings.MEDIA_URL, '')
 
     def __str__(self):
         return self.tipo_documento

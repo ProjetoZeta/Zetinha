@@ -41,7 +41,7 @@ class BolsistaForm(BaseFormControl):
         model = Bolsista
         fields = get_fields(model)
 
-class DocumentoForm(BaseForm):
+class DocumentoForm(BaseFormControl):
     preview = [f.name for f in Documento._meta.get_fields()]
     class Meta:
         model = Documento

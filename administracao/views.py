@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
+from django import forms
 
 from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento
 from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm
@@ -60,6 +61,15 @@ def bolsista(request, pk=None, pkdelete=None):
         'content_title': 'Bolsistas'
     })
 
+def fetch_bolsista(request, bolsista_form, documento_form, pk):
+    return render(request, 'administracao/bolsista.html', {
+        'content_title': 'Cadastrar Bolsistas / Pequisadores',
+        'form': bolsista_form,
+        'formf': documento_form,
+        'documents': Documento.objects.filter(bolsista=Bolsista.objects.get(pk=pk) if pk else None),
+        'pk': pk
+    })
+
 def bolsista_handle(request, pk=None, pkdelete=None):
     if request.method == 'POST':
         form = BolsistaForm(request.POST, instance=Bolsista.objects.get(pk=pk)) if pk else BolsistaForm(request.POST)
@@ -67,16 +77,25 @@ def bolsista_handle(request, pk=None, pkdelete=None):
             return redirect('bolsista')
     elif request.method == 'GET':
         form = BolsistaForm(instance=Bolsista.objects.get(pk=pk)) if pk else BolsistaForm()
+    documento_form = DocumentoForm(initial={'bolsista': Bolsista.objects.get(pk=pk)}) if pk else DocumentoForm()
+    documento_form.fields['bolsista'].widget = forms.HiddenInput() if pk else documento_form.fields['bolsista'].widget
+    return fetch_bolsista(request, form, documento_form, pk)
 
-    return render(request, 'administracao/bolsista.html', {
-        'content_title': 'Cadastrar Bolsistas / Pequisadores',
-        'form': form,
-        'formf': DocumentoForm()
-    })
-
-def upload_arquivo_bolsista(request):
+def handle_arquivo_bolsista(request, pk=None, pkdelete=None):
     if request.method == 'POST':
+        bolsista_id = request.POST.get('bolsista', None)
         form = DocumentoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-    return redirect('bolsista')
+            return redirect('bolsista-editar', pk=bolsista_id)
+        bolsista_form = BolsistaForm(instance=Bolsista.objects.get(pk=bolsista_id)) if bolsista_id else BolsistaForm()
+    elif request.method == 'GET':
+        bolsista = Bolsista.objects.get(pk=Documento.objects.get(pk=pkdelete if pkdelete else pk).bolsista.pk)
+        form = DocumentoForm()
+        bolsista_form = BolsistaForm(instance=bolsista)
+        if pkdelete:
+            item = Documento.objects.get(pk=pkdelete)
+            if item:
+                item.delete()
+        return redirect('bolsista-editar', pk=bolsista.pk)
+    return fetch_bolsista(request, bolsista_form, form, bolsista.pk)
