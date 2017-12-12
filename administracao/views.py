@@ -101,5 +101,11 @@ def handle_arquivo_bolsista(request, pk=None, pkdelete=None):
     return fetch_bolsista(request, bolsista_form, form, bolsista.pk)
 
 def show_document(request, pk=None):
-    pass
+    if request.method == 'GET':
+        pass
+
+def handle_projeto(request, pk=None, pkdelete=None):
+    return render(request, 'administracao/projeto2.html', {
+        'content_title': 'Manter Projeto',
+    })
 
