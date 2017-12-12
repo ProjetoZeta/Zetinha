@@ -83,12 +83,12 @@ def bolsista_handle(request, pk=None, pkdelete=None):
 
 def handle_arquivo_bolsista(request, pk=None, pkdelete=None):
     if request.method == 'POST':
-        bolsista_id = request.POST.get('bolsista', None)
+        bolsista = Bolsista.objects.get(pk=request.POST.get('bolsista', None))
         form = DocumentoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('bolsista-editar', pk=bolsista_id)
-        bolsista_form = BolsistaForm(instance=Bolsista.objects.get(pk=bolsista_id)) if bolsista_id else BolsistaForm()
+            return redirect('bolsista-editar', pk=bolsista.pk)
+        bolsista_form = BolsistaForm(instance=Bolsista.objects.get(pk=bolsista.pk)) if bolsista.pk else BolsistaForm()
     elif request.method == 'GET':
         bolsista = Bolsista.objects.get(pk=Documento.objects.get(pk=pkdelete if pkdelete else pk).bolsista.pk)
         form = DocumentoForm()
@@ -99,3 +99,7 @@ def handle_arquivo_bolsista(request, pk=None, pkdelete=None):
                 item.delete()
         return redirect('bolsista-editar', pk=bolsista.pk)
     return fetch_bolsista(request, bolsista_form, form, bolsista.pk)
+
+def show_document(request, pk=None):
+    pass
+

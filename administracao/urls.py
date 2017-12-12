@@ -32,5 +32,7 @@ urlpatterns = [
     url(r'^bolsista/arquivo_upload$', views.handle_arquivo_bolsista, name='upload-arquivo-bolsista'),
     url(r'^bolsista/arquivo/(?P<pkdelete>[0-9]+)/remover$', views.handle_arquivo_bolsista, name='remover-arquivo-bolsista'),
 
+    url(r'documento/(?P<pk>[0-9]+)', views.show_document, name='show-document')
+
 
 ]
