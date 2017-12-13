@@ -1,0 +1,25 @@
+{% extends 'administracao/crud-table.html' %}
+
+
+{% block page-script %}
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').DataTable({
+                dom: 'Bfrtp',
+                buttons: [
+                    {
+                        text: '<i class="fa fa-plus" aria-hidden="true"></i>',
+                        action: function (e, dt, node, config) {
+                            window.location.href = "{% url 'bolsista-criar' %}";
+                        }
+                    }
+                ],
+                responsive: true,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json"
+                }
+            });
+
+        });
+    </script>
+{% endblock %}

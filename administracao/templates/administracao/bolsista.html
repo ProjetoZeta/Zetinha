@@ -1,0 +1,384 @@
+{% extends 'administracao/default.html' %}
+
+{% load bootstrap3 %}
+
+{% block css %}
+
+    <style type="text/css">
+        label{
+            font-weight:normal;
+        }
+        .well{
+            background-color: white;
+        }
+
+        .opacity{
+            background-color: #f5f5f5;
+        }
+
+        .form-group {
+            margin-bottom: 0px;
+        }
+
+        .form-group.required .control-label:after {
+            content: "*";
+            color: red;
+        }
+
+        .the-legend {
+            border-style: none;
+            border-width: 0;
+            font-size: 14px;
+            line-height: 20px;
+            margin-bottom: 0;
+            width: auto;
+            padding: 0 10px;
+            border: 1px solid #e0e0e0;
+            font-weight:bold;
+        }
+
+        .the-fieldset {
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+        }
+
+        a.delete-file-x{
+            color: orangered;
+        }
+
+        a.delete-file-x:visited {
+            color: orangered;
+        }
+
+        a.open-file {
+            color: #333;
+        }
+
+        a.open-file:visited {
+            color: #333;
+        }
+
+        td {
+            word-wrap: break-word;
+        }
+
+        .file-table {
+            table-layout: fixed;
+        }
+
+        .file-icon{
+
+        }
+
+
+    </style>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(document).ready(function () {
+            $('#modal-file').modal({% if formf.errors %}'show'{% else %}''{% endif %});
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-9">
+        <form class="form-horizontal" role="form" method="POST" action="{% if pk %} {% url 'bolsista-editar' pk %} {% else %}{% url 'bolsista-criar' %}{% endif %}">
+            {% csrf_token %}
+            <fieldset class="well the-fieldset">
+
+                <legend class="the-legend">Identificação do Bolsista</legend>
+
+                <div class="form-group required {% if form.tipo_vinculo.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="name" class="control-label col-sm-2">Vínculo:</label>
+                    <div class="col-sm-10">
+                        {{ form.tipo_vinculo }}
+                        <div class="help-block">{{ form.tipo_vinculo.errors }}</div>
+                    </div>
+                </div>
+
+                <!--<div class="form-row">
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            <input type="radio" name="editList" value="always"/>Servidor Público - Professor
+                        </label>
+                        <label class="col-sm-4">
+                            <input type="radio" name="editList" value="never"/>Servidor Público ou Empregado Público
+                        </label>
+                        <label class="col-sm-4">
+                            <input type="radio" name="editList" value="costChange"/>Colaborador sem vínculo com o
+                            serviço
+                        </label>
+                    </div>
+                </div>-->
+
+                <div class="form-group required {% if form.no_bolsista.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="name" class="control-label col-sm-2">Nome:</label>
+                    <div class="col-sm-10">
+                        {{ form.no_bolsista }}
+                        <div class="help-block">{{ form.nome.errors }}</div>
+                    </div>
+                </div>
+
+                <div class="form-group required {% if form.email.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="name" class="control-label col-sm-2">E-mail:</label>
+                    <div class="col-sm-10">
+                        {{ form.email }}
+                        <div class="help-block">{{ form.email.errors }}</div>
+                    </div>
+                </div>
+
+
+                <div class="form-group row required">
+                    <div class="{% if form.cpf.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">CPF:</label>
+                        <div class="col-md-4">
+                            {{ form.cpf }}
+                            <div class="help-block">{{ form.cpf.errors }}</div>
+                        </div>
+                    </div>
+                    <div class="{% if form.dt_nascimento.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputValue" class="col-md-3 control-label">Data de Nascimento:</label>
+                        <div class="col-md-3">
+                            {{ form.dt_nascimento }}
+                            <div class="help-block">{{ form.dt_nascimento.errors }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row required">
+                    <div class="{% if form.rg.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">RG:</label>
+                        <div class="col-md-4">
+                            {{ form.rg }}
+                            <div class="help-block">{{ form.rg.errors }}</div>
+                        </div>
+                    </div>
+                    <div class="{% if form.orgao_expedidor.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputValue" class="col-md-3 control-label">Órgão Expedidor:</label>
+                        <div class="col-md-3">
+                            {{ form.orgao_expedidor }}
+                            <div class="help-block">{{ form.orgao_expedidor.errors }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="{% if form.telefone.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">Telefone:</label>
+                        <div class="col-md-4">
+                            {{ form.telefone }}
+                            <div class="help-block">{{ form.telefone.errors }}</div>
+                        </div>
+                    </div>
+
+                    <div class="{% if form.celular.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputValue" class="col-md-3 control-label">Celular:</label>
+                        <div class="col-md-3">
+                            {{ form.celular }}
+                            <div class="help-block">{{ form.celular.errors }}</div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group row ">
+                    <div class="{% if form.matricula.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">Matrícula:</label>
+                        <div class="col-md-4">
+                            {{ form.matricula }}
+                            <div class="help-block">{{ form.matricula.errors }}</div>
+                        </div>
+                    </div>
+
+                    <div class="{% if form.ic_ativo.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputValue" class="col-md-3 control-label">Ativo:</label>
+                        <div class="col-md-1">
+                            {{ form.ic_ativo }}
+                            <div class="help-block">{{ form.ic_ativo.errors }}</div>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+
+
+            <fieldset class="well">
+
+                <legend class="the-legend">Endereço</legend>
+                <div class="form-group row required">
+                    <div class="{% if form.endereco.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">Endereço:</label>
+                        <div class="col-md-4">
+                            {{ form.endereco }}
+                            <div class="help-block">{{ form.endereco.errors }}</div>
+                        </div>
+                    </div>
+
+                    <div class="{% if form.cidade.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputValue" class="col-md-2 control-label">Cidade:</label>
+                        <div class="col-md-4">
+                            {{ form.cidade }}
+                            <div class="help-block">{{ form.cidade.errors }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row required">
+
+                    <div class="{% if form.cep.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">CEP:</label>
+                        <div class="col-md-4">
+                            {{ form.cep }}
+                            <div class="help-block">{{ form.cep.errors }}</div>
+                        </div>
+                    </div>
+
+                    <div class="{% if form.uf.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputValue" class="col-md-2 control-label">UF:</label>
+                        <div class="col-md-4">
+                            {{ form.uf }}
+                            <div class="help-block">{{ form.uf.errors }}</div>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+
+            <fieldset class="well">
+
+                <legend class="the-legend">Dados Bancários</legend>
+                <div class="form-group row required">
+
+                    <div class="{% if form.banco.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">Banco:</label>
+                        <div class="col-md-4">
+                            {{ form.banco }}
+                            <div class="help-block">{{ form.banco.errors }}</div>
+                        </div>
+                    </div>
+
+                    <div class="{% if form.agencia.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputValue" class="col-md-2 control-label">Agência:</label>
+                        <div class="col-md-4">
+                            {{ form.agencia }}
+                            <div class="help-block">{{ form.agencia.errors }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row required">
+                    <div class="{% if form.tipo_conta.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">Tipo de Conta:</label>
+                        <div class="col-md-4">
+                            {{ form.tipo_conta }}
+                            <div class="help-block">{{ form.tipo_conta.errors }}</div>
+                        </div>
+                    </div>
+
+                    <div class="{% if form.conta.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputValue" class="col-md-2 control-label">Conta:</label>
+                        <div class="col-md-4">
+                            {{ form.conta }}
+                            <div class="help-block">{{ form.conta.errors }}</div>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+
+            <fieldset class="well">
+
+                <legend class="the-legend">Dados de Acesso UnB</legend>
+                <div class="form-group {% if form.email_unb.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="name" class="control-label col-sm-2">E-mail UnB</label>
+                    <div class="col-sm-10">
+                        {{ form.email_unb }}
+                        <div class="help-block">{{ form.email_unb.errors }}</div>
+                    </div>
+                </div>
+
+                <div class="form-group {% if form.telefone_local.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="name" class="control-label col-sm-2">Telefone Local</label>
+                    <div class="col-sm-4">
+                        {{ form.telefone_local }}
+                        <div class="help-block">{{ form.telefone_local.errors }}</div>
+                    </div>
+                </div>
+
+
+            </fieldset>
+
+            <button type="submit" class="btn btn-info">Salvar</button>
+            <a href="{% url 'bolsista' %}" class="btn btn-default">Voltar</a>
+            <br><br>
+
+
+        </form>
+    </div>
+
+    <div class="col-md-3">
+
+        <fieldset class="well the-fieldset opacity">
+            <legend class="the-legend">Arquivos</legend>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-file" {% if not pk %}disabled{% endif %}>Adicionar
+            </button>
+
+            <br><br>
+            <div>
+                <table class="table table-striped file-table">
+
+                    {% for document in documents %}
+                        <tr>
+                            <td class="col-sm-2"><a href="{% url 'remover-arquivo-bolsista' document.pk %}" class="delete-file-x" onclick="return confirm('Tem certeza? O arquivo será apagado permanentemente')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                            <td class="col-sm-2"><i class="fa fa-file-word-o file-icon" aria-hidden="true"></i></td>
+                            <td class="col-sm-8"><a target="_blank" href="{% url 'show-document' document.pk %}" class="open-file">{{ document.filename }}</a></td>
+                            <!--<td><img src="{{ document.arquivo.url }}" alt=""></td>-->
+                        </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+
+
+
+        </fieldset>
+
+    </div>
+
+
+    <!-- Modal -->
+    <div id="modal-file" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Juntar Documento</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'upload-arquivo-bolsista' %}" method="post" class="form" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        {% bootstrap_form formf %}
+                        <br>
+                        {% buttons %}
+                            <button type="submit" class="btn btn-primary">
+                                {% bootstrap_icon "star" %} Salvar
+                            </button>
+                        {% endbuttons %}
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
