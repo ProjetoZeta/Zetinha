@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from datetime import datetime
 from django.conf import settings
+from common.validators import validate_cpf
 
 class Usuario(AbstractUser):
     no_completo = models.CharField('Nome completo', max_length=64, unique=True)
@@ -52,17 +53,47 @@ class Bolsista(models.Model):
         ('3', 'Colaborador sem vínculo com o serviço')
     )
 
+    TIPO_CONTA = (
+        ('1', 'Conta-salário'),
+        ('2', 'Conta-poupança'),
+        ('3', 'Conta-corrente')
+    )
+
     UFS = (
-        ('DF', 'Distrito Federal'),
-        ('RJ', 'Rio de Janeiro'),
-        ('SP', 'São Paulo')
+        ('AC', 'AC - Acre'),
+        ('AL', 'AL - Alagoas'),
+        ('AP', 'AP - Amapá'),
+        ('AM', 'AM - Amazonas'),
+        ('BA', 'BA - Bahia'),
+        ('CE', 'CE - Ceará'),
+        ('DF', 'DF - Distrito Federal'),
+        ('ES', 'ES - Espírito Santo'),
+        ('GO', 'GO - Goiás'),
+        ('MA', 'MA - Maranhão'),
+        ('MT', 'MT - Mato Grosso'),
+        ('MS', 'MS - Mato Grosso do Sul'),
+        ('MG', 'MG - Minas Gerais'),
+        ('PA', 'PA - Pará'),
+        ('PB', 'PB - Paraíba'),
+        ('PR', 'PR - Paraná'),
+        ('PE', 'PE - Pernambuco'),
+        ('PI', 'PI - Piauí'),
+        ('RJ', 'RJ - Rio de Janeiro'),
+        ('RN', 'RN - Rio Grande do Norte'),
+        ('RS', 'RS - Rio Grande do Sul'),
+        ('RO', 'RO - Rondônia'),
+        ('RR', 'RR - Roraima'),
+        ('SC', 'SC - Santa Catarina'),
+        ('SP', 'SP - São Paulo'),
+        ('SE', 'SE - Sergipe'),
+        ('TO', 'TO - Tocantins')
     )
 
     tipo_vinculo = models.CharField('Tipo de Vínculo', max_length=1, choices=TIPOS_VINCULOS, default='1')
 
     no_bolsista = models.CharField('Nome', max_length=32, unique=True)
     email = models.EmailField('Email', unique=True)
-    cpf = models.CharField('Nome', max_length=11, unique=True)
+    cpf = models.CharField('Nome', max_length=11, unique=True, validators=[validate_cpf])
     dt_nascimento = models.DateField('Data de Nascimento')
     rg = models.CharField('RG', max_length=32, unique=True)
     orgao_expedidor = models.CharField('Órgão Expedidor', max_length=32)
@@ -78,7 +109,7 @@ class Bolsista(models.Model):
 
     banco = models.CharField('Banco', max_length=32)
     agencia = models.CharField('Agência', max_length=32)
-    tipo_conta = models.CharField('Tipo de Conta', max_length=32)
+    tipo_conta = models.CharField('Tipo de Conta', max_length=1, choices=TIPO_CONTA, default='1')
     conta = models.CharField('Conta', max_length=32)
 
     email_unb = models.EmailField('Email UnB', unique=True, blank=True)
