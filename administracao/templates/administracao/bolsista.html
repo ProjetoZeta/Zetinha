@@ -204,6 +204,18 @@
 
             </fieldset>
 
+            <fieldset class="well">
+
+                <legend class="the-legend">Informações Profissionais</legend>
+                <div class="form-group required {% if form.link_lattes.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="name" class="control-label col-sm-2">Lattes:</label>
+                    <div class="col-sm-10">
+                        {{ form.link_lattes }}
+                        <div class="help-block">{{ form.link_lattes.errors }}</div>
+                    </div>
+                </div>
+
+            </fieldset>
 
             <fieldset class="well">
 
