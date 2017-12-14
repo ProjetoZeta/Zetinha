@@ -102,6 +102,7 @@ class Bolsista(models.Model):
     matricula = models.CharField('Matrícula', max_length=32, unique=True, blank=True)
     ic_ativo = models.BooleanField('Ativo')
 
+    pis_nit = models.CharField('PIS ou NIT', max_length=32)
     link_lattes = models.CharField('Lattes', max_length=128, unique=True, validators=[lattes_url])
 
     endereco = models.CharField('Endereço', max_length=32)
@@ -124,11 +125,12 @@ class Documento(models.Model):
     TIPOS = (
         ('1', 'Fotografia'),
         ('2', 'Declaração'),
-        ('3', 'Documento pessoal')
+        ('3', 'Documento pessoal'),
+        ('4', 'Certificado'),
     )
     bolsista = models.ForeignKey('Bolsista', on_delete=models.CASCADE)
     tipo_documento = models.CharField('Tipo de Documento', max_length=1, choices=TIPOS, default='3')
-    no_documento = models.CharField('Descrição', max_length=32)
+    no_documento = models.CharField('Descrição', max_length=512)
     dt_cadastro = models.DateTimeField('Momento do Upload', default=datetime.now, blank=True)
     arquivo = models.FileField()
 
