@@ -119,3 +119,24 @@ pyvenv.cfg
 pip-selfcheck.json
 
 # End of https://www.gitignore.io/api/python,virtualenv
+
+.idea
+*.egg-info
+*.pot
+*.py[co]
+.tox/
+__pycache__
+MANIFEST
+dist/
+docs/_build/
+docs/locale/
+node_modules/
+tests/coverage_html/
+tests/.coverage
+build/
+tests/report/
+db.sqlite3
+*/migrations/*.py
+!*/migrations/__init__.py
+uploads/*
+!uploads/__init__.py
