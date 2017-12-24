@@ -204,6 +204,27 @@
 
             </fieldset>
 
+            <fieldset class="well">
+
+                <legend class="the-legend">Informações Profissionais</legend>
+
+                <div class="form-group required {% if form.pis_nit.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="name" class="control-label col-sm-2">PIS ou NIT:</label>
+                    <div class="col-sm-10">
+                        {{ form.pis_nit }}
+                        <div class="help-block">{{ form.pis_nit.errors }}</div>
+                    </div>
+                </div>
+
+                <div class="form-group required {% if form.link_lattes.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="name" class="control-label col-sm-2">Lattes:</label>
+                    <div class="col-sm-10">
+                        {{ form.link_lattes }}
+                        <div class="help-block">{{ form.link_lattes.errors }}</div>
+                    </div>
+                </div>
+
+            </fieldset>
 
             <fieldset class="well">
 
@@ -323,10 +344,14 @@
 
         <fieldset class="well the-fieldset opacity">
             <legend class="the-legend">Arquivos</legend>
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-file" {% if not pk %}disabled{% endif %}>Adicionar
-            </button>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-file" {% if not pk %}disabled{% endif %}>Adicionar</button>
 
             <br><br>
+
+            {% if not pk %}
+                <div style="color: #bab3b3;">Crie um bolsista para depois adicionar arquivos</div>
+            {% endif %}
+
             <div>
                 <table class="table table-striped file-table">
 

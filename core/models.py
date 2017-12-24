@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from datetime import datetime
 from django.conf import settings
-from common.validators import validate_cpf
+from common.validators import cpf, lattes_url
 
 class Usuario(AbstractUser):
     no_completo = models.CharField('Nome completo', max_length=64, unique=True)
@@ -93,7 +93,7 @@ class Bolsista(models.Model):
 
     no_bolsista = models.CharField('Nome', max_length=32, unique=True)
     email = models.EmailField('Email', unique=True)
-    cpf = models.CharField('Nome', max_length=11, unique=True, validators=[validate_cpf])
+    cpf = models.CharField('Nome', max_length=11, unique=True, validators=[cpf])
     dt_nascimento = models.DateField('Data de Nascimento')
     rg = models.CharField('RG', max_length=32, unique=True)
     orgao_expedidor = models.CharField('Órgão Expedidor', max_length=32)
@@ -101,6 +101,9 @@ class Bolsista(models.Model):
     celular = models.CharField('Celular', max_length=32, blank=True)
     matricula = models.CharField('Matrícula', max_length=32, unique=True, blank=True)
     ic_ativo = models.BooleanField('Ativo')
+
+    pis_nit = models.CharField('PIS ou NIT', max_length=32)
+    link_lattes = models.CharField('Lattes', max_length=128, unique=True, validators=[lattes_url])
 
     endereco = models.CharField('Endereço', max_length=32)
     cidade = models.CharField('Cidade', max_length=32)
@@ -122,11 +125,12 @@ class Documento(models.Model):
     TIPOS = (
         ('1', 'Fotografia'),
         ('2', 'Declaração'),
-        ('3', 'Documento pessoal')
+        ('3', 'Documento pessoal'),
+        ('4', 'Certificado'),
     )
     bolsista = models.ForeignKey('Bolsista', on_delete=models.CASCADE)
     tipo_documento = models.CharField('Tipo de Documento', max_length=1, choices=TIPOS, default='3')
-    no_documento = models.CharField('Descrição', max_length=32)
+    no_documento = models.CharField('Descrição', max_length=512)
     dt_cadastro = models.DateTimeField('Momento do Upload', default=datetime.now, blank=True)
     arquivo = models.FileField()
 
