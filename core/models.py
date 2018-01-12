@@ -59,6 +59,23 @@ class Bolsista(models.Model):
         ('3', 'Conta-corrente')
     )
 
+    COD_BANCO = (
+        ('001', '001 - BANCO DO BRASIL S/A'),
+        ('002','002 - BANCO CENTRAL DO BRASIL'),
+        ('003','003 - BANCO DA AMAZONIA S.A'),
+        ('004','004 - BANCO DO NORDESTE DO BRASIL S.A'),
+        ('070','070 - BANCO DE BRASILIA S.A'),
+        ('104','104 - CAIXA ECONOMICA FEDERAL'),
+        ('237','237 - BANCO BRADESCO S.A'),
+        ('275','275 - BANCO REAL S.A'),
+        ('341','341 - BANCO ITAU S.A'),
+        ('409','409 - UNIBANCO - UNIAO DOS BANCOS BRASILEIROS'),
+        ('422','422 - BANCO SAFRA S.A'),
+        ('477','477 - CITIBANK N.A'),
+        ('502','502 - BANCO SANTANDER S.A')
+
+    )
+
     UFS = (
         ('AC', 'AC - Acre'),
         ('AL', 'AL - Alagoas'),
@@ -93,8 +110,8 @@ class Bolsista(models.Model):
 
     no_bolsista = models.CharField('Nome', max_length=32, unique=True)
     email = models.EmailField('Email', unique=True)
-    cpf = models.CharField('Nome', max_length=11, unique=True, validators=[cpf])
-    dt_nascimento = models.DateField('Data de Nascimento')
+    cpf = models.CharField('CPF', max_length=14, unique=True, validators=[cpf])
+    dt_nascimento = models.CharField('Data de Nascimento',max_length=10)
     rg = models.CharField('RG', max_length=32, unique=True)
     orgao_expedidor = models.CharField('Órgão Expedidor', max_length=32)
     telefone = models.CharField('Telefone', max_length=32, blank=True)
@@ -102,15 +119,15 @@ class Bolsista(models.Model):
     matricula = models.CharField('Matrícula', max_length=32, unique=True, blank=True)
     ic_ativo = models.BooleanField('Ativo')
 
-    pis_nit = models.CharField('PIS ou NIT', max_length=32)
+    pis_nit = models.CharField('PIS ou NIT', max_length=32, blank=True)
     link_lattes = models.CharField('Lattes', max_length=128, unique=True, validators=[lattes_url])
 
-    endereco = models.CharField('Endereço', max_length=32)
+    endereco = models.CharField('Endereço', max_length=128)
     cidade = models.CharField('Cidade', max_length=32)
     cep = models.CharField('CEP', max_length=32, unique=True)
     uf = models.CharField('UF', max_length=2, choices=UFS, default='1')
 
-    banco = models.CharField('Banco', max_length=32)
+    banco = models.CharField('Banco',  max_length=128, choices=COD_BANCO, default='001')
     agencia = models.CharField('Agência', max_length=32)
     tipo_conta = models.CharField('Tipo de Conta', max_length=1, choices=TIPO_CONTA, default='1')
     conta = models.CharField('Conta', max_length=32)
@@ -140,4 +157,3 @@ class Documento(models.Model):
 
     def __str__(self):
         return self.tipo_documento
-
