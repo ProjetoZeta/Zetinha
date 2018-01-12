@@ -35,8 +35,8 @@ class ResponsavelForm(BaseForm):
         fields = get_fields(model)
 
 class BolsistaForm(BaseFormControl):
-    dt_nascimento = forms.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-    preview = ['no_bolsista', 'email', 'cpf', 'telefone', 'ic_ativo']
+
+    preview = ['no_bolsista', 'email', 'cpf', 'celular', 'ic_ativo']
     class Meta:
         model = Bolsista
         fields = get_fields(model)
@@ -46,5 +46,3 @@ class DocumentoForm(BaseFormControl):
     class Meta:
         model = Documento
         fields = ['bolsista', 'tipo_documento', 'no_documento', 'arquivo']
-
-
