@@ -1,0 +1,74 @@
+image: python-lftp:latest
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/pip-cache"
+
+cache:
+  paths:
+    - "$CI_PROJECT_DIR/pip-cache"
+  key: "$CI_PROJECT_ID"
+
+stages:
+  - deploy
+
+deploy:homol:
+  stage: deploy
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "$HOMOL_PRIVATE_KEY" | ssh-add -
+    - mkdir -p ~/.ssh
+    - echo "$SSH_SERVER_HOSTKEYS" > ~/.ssh/known_hosts
+  script:
+    - echo "Configuring database"
+    - >-
+      sed -i "s|'NAME': 'sbpl'|'NAME': '$HOMOL_DB_NAME'|g" sisbp/settings.py
+    - >-
+      sed -i "s|'USER': 'postgres'|'USER': '$HOMOL_DB_USER'|g" sisbp/settings.py
+    - >-
+      sed -i "s|'PASSWORD': '121294'|'PASSWORD': '$HOMOL_DB_PASSWORD'|g" sisbp/settings.py
+    - >-
+      sed -i "s|'HOST': 'localhost'|'HOST': '$HOMOL_DB_HOST'|g" sisbp/settings.py
+    - sed -i "s|DEBUG = True|DEBUG = False|g" sisbp/settings.py
+    - sed -i "s|ALLOWED_HOSTS = \[\]|ALLOWED_HOSTS = \['homol.sgpl.redes.unb.br'\]|g" sisbp/settings.py
+    - echo "Running the migrations"
+    - pip3 install -r requirements.txt
+    - python3 manage.py makemigrations
+    - python3 manage.py migrate
+    - echo "Deploying to staging server..."
+    - lftp sftp://$HOMOL_REMOTE_SERVER -u $HOMOL_REMOTE_USER,chave -e "mirror --delete -R . sgpl"
+  environment:
+    name: homol
+    url: http://homol.sgpl.redes.unb.br/
+  only:
+    - prototipo
+
+deploy:dev:
+  stage: deploy
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "$DEV_PRIVATE_KEY" | ssh-add -
+    - mkdir -p ~/.ssh
+    - echo "$SSH_SERVER_HOSTKEYS" > ~/.ssh/known_hosts
+  script:
+    - echo "Configuring database"
+    - >-
+      sed -i "s|'NAME': 'sbpl'|'NAME': '$DEV_DB_NAME'|g" sisbp/settings.py
+    - >-
+      sed -i "s|'USER': 'postgres'|'USER': '$DEV_DB_USER'|g" sisbp/settings.py
+    - >-
+      sed -i "s|'PASSWORD': '121294'|'PASSWORD': '$DEV_DB_PASSWORD'|g" sisbp/settings.py
+    - >-
+      sed -i "s|'HOST': 'localhost'|'HOST': '$DEV_DB_HOST'|g" sisbp/settings.py
+    - sed -i "s|DEBUG = True|DEBUG = False|g" sisbp/settings.py
+    - sed -i "s|ALLOWED_HOSTS = \[\]|ALLOWED_HOSTS = \['dev.sgpl.redes.unb.br'\]|g" sisbp/settings.py
+    - echo "Running the migrations"
+    - pip3 install -r requirements.txt
+    - python3 manage.py makemigrations
+    - python3 manage.py migrate
+    - echo "Deploying to development server..."
+    - lftp sftp://$DEV_REMOTE_SERVER -u $DEV_REMOTE_USER,chave -e "mirror --delete -R . sgpl"
+  environment:
+    name: dev
+    url: http://dev.sgpl.redes.unb.br/
+  only:
+    - develop
