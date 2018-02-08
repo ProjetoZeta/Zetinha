@@ -41,3 +41,7 @@ footer {
         height: auto;
     }
 }
+
+.top-buffer {
+    margin-top:32px;
+}
