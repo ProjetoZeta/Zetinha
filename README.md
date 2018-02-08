@@ -6,15 +6,25 @@ pip3 install -r requirements.txt
 
 sudo apt-get install postgresql-server postgresql
 
-# Altere os dados do seu banco na pasta sisbp/settings.py
+# Configure postgres
 
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': 'sbpl',
-    'USER': 'seuUsuario',
-    'PASSWORD': 'suaSenha',
-    'HOST': 'localhost',
-    'PORT': '5432',
-    
+1. Create database:
+```
+sudo -u postgres createdb sbpl
+```
+2. Load the db script:
+```
+sudo -u postgres psql -d sbpl -a -f bd/schema_v1.sql
+```
+3. Access postgres console
+```
+sudo -u postgres psql sbpl
+```
+4. On the postgres console, change the postgres password
+```sql
+ALTER USER postgres WITH PASSWORD '121294';\q
+```
+
 #Get started
 
 ## Before first time running the server
