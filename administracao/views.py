@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django import forms
 
 from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento
-from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm
+from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm
 
 # Create your views here.
 
@@ -110,5 +110,6 @@ def show_document(request, pk=None):
 def handle_projeto(request, pk=None, pkdelete=None):
     return render(request, 'administracao/projeto2.html', {
         'content_title': 'Manter Projeto',
+        'form': ProjetoForm()
     })
 

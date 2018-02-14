@@ -1,6 +1,6 @@
 from django import forms
 from common.forms import BaseForm, BaseFormControl
-from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento
+from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, Projeto
 from django.conf import settings
 from utils.models import get_fields
 
@@ -46,3 +46,10 @@ class DocumentoForm(BaseFormControl):
     class Meta:
         model = Documento
         fields = ['bolsista', 'tipo_documento', 'no_documento', 'arquivo']
+
+class ProjetoForm(BaseForm):
+    preview = [f.name for f in Projeto._meta.get_fields()]
+    fk_entidade_proponente = forms.ModelChoiceField(queryset=Entidade.objects.all())
+    class Meta:
+        model = Projeto
+        fields = get_fields(model)

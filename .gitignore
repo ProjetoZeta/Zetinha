@@ -104,39 +104,33 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-### VirtualEnv ###
-# Virtualenv
-# http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
-[Bb]in
-[Ii]nclude
-[Ll]ib
-[Ll]ib64
-[Ll]ocal
-[Mm]an
-[Ss]cripts
-[Tt]cl
-pyvenv.cfg
-pip-selfcheck.json
 
-# End of https://www.gitignore.io/api/python,virtualenv
+console.log(document.form1.cod_ano_serie.value, document.form1.cil.value)
+getLinguas(document.form1.cod_ano_serie.value,document.form1.cil.value)
 
-.idea
-*.egg-info
-*.pot
-*.py[co]
-.tox/
-__pycache__
-MANIFEST
-dist/
-docs/_build/
-docs/locale/
-node_modules/
-tests/coverage_html/
-tests/.coverage
-build/
-tests/report/
-db.sqlite3
-*/migrations/*.py
-!*/migrations/__init__.py
-uploads/*
-!uploads/__init__.py
+
+
+
+
+function getLinguas2(cod_ano_serie, cod_escola ) {
+			
+	$.ajax({
+		type: "POST",
+		url: "vagas_remanescentes_control.php",				
+		data: "cod_ano_serie_s="+cod_ano_serie+"&cod_escola_s="+cod_escola, 
+		
+		success: function(data) {
+			console.log(data)
+
+			
+
+
+		}
+	});
+}
+
+
+document.form1.cil.addEventListener("blur", function(){
+	getLinguas2(document.form1.cod_ano_serie.value,document.form1.cil.value)
+})
+

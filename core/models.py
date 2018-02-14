@@ -166,3 +166,21 @@ class Documento(models.Model):
 
     def __str__(self):
         return self.tipo_documento
+
+
+class Projeto(models.Model):
+    no_projeto = models.CharField('Nome do Projeto', max_length=32)
+    fk_entidade_proponente = models.ForeignKey('Entidade', on_delete=models.CASCADE, related_name='proponente')
+    fk_responsavel_proponente = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='proponente')
+    fk_entidade_concedente = models.ForeignKey('Entidade', on_delete=models.CASCADE, related_name='concedente')
+    fk_responsavel_concedente = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='concedente')
+
+    sg_projeto = models.CharField('Sigla', max_length=32, unique=True)
+    dt_inicio = models.DateField('Data Início')
+    dt_fim = models.DateField('Data Fim')
+    du_duracao_meses = models.IntegerField('Quantidade de meses de duração')
+    identificao_objeto = models.TextField('Identificação do Projeto', max_length=2048)
+    justificativa = models.TextField('Justificativa', max_length=2048)
+    referencias_bibliograficas = models.TextField('Referências Bibliográficas', max_length=2048)
+    metodologia = models.TextField('metodologia', max_length=1024)
+    gestao_transferencia_tecnologia = models.TextField('Gestão de Transferência de Tecnologia', max_length=1024)
