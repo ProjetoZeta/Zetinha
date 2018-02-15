@@ -29,12 +29,12 @@ class Entidade(models.Model):
 
 
 class Cargo(models.Model):
-    no_cargo = models.CharField('Nome', max_length=6, unique=True)
+    no_cargo = models.CharField('Nome', max_length=32, unique=True)
     ic_ativo = models.BooleanField('Ativo')
 
 
 class Funcao(models.Model):
-    no_funcao = models.CharField('Nome', max_length=6, unique=True)
+    no_funcao = models.CharField('Nome', max_length=32, unique=True)
     ic_ativo = models.BooleanField('Ativo')
 
     class Meta:
@@ -52,6 +52,8 @@ class Responsavel(models.Model):
     class Meta:
         verbose_name_plural = "responsáveis"
         verbose_name = "responsável"
+
+
 
 
 class Bolsista(models.Model):
@@ -174,6 +176,9 @@ class Projeto(models.Model):
     fk_responsavel_proponente = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='proponente')
     fk_entidade_concedente = models.ForeignKey('Entidade', on_delete=models.CASCADE, related_name='concedente')
     fk_responsavel_concedente = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='concedente')
+
+    fk_bolsista = models.ForeignKey('Bolsista', on_delete=models.CASCADE, related_name='bolsista')
+    fk_funcao = models.ForeignKey('Funcao', on_delete=models.CASCADE, related_name='funcao')
 
     sg_projeto = models.CharField('Sigla', max_length=32, unique=True)
     dt_inicio = models.DateField('Data Início')

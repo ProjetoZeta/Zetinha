@@ -52,6 +52,26 @@ class ProjetoForm(BaseForm):
     fk_entidade_proponente = forms.ModelChoiceField(queryset=Entidade.objects.values_list('no_entidade',flat=True), 
                                                     widget=forms.Select(attrs={'class':'form-control'}),
                                                     to_field_name="no_entidade")
+
+    fk_entidade_concedente = forms.ModelChoiceField(queryset=Entidade.objects.values_list('no_entidade',flat=True), 
+                                                    widget=forms.Select(attrs={'class':'form-control'}),
+                                                    to_field_name="no_entidade")
+
+    fk_responsavel_proponente = forms.ModelChoiceField(queryset=Responsavel.objects.values_list('no_responsavel',flat=True), 
+                                                    widget=forms.Select(attrs={'class':'form-control'}),
+                                                    to_field_name="no_responsavel")
+
+    fk_responsavel_concedente = forms.ModelChoiceField(queryset=Responsavel.objects.values_list('no_responsavel',flat=True), 
+                                                    widget=forms.Select(attrs={'class':'form-control'}),
+                                                    to_field_name="no_responsavel")
+
+    fk_bolsita = forms.ModelChoiceField(queryset=Bolsista.objects.values_list('no_bolsista',flat=True), 
+                                                    widget=forms.Select(attrs={'class':'form-control'}),
+                                                    to_field_name="no_bolsista")
+
+    fk_funcao = forms.ModelChoiceField(queryset=Funcao.objects.values_list('no_funcao',flat=True), 
+                                                    widget=forms.Select(attrs={'class':'form-control'}),
+                                                    to_field_name="no_funcao")
     
     class Meta:
         model = Projeto
