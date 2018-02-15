@@ -49,7 +49,10 @@ class DocumentoForm(BaseFormControl):
 
 class ProjetoForm(BaseForm):
     preview = [f.name for f in Projeto._meta.get_fields()]
-    fk_entidade_proponente = forms.ModelChoiceField(queryset=Entidade.objects.all())
+    fk_entidade_proponente = forms.ModelChoiceField(queryset=Entidade.objects.values('no_entidade'), 
+                                                    widget=forms.Select(attrs={'class':'form-control'}),
+                                                    to_field_name="no_entidade")
+    
     class Meta:
         model = Projeto
         fields = get_fields(model)

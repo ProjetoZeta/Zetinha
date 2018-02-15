@@ -104,7 +104,7 @@
                     <div class="form-group required {% if form.fk_entidade_proponente.errors %}{{ "has-error" }}{% endif %}">
                         <label for="name" class="control-label col-sm-2">Entidade Proponente</label>
                         <div class="col-sm-10">
-                            {{ form.fk_entidade_proponente }}
+                            {{ form.fk_entidade_proponente}}
                             <div class="help-block">{{ form.fk_entidade_proponente.errors }}</div>
                         </div>
                     </div>
@@ -119,14 +119,9 @@
 
                     <div class="form-group row required">
                         <label for="inputValue" class="col-md-2 control-label">Entidade Concedente:</label>
-                        <div class="col-md-10">
-                            <select class="form-control" id="sel1">
-                                <option selected="selected" disabled>Selecione uma opção</option>
-                                <option>Teste</option>
-                                <option>Teste2</option>
-                                <option>Teste3</option>
-                                <option>Teste4</option>
-                            </select>
+                        <div class="col-sm-10">
+                            {{ form.fk_entidade_proponente}}
+                            <div class="help-block">{{ form.fk_entidade_proponente.errors }}</div>
                         </div>
                     </div>
 
