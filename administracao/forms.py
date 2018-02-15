@@ -29,7 +29,7 @@ class EntidadeForm(BaseForm):
         fields = get_fields(model)
 
 class ResponsavelForm(BaseForm):
-    preview = [f.name for f in Responsavel._meta.get_fields()]
+    preview = ['no_responsavel', 'ic_ativo', 'co_matricula']
     class Meta:
         model = Responsavel
         fields = get_fields(model)
