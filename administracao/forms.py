@@ -17,7 +17,7 @@ class CargoForm(BaseForm):
         fields = get_fields(model)
 
 class FuncaoForm(BaseForm):
-    preview = [f.name for f in Funcao._meta.get_fields()]
+    preview = ['no_funcao','ic_ativo']
     class Meta:
         model = Funcao
         fields = get_fields(model)
