@@ -34,6 +34,9 @@ urlpatterns = [
 
     url(r'documento/(?P<pk>[0-9]+)', views.show_document, name='show-document'),
 
-    url(r'projeto$', views.handle_projeto, name='manter-projeto'),
+    url(r'^projeto$', views.projeto, name='projeto'),
+    url(r'^projeto/novo$', views.projeto_handle, name='projeto-criar'),
+    url(r'^projeto/(?P<pk>[0-9]+)/editar$', views.projeto_handle, name='projeto-editar'),
+    url(r'^projeto/(?P<pkdelete>[0-9]+)/remover$', views.projeto, name='projeto-remover'),
 
 ]

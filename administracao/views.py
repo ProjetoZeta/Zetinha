@@ -6,8 +6,8 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django import forms
 
-from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento
-from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm
+from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, Projeto
+from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, ProjetoFormEdit
 
 # Create your views here.
 
@@ -49,6 +49,18 @@ def responsavel(request, pk=None, pkdelete=None):
 def usuario(request, pk=None, pkdelete=None):
     return handler("Usuario", request, pk, pkdelete)
 
+def projeto(request, pk=None, pkdelete=None):
+    if pkdelete:
+        item = Bolsista.objects.get(pk=pkdelete)
+        if item:
+            item.delete()
+        return redirect('projeto')
+    return render(request, 'administracao/crud-projeto.html', {
+        'data': Projeto.objects.all(),
+        'form': ProjetoForm(),
+        'content_title': 'Projeto'
+    })
+
 def bolsista(request, pk=None, pkdelete=None):
     if pkdelete:
         item = Bolsista.objects.get(pk=pkdelete)
@@ -60,6 +72,7 @@ def bolsista(request, pk=None, pkdelete=None):
         'form': BolsistaForm(),
         'content_title': 'Bolsistas'
     })
+
 
 def fetch_bolsista(request, bolsista_form, documento_form, pk):
     return render(request, 'administracao/bolsista.html', {
@@ -107,9 +120,9 @@ def show_document(request, pk=None):
             'document': Documento.objects.get(pk=pk)
         })
 
-def handle_projeto(request, pk=None, pkdelete=None):
+def projeto_handle(request, pk=None, pkdelete=None):
     return render(request, 'administracao/projeto2.html', {
         'content_title': 'Manter Projeto',
-        'form': ProjetoForm()
+        'form': ProjetoFormEdit()
     })
 

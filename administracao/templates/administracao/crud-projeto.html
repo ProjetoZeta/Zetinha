@@ -1,0 +1,26 @@
+{% extends 'administracao/crud-table.html' %}
+
+{% load static %}
+
+{% block page-script %}
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').DataTable({
+                dom: 'Bfrtp',
+                buttons: [
+                    {
+                        text: '<i class="fa fa-plus" aria-hidden="true"></i>',
+                        action: function (e, dt, node, config) {
+                            window.location.href = "{% url 'projeto-criar' %}";
+                        }
+                    }
+                ],
+                responsive: true,
+                language: {
+                    url: "{% static 'common/admin2/vendor/datatables/lang/pt-br.json' %}"
+                }
+            });
+
+        });
+    </script>
+{% endblock %}
