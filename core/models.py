@@ -64,7 +64,6 @@ class Bolsista(models.Model):
     )
 
     TIPO_CONTA = (
-        ('1', 'Conta-salário'),
         ('2', 'Conta-poupança'),
         ('3', 'Conta-corrente')
     )
