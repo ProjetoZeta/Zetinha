@@ -64,8 +64,8 @@ class Bolsista(models.Model):
     )
 
     TIPO_CONTA = (
-        ('2', 'Conta-poupança'),
-        ('3', 'Conta-corrente')
+        ('1', 'Conta-poupança'),
+        ('2', 'Conta-corrente')
     )
 
     COD_BANCO = (
@@ -115,7 +115,7 @@ class Bolsista(models.Model):
         ('TO', 'TO - Tocantins')
     )
 
-    tipo_vinculo = models.CharField('Tipo de Vínculo', max_length=1, choices=TIPOS_VINCULOS, default='1')
+    tipo_vinculo = models.CharField('Tipo de Vínculo', max_length=1, choices=TIPOS_VINCULOS, default='3')
 
     no_bolsista = models.CharField('Nome', max_length=32, unique=True)
     email = models.EmailField('Email', unique=True)
@@ -134,7 +134,7 @@ class Bolsista(models.Model):
     endereco = models.CharField('Endereço', max_length=128)
     cidade = models.CharField('Cidade', max_length=32)
     cep = models.CharField('CEP', max_length=32, unique=True)
-    uf = models.CharField('UF', max_length=2, choices=UFS, default='1')
+    uf = models.CharField('UF', max_length=2, choices=UFS, default='DF')
 
     banco = models.CharField('Banco', max_length=128, choices=COD_BANCO, default='001')
     agencia = models.CharField('Agência', max_length=32)
