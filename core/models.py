@@ -189,4 +189,4 @@ class Projeto(models.Model):
     gestao_transferencia_tecnologia = models.TextField('Gestão de Transferência de Tecnologia', max_length=1024)
 
     def __str__(self):
-        return self.no_projeto
+        return "{} - {}".format(self.sg_projeto, self.no_projeto)

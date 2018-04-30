@@ -38,9 +38,8 @@ class BolsistaForm(BaseFormControl):
 
     preview = ['no_bolsista', 'email', 'cpf', 'celular', 'ic_ativo']
 
-    projeto_atual = forms.ModelChoiceField(queryset=Projeto.objects.values_list('no_projeto',flat=True),
-                                                    widget=forms.Select(attrs={'class':'form-control'}),
-                                                    to_field_name="no_projeto")
+    projeto_atual = forms.ModelChoiceField(queryset=Projeto.objects,
+                                                    widget=forms.Select(attrs={'class':'form-control'}))
 
     def is_valid(self):
 
