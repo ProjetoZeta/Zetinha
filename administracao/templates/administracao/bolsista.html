@@ -342,8 +342,7 @@
 
                 <legend class="the-legend">Dados Bancários</legend>
                 <div class="form-group row required">
-
-                    <div class="{% if form.banco.errors %}{{ "has-error" }}{% endif %}">
+                    <div class="{% if form.banco.errors or form.errors.poupanca_sem_caixa %}{{ "has-error" }}{% endif %}">
                         <label for="inputKey" class="col-md-2 control-label">Banco:</label>
                         <div class="col-md-4">
                             {{ form.banco }}
@@ -361,11 +360,12 @@
                 </div>
 
                 <div class="form-group row required">
-                    <div class="{% if form.tipo_conta.errors %}{{ "has-error" }}{% endif %}">
+                    <div class="{% if form.tipo_conta.errors or form.errors.poupanca_sem_caixa %}{{ "has-error" }}{% endif %}">
                         <label for="inputKey" class="col-md-2 control-label">Tipo de Conta:</label>
                         <div class="col-md-4">
                             {{ form.tipo_conta }}
                             <div class="help-block">{{ form.tipo_conta.errors }}</div>
+                            <div class="help-block">{{ form.errors.poupanca_sem_caixa }}</div>
                         </div>
                     </div>
 
