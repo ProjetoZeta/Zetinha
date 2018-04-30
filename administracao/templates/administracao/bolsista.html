@@ -406,6 +406,20 @@
 
             </fieldset>
 
+            <fieldset class="well">
+
+                <legend class="the-legend">Atuação</legend>
+
+                <div class="form-group {% if form.projeto_atual.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="name" class="control-label col-sm-2">Projeto Atual</label>
+                    <div class="col-sm-10">
+                        {{ form.projeto_atual }}
+                        <div class="help-block">{{ form.projeto_atual.errors }}</div>
+                    </div>
+                </div>
+
+            </fieldset>
+
             <button type="submit" class="btn btn-info">Salvar</button>
             <a href="{% url 'bolsista' %}" class="btn btn-default">Voltar</a>
             <br><br>

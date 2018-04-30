@@ -16,7 +16,7 @@ $(document).ready(function () {
     $("#id_tipo_conta").change(function () {
         lock();
     });
-    
+
 });
 
 

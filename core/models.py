@@ -144,6 +144,8 @@ class Bolsista(models.Model):
     email_unb = models.EmailField('Email UnB', unique=True, blank=True)
     telefone_local = models.CharField('Telefone Local', max_length=32, blank=True)
 
+    projeto_atual = models.ForeignKey('Projeto', on_delete=models.CASCADE, blank=True, default=None)
+
     def __str__(self):
         return self.no_bolsista
 
@@ -171,13 +173,10 @@ class Documento(models.Model):
 
 class Projeto(models.Model):
     no_projeto = models.CharField('Nome do Projeto', max_length=32)
-    fk_entidade_proponente = models.ForeignKey('Entidade', on_delete=models.CASCADE, related_name='proponente')
-    fk_responsavel_proponente = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='proponente')
-    fk_entidade_concedente = models.ForeignKey('Entidade', on_delete=models.CASCADE, related_name='concedente')
-    fk_responsavel_concedente = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='concedente')
-
-    fk_bolsista = models.ForeignKey('Bolsista', on_delete=models.CASCADE, related_name='bolsista')
-    fk_funcao = models.ForeignKey('Funcao', on_delete=models.CASCADE, related_name='funcao')
+    entidade_proponente = models.ForeignKey('Entidade', on_delete=models.CASCADE, related_name='proponente')
+    responsavel_proponente = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='proponente')
+    entidade_concedente = models.ForeignKey('Entidade', on_delete=models.CASCADE, related_name='concedente')
+    responsavel_concedente = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='concedente')
 
     sg_projeto = models.CharField('Sigla', max_length=32, unique=True)
     dt_inicio = models.DateField('Data Início')
@@ -188,3 +187,6 @@ class Projeto(models.Model):
     referencias_bibliograficas = models.TextField('Referências Bibliográficas', max_length=2048)
     metodologia = models.TextField('metodologia', max_length=1024)
     gestao_transferencia_tecnologia = models.TextField('Gestão de Transferência de Tecnologia', max_length=1024)
+
+    def __str__(self):
+        return self.no_projeto
