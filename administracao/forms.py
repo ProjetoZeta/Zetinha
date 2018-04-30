@@ -42,8 +42,8 @@ class BolsistaForm(BaseFormControl):
 
         #parent built-in is_valid() method
         valid = super(BolsistaForm, self).is_valid()
-
-        if self.cleaned_data['tipo_conta'] == '1' and self.cleaned_data['banco'] is not '104':
+        print(self.cleaned_data)
+        if self.cleaned_data['tipo_conta'] == '1' and self.cleaned_data['banco'] != '104':
             self._errors['poupanca_sem_caixa'] = '{} disponível somente para o banco {}'.format(dict(Bolsista.TIPO_CONTA).get('1'), dict(Bolsista.COD_BANCO).get('104'))
             return False
 

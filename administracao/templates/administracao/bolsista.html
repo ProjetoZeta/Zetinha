@@ -2,6 +2,8 @@
 
 {% load bootstrap3 %}
 
+{% load static %}
+
 {% block css %}
 
     <style type="text/css">
@@ -150,6 +152,8 @@
          });
      });
     </script>
+
+    <script type="text/javascript" src="{% static "administracao/lock-poupanca-caixa.js" %}"></script>
 {% endblock %}
 
 {% block content %}

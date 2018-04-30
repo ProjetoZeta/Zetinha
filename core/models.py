@@ -138,7 +138,7 @@ class Bolsista(models.Model):
 
     banco = models.CharField('Banco', max_length=128, choices=COD_BANCO, default='001')
     agencia = models.CharField('Agência', max_length=32)
-    tipo_conta = models.CharField('Tipo de Conta', max_length=1, choices=TIPO_CONTA, default='1')
+    tipo_conta = models.CharField('Tipo de Conta', max_length=1, choices=TIPO_CONTA, default='2')
     conta = models.CharField('Conta', max_length=32)
 
     email_unb = models.EmailField('Email UnB', unique=True, blank=True)
