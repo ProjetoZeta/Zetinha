@@ -11,17 +11,11 @@ sudo apt-get install postgresql-server postgresql
 
 # Configure postgres
 
-1. Create database:
 ```
-sudo -u postgres createdb sbpl
-```
-2. Load the db script:
-```
-sudo -u postgres psql -d sbpl -a -f bd/schema_v1.sql
-```
-3. Access postgres console
-```
-sudo -u postgres psql sbpl
+sudo -u postgres dropdb sbpl;
+sudo -u postgres createdb sbpl;
+sudo -u postgres psql -c "alter user postgres with encrypted password '121294';";
+sudo -u postgres psql -c "grant all privileges on database sbpl to postgres;";
 ```
 4. On the postgres console, change the postgres password
 ```sql
