@@ -7,6 +7,13 @@ class BaseForm(ModelForm):
         self.preview = remove('id', self.preview)
         super(ModelForm, self).__init__(*args, **kwargs)
 
+    def save(self, commit=True):
+        m = super(ModelForm, self).save(commit=False)
+        # do custom stuff
+        if commit:
+            m.save()
+        return m
+
 class BaseFormControl(ModelForm):
     def __init__(self, *args, **kwargs):
         self.preview = remove('id', self.preview)

@@ -459,6 +459,35 @@
 
         </fieldset>
 
+        <fieldset class="well the-fieldset opacity">
+            <legend class="the-legend">Materiais Cedidos</legend>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-file" {% if not pk %}disabled{% endif %}>Adicionar</button>
+
+            <br><br>
+
+            {% if not projeto %}
+                <div style="color: #bab3b3;">Crie um bolsista e vincule-o a um projeto para depois ceder materiais</div>
+            {% endif %}
+
+            <div>
+                <table class="table table-striped file-table">
+
+                    {% for document in documents %}
+                        <tr>
+                            <td class="col-sm-2"><a href="{% url 'remover-arquivo-bolsista' document.pk %}" class="delete-file-x" onclick="return confirm('Tem certeza? O arquivo será apagado permanentemente')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                            <td class="col-sm-2"><i class="fa fa-file-word-o file-icon" aria-hidden="true"></i></td>
+                            <td class="col-sm-8"><a target="_blank" href="{% url 'show-document' document.pk %}" class="open-file">{{ document.filename }}</a></td>
+                            <!--<td><img src="{{ document.arquivo.url }}" alt=""></td>-->
+                        </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+
+
+
+        </fieldset>
+
     </div>
 
 

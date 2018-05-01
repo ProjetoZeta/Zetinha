@@ -144,7 +144,7 @@ class Bolsista(models.Model):
     email_unb = models.EmailField('Email UnB', unique=True, blank=True)
     telefone_local = models.CharField('Telefone Local', max_length=32, blank=True)
 
-    projeto_atual = models.ForeignKey('Projeto', on_delete=models.CASCADE, blank=True, default=None)
+    projeto_atual = models.ForeignKey('Projeto', on_delete=models.CASCADE, related_name='atuacao')
 
     def __str__(self):
         return self.no_bolsista

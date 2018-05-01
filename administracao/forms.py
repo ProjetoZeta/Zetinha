@@ -38,22 +38,22 @@ class BolsistaForm(BaseFormControl):
 
     preview = ['no_bolsista', 'email', 'cpf', 'celular', 'ic_ativo']
 
-    projeto_atual = forms.ModelChoiceField(queryset=Projeto.objects,
-                                                    widget=forms.Select(attrs={'class':'form-control'}))
-
     def is_valid(self):
 
         #parent built-in is_valid() method
         valid = super(BolsistaForm, self).is_valid()
-        if self.cleaned_data['tipo_conta'] == '1' and self.cleaned_data['banco'] != '104':
+
+        if self.cleaned_data['tipo_conta'] == '1' and self.cleaned_data['banco'] is not '104':
             self._errors['poupanca_sem_caixa'] = '{} disponível somente para o banco {}'.format(dict(Bolsista.TIPO_CONTA).get('1'), dict(Bolsista.COD_BANCO).get('104'))
             return False
+
+        print(self.Meta.fields)
 
         return valid
 
     class Meta:
         model = Bolsista
-        fields = get_fields(model)
+        fields = get_fields(model) + ['projeto_atual']
 
 class DocumentoForm(BaseFormControl):
     preview = [f.name for f in Documento._meta.get_fields()]
