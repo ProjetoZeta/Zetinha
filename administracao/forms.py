@@ -2,7 +2,7 @@ from django import forms
 from common.forms import BaseForm, BaseFormControl
 from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, Projeto
 from django.conf import settings
-from utils.models import get_fields
+from utils.models import get_fields, get_clean_fields
 
 class UsuarioForm(BaseForm):
     preview = ['email', 'no_completo', 'ic_ativo', 'ic_bolsista']
@@ -11,7 +11,7 @@ class UsuarioForm(BaseForm):
         fields = ['email', 'no_completo', 'ic_ativo', 'ic_bolsista']
 
 class CargoForm(BaseForm):
-    preview = [f.name for f in Cargo._meta.get_fields()]
+    preview = get_clean_fields(Cargo)
     class Meta:
         model = Cargo
         fields = get_fields(model)
@@ -43,20 +43,18 @@ class BolsistaForm(BaseFormControl):
         #parent built-in is_valid() method
         valid = super(BolsistaForm, self).is_valid()
 
-        if self.cleaned_data['tipo_conta'] == '1' and self.cleaned_data['banco'] is not '104':
+        if self.cleaned_data['tipo_conta'] == '1' and self.cleaned_data['banco'] != '104':
             self._errors['poupanca_sem_caixa'] = '{} disponível somente para o banco {}'.format(dict(Bolsista.TIPO_CONTA).get('1'), dict(Bolsista.COD_BANCO).get('104'))
             return False
-
-        print(self.Meta.fields)
 
         return valid
 
     class Meta:
         model = Bolsista
-        fields = get_fields(model) + ['projeto_atual']
+        fields = get_fields(model)
 
 class DocumentoForm(BaseFormControl):
-    preview = [f.name for f in Documento._meta.get_fields()]
+    preview = get_clean_fields(Documento)
     class Meta:
         model = Documento
         fields = ['bolsista', 'tipo_documento', 'no_documento', 'arquivo']
@@ -69,7 +67,7 @@ class ProjetoForm(BaseForm):
         fields = get_fields(model)
 
 class ProjetoFormEdit(BaseForm):
-    preview = [f.name for f in Projeto._meta.get_fields()]
+    preview = get_clean_fields(Projeto)
     fk_entidade_proponente = forms.ModelChoiceField(queryset=Entidade.objects.values_list('no_entidade',flat=True), 
                                                     widget=forms.Select(attrs={'class':'form-control'}),
                                                     to_field_name="no_entidade")
