@@ -144,7 +144,7 @@ class Bolsista(models.Model):
     email_unb = models.EmailField('Email UnB', unique=True, blank=True)
     telefone_local = models.CharField('Telefone Local', max_length=32, blank=True)
 
-    projeto_atual = models.ForeignKey('Projeto', on_delete=models.CASCADE, related_name='atuacao')
+    projeto_atual = models.ForeignKey('Projeto', on_delete=models.CASCADE, related_name='atuacao', blank=True)
 
     def __str__(self):
         return self.no_bolsista
@@ -170,6 +170,28 @@ class Documento(models.Model):
     def __str__(self):
         return self.tipo_documento
 
+class EmprestimoEquipamento(models.Model):
+    TIPOS = (
+        ('1', 'Computador'),
+        ('2', 'Projetor'),
+        ('2', 'Microcontrolador'),
+        ('4', 'Equipamento de Rede'),
+        ('5', 'Outro'),
+    )
+    bolsista = models.ForeignKey('Bolsista', on_delete=models.CASCADE)
+    tipo_equipamento = models.CharField('Tipo de Equipamento', max_length=1, choices=TIPOS, default='1')
+    descricao_equipamento = models.CharField('Descrição do Equipamento', max_length=512)
+    nu_serie = models.CharField('Número de Série', max_length=64)
+    nu_patrimonio = models.CharField('Número de Patrimônio', max_length=64)
+    dt_emprestimo = models.DateTimeField('Momento do Registro', default=datetime.now, blank=True)
+    foto = models.FileField()
+
+    @property
+    def filename(self):
+        return self.foto.name.replace(settings.MEDIA_URL, '')
+
+    def __str__(self):
+        return dict(EmprestimoEquipamento.TIPOS).get(self.tipo_equipamento)
 
 class Projeto(models.Model):
     no_projeto = models.CharField('Nome do Projeto', max_length=32)

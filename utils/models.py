@@ -5,9 +5,10 @@ def get_clean_fields(model):
             fields.append(f.name)
     return fields
 
-def get_fields(model):
+def get_fields(model, ignore=[]):
     fields = []
     for f in model._meta.get_fields():
         if not f.auto_created:
             fields.append(f.name)
-    return fields
+
+    return [x for x in fields if x not in ignore]

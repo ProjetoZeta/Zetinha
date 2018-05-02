@@ -460,24 +460,24 @@
         </fieldset>
 
         <fieldset class="well the-fieldset opacity">
-            <legend class="the-legend">Materiais Cedidos</legend>
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-file" {% if not pk %}disabled{% endif %}>Adicionar</button>
+            <legend class="the-legend">Empréstimos</legend>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-emprestimo" {% if not pk %}disabled{% endif %}>Adicionar</button>
 
             <br><br>
 
             {% if not projeto %}
-                <div style="color: #bab3b3;">Crie um bolsista e vincule-o a um projeto para depois ceder materiais</div>
+                <div style="color: #bab3b3;">Crie um bolsista e vincule-o a um projeto para depois conceder empréstimos</div>
             {% endif %}
 
             <div>
                 <table class="table table-striped file-table">
 
-                    {% for document in documents %}
+                    {% for emprestimo in emprestimos %}
                         <tr>
-                            <td class="col-sm-2"><a href="{% url 'remover-arquivo-bolsista' document.pk %}" class="delete-file-x" onclick="return confirm('Tem certeza? O arquivo será apagado permanentemente')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
-                            <td class="col-sm-2"><i class="fa fa-file-word-o file-icon" aria-hidden="true"></i></td>
-                            <td class="col-sm-8"><a target="_blank" href="{% url 'show-document' document.pk %}" class="open-file">{{ document.filename }}</a></td>
-                            <!--<td><img src="{{ document.arquivo.url }}" alt=""></td>-->
+                            <td class="col-sm-2"><a href="{% url 'remover-emprestimo-equipamento-bolsista' emprestimo.pk %}" class="delete-file-x" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                            <td class="col-sm-2"><i class="fa fa-handshake-o" aria-hidden="true"></i></td>
+                            <td class="col-sm-8"><a target="_blank" href="{% url 'show-emprestimoequipamento' emprestimo.pk %}" class="open-file">{{ emprestimo }}</a></td>
+                            <!--<td><img src="{{ emprestimo.arquivo.url }}" alt=""></td>-->
                         </tr>
                     {% endfor %}
 
@@ -506,6 +506,38 @@
                         {% csrf_token %}
 
                         {% bootstrap_form formf %}
+                        <br>
+                        {% buttons %}
+                            <button type="submit" class="btn btn-primary">
+                                {% bootstrap_icon "star" %} Salvar
+                            </button>
+                        {% endbuttons %}
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal-emprestimo" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Emprestimo de Equipamento</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'emprestimo-equipamento-bolsista' %}" method="post" class="form" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        {% bootstrap_form forme %}
                         <br>
                         {% buttons %}
                             <button type="submit" class="btn btn-primary">
