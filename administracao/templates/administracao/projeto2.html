@@ -79,19 +79,54 @@
 {% block content %}
 
 <ul class="nav nav-pills nav-justified">
-    <li class="active"><a data-toggle="tab" href="#menu1">Dados Cadastrais dos Interessados</a></li>
-    <li><a data-toggle="tab" href="#menu2">Descrição do Projeto</a></li>
-    <li><a data-toggle="tab" href="#menu3">Participantes</a></li>
-    <li><a data-toggle="tab" href="#menu4">Cronograma/Meta</a></li>
-    <li><a data-toggle="tab" href="#menu5">Vincular Atividade ao Bolsista</a></li>
-    <li><a data-toggle="tab" href="#menu6">Metas do Projeto</a></li>
-    <li><a data-toggle="tab" href="#menu7">Anexos</a></li>
-    <li><a data-toggle="tab" href="#menu8">Resumo do Projeto</a></li>
+    <li class="active"><a data-toggle="tab" href="#menu1">Denominação do Projeto</a></li>
+    <li class="disabled"><a data-toggle="tab-disabled" href="#menu2">Dados Cadastrais dos Interessados</a></li>
+    <li class="disabled"><a data-toggle="tab-disabled" href="#menu3">Participantes</a></li>
+    <li class="disabled"><a data-toggle="tab-disabled" href="#menu4">Cronograma/Meta</a></li>
+    <li class="disabled"><a data-toggle="tab-disabled" href="#menu5">Vincular Atividade ao Bolsista</a></li>
+    <li class="disabled"><a data-toggle="tab-disabled" href="#menu6">Metas do Projeto</a></li>
+    <li class="disabled"><a data-toggle="tab-disabled" href="#menu7">Anexos</a></li>
+    <li class="disabled"><a data-toggle="tab-disabled" href="#menu8">Resumo do Projeto</a></li>
 </ul>
 
 <div class="tab-content">
 
     <div id="menu1" class="tab-pane fade in active">
+
+        <br>
+        <div class="panel panel-primary">
+            <div class="panel-heading"><b>Nome e Sigla</b></div>
+            <div class="panel-body">
+
+                <form class="form" role="form" method="POST" action="{% if pk %} {% url 'bolsista-editar' pk %} {% else %}{% url 'bolsista-criar' %}{% endif %}">
+
+                        <div class="form-group row required">
+                            <label for="inputKey" class="col-md-2 control-label">Nome do Projeto:</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" id="inputKey" placeholder="">
+                            <br>
+                            </div>
+                        </div>
+
+                        <div class="form-group row required">
+                            <label for="inputKey" class="col-md-2 control-label">Sigla:</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" id="inputKey" placeholder="">
+                            <br>
+                            </div>
+                        </div>
+
+                    <button type="submit" class="btn btn-info">Salvar</button>
+                    <a href="{% url 'bolsista' %}" class="btn btn-default">Voltar</a>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="menu2" class="tab-pane fade">
 
         <br>
         <div class="panel panel-primary">
@@ -142,80 +177,6 @@
                             <div class="help-block">{{ form.fk_responsavel_proponente.errors }}</div>
                         </div>
                     </div>
-
-                </fieldset>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div id="menu2" class="tab-pane fade">
-
-        <br>
-        <div class="panel panel-primary">
-            <div class="panel-heading"><b>DESCRIÇÃO DO PROJETO</b></div>
-            <div class="panel-body">
-
-                <fieldset class="well the-fieldset">
-
-                <div class="form-group row required">
-                    <label for="inputKey" class="col-md-2 control-label">Título do Projeto:</label>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" id="inputKey" placeholder="">
-                    <br>
-                    </div>
-                </div>
-
-                <div class="form-group row required">
-                    <label for="inputKey" class="col-md-2 control-label">Sigla do Projeto:</label>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" id="inputKey" placeholder="">
-                    <br>
-                    </div>
-                </div>
-
-                <div class="form-group row required">
-                    <label for="inputKey" class="col-md-2 control-label">Período de Execução:</label>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" id="inputKey" placeholder="">
-                    <br>
-                    </div>
-                </div>
-
-                <div class="form-group row required">
-                    <label for="inputKey" class="col-md-2 control-label">Duração:</label>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" id="inputKey" placeholder="">
-                    <br>
-                    </div>
-                </div>
-
-                <div class="form-group row required">
-                    <label for="inputKey" class="col-md-2 control-label">Identificação do Objeto:</label>
-                    <div class="col-md-10">
-                        <textarea type="text" class="form-control" id="inputKey" placeholder=""></textarea>
-                    <br>
-                    </div>
-                </div>
-
-                <div class="form-group row required">
-                    <label for="inputKey" class="col-md-2 control-label">Justificativa da Proposta:</label>
-                    <div class="col-md-10">
-                        <textarea type="text" class="form-control" id="inputKey" placeholder=""></textarea>
-                    <br>
-                    </div>
-                </div>
-
-                <div class="form-group row required">
-                    <label for="inputKey" class="col-md-2 control-label">Referências Bibliográficas:</label>
-                    <div class="col-md-10">
-                        <textarea type="text" class="form-control" id="inputKey" placeholder=""></textarea>
-                    </div>
-
-                </div>
 
                 </fieldset>
 
