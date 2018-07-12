@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django import forms
 
 from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, Projeto, EmprestimoEquipamento
-from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, ProjetoFormEdit, EmprestimoEquipamentoForm
+from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, ProjetoDenominacaoForm, EmprestimoEquipamentoForm
 
 # Create your views here.
 
@@ -157,6 +157,6 @@ def show_emprestimoequipamento(request, pk=None):
 def projeto_handle(request, pk=None, pkdelete=None):
     return render(request, 'administracao/projeto2.html', {
         'content_title': 'Manter Projeto',
-        'form': ProjetoFormEdit()
+        'form': ProjetoDenominacaoForm()
     })
 

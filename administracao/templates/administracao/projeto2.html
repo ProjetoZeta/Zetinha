@@ -103,7 +103,8 @@
                         <div class="form-group row required">
                             <label for="inputKey" class="col-md-2 control-label">Nome do Projeto:</label>
                             <div class="col-md-10">
-                                <input type="text" class="form-control" id="inputKey" placeholder="">
+                                {{ form.nome }}
+                                <div class="help-block">{{ form.nome.errors }}</div>
                             <br>
                             </div>
                         </div>
@@ -111,7 +112,8 @@
                         <div class="form-group row required">
                             <label for="inputKey" class="col-md-2 control-label">Sigla:</label>
                             <div class="col-md-10">
-                                <input type="text" class="form-control" id="inputKey" placeholder="">
+                                {{ form.sigla }}
+                                <div class="help-block">{{ form.sigla.errors }}</div>
                             <br>
                             </div>
                         </div>

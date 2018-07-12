@@ -212,3 +212,7 @@ class Projeto(models.Model):
 
     def __str__(self):
         return "{} - {}".format(self.sg_projeto, self.no_projeto)
+
+class ProjetoDenominacao(models.Model):
+    nome = models.CharField('Nome do Projeto', max_length=32)
+    sigla = models.CharField('Sigla', max_length=32, unique=True)
