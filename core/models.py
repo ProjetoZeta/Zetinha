@@ -216,3 +216,7 @@ class Projeto(models.Model):
 class ProjetoDenominacao(models.Model):
     nome = models.CharField('Nome do Projeto', max_length=32)
     sigla = models.CharField('Sigla', max_length=32, unique=True)
+
+    class Meta:
+        verbose_name_plural = "Denominações de Projetos"
+        verbose_name = "Denominação de Projeto"

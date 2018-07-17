@@ -155,8 +155,20 @@ def show_emprestimoequipamento(request, pk=None):
         })
 
 def projeto_handle(request, pk=None, pkdelete=None):
+    if request.method == 'POST':
+        form = ProjetoDenominacaoForm(request.POST, instance=ProjetoDenominacao.objects.get(pk=pk)) if pk else ProjetoDenominacaoForm(request.POST)
+        if form.is_valid() and form.save():
+            return redirect('projeto')
+    elif request.method == 'GET':
+        form = ProjetoDenominacaoForm(instance=ProjetoDenominacao.objects.get(pk=pk)) if pk else ProjetoDenominacaoForm()
+
+    return fetch_projeto(request, form, pk)
+
+
+def fetch_projeto(request, projeto_form, pk):
     return render(request, 'administracao/projeto2.html', {
         'content_title': 'Manter Projeto',
-        'form': ProjetoDenominacaoForm()
+        'form': projeto_form,
+        'pk': pk
     })
 

@@ -98,25 +98,27 @@
             <div class="panel-heading"><b>Nome e Sigla</b></div>
             <div class="panel-body">
 
-                <form class="form" role="form" method="POST" action="{% if pk %} {% url 'bolsista-editar' pk %} {% else %}{% url 'bolsista-criar' %}{% endif %}">
+                <form class="form" role="form" method="POST" action="{% if pk %} {% url 'projeto-editar' pk %} {% else %}{% url 'projeto-criar' %}{% endif %}">
 
-                        <div class="form-group row required">
-                            <label for="inputKey" class="col-md-2 control-label">Nome do Projeto:</label>
-                            <div class="col-md-10">
-                                {{ form.nome }}
-                                <div class="help-block">{{ form.nome.errors }}</div>
-                            <br>
-                            </div>
-                        </div>
+                    {% csrf_token %}
 
-                        <div class="form-group row required">
-                            <label for="inputKey" class="col-md-2 control-label">Sigla:</label>
-                            <div class="col-md-10">
-                                {{ form.sigla }}
-                                <div class="help-block">{{ form.sigla.errors }}</div>
-                            <br>
-                            </div>
+                    <div class="form-group row required">
+                        <label for="inputKey" class="col-md-2 control-label">Nome do Projeto:</label>
+                        <div class="col-md-10">
+                            {{ form.nome }}
+                            <div class="help-block">{{ form.nome.errors }}</div>
+                        <br>
                         </div>
+                    </div>
+
+                    <div class="form-group row required">
+                        <label for="inputKey" class="col-md-2 control-label">Sigla:</label>
+                        <div class="col-md-10">
+                            {{ form.sigla }}
+                            <div class="help-block">{{ form.sigla.errors }}</div>
+                        <br>
+                        </div>
+                    </div>
 
                     <button type="submit" class="btn btn-info">Salvar</button>
                     <a href="{% url 'bolsista' %}" class="btn btn-default">Voltar</a>
