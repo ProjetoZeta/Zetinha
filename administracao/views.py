@@ -6,7 +6,7 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django import forms
 
-from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, Projeto, EmprestimoEquipamento
+from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, Projeto, EmprestimoEquipamento,ProjetoDenominacao
 from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, ProjetoDenominacaoForm, EmprestimoEquipamentoForm
 
 # Create your views here.
@@ -56,8 +56,8 @@ def projeto(request, pk=None, pkdelete=None):
             item.delete()
         return redirect('projeto')
     return render(request, 'administracao/crud-projeto.html', {
-        'data': Projeto.objects.all(),
-        'form': ProjetoForm(),
+        'data': ProjetoDenominacao.objects.all(),
+        'form': ProjetoDenominacaoForm(),
         'content_title': 'Projeto'
     })
 
