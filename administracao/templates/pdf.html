@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Sales Report</title>
+    <style type="text/css">
+        @page {
+            size: A4;
+            margin: 1cm;
+        }
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 5px;
+            background-color: #fff;
+        }
+        .table th,
+        .table td {
+            padding: 5px;
+            vertical-align: top;
+            border-top: 1px solid #000;
+            text-align: center;
+        }
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #000;
+        }
+        .table tbody + tbody {
+            border-top: 2px solid #000;
+        }
+        .table .table {
+            background-color: #fff;
+        }
+        .list-group {
+            display: block;
+            width: 100%;
+            list-style: none;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .list-group p {
+            width: 100%;
+            height: 20px;
+            line-height: 20px;
+            list-style: none;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h3>Formulário Bolsista - {{ today | date:"d/m/Y" }}</h3>
+        </div>
+
+
+        {% for bolsista in bolsistas %}
+        <div class="form-group row ">
+                <div class="{% if form.matricula.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputKey" class="col-md-2 control-label">Nome:</label>
+                    <div class="col-md-4">
+                        {{ bolsista.no_bolsista }}<br>
+                        {{bolsista.email}}<br>
+                        {{bolsista.cpf}}<br>
+                        {{bolsista.dt_nascimento}}<br>
+                        {{bolsista.rg}}<br>
+                        {{bolsista.orgao_expedidor}}<br>
+                        {{bolsista.telefone}}<br>
+                        {{bolsista.celular}}<br>
+                        {{bolsista.matricula}}<br>
+                        {{bolsista.pis_nit}}<br>
+                        {{bolsista.endereco}}<br>
+                        {{bolsista.cidade}}<br>
+                        {{bolsista.cep}}<br>
+                        {{bolsista.uf}}<br>
+                        {{bolsista.banco}}<br>
+                        {{bolsista.agencia}}<br>
+                        {{bolsista.tipo_conta}}<br>
+                        {{bolsista.conta}}<br>
+                        {{bolsista.projeto_atual}}<br>
+
+                    </div>
+                </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>

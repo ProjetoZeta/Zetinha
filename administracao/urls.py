@@ -1,9 +1,11 @@
 from django.conf.urls import url
+from django.urls import include, path
 from administracao import views
+from administracao.views import Pdf
 
 urlpatterns = [
     url(r'^$', views.main, name='main'),
-
+    path(r'render/pdf/', Pdf.as_view()),
     url(r'^cargo$', views.cargo, name='cargo'),
     url(r'^cargo/(?P<pk>[0-9]+)/editar$', views.cargo, name='cargo-editar'),
     url(r'^cargo/(?P<pkdelete>[0-9]+)/remover$', views.cargo, name='cargo-remover'),
@@ -43,5 +45,7 @@ urlpatterns = [
     url(r'^projeto/novo$', views.projeto_handle, name='projeto-criar'),
     url(r'^projeto/(?P<pk>[0-9]+)/editar$', views.projeto_handle, name='projetodenominacao-editar'),
     url(r'^projeto/(?P<pkdelete>[0-9]+)/remover$', views.projeto, name='projetodenominacao-remover'),
+
+
 
 ]

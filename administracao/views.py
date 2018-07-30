@@ -8,6 +8,9 @@ from django import forms
 
 from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, Projeto, EmprestimoEquipamento,ProjetoDenominacao
 from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, ProjetoDenominacaoForm, EmprestimoEquipamentoForm
+from .render import Render
+from django.views.generic import View
+from django.utils import timezone
 
 # Create your views here.
 
@@ -172,3 +175,15 @@ def fetch_projeto(request, projeto_form, pk):
         'pk': pk
     })
 
+class Pdf(View):
+
+    def get(self, request):
+        bolsistas = Bolsista.objects.all()
+        today = timezone.now()
+        params = {
+            'today': today,
+            'bolsistas': bolsistas,
+            'request': request
+        }
+        
+        return Render.render('pdf.html', params)
