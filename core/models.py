@@ -144,7 +144,7 @@ class Bolsista(models.Model):
     email_unb = models.EmailField('Email UnB', unique=True, blank=True)
     telefone_local = models.CharField('Telefone Local', max_length=32, blank=True)
 
-    projeto_atual = models.ForeignKey('Projeto', on_delete=models.CASCADE, related_name='atuacao', blank=True)
+    projeto_atual = models.ForeignKey('ProjetoDenominacao', on_delete=models.CASCADE, related_name='atuacao', blank=True)
 
     def __str__(self):
         return self.no_bolsista
@@ -220,3 +220,5 @@ class ProjetoDenominacao(models.Model):
     class Meta:
         verbose_name_plural = "Denominações de Projetos"
         verbose_name = "Denominação de Projeto"
+    def __str__(self):
+        return self.nome
