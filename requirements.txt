@@ -3,3 +3,4 @@ django-bootstrap3==9.1.0
 django-cleanup==1.0.1
 psycopg2==2.7.3.2
 pytz==2018.3
+xhtml2pdf==0.2.2

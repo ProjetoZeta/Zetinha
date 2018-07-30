@@ -78,10 +78,12 @@
 {% endblock %}
 
 {% block js %}
+<script src="https://rawgit.com/Lautert/helpers/master/javascript.helpers.js"></script>
+
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
     <script>
         $(document).ready(function () {
-            $('#modal-file').modal({% if formf.errors %}'show'{% else %}''{% endif %});
+            $('#modal-file').modal({% if form.errors %}'show'{% else %}''{% endif %});
 
         });
 
@@ -90,9 +92,30 @@
 
             $("#id_cpf").mask('000.000.000-00', {reverse: true});
             $("#id_dt_nascimento").mask('00/00/0000', {reverse: true});
+            $("#id_inicio_vigencia").mask('00/00/0000', {reverse: true});
+            $("#id_termino_vigencia").mask('00/00/0000', {reverse: true});
             $('#id_telefone').mask('(00) 0000-0000');
             $('#id_celular').mask('(00) 0 0000-0000');
             $('#id_cep').mask('00.000-000');
+            $('#id_valor_mensal')
+            
+     
+            $("#id_periodo_total").on("click", function (event) {
+                event.preventDefault();
+                var inicio = $('#id_inicio_vigencia').val()
+                var fim = $("#id_termino_vigencia").val()
+                var dt_inicio = new Date(inicio.toDate('dd/mm/yyyy'));
+                var dt_fim = new Date(fim.toDate('dd/mm/yyyy'));
+                var timeDiff = Math.abs(dt_fim.getTime() - dt_inicio.getTime());
+                var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+                var months = Math.trunc(diffDays / 30); 
+                $("#id_periodo_total").val(months)
+
+            });
+
+            
+
+
         });
 
     </script>
@@ -172,20 +195,6 @@
                     </div>
                 </div>
 
-                <!--<div class="form-row">
-                    <div class="form-group">
-                        <label class="col-sm-4">
-                            <input type="radio" name="editList" value="always"/>Servidor Público - Professor
-                        </label>
-                        <label class="col-sm-4">
-                            <input type="radio" name="editList" value="never"/>Servidor Público ou Empregado Público
-                        </label>
-                        <label class="col-sm-4">
-                            <input type="radio" name="editList" value="costChange"/>Colaborador sem vínculo com o
-                            serviço
-                        </label>
-                    </div>
-                </div>-->
 
                 <div class="form-group required {% if form.no_bolsista.errors %}{{ "has-error" }}{% endif %}">
                     <label for="name" class="control-label col-sm-2">Nome:</label>
@@ -299,6 +308,109 @@
 
             </fieldset>
 
+
+            <fieldset class="well">
+            <legend class="the-legend">Especificação da Bolsa</legend>
+
+
+
+
+            <div class="form-group row ">
+                <div class="{% if form.categoria.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputKey" class="col-md-2 control-label">Categoria:</label>
+                    <div class="col-md-4">
+                        {{ form.categoria }}
+                        <div class="help-block">{{ form.categoria.errors }}</div>
+                    </div>
+                </div>
+                <div class="{% if form.orgao_expedidor.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputValue" class="col-md-3 control-label">Modalidade:</label>
+                    <div class="col-md-3">
+                        {{ form.modalidade }}
+                        <div class="help-block">{{ form.modalidade.errors }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row ">
+                <div class="{% if form.nivel.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputKey" class="col-md-2 control-label">Nivel:</label>
+                    <div class="col-md-4">
+                        {{ form.nivel }}
+                        <div class="help-block">{{ form.nivel.errors }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row ">
+                <div class="{% if form.inicio_vigencia.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputKey" class="col-md-2 control-label">Início da Vigência:</label>
+                    <div class="col-md-4">
+                        {{ form.inicio_vigencia }}
+                        <div class="help-block">{{ form.inicio_vigencia.errors }}</div>
+                    </div>
+                </div>
+                <div class="{% if form.termino_vigencia.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputValue" class="col-md-3 control-label">Término da Vigência:</label>
+                    <div class="col-md-3">
+                        {{ form.termino_vigencia }}
+                        <div class="help-block">{{ form.termino_vigencia.errors }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row ">
+                <div class="{% if form.periodo_total.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputKey" class="col-md-2 control-label">Período Total Previsto:</label>
+                    <div class="col-md-4">
+                        {{ form.periodo_total }}
+                        <div class="help-block">{{ form.periodo_total.errors }}</div>
+                    </div>
+                </div>
+                <div class="{% if form.horas_semanais.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputValue" class="col-md-3 control-label">Horas Semanais:</label>
+                    <div class="col-md-3">
+                        {{ form.horas_semanais }}
+                        <div class="help-block">{{ form.horas_semanais.errors }}</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group row ">
+                <div class="{% if form.valor_mensal.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputKey" class="col-md-2 control-label">Valor Mensal:</label>
+                    <div class="col-md-4">
+                        {{ form.valor_mensal }}
+                        <div class="help-block">{{ form.valor_mensal.errors }}</div>
+                    </div>
+                </div>
+                <div class="{% if form.valor_total.errors %}{{ "has-error" }}{% endif %}">
+                    <label for="inputValue" class="col-md-3 control-label">Valor Total:</label>
+                    <div class="col-md-3">
+                        {{ form.valor_total }}
+                        <div class="help-block">{{ form.valor_total.errors }}</div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </fieldset>
+
             <fieldset class="well">
               <div class="form-group row required">
 
@@ -383,6 +495,7 @@
                 </div>
 
             </fieldset>
+
 
             <fieldset class="well">
 

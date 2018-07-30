@@ -146,6 +146,17 @@ class Bolsista(models.Model):
 
     projeto_atual = models.ForeignKey('ProjetoDenominacao', on_delete=models.CASCADE, related_name='atuacao', blank=True)
 
+    ##Talvez isso precise de um refactoring
+    categoria = models.CharField('Categoria', max_length=100, blank=True )
+    modalidade = models.CharField('Modalidade', max_length=100, blank=True )
+    nivel = models.CharField('Nível', max_length=100, blank=True )
+    inicio_vigencia = models.CharField('Início da Vigência', max_length=100, blank=True )
+    termino_vigencia = models.CharField('Término da Vigência', max_length=100, blank=True )
+    periodo_total = models.CharField('Período Total Previsto', max_length=100, blank=True )
+    valor_mensal = models.CharField('Valor Mensal', max_length=100, blank=True )
+    horas_semanais = models.CharField('Número de Horas semanais', max_length=100, blank=True )
+    valor_total = models.CharField('Valor Total', max_length=100, blank=True )
+
     def __str__(self):
         return self.no_bolsista
 
