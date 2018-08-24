@@ -18,6 +18,10 @@ deploy:homol:
     - echo "$HOMOL_PRIVATE_KEY" | ssh-add -
     - mkdir -p ~/.ssh
     - echo "$SSH_SERVER_HOSTKEYS" > ~/.ssh/known_hosts
+    - apt-get install python3-setuptools
+    - apt-get install libtiff5-dev libjpeg8-dev zlib1g-dev
+    - apt-get install libfreetype6-dev liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev
+    - apt-get installtcl8.6-dev tk8.6-dev python-tk
   script:
     - echo "Configuring database"
     - >-
@@ -49,6 +53,10 @@ deploy:dev:
     - echo "$DEV_PRIVATE_KEY" | ssh-add -
     - mkdir -p ~/.ssh
     - echo "$SSH_SERVER_HOSTKEYS" > ~/.ssh/known_hosts
+    - apt-get install python3-setuptools
+    - apt-get install libtiff5-dev libjpeg8-dev zlib1g-dev
+    - apt-get install libfreetype6-dev liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev
+    - apt-get installtcl8.6-dev tk8.6-dev python-tk
   script:
     - echo "Configuring database"
     - >-
