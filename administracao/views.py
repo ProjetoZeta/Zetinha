@@ -6,8 +6,8 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django import forms
 
-from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, Projeto, EmprestimoEquipamento,ProjetoDenominacao
-from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, ProjetoDenominacaoForm, EmprestimoEquipamentoForm
+from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, Projeto, EmprestimoEquipamento,ProjetoDenominacao, ProjetoInteressados, ProjetoMetas
+from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, ProjetoDenominacaoForm, EmprestimoEquipamentoForm, ProjetoInteressadosForm, ProjetoMetasForm
 from .render import Render
 from django.views.generic import View
 from django.utils import timezone
@@ -159,21 +159,28 @@ def show_emprestimoequipamento(request, pk=None):
 
 def projeto_handle(request, pk=None, pkdelete=None):
     if request.method == 'POST':
-        form = ProjetoDenominacaoForm(request.POST, instance=ProjetoDenominacao.objects.get(pk=pk)) if pk else ProjetoDenominacaoForm(request.POST)
+        form_denominacao = ProjetoDenominacaoForm(request.POST, instance=ProjetoDenominacao.objects.get(pk=pk)) if pk else ProjetoDenominacaoForm(request.POST)
+        form_interessados = ProjetoInteressadosForm(request.POST, instance=ProjetoInteressados.objects.get(pk=pk)) if pk else ProjetoInteressadosForm(request.POST)
+        form_metas = ProjetoMetasForm(request.POST, instance=ProjetoMetas.objects.get(pk=pk)) if pk else ProjetoMetasForm(request.POST)
+
         if form.is_valid() and form.save():
             return redirect('projeto')
     elif request.method == 'GET':
-        form = ProjetoDenominacaoForm(instance=ProjetoDenominacao.objects.get(pk=pk)) if pk else ProjetoDenominacaoForm()
+        form_denominacao = ProjetoDenominacaoForm(instance=ProjetoDenominacao.objects.get(pk=pk)) if pk else ProjetoDenominacaoForm()
+        form_interessados = ProjetoInteressadosForm(instance=ProjetoInteressados.objects.get(pk=pk)) if pk else ProjetoInteressadosForm()
+        form_metas = ProjetoMetasForm(instance=ProjetoMetas.objects.get(pk=pk)) if pk else ProjetoMetasForm()
 
-    return fetch_projeto(request, form, pk)
+    return fetch_projeto(request, form_denominacao, form_interessados, form_metas, pk)
 
 
-def fetch_projeto(request, projeto_form, pk):
-    return render(request, 'administracao/projeto2.html', {
-        'content_title': 'Manter Projeto',
-        'form': projeto_form,
-        'pk': pk
-    })
+def fetch_projeto(request, form_denominacao, form_interessados, form_metas, pk):
+    return render(request,'administracao/projeto2.html', {
+                'content_title': 'Manter Projeto',
+                'form_denominacao': form_denominacao,
+                'form_interessados': form_interessados,
+                'form_metas': form_metas,
+                'pk': pk
+                })
 
 class Pdf(View):
 
@@ -185,5 +192,5 @@ class Pdf(View):
             'bolsistas': bolsistas,
             'request': request
         }
-        
+
         return Render.render('pdf.html', params)

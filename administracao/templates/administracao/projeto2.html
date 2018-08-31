@@ -80,13 +80,13 @@
 
 <ul class="nav nav-pills nav-justified">
     <li class="active"><a data-toggle="tab" href="#menu1">Denominação do Projeto</a></li>
-    <li class="disabled"><a data-toggle="tab-disabled" href="#menu2">Dados Cadastrais dos Interessados</a></li>
-    <li class="disabled"><a data-toggle="tab-disabled" href="#menu3">Participantes</a></li>
-    <li class="disabled"><a data-toggle="tab-disabled" href="#menu4">Cronograma/Meta</a></li>
-    <li class="disabled"><a data-toggle="tab-disabled" href="#menu5">Vincular Atividade ao Bolsista</a></li>
-    <li class="disabled"><a data-toggle="tab-disabled" href="#menu6">Metas do Projeto</a></li>
-    <li class="disabled"><a data-toggle="tab-disabled" href="#menu7">Anexos</a></li>
-    <li class="disabled"><a data-toggle="tab-disabled" href="#menu8">Resumo do Projeto</a></li>
+    <li class="disabled"><a data-toggle="tab" href="#menu2">Dados Cadastrais dos Interessados</a></li>
+    <li class="disabled"><a data-toggle="tab" href="#menu3">Participantes</a></li>
+    <li class="disabled"><a data-toggle="tab" href="#menu4">Cronograma/Meta</a></li>
+    <li class="disabled"><a data-toggle="tab" href="#menu5">Vincular Atividade ao Bolsista</a></li>
+    <li class="disabled"><a data-toggle="tab" href="#menu6">Metas do Projeto</a></li>
+    <li class="disabled"><a data-toggle="tab" href="#menu7">Anexos</a></li>
+    <li class="disabled"><a data-toggle="tab" href="#menu8">Resumo do Projeto</a></li>
 </ul>
 
 <div class="tab-content">
@@ -98,15 +98,15 @@
             <div class="panel-heading"><b>Nome e Sigla</b></div>
             <div class="panel-body">
 
-                <form class="form" role="form" method="POST" action="{% if pk %} {% url 'projeto-editar' pk %} {% else %}{% url 'projeto-criar' %}{% endif %}">
+                <class="form_denominacao" role="form" method="POST" action="{% if pk %} {% url 'projeto-editar' pk %} {% else %}{% url 'projeto-criar' %}{% endif %}"> <!-- TODO:  -->
 
                     {% csrf_token %}
 
                     <div class="form-group row required">
                         <label for="inputKey" class="col-md-2 control-label">Nome do Projeto:</label>
                         <div class="col-md-10">
-                            {{ form.nome }}
-                            <div class="help-block">{{ form.nome.errors }}</div>
+                            {{ form_denominacao.nome }}
+                            <div class="help-block">{{ form_denominacao.nome.errors }}</div>
                         <br>
                         </div>
                     </div>
@@ -114,8 +114,8 @@
                     <div class="form-group row required">
                         <label for="inputKey" class="col-md-2 control-label">Sigla:</label>
                         <div class="col-md-10">
-                            {{ form.sigla }}
-                            <div class="help-block">{{ form.sigla.errors }}</div>
+                            {{ form_denominacao.sigla }}
+                            <div class="help-block">{{ form_denominacao.sigla.errors }}</div>
                         <br>
                         </div>
                     </div>
@@ -141,11 +141,11 @@
 
                     <legend class="the-legend">1 - Proponente</legend>
 
-                    <div class="form-group required {% if form.fk_entidade_proponente.errors %}{{ "has-error" }}{% endif %}">
+                    <div class="form-group required {% if form_interessados.entidade_proponente.errors %}{{ "has-error" }}{% endif %}">
                         <label for="name" class="control-label col-sm-2">Entidade Proponente</label>
                         <div class="col-sm-10">
-                            {{ form.fk_entidade_proponente}}
-                            <div class="help-block">{{ form.fk_entidade_proponente.errors }}</div>
+                            {{ form_interessados.entidade_proponente}}
+                            <div class="help-block">{{ form_interessados.entidade_proponente.errors }}</div>
                         </div>
                     </div>
 
@@ -157,28 +157,28 @@
 
                     <legend class="the-legend">2 - Concedente</legend>
 
-                    <div class="form-group row required  {% if form.fk_entidade_concedente.errors %}{{ "has-error" }}{% endif %}">
+                    <div class="form-group row required  {% if form_interessados.entidade_concedente.errors %}{{ "has-error" }}{% endif %}">
                         <label for="inputValue" class="col-md-2 control-label">Entidade Concedente:</label>
                         <div class="col-sm-10">
-                            {{ form.fk_entidade_concedente}}
-                            <div class="help-block">{{ form.fk_entidade_concedente.errors }}</div>
+                            {{ form_interessados.entidade_concedente}}
+                            <div class="help-block">{{ form_interessados.entidade_concedente.errors }}</div>
                         </div>
                     </div>
-                    
 
-                    <div class="form-group row required {% if form.fk_responsavel_concedente.errors %}{{ "has-error" }}{% endif %}">
+
+                    <div class="form-group row required {% if form_interessados.responsavel_concedente.errors %}{{ "has-error" }}{% endif %}">
                         <label for="inputValue" class="col-md-2 control-label">Responsável Concedente:</label>
                         <div class="col-md-10">
-                            {{ form.fk_responsavel_concedente}}
-                            <div class="help-block">{{ form.fk_responsavel_concedente.errors }}</div>
+                            {{ form_interessados.responsavel_concedente}}
+                            <div class="help-block">{{ form_interessados.responsavel_concedente.errors }}</div>
                         </div>
                     </div>
 
-                    <div class="form-group row required {% if form.fk_responsavel_proponente.errors %}{{ "has-error" }}{% endif %}">
+                    <div class="form-group row required {% if form_interessados.responsavel_proponente.errors %}{{ "has-error" }}{% endif %}">
                         <label for="inputValue" class="col-md-2 control-label">Responsável Técnico:</label>
                         <div class="col-md-10">
-                            {{ form.fk_responsavel_proponente}}
-                            <div class="help-block">{{ form.fk_responsavel_proponente.errors }}</div>
+                            {{ form_interessados.responsavel_proponente}}
+                            <div class="help-block">{{ form_interessados.responsavel_proponente.errors }}</div>
                         </div>
                     </div>
 
@@ -335,7 +335,7 @@
                     <div class="form-group row required">
                         <label for="inputKey" class="col-md-2 control-label">Título da meta:</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" id="inputKey" placeholder="">
+                            {{form_metas.meta}}
                         <br>
                         </div>
                     </div>
@@ -343,7 +343,8 @@
                     <div class="form-group row required">
                         <label for="inputKey" class="col-md-2 control-label">Descrição:</label>
                         <div class="col-md-10">
-                            <textarea type="text" class="form-control" id="inputKey" placeholder=""></textarea>
+                            {{form_metas.descricao_meta}}
+
                         </div>
                     </div>
 
@@ -358,7 +359,13 @@
 
                 <fieldset class="well the-fieldset">
 
-                    <legend class="the-legend">Atividade Vinculada</legend>
+                    <div class="form-group row required">
+                        <label for="inputKey" class="col-md-2 control-label">Atividade vinculada:</label>
+                        <div class="col-md-10">
+                            {{form_metas.atividade_vinvulada}}
+
+                        </div>
+                    </div>
 
 
                 </fieldset>
@@ -431,7 +438,7 @@
                     <div class="form-group row required">
                         <label for="inputKey" class="col-md-2 control-label">6.1. Meta Específica:</label>
                         <div class="col-md-10">
-                            <textarea type="text" class="form-control" id="inputKey" placeholder=""></textarea>
+                            {{form_metas.meta_especifica}}
                         <br>
                         </div>
                     </div>
@@ -440,7 +447,7 @@
                         <label for="inputKey" class="col-md-2 control-label">6.2. Descrição da Atividades previstas do
                             Projeto:</label>
                         <div class="col-md-10">
-                            <textarea type="text" class="form-control" id="inputKey" placeholder=""></textarea>
+                            {{form_metas.descricao_meta}}
                         <br>
                         </div>
                     </div>
@@ -449,7 +456,7 @@
                 <div class="form-group row required">
                     <label for="inputKey" class="col-md-2 control-label">6.3. Metodologia:</label>
                     <div class="col-md-10">
-                        <textarea type="text" class="form-control" id="inputKey" placeholder=""></textarea>
+                        {{form_metas.metodologia}}
                     <br>
                     </div>
                 </div>
@@ -458,7 +465,7 @@
                     <label for="inputKey" class="col-md-2 control-label">6.4. Gestão de Projeto e Transferência de
                         Tecnologia:</label>
                     <div class="col-md-10">
-                        <textarea type="text" class="form-control" id="inputKey" placeholder=""></textarea>
+                        {{form_metas.gestao_transferencia_tecnologia}}
                     </div>
 
                 </div>
