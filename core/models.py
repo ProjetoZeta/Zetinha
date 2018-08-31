@@ -215,11 +215,11 @@ class Projeto(models.Model):
     dt_inicio = models.DateField('Data Início')
     dt_fim = models.DateField('Data Fim')
     du_duracao_meses = models.IntegerField('Quantidade de meses de duração')
-    identificao_objeto = models.TextField('Identificação do Projeto', max_length=2048)
-    justificativa = models.TextField('Justificativa', max_length=2048)
+    #identificao_objeto = models.TextField('Identificação do Projeto', max_length=2048)
+    #justificativa = models.TextField('Justificativa', max_length=2048)
     referencias_bibliograficas = models.TextField('Referências Bibliográficas', max_length=2048)
-    metodologia = models.TextField('metodologia', max_length=1024)
-    gestao_transferencia_tecnologia = models.TextField('Gestão de Transferência de Tecnologia', max_length=1024)
+    #metodologia = models.TextField('metodologia', max_length=1024)
+    #gestao_transferencia_tecnologia = models.TextField('Gestão de Transferência de Tecnologia', max_length=1024)
 
     def __str__(self):
         return "{} - {}".format(self.sg_projeto, self.no_projeto)
@@ -253,12 +253,6 @@ class ProjetoMetas(models.Model):
     metodologia = models.TextField('Metodologia', max_length=1024, default = "")
     atividades_previstas = models.TextField('Atividades previstas', max_length=1024, default = "")
     gestao_transferencia_tecnologia = models.TextField('Gestão de Transferência de Tecnologia', max_length=1024, default = "")
-
-    class Meta:
-        verbose_name_plural = "Metodos do projeto"
-        verbose_name = "Metodo do Projeto"
-    def __str__(self):
-        return self.nome
 
     class Meta:
         verbose_name_plural = "Metodos do projeto"
