@@ -6,8 +6,8 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django import forms
 
-from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, Projeto, EmprestimoEquipamento,ProjetoDenominacao, ProjetoInteressados, ProjetoMetas
-from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, ProjetoDenominacaoForm, EmprestimoEquipamentoForm, ProjetoInteressadosForm, ProjetoMetasForm
+from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, Projeto, EmprestimoEquipamento,ProjetoDenominacao, ProjetoInteressados, ProjetoMetas, ProjetoAnexos
+from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, ProjetoDenominacaoForm, EmprestimoEquipamentoForm, ProjetoInteressadosForm, ProjetoMetasForm, ProjetoAnexosForm
 from .render import Render
 from django.views.generic import View
 from django.utils import timezone
@@ -162,23 +162,24 @@ def projeto_handle(request, pk=None, pkdelete=None):
         form_denominacao = ProjetoDenominacaoForm(request.POST, instance=ProjetoDenominacao.objects.get(pk=pk)) if pk else ProjetoDenominacaoForm(request.POST)
         form_interessados = ProjetoInteressadosForm(request.POST, instance=ProjetoInteressados.objects.get(pk=pk)) if pk else ProjetoInteressadosForm(request.POST)
         form_metas = ProjetoMetasForm(request.POST, instance=ProjetoMetas.objects.get(pk=pk)) if pk else ProjetoMetasForm(request.POST)
-
+        form_anexos = ProjetoAnexosForm(request.POST, instance=ProjetoAnexos.objects.get(pk=pk)) if pk else ProjetoAnexosForm(request.POST)
         if form.is_valid() and form.save():
             return redirect('projeto')
     elif request.method == 'GET':
         form_denominacao = ProjetoDenominacaoForm(instance=ProjetoDenominacao.objects.get(pk=pk)) if pk else ProjetoDenominacaoForm()
         form_interessados = ProjetoInteressadosForm(instance=ProjetoInteressados.objects.get(pk=pk)) if pk else ProjetoInteressadosForm()
         form_metas = ProjetoMetasForm(instance=ProjetoMetas.objects.get(pk=pk)) if pk else ProjetoMetasForm()
+        form_anexos = ProjetoAnexosForm(instance=ProjetoAnexos.objects.get(pk=pk)) if pk else ProjetoAnexosForm()
+    return fetch_projeto(request, form_denominacao, form_interessados, form_metas, form_anexos, pk)
 
-    return fetch_projeto(request, form_denominacao, form_interessados, form_metas, pk)
 
-
-def fetch_projeto(request, form_denominacao, form_interessados, form_metas, pk):
+def fetch_projeto(request, form_denominacao, form_interessados, form_metas, form_anexos,  pk):
     return render(request,'administracao/projeto2.html', {
                 'content_title': 'Manter Projeto',
                 'form_denominacao': form_denominacao,
                 'form_interessados': form_interessados,
                 'form_metas': form_metas,
+                'form_anexos': form_anexos,
                 'pk': pk
                 })
 
