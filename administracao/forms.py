@@ -126,3 +126,9 @@ class ProjetoAnexosForm(BaseFormControl):
     class Meta:
         model = ProjetoAnexos
         fields = get_fields(model)
+        
+class ProjetoBolsistaForm(BaseFormControl):
+    preview = get_clean_fields(Bolsista)
+    class Meta:
+        model = Bolsista
+        fields = get_fields(model)
