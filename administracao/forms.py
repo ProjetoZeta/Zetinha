@@ -1,6 +1,6 @@
 from django import forms
 from common.forms import BaseForm, BaseFormControl
-from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, Projeto, EmprestimoEquipamento, ProjetoDenominacao, ProjetoInteressados, ProjetoMetas, ProjetoAnexos
+from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, Projeto, EmprestimoEquipamento, ProjetoDenominacao, ProjetoInteressados, ProjetoMetas, ProjetoAnexos, ProjetoBolsista
 from django.conf import settings
 from utils.models import get_fields, get_clean_fields
 
@@ -126,9 +126,9 @@ class ProjetoAnexosForm(BaseFormControl):
     class Meta:
         model = ProjetoAnexos
         fields = get_fields(model)
-        
+
 class ProjetoBolsistaForm(BaseFormControl):
-    preview = get_clean_fields(Bolsista)
+    preview = get_clean_fields(ProjetoBolsista)
     class Meta:
-        model = Bolsista
+        model = ProjetoBolsista
         fields = get_fields(model)

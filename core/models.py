@@ -266,3 +266,13 @@ class ProjetoAnexos(models.Model):
         verbose_name = "Anexo do Projeto"
     def __str__(self):
         return self.nome
+
+class ProjetoBolsista(models.Model):
+    objectlist = Bolsista.objects.all()
+    nome_bolsista_pr = models.CharField('Nome do bolsista', max_length=1024, choices=objectlist, default='')
+
+    class Meta:
+        verbose_name_plural = "Bolsistas do Projeto"
+        verbose_name = "Bolsista do Projeto"
+    def __str__(self):
+        return self.nome
