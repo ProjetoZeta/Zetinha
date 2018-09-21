@@ -79,7 +79,7 @@
 {% block content %}
 
 <ul class="nav nav-pills nav-justified">
-    <li class="active"><a data-toggle="tab" href="#menu1">Denominação do Projeto</a></li>
+    <li class="disabled"><a data-toggle="tab" href="#menu1">Denominação do Projeto</a></li>
     <li class="disabled"><a data-toggle="tab" href="#menu2">Dados Cadastrais dos Interessados</a></li>
     <li class="disabled"><a data-toggle="tab" href="#menu3">Participantes</a></li>
     <li class="disabled"><a data-toggle="tab" href="#menu4">Cronograma/Meta</a></li>
@@ -204,23 +204,24 @@
 
                     <label for="inputValue" class="col-md-2 control-label">Nome Completo:</label>
                     <div class="col-md-10">
-                        {{ form_bolsista.nome_bolsista_pr}}
-                        <div class="help-block">{{ form_bolsista.nome_bolsista_pr.errors}}</div>
+                        {{ form_bolsista.no_bolsista}}
+                        <div class="help-block">{{ form_bolsista.no_bolsista.errors}}</div>
                     </div>
                 </div>
 
                 <div class="form-group row required">
                     <label for="inputValue" class="col-md-2 control-label">Função:</label>
                     <div class="col-md-10">
-                        {{ form.fk_funcao}}
-                        <div class="help-block">{{ form.fk_funcao.errors}}</div>
+                        {{ form_bolsista.funcao}}
+                        <div class="help-block">{{ form_bolsista.funcao.errors}}</div>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="inputValue" class="col-md-2 control-label">Ativo:</label>
                     <div class="col-md-1">
-                        <input type="checkbox" class="form-control" id="inputValue" placeholder="">
+                        {{ form_bolsista.ic_ativo}}
+                        <div class="help-block">{{ form_bolsista.ic_ativo.errors}}</div>
                     <br>
                     </div>
                 </div>
@@ -231,11 +232,8 @@
                     <div class="form-group row required">
                         <label for="inputValue" class="col-md-2 control-label">Categoria da Bolsa:</label>
                         <div class="col-md-4">
-                            <select class="form-control" id="sel1">
-                                <option selected="selected" disabled>Selecione uma opção</option>
-                                <option>Bolsa de Aux. Financeiro a Estudante</option>
-                                <option>Bolsa de Aux. a Pesquisador</option>
-                            </select>
+                            {{ form_bolsista.categoria}}
+                            <div class="help-block">{{ form_bolsista.categoria.errors}}</div>
                         <br>
                         </div>
                         <label for="inputKey" class="col-md-2 control-label">Período Total Prevísto:</label>
@@ -247,21 +245,14 @@
                     <div class="form-group row required">
                         <label for="inputValue" class="col-md-2 control-label">Modalidade da Bolsa:</label>
                         <div class="col-md-4">
-                            <select class="form-control" id="sel1">
-                                <option selected="selected" disabled>Selecione uma opção</option>
-                                <option>Mestrado</option>
-                                <option>Lista Item 1 e/ou Iniciação Científica</option>
-                                <option>Nível Médio</option>
-                                <option>Pesquisador Sênior</option>
-                                <option>Pesquisa Acadêmica</option>
-                                <option>Pesquisa, Desenvolvimento e Inovação PDI</option>
-                                <option>Apoio Operacional à Pesquisa</option>
-                            </select>
+                                {{ form_bolsista.modalidade}}
+                                <div class="help-block">{{ form_bolsista.modalidade.errors}}</div>
                         <br>
                         </div>
                         <label for="inputKey" class="col-md-2 control-label">Número de horas semanais:</label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" id="inputKey" placeholder="">
+                            {{ form_bolsista.horas_semanais}}
+                            <div class="help-block">{{ form_bolsista.horas_semanais.errors}}</div>
                         <br>
                         </div>
                     </div>
@@ -269,18 +260,14 @@
                     <div class="form-group row required">
                         <label for="inputValue" class="col-md-2 control-label">Nível:</label>
                         <div class="col-md-4">
-                            <select class="form-control" id="sel1">
-                                <option selected="selected" disabled>Selecione uma opção</option>
-                                <option>A</option>
-                                <option>B</option>
-                                <option>C</option>
-                                <option>D</option>
-                            </select>
+                            {{ form_bolsista.nivel}}
+                            <div class="help-block">{{ form_bolsista.nivel.errors}}</div>
                         <br>
                         </div>
                         <label for="inputKey" class="col-md-2 control-label">Valor Mensal:</label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" id="inputKey" placeholder="">
+                            <{{ form_bolsista.valor_mensal}}
+                            <div class="help-block">{{ form_bolsista.valor_mensal.errors}}</div>
                         <br>
                         </div>
                     </div>
@@ -291,26 +278,29 @@
                             <fieldset class="well the-fieldset">
                                 <label for="inputKey" class="col-md-3 control-label">Início:</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" id="inputKey" placeholder="">
+                                    {{ form_bolsista.inicio_vigencia}}
+                                    <div class="help-block">{{ form_bolsista.inicio_vigencia.errors}}</div>
                                 <br>
                                 </div>
                                 <label for="inputKey" class="col-md-3 control-label">Término:</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" id="inputKey" placeholder="">
+                                    {{ form_bolsista.termino_vigencia}}
+                                    <div class="help-block">{{ form_bolsista.termino_vigencia.errors}}</div>
                                 </div>
                             </fieldset>
                         </div>
                         <label for="inputKey" class="col-md-2 control-label">Valor Total:</label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" id="inputKey" placeholder="">
+                            {{ form_bolsista.valor_total}}
+                            <div class="help-block">{{ form_bolsista.valor_total.errors}}</div>
                         <br>
                         </div>
                     </div>
 
                 </fieldset>
 
-                <button type="submit" class="btn btn-info">Adicionar</button>
-                <button type="submit" class="btn btn-default">Cancelar</button>
+                <button type="submit" class="btn btn-info">Salvar</button>
+                <a href="{% url 'bolsista' %}" class="btn btn-default">Voltar</a>
 
             </div>
 

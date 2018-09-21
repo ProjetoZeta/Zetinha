@@ -163,7 +163,7 @@ def projeto_handle(request, pk=None, pkdelete=None):
         form_interessados = ProjetoInteressadosForm(request.POST, instance=ProjetoInteressados.objects.get(pk=pk)) if pk else ProjetoInteressadosForm(request.POST)
         form_metas = ProjetoMetasForm(request.POST, instance=ProjetoMetas.objects.get(pk=pk)) if pk else ProjetoMetasForm(request.POST)
         form_anexos = ProjetoAnexosForm(request.POST, instance=ProjetoAnexos.objects.get(pk=pk)) if pk else ProjetoAnexosForm(request.POST)
-        form_bolsista = ProjetoBolsistaForm(request.POST, instance=ProjetoBolsista.objects.get(pk=pk)) if pk else ProjetoBolsistaForm(request.POST)
+        form_bolsista = BolsistaForm(request.POST, instance=Bolsista.objects.get(pk=pk)) if pk else BolsistaForm(request.POST)
         if form.is_valid() and form.save():
             return redirect('projeto')
     elif request.method == 'GET':
@@ -171,7 +171,7 @@ def projeto_handle(request, pk=None, pkdelete=None):
         form_interessados = ProjetoInteressadosForm(instance=ProjetoInteressados.objects.get(pk=pk)) if pk else ProjetoInteressadosForm()
         form_metas = ProjetoMetasForm(instance=ProjetoMetas.objects.get(pk=pk)) if pk else ProjetoMetasForm()
         form_anexos = ProjetoAnexosForm(instance=ProjetoAnexos.objects.get(pk=pk)) if pk else ProjetoAnexosForm()
-        form_bolsista = ProjetoBolsistaForm(instance=ProjetoBolsista.objects.get(pk=pk)) if pk else ProjetoBolsistaForm()
+        form_bolsista = BolsistaForm(instance=Bolsista.objects.get(pk=pk)) if pk else BolsistaForm()
     return fetch_projeto(request, form_denominacao, form_interessados, form_metas, form_anexos, form_bolsista, pk)
 
 
