@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Entidade, Cargo, Responsavel, Usuario, Bolsista, Documento, Projeto, ProjetoDenominacao
+from .models import Entidade, Cargo, Responsavel, Usuario, Bolsista, Documento, ProjetoDenominacao ,ProjetoInteressados, ProjetoMetas, ProjetoAnexos
 from .forms import UsuarioChangeForm
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
@@ -22,6 +22,6 @@ admin.site.register(Cargo)
 admin.site.register(Responsavel)
 admin.site.register(Bolsista)
 admin.site.register(Documento)
-admin.site.register(Projeto)
 admin.site.register(ProjetoDenominacao)
-
+admin.site.register(ProjetoInteressados)
+admin.site.register(ProjetoMetas)

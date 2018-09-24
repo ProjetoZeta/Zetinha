@@ -27,6 +27,9 @@ class Entidade(models.Model):
     co_esfera = models.CharField('Esfera', max_length=32, unique=True)
     de_endereco = models.CharField('Endereço', max_length=128, unique=True)
 
+    def __str__(self):
+        return "{} - {}".format(self.no_entidade, self.sg_entidade)
+
 
 class Cargo(models.Model):
     no_cargo = models.CharField('Nome', max_length=32, unique=True)
@@ -53,6 +56,8 @@ class Responsavel(models.Model):
         verbose_name_plural = "responsáveis"
         verbose_name = "responsável"
 
+    def __str__(self):
+        return self.no_responsavel
 
 
 
@@ -233,25 +238,6 @@ class EmprestimoEquipamento(models.Model):
     def __str__(self):
         return dict(EmprestimoEquipamento.TIPOS).get(self.tipo_equipamento)
 
-class Projeto(models.Model):
-    #no_projeto = models.CharField('Nome do Projeto', max_length=32)
-    #entidade_proponente = models.ForeignKey('Entidade', on_delete=models.CASCADE, related_name='proponente')
-    #responsavel_proponente = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='proponente')
-    #entidade_concedente = models.ForeignKey('Entidade', on_delete=models.CASCADE, related_name='concedente')
-    #responsavel_concedente = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='concedente')
-
-    #sg_projeto = models.CharField('Sigla', max_length=32, unique=True)
-    dt_inicio = models.DateField('Data Início')
-    dt_fim = models.DateField('Data Fim')
-    du_duracao_meses = models.IntegerField('Quantidade de meses de duração')
-    #identificao_objeto = models.TextField('Identificação do Projeto', max_length=2048)
-    #justificativa = models.TextField('Justificativa', max_length=2048)
-    referencias_bibliograficas = models.TextField('Referências Bibliográficas', max_length=2048)
-    #metodologia = models.TextField('metodologia', max_length=1024)
-    #gestao_transferencia_tecnologia = models.TextField('Gestão de Transferência de Tecnologia', max_length=1024)
-
-    def __str__(self):
-        return "{} - {}".format(self.sg_projeto, self.no_projeto)
 
 class ProjetoDenominacao(models.Model):
     nome = models.CharField('Nome do Projeto', max_length=32)
@@ -274,7 +260,7 @@ class ProjetoInteressados(models.Model):
         verbose_name_plural = "Interessados ao Projeto"
         verbose_name = "Interessado ao Projeto"
     def __str__(self):
-        return self.nome
+        return "{} - {}".format(self.entidade_concedente, self.entidade_proponente)
 class ProjetoMetas(models.Model):
     meta = models.CharField('Titulo da meta', max_length=64, default = "")
     descricao_meta = models.TextField('Descrição da meta', max_length=1024, default = "")
@@ -294,39 +280,5 @@ class ProjetoAnexos(models.Model):
     class Meta:
         verbose_name_plural = "Anexos do projeto"
         verbose_name = "Anexo do Projeto"
-    def __str__(self):
-        return self.nome
-
-class ProjetoBolsista(models.Model):
-    FUNCAO = (
-        ('1', '5'),
-        ('2', '4'),
-        ('2', '3'),
-        ('4', '2'),
-        ('5', '1'),
-    )
-    CATEGORIA = (
-        ('1', 'Bolsa de aux. ao estudante'),
-        ('2', 'Bolsa de aux. ao pesquisador '),
-    )
-    MODALIDADE = (
-        ('1', 'Mestrado'),
-        ('2', 'Iniciação Científica'),
-        ('3', 'Nível Médio'),
-        ('4', 'Pesquisador Sênior'),
-        ('5', 'Pesquisa Acadêmica'),
-        ('6', 'Pesquisa, Desenvolvimento e Inovação PDI'),
-        ('7', 'Apoio Operacional à Pesquisa'),
-
-    )
-
-    nome_bolsista_pr = models.ForeignKey('Bolsista',on_delete=models.CASCADE, related_name='participante')
-    funcao = models.CharField('Funcao', max_length=1, choices=FUNCAO, default='1')
-    cat_bolsa = models.CharField('Categoria', max_length=1, choices=CATEGORIA, default='1')
-    mod_bolsa = models.CharField('Modalidade', max_length=1, choices=MODALIDADE, default='1')
-    
-    class Meta:
-        verbose_name_plural = "Bolsistas do Projeto"
-        verbose_name = "Bolsista do Projeto"
     def __str__(self):
         return self.nome

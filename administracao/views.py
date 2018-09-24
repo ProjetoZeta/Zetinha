@@ -6,8 +6,8 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django import forms
 
-from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, Projeto, EmprestimoEquipamento,ProjetoDenominacao, ProjetoInteressados, ProjetoMetas, ProjetoAnexos
-from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, ProjetoDenominacaoForm, EmprestimoEquipamentoForm, ProjetoInteressadosForm, ProjetoMetasForm, ProjetoAnexosForm, ProjetoBolsistaForm
+from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento,ProjetoDenominacao, ProjetoInteressados, ProjetoMetas, ProjetoAnexos
+from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoDenominacaoForm, EmprestimoEquipamentoForm, ProjetoInteressadosForm, ProjetoMetasForm, ProjetoAnexosForm
 from .render import Render
 from django.views.generic import View
 from django.utils import timezone

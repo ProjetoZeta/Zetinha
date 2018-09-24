@@ -1,6 +1,6 @@
 from django import forms
 from common.forms import BaseForm, BaseFormControl
-from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, Projeto, EmprestimoEquipamento, ProjetoDenominacao, ProjetoInteressados, ProjetoMetas, ProjetoAnexos, ProjetoBolsista
+from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, ProjetoDenominacao, ProjetoInteressados, ProjetoMetas, ProjetoAnexos
 from django.conf import settings
 from utils.models import get_fields, get_clean_fields
 
@@ -65,43 +65,6 @@ class EmprestimoEquipamentoForm(BaseForm):
         model = EmprestimoEquipamento
         fields = get_fields(model, ignore=['dt_emprestimo'])
 
-
-class ProjetoForm(BaseForm):
-    preview = ['no_projeto', 'sg_projeto']
-    class Meta:
-        model = Projeto
-        fields = get_fields(model)
-
-class ProjetoFormEdit(BaseForm):
-    preview = get_clean_fields(Projeto)
-    fk_entidade_proponente = forms.ModelChoiceField(queryset=Entidade.objects.values_list('no_entidade',flat=True),
-                                                    widget=forms.Select(attrs={'class':'form-control'}),
-                                                    to_field_name="no_entidade")
-
-    fk_entidade_concedente = forms.ModelChoiceField(queryset=Entidade.objects.values_list('no_entidade',flat=True),
-                                                    widget=forms.Select(attrs={'class':'form-control'}),
-                                                    to_field_name="no_entidade")
-
-    fk_responsavel_proponente = forms.ModelChoiceField(queryset=Responsavel.objects.values_list('no_responsavel',flat=True),
-                                                    widget=forms.Select(attrs={'class':'form-control'}),
-                                                    to_field_name="no_responsavel")
-
-    fk_responsavel_concedente = forms.ModelChoiceField(queryset=Responsavel.objects.values_list('no_responsavel',flat=True),
-                                                    widget=forms.Select(attrs={'class':'form-control'}),
-                                                    to_field_name="no_responsavel")
-
-    fk_bolsita = forms.ModelChoiceField(queryset=Bolsista.objects.values_list('no_bolsista',flat=True),
-                                                    widget=forms.Select(attrs={'class':'form-control'}),
-                                                    to_field_name="no_bolsista")
-
-    fk_funcao = forms.ModelChoiceField(queryset=Funcao.objects.values_list('no_funcao',flat=True),
-                                                    widget=forms.Select(attrs={'class':'form-control'}),
-                                                    to_field_name="no_funcao")
-
-    class Meta:
-        model = Projeto
-        fields = get_fields(model)
-
 class ProjetoDenominacaoForm(BaseFormControl):
     preview = get_clean_fields(ProjetoDenominacao)
     class Meta:
@@ -125,10 +88,4 @@ class ProjetoAnexosForm(BaseFormControl):
     file = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
     class Meta:
         model = ProjetoAnexos
-        fields = get_fields(model)
-
-class ProjetoBolsistaForm(BaseFormControl):
-    preview = get_clean_fields(ProjetoBolsista)
-    class Meta:
-        model = ProjetoBolsista
         fields = get_fields(model)
