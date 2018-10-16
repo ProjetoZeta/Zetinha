@@ -85,7 +85,7 @@ def fetch_bolsista(request, bolsista_form, documento_form, emprestimo_form, pk):
         'forme': emprestimo_form,
         'documents': Documento.objects.filter(bolsista=Bolsista.objects.get(pk=pk) if pk else None),
         'emprestimos': EmprestimoEquipamento.objects.filter(bolsista=Bolsista.objects.get(pk=pk) if pk else None),
-        'projects': Bolsista.objects.get(pk=1).projeto_atual if pk else 'None',
+        'projects': Bolsista.objects.get(pk=pk).projeto_atual if pk else 'None',
         'pk': pk
     })
 
