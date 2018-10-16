@@ -179,7 +179,7 @@ class Bolsista(models.Model):
 
     projeto_atual = models.ForeignKey('ProjetoDenominacao', on_delete=models.CASCADE, related_name='atuacao', blank=True)
 
-    funcao = models.CharField('Funcao', max_length=1, choices=FUNCAO, default='1')
+    # funcao = models.CharField('Funcao', max_length=1, choices=FUNCAO, default='1')
     categoria = models.CharField('Categoria', max_length=1, choices=CATEGORIA, default='1')
     modalidade = models.CharField('Modalidade', max_length=1, choices=MODALIDADE, default='1')
     nivel = models.CharField('Nivel', max_length=1, choices=NIVEL, default='1')
