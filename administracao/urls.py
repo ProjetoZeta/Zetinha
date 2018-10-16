@@ -5,7 +5,8 @@ from administracao.views import Pdf
 
 urlpatterns = [
     url(r'^$', views.main, name='main'),
-    path(r'render/pdf/', Pdf.as_view()),
+    url(r'relatorio$', Pdf.as_view(),name='relatorio'),
+    url(r'relatorio/(?P<pk>[0-9]+)$', Pdf.as_view(),name='relatorio-gerar'),
     url(r'^cargo$', views.cargo, name='cargo'),
     url(r'^cargo/(?P<pk>[0-9]+)/editar$', views.cargo, name='cargo-editar'),
     url(r'^cargo/(?P<pkdelete>[0-9]+)/remover$', views.cargo, name='cargo-remover'),
