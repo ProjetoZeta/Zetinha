@@ -251,7 +251,7 @@ class ProjetoDenominacao(models.Model):
     entidade_concedente = models.ManyToManyField('Entidade', related_name='concedente')
     responsavel_concedente = models.ManyToManyField('Responsavel', related_name='concedente')
 
-    #participantes
+    participante = models.ManyToManyField('Bolsista')
 
     meta = models.CharField('Titulo da meta', max_length=64, default = "")
     descricao_meta = models.TextField('Descrição da meta', max_length=1024, default = "")
@@ -261,17 +261,9 @@ class ProjetoDenominacao(models.Model):
     atividades_previstas = models.TextField('Atividades previstas', max_length=1024, default = "")
     gestao_transferencia_tecnologia = models.TextField('Gestão de Transferência de Tecnologia', max_length=1024, default = "")
 
-    #atividade
-
-    #Anexos
-
-    #resumo
-
-
-
     file = models.ImageField('Anexos',upload_to=None, height_field=None, width_field=None, max_length=100)
     class Meta:
-        verbose_name_plural = "Anexos do projeto"
-        verbose_name = "Anexo do Projeto"
+        verbose_name_plural = "Projetos"
+        verbose_name = "Projeto"
     def __str__(self):
         return "{} - {}".format(self.sigla, self.nome)
