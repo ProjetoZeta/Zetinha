@@ -83,10 +83,12 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
     <script>
         $(document).ready(function () {
-            $('#modal-file').modal({% if form.errors %}'show'{% else %}''{% endif %});
-
+            $('#modal-file').modal({% if formf.errors %}'show'{% else %}''{% endif %});
         });
 
+        $(document).ready(function () {
+            $('#modal-emprestimo').modal({% if forme.errors %}'show'{% else %}''{% endif %});
+        });
 
         $(document).ready(function () {
 
