@@ -242,30 +242,17 @@ class EmprestimoEquipamento(models.Model):
     def __str__(self):
         return dict(EmprestimoEquipamento.TIPOS).get(self.tipo_equipamento)
 
-
 class ProjetoDenominacao(models.Model):
     nome = models.CharField('Nome do Projeto', max_length=32)
     sigla = models.CharField('Sigla', max_length=32, unique=True)
 
-    class Meta:
-        verbose_name_plural = "Denominações de Projetos"
-        verbose_name = "Denominação de Projeto"
-    def __str__(self):
-        return self.nome
+    entidade_proponente = models.ManyToManyField('Entidade', related_name='proponente')
+    responsavel_proponente = models.ManyToManyField('Responsavel', related_name='proponente')
+    entidade_concedente = models.ManyToManyField('Entidade', related_name='concedente')
+    responsavel_concedente = models.ManyToManyField('Responsavel', related_name='concedente')
 
-class ProjetoInteressados(models.Model):
+    #participantes
 
-    entidade_proponente = models.ForeignKey('Entidade',  on_delete=models.CASCADE, related_name='proponente')
-    responsavel_proponente = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='proponente')
-    entidade_concedente = models.ForeignKey('Entidade', on_delete=models.CASCADE, related_name='concedente')
-    responsavel_concedente = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='concedente')
-
-    class Meta:
-        verbose_name_plural = "Interessados ao Projeto"
-        verbose_name = "Interessado ao Projeto"
-    def __str__(self):
-        return "{} - {}".format(self.entidade_concedente, self.entidade_proponente)
-class ProjetoMetas(models.Model):
     meta = models.CharField('Titulo da meta', max_length=64, default = "")
     descricao_meta = models.TextField('Descrição da meta', max_length=1024, default = "")
     atividade_vinvulada = models.TextField('Atividade vinculada', max_length=1024, default = "")
@@ -274,15 +261,17 @@ class ProjetoMetas(models.Model):
     atividades_previstas = models.TextField('Atividades previstas', max_length=1024, default = "")
     gestao_transferencia_tecnologia = models.TextField('Gestão de Transferência de Tecnologia', max_length=1024, default = "")
 
-    class Meta:
-        verbose_name_plural = "Metodos do projeto"
-        verbose_name = "Metodo do Projeto"
-    def __str__(self):
-        return self.nome
-class ProjetoAnexos(models.Model):
+    #atividade
+
+    #Anexos
+
+    #resumo
+
+
+
     file = models.ImageField('Anexos',upload_to=None, height_field=None, width_field=None, max_length=100)
     class Meta:
         verbose_name_plural = "Anexos do projeto"
         verbose_name = "Anexo do Projeto"
     def __str__(self):
-        return self.nome
+        return "{} - {}".format(self.sigla, self.nome)

@@ -105,8 +105,8 @@
                     <div class="form-group row required">
                         <label for="inputKey" class="col-md-2 control-label">Nome do Projeto:</label>
                         <div class="col-md-10">
-                            {{ form_denominacao.nome }}
-                            <div class="help-block">{{ form_denominacao.nome.errors }}</div>
+                            {{ form_projeto.nome }}
+                            <div class="help-block">{{ form_projeto.nome.errors }}</div>
                         <br>
                         </div>
                     </div>
@@ -114,8 +114,8 @@
                     <div class="form-group row required">
                         <label for="inputKey" class="col-md-2 control-label">Sigla:</label>
                         <div class="col-md-10">
-                            {{ form_denominacao.sigla }}
-                            <div class="help-block">{{ form_denominacao.sigla.errors }}</div>
+                            {{ form_projeto.sigla }}
+                            <div class="help-block">{{ form_projeto.sigla.errors }}</div>
                         <br>
                         </div>
                     </div>
@@ -144,8 +144,8 @@
                     <div class="form-group required {% if form_interessados.entidade_proponente.errors %}{{ "has-error" }}{% endif %}">
                         <label for="name" class="control-label col-sm-2">Entidade Proponente</label>
                         <div class="col-sm-10">
-                            {{ form_interessados.entidade_proponente}}
-                            <div class="help-block">{{ form_interessados.entidade_proponente.errors }}</div>
+                            {{ form_projeto.entidade_proponente}}
+                            <div class="help-block">{{ form_projeto.entidade_proponente.errors }}</div>
                         </div>
                     </div>
 
@@ -160,8 +160,8 @@
                     <div class="form-group row required  {% if form_interessados.entidade_concedente.errors %}{{ "has-error" }}{% endif %}">
                         <label for="inputValue" class="col-md-2 control-label">Entidade Concedente:</label>
                         <div class="col-sm-10">
-                            {{ form_interessados.entidade_concedente}}
-                            <div class="help-block">{{ form_interessados.entidade_concedente.errors }}</div>
+                            {{ form_projeto.entidade_concedente}}
+                            <div class="help-block">{{ form_projeto.entidade_concedente.errors }}</div>
                         </div>
                     </div>
 
@@ -169,16 +169,16 @@
                     <div class="form-group row required {% if form_interessados.responsavel_concedente.errors %}{{ "has-error" }}{% endif %}">
                         <label for="inputValue" class="col-md-2 control-label">Responsável Concedente:</label>
                         <div class="col-md-10">
-                            {{ form_interessados.responsavel_concedente}}
-                            <div class="help-block">{{ form_interessados.responsavel_concedente.errors }}</div>
+                            {{ form_projeto.responsavel_concedente}}
+                            <div class="help-block">{{ form_projeto.responsavel_concedente.errors }}</div>
                         </div>
                     </div>
 
                     <div class="form-group row required {% if form_interessados.responsavel_proponente.errors %}{{ "has-error" }}{% endif %}">
                         <label for="inputValue" class="col-md-2 control-label">Responsável Técnico:</label>
                         <div class="col-md-10">
-                            {{ form_interessados.responsavel_proponente}}
-                            <div class="help-block">{{ form_interessados.responsavel_proponente.errors }}</div>
+                            {{ form_projeto.responsavel_proponente}}
+                            <div class="help-block">{{ form_projeto.responsavel_proponente.errors }}</div>
                         </div>
                     </div>
 
@@ -204,98 +204,10 @@
 
                     <label for="inputValue" class="col-md-2 control-label">Nome Completo:</label>
                     <div class="col-md-10">
-                        {{ form_bolsista.no_bolsista}}
-                        <div class="help-block">{{ form_bolsista.no_bolsista.errors}}</div>
+                        {{ form_projeto.no_bolsista}}
+                        <div class="help-block">{{ form_projeto.no_bolsista.errors}}</div>
                     </div>
                 </div>
-
-                <div class="form-group row required">
-                    <label for="inputValue" class="col-md-2 control-label">Função:</label>
-                    <div class="col-md-10">
-                        {{ form_bolsista.funcao}}
-                        <div class="help-block">{{ form_bolsista.funcao.errors}}</div>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="inputValue" class="col-md-2 control-label">Ativo:</label>
-                    <div class="col-md-1">
-                        {{ form_bolsista.ic_ativo}}
-                        <div class="help-block">{{ form_bolsista.ic_ativo.errors}}</div>
-                    <br>
-                    </div>
-                </div>
-
-                <fieldset class="well the-fieldset">
-                    <legend class="the-legend">Especificação da Bolsa</legend>
-
-                    <div class="form-group row required">
-                        <label for="inputValue" class="col-md-2 control-label">Categoria da Bolsa:</label>
-                        <div class="col-md-4">
-                            {{ form_bolsista.categoria}}
-                            <div class="help-block">{{ form_bolsista.categoria.errors}}</div>
-                        <br>
-                        </div>
-                        <label for="inputKey" class="col-md-2 control-label">Período Total Prevísto:</label>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control" id="inputKey" placeholder="">
-                        </div>
-                    </div>
-
-                    <div class="form-group row required">
-                        <label for="inputValue" class="col-md-2 control-label">Modalidade da Bolsa:</label>
-                        <div class="col-md-4">
-                                {{ form_bolsista.modalidade}}
-                                <div class="help-block">{{ form_bolsista.modalidade.errors}}</div>
-                        <br>
-                        </div>
-                        <label for="inputKey" class="col-md-2 control-label">Número de horas semanais:</label>
-                        <div class="col-md-4">
-                            {{ form_bolsista.horas_semanais}}
-                            <div class="help-block">{{ form_bolsista.horas_semanais.errors}}</div>
-                        <br>
-                        </div>
-                    </div>
-
-                    <div class="form-group row required">
-                        <label for="inputValue" class="col-md-2 control-label">Nível:</label>
-                        <div class="col-md-4">
-                            {{ form_bolsista.nivel}}
-                            <div class="help-block">{{ form_bolsista.nivel.errors}}</div>
-                        <br>
-                        </div>
-                        <label for="inputKey" class="col-md-2 control-label">Valor Mensal:</label>
-                        <div class="col-md-4">
-                            <{{ form_bolsista.valor_mensal}}
-                            <div class="help-block">{{ form_bolsista.valor_mensal.errors}}</div>
-                        <br>
-                        </div>
-                    </div>
-
-                    <div class="form-group row required">
-                        <label for="inputValue" class="col-md-2 control-label">Vigência Prevista:</label>
-                        <div class="col-md-4">
-                            <fieldset class="well the-fieldset">
-                                <label for="inputKey" class="col-md-3 control-label">Início:</label>
-                                <div class="col-md-9">
-                                    {{ form_bolsista.inicio_vigencia}}
-                                    <div class="help-block">{{ form_bolsista.inicio_vigencia.errors}}</div>
-                                <br>
-                                </div>
-                                <label for="inputKey" class="col-md-3 control-label">Término:</label>
-                                <div class="col-md-9">
-                                    {{ form_bolsista.termino_vigencia}}
-                                    <div class="help-block">{{ form_bolsista.termino_vigencia.errors}}</div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <label for="inputKey" class="col-md-2 control-label">Valor Total:</label>
-                        <div class="col-md-4">
-                            {{ form_bolsista.valor_total}}
-                            <div class="help-block">{{ form_bolsista.valor_total.errors}}</div>
-                        <br>
-                        </div>
-                    </div>
 
                 </fieldset>
 
@@ -325,7 +237,7 @@
                     <div class="form-group row required">
                         <label for="inputKey" class="col-md-2 control-label">Título da meta:</label>
                         <div class="col-md-10">
-                            {{form_metas.meta}}
+                            {{form_projeto.meta}}
                         <br>
                         </div>
                     </div>
@@ -333,7 +245,7 @@
                     <div class="form-group row required">
                         <label for="inputKey" class="col-md-2 control-label">Descrição:</label>
                         <div class="col-md-10">
-                            {{form_metas.descricao_meta}}
+                            {{form_projeto.descricao_meta}}
 
                         </div>
                     </div>
@@ -352,7 +264,7 @@
                     <div class="form-group row required">
                         <label for="inputKey" class="col-md-2 control-label">Atividade vinculada:</label>
                         <div class="col-md-10">
-                            {{form_metas.atividade_vinvulada}}
+                            {{form_projeto.atividade_vinvulada}}
 
                         </div>
                     </div>
@@ -428,7 +340,7 @@
                     <div class="form-group row required">
                         <label for="inputKey" class="col-md-2 control-label">6.1. Meta Específica:</label>
                         <div class="col-md-10">
-                            {{form_metas.meta_especifica}}
+                            {{form_projeto.meta_especifica}}
                         <br>
                         </div>
                     </div>
@@ -437,7 +349,7 @@
                         <label for="inputKey" class="col-md-2 control-label">6.2. Descrição da Atividades previstas do
                             Projeto:</label>
                         <div class="col-md-10">
-                            {{form_metas.descricao_meta}}
+                            {{form_projeto.descricao_meta}}
                         <br>
                         </div>
                     </div>
@@ -446,7 +358,7 @@
                 <div class="form-group row required">
                     <label for="inputKey" class="col-md-2 control-label">6.3. Metodologia:</label>
                     <div class="col-md-10">
-                        {{form_metas.metodologia}}
+                        {{form_projeto.metodologia}}
                     <br>
                     </div>
                 </div>
@@ -455,7 +367,7 @@
                     <label for="inputKey" class="col-md-2 control-label">6.4. Gestão de Projeto e Transferência de
                         Tecnologia:</label>
                     <div class="col-md-10">
-                        {{form_metas.gestao_transferencia_tecnologia}}
+                        {{form_projeto.gestao_transferencia_tecnologia}}
                     </div>
 
                 </div>
@@ -477,7 +389,7 @@
                 <div class="form-group row required">
                     <label for="inputKey" class="col-md-2 control-label">7.1 Anexos:</label>
                     <div class="col-md-10">
-                      {{form_anexos.file}}
+                      {{form_projeto.file}}
                     </div>
                 </div>
 

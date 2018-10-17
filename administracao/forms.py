@@ -1,6 +1,6 @@
 from django import forms
 from common.forms import BaseForm, BaseFormControl
-from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, ProjetoDenominacao, ProjetoInteressados, ProjetoMetas, ProjetoAnexos
+from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, ProjetoDenominacao
 from django.conf import settings
 from utils.models import get_fields, get_clean_fields
 
@@ -67,25 +67,7 @@ class EmprestimoEquipamentoForm(BaseForm):
 
 class ProjetoDenominacaoForm(BaseFormControl):
     preview = get_clean_fields(ProjetoDenominacao)
-    class Meta:
-        model = ProjetoDenominacao
-        fields = get_fields(model)
-
-class ProjetoInteressadosForm(BaseFormControl):
-    preview = get_clean_fields(ProjetoInteressados)
-    class Meta:
-        model = ProjetoInteressados
-        fields = get_fields(model)
-
-class ProjetoMetasForm(BaseFormControl):
-    preview = get_clean_fields(ProjetoMetas)
-    class Meta:
-        model = ProjetoMetas
-        fields = get_fields(model)
-
-class ProjetoAnexosForm(BaseFormControl):
-    preview = get_clean_fields(ProjetoAnexos)
     file = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
     class Meta:
-        model = ProjetoAnexos
+        model = ProjetoDenominacao
         fields = get_fields(model)
