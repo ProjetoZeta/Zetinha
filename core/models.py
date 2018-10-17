@@ -190,11 +190,11 @@ class Bolsista(models.Model):
     valor_mensal = models.CharField('Valor Mensal', max_length=100, blank=True )
     horas_semanais = models.CharField('Número de Horas semanais', max_length=100, blank=True )
     valor_total = models.CharField('Valor Total', max_length=100, blank=True )
-    
+
     class Meta:
         verbose_name_plural = "Bolsistas"
         verbose_name = "Bolsista"
-        
+
     def __str__(self):
         return self.no_bolsista
 
@@ -279,7 +279,7 @@ class ProjetoMetas(models.Model):
         verbose_name = "Metodo do Projeto"
     def __str__(self):
         return self.nome
-class ProjetoAnexos(models.Model):
+class ProjetoAnexos(models.Model):fsdfsd
     file = models.ImageField('Anexos',upload_to=None, height_field=None, width_field=None, max_length=100)
     class Meta:
         verbose_name_plural = "Anexos do projeto"
