@@ -279,7 +279,7 @@ class ProjetoMetas(models.Model):
         verbose_name = "Metodo do Projeto"
     def __str__(self):
         return self.nome
-class ProjetoAnexos(models.Model):fsdfsd
+class ProjetoAnexos(models.Model):
     file = models.ImageField('Anexos',upload_to=None, height_field=None, width_field=None, max_length=100)
     class Meta:
         verbose_name_plural = "Anexos do projeto"
