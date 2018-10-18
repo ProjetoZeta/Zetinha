@@ -66,7 +66,7 @@ class EmprestimoEquipamentoForm(BaseForm):
         fields = get_fields(model, ignore=['dt_emprestimo'])
 
 class ProjetoDenominacaoForm(BaseFormControl):
-    preview = get_clean_fields(ProjetoDenominacao)
+    preview = ['nome', 'sigla']
     file = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
     class Meta:
         model = ProjetoDenominacao
