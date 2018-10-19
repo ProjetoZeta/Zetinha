@@ -234,6 +234,7 @@
                         <label for="inputKey" class="col-md-2 control-label">Título da meta:</label>
                         <div class="col-md-10">
                             {{form_projeto.meta}}
+                            <div class="help-block">{{ form_projeto.meta.errors }}</div>
                         <br>
                         </div>
                     </div>
@@ -242,6 +243,7 @@
                         <label for="inputKey" class="col-md-2 control-label">Descrição:</label>
                         <div class="col-md-10">
                             {{form_projeto.descricao_meta}}
+                            <div class="help-block">{{ form_projeto.descricao_meta.errors }}</div>
 
                         </div>
                     </div>
@@ -254,7 +256,7 @@
                         <label for="inputKey" class="col-md-2 control-label">Atividade vinculada:</label>
                         <div class="col-md-10">
                             {{form_projeto.atividade_vinvulada}}
-
+                            <div class="help-block">{{ form_projeto.atividade_vinvulada.errors }}</div>
                         </div>
                     </div>
 
@@ -282,13 +284,8 @@
                 <div class="form-group row required">
                     <label for="inputValue" class="col-md-2 control-label">Meta:</label>
                     <div class="col-md-10">
-                        <select class="form-control" id="sel1">
-                            <option selected="selected" disabled>Selecione uma opção</option>
-                            <option>Controle de Andamento do Projeto.</option>
-                            <option>Definição e Operacionalização da Arquitetura de Integração e Interoperação.</option>
-                            <option>Modelo de Arquitetura e Medidas de Segutança dos Sistemas de Informações.</option>
-                            <option>Acompanhamento da Operalização dos Processos de Gorvernança e TI na DPU.</option>
-                        </select>
+                      {{form_projeto.meta_geral}}
+                      <div class="help-block">{{ form_projeto.meta_geral.errors }}</div>
                     <br>
                   </div>
                 </div>
@@ -296,13 +293,8 @@
                 <div class="form-group row required">
                     <label for="inputValue" class="col-md-2 control-label">Atividade:</label>
                     <div class="col-md-10">
-                        <select class="form-control" id="sel1">
-                            <option selected="selected" disabled>Selecione uma opção</option>
-                            <option>Teste</option>
-                            <option>Teste2</option>
-                            <option>Teste3</option>
-                            <option>Teste4</option>
-                        </select>
+                      {{form_projeto.atividade_geral}}
+                      <div class="help-block">{{ form_projeto.atividade_geral.errors }}</div>
                     </div>
                 </div>
 
@@ -339,6 +331,7 @@
                             Projeto:</label>
                         <div class="col-md-10">
                             {{form_projeto.descricao_meta}}
+                            <div class="help-block">{{ form_projeto.descricao_meta.errors }}</div>
                         <br>
                         </div>
                     </div>
@@ -348,6 +341,7 @@
                     <label for="inputKey" class="col-md-2 control-label">6.3. Metodologia:</label>
                     <div class="col-md-10">
                         {{form_projeto.metodologia}}
+                        <div class="help-block">{{ form_projeto.metodologia.errors }}</div>
                     <br>
                     </div>
                 </div>
@@ -357,6 +351,7 @@
                         Tecnologia:</label>
                     <div class="col-md-10">
                         {{form_projeto.gestao_transferencia_tecnologia}}
+                        <div class="help-block">{{ form_projeto.gestao_transferencia_tecnologia.errors }}</div>
                     </div>
 
                 </div>
@@ -379,6 +374,7 @@
                     <label for="inputKey" class="col-md-2 control-label">7.1 Anexos:</label>
                     <div class="col-md-10">
                       {{form_projeto.file}}
+                      <div class="help-block">{{ form_projeto.file.errors }}</div>
                     </div>
                 </div>
 
@@ -390,12 +386,13 @@
 
     <div id="menu8" class="tab-pane show active">
         <div class="panel panel-primary">
-            <div class="panel-heading"><b>6 - DESCRIÇÃO DAS METAS</b></div>
+            <div class="panel-heading"><b>8 - Resumo do Projeto</b></div>
             <div class="panel-body">
                 <div class="form-group row required">
-                    <label for="inputKey" class="col-md-2 control-label">6.3. Metodologia:</label>
+                    <label for="inputKey" class="col-md-2 control-label">8.1 Resumo:</label>
                     <div class="col-md-10">
-                        <textarea type="text" class="form-control" id="inputKey" placeholder=""></textarea>
+                        {{form_projeto.resumo}}
+                        <div class="help-block">{{ form_projeto.resumo.errors }}</div>
                     </div>
 
                 </div>
@@ -408,7 +405,7 @@
     </div>
 
     <button type="submit" class="btn btn-info">Salvar</button>
-    <a href="{% url 'bolsista' %}" class="btn btn-default">Voltar</a>
+    <a href="{% url 'projeto' %}" class="btn btn-default">Voltar</a>
 
 </div>
 </form>

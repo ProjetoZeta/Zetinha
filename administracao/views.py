@@ -54,7 +54,7 @@ def usuario(request, pk=None, pkdelete=None):
 
 def projeto(request, pk=None, pkdelete=None):
     if pkdelete:
-        item = Bolsista.objects.get(pk=pkdelete)
+        item = ProjetoDenominacao.objects.get(pk=pkdelete)
         if item:
             item.delete()
         return redirect('projeto')
@@ -159,20 +159,20 @@ def show_emprestimoequipamento(request, pk=None):
 
 def projeto_handle(request, pk=None, pkdelete=None):
     if request.method == 'POST':
-        form_proj = ProjetoDenominacaoForm(request.POST, instance=ProjetoDenominacao.objects.get(pk=pk)) if pk else ProjetoDenominacaoForm(request.POST)
-
+        form = ProjetoDenominacaoForm(request.POST, instance=ProjetoDenominacao.objects.get(pk=pk)) if pk else ProjetoDenominacaoForm(request.POST)
         if form.is_valid() and form.save():
             return redirect('projeto')
+
     elif request.method == 'GET':
-        form_proj = ProjetoDenominacaoForm(instance=ProjetoDenominacao.objects.get(pk=pk)) if pk else ProjetoDenominacaoForm()
+        form = ProjetoDenominacaoForm(instance=ProjetoDenominacao.objects.get(pk=pk)) if pk else ProjetoDenominacaoForm()
 
-    return fetch_projeto(request, form_proj, pk)
+    return fetch_projeto(request, form, pk)
 
 
-def fetch_projeto(request, form_proj,  pk):
+def fetch_projeto(request, form,  pk):
     return render(request,'administracao/projeto2.html', {
                 'content_title': 'Manter Projeto',
-                'form_projeto': form_proj,
+                'form_projeto': form,
                 'pk': pk
                 })
 

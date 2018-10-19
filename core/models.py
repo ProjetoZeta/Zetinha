@@ -177,7 +177,7 @@ class Bolsista(models.Model):
     email_unb = models.EmailField('Email UnB', unique=True, blank=True)
     telefone_local = models.CharField('Telefone Local', max_length=32, blank=True)
 
-    projeto_atual = models.ForeignKey('ProjetoDenominacao', on_delete=models.CASCADE, related_name='atuacao', blank=True)
+    projeto_atual = models.ForeignKey('ProjetoDenominacao', on_delete=models.CASCADE, related_name='atuacao', blank=True, null=True)
 
     # funcao = models.CharField('Funcao', max_length=1, choices=FUNCAO, default='1')
     categoria = models.CharField('Categoria', max_length=1, choices=CATEGORIA, default='1')
@@ -243,6 +243,20 @@ class EmprestimoEquipamento(models.Model):
         return dict(EmprestimoEquipamento.TIPOS).get(self.tipo_equipamento)
 
 class ProjetoDenominacao(models.Model):
+    META = (
+        ('1', 'Controle de Andamento do Projeto'),
+        ('2', 'Definição e Operacionalização da Arquitetura de Integração e Interoperação'),
+        ('2', 'Modelo de Arquitetura e Medidas de Segutança dos Sistemas de Informações'),
+        ('4', 'Acompanhamento da Operalização dos Processos de Gorvernança e TI na DPU'),
+    )
+
+    ATIVIDADE = (
+        ('1', 'INSERIR'),
+        ('2', 'INSERIR'),
+        ('2', 'INSERIR'),
+        ('4', 'INSERIR'),
+        ('5', 'INSERIR'),
+    )
     nome = models.CharField('Nome do Projeto', max_length=32)
     sigla = models.CharField('Sigla', max_length=32, unique=True)
 
@@ -260,6 +274,11 @@ class ProjetoDenominacao(models.Model):
     metodologia = models.TextField('Metodologia', max_length=1024, default = "")
     atividades_previstas = models.TextField('Atividades previstas', max_length=1024, default = "")
     gestao_transferencia_tecnologia = models.TextField('Gestão de Transferência de Tecnologia', max_length=1024, default = "")
+
+    meta_geral = models.CharField('Meta', max_length=1, choices=META, default='')
+    atividade_geral = models.CharField('Atividade', max_length=1, choices=ATIVIDADE, default='')
+
+    resumo = models.TextField('Resumo do projeto', max_length=1024, default = "")
 
     file = models.ImageField('Anexos',upload_to=None, height_field=None, width_field=None, max_length=100)
     class Meta:
