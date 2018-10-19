@@ -80,15 +80,17 @@
 
 <ul class="nav nav-pills nav-justified">
     <li class="active"><a data-toggle="tab" href="#menu1">Denominação do Projeto</a></li>
-    <li class="link"><a data-toggle="tab" href="#menu2">Dados Cadastrais dos Interessados</a></li>
-    <li class="link"><a data-toggle="tab" href="#menu3">Participantes</a></li>
-    <li class="link"><a data-toggle="tab" href="#menu4">Cronograma/Meta</a></li>
-    <li class="link"><a data-toggle="tab" href="#menu5">Vincular Atividade ao Bolsista</a></li>
-    <li class="link"><a data-toggle="tab" href="#menu6">Metas do Projeto</a></li>
-    <li class="link"><a data-toggle="tab" href="#menu7">Anexos</a></li>
-    <li class="link"><a data-toggle="tab" href="#menu8">Resumo do Projeto</a></li>
+    <li class="link"><a data-toggle="tab-disabled" href="#menu2">Dados Cadastrais dos Interessados</a></li>
+    <li class="link"><a data-toggle="tab-disabled" href="#menu3">Participantes</a></li>
+    <li class="link"><a data-toggle="tab-disabled" href="#menu4">Cronograma/Meta</a></li>
+    <li class="link"><a data-toggle="tab-disabled" href="#menu5">Vincular Atividade ao Bolsista</a></li>
+    <li class="link"><a data-toggle="tab-disabled" href="#menu6">Metas do Projeto</a></li>
+    <li class="link"><a data-toggle="tab-disabled" href="#menu7">Anexos</a></li>
+    <li class="link"><a data-toggle="tab-disabled" href="#menu8">Resumo do Projeto</a></li>
 </ul>
 <form>
+  {% csrf_token %}
+
 <div class="tab-content">
 
     <div id="menu1" class="tab-pane show active">
@@ -100,7 +102,6 @@
 
                 <class="form_denominacao" role="form" method="POST" action="{% if pk %} {% url 'projeto-editar' pk %} {% else %}{% url 'projeto-criar' %}{% endif %}"> <!-- TODO:  -->
 
-                    {% csrf_token %}
 
                     <div class="form-group row required">
                         <label for="inputKey" class="col-md-2 control-label">Nome do Projeto:</label>
@@ -122,10 +123,11 @@
 
 
             </div>
-            </form>
+
         </div>
 
     </div>
+
 
     <div id="menu2" class="tab-pane show active">
 
