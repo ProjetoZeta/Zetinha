@@ -1,0 +1,515 @@
+{% extends 'administracao/default.html' %}
+
+{% load bootstrap3 %}
+
+{% block css %}
+
+<style type="text/css">
+        label{
+            font-weight:normal;
+        }
+        .well{
+            background-color: white;
+        }
+
+        .opacity{
+            background-color: #f5f5f5;
+        }
+
+        .form-group {
+            margin-bottom: 0px;
+        }
+
+        .form-group.required .control-label:after {
+            content: "*";
+            color: red;
+        }
+
+        .the-legend {
+            border-style: none;
+            border-width: 0;
+            font-size: 14px;
+            line-height: 20px;
+            margin-bottom: 0;
+            width: auto;
+            padding: 0 10px;
+            border: 1px solid #e0e0e0;
+            font-weight:bold;
+        }
+
+        .the-fieldset {
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+        }
+
+        a.delete-file-x{
+            color: orangered;
+        }
+
+        a.delete-file-x:visited {
+            color: orangered;
+        }
+
+        a.open-file {
+            color: #333;
+        }
+
+        a.open-file:visited {
+            color: #333;
+        }
+
+        td {
+            word-wrap: break-word;
+        }
+
+        .file-table {
+            table-layout: fixed;
+        }
+
+        .file-icon{
+
+        }
+
+
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<ul class="nav nav-pills nav-justified">
+    <li class="active"><a data-toggle="tab" href="#menu1">Denominação do Projeto</a></li>
+    <li class="disabled"><a data-toggle="tab-disabled" href="#menu2">Dados Cadastrais dos Interessados</a></li>
+    <li class="disabled"><a data-toggle="tab-disabled" href="#menu3">Participantes</a></li>
+    <li class="disabled"><a data-toggle="tab-disabled" href="#menu4">Cronograma/Meta</a></li>
+    <li class="disabled"><a data-toggle="tab-disabled" href="#menu5">Vincular Atividade ao Bolsista</a></li>
+    <li class="disabled"><a data-toggle="tab-disabled" href="#menu6">Metas do Projeto</a></li>
+    <li class="disabled"><a data-toggle="tab-disabled" href="#menu7">Anexos</a></li>
+    <li class="disabled"><a data-toggle="tab-disabled" href="#menu8">Resumo do Projeto</a></li>
+</ul>
+
+<div class="tab-content">
+
+    <div id="menu1" class="tab-pane fade in active">
+
+        <br>
+        <div class="panel panel-primary">
+            <div class="panel-heading"><b>Nome e Sigla</b></div>
+            <div class="panel-body">
+
+                <form class="form" role="form" method="POST" action="{% if pk %} {% url 'projeto-editar' pk %} {% else %}{% url 'projeto-criar' %}{% endif %}">
+
+                    {% csrf_token %}
+
+                    <div class="form-group row required">
+                        <label for="inputKey" class="col-md-2 control-label">Nome do Projeto:</label>
+                        <div class="col-md-10">
+                            {{ form.nome }}
+                            <div class="help-block">{{ form.nome.errors }}</div>
+                        <br>
+                        </div>
+                    </div>
+
+                    <div class="form-group row required">
+                        <label for="inputKey" class="col-md-2 control-label">Sigla:</label>
+                        <div class="col-md-10">
+                            {{ form.sigla }}
+                            <div class="help-block">{{ form.sigla.errors }}</div>
+                        <br>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-info">Salvar</button>
+                    <a href="{% url 'bolsista' %}" class="btn btn-default">Voltar</a>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="menu2" class="tab-pane fade">
+
+        <br>
+        <div class="panel panel-primary">
+            <div class="panel-heading"><b>DADOS CADASTRAIS DOS INTERESSADOS</b></div>
+            <div class="panel-body">
+
+                <fieldset class="well the-fieldset">
+
+                    <legend class="the-legend">1 - Proponente</legend>
+
+                    <div class="form-group required {% if form.fk_entidade_proponente.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="name" class="control-label col-sm-2">Entidade Proponente</label>
+                        <div class="col-sm-10">
+                            {{ form.fk_entidade_proponente}}
+                            <div class="help-block">{{ form.fk_entidade_proponente.errors }}</div>
+                        </div>
+                    </div>
+
+
+
+                </fieldset>
+
+                <fieldset class="well the-fieldset">
+
+                    <legend class="the-legend">2 - Concedente</legend>
+
+                    <div class="form-group row required  {% if form.fk_entidade_concedente.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputValue" class="col-md-2 control-label">Entidade Concedente:</label>
+                        <div class="col-sm-10">
+                            {{ form.fk_entidade_concedente}}
+                            <div class="help-block">{{ form.fk_entidade_concedente.errors }}</div>
+                        </div>
+                    </div>
+                    
+
+                    <div class="form-group row required {% if form.fk_responsavel_concedente.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputValue" class="col-md-2 control-label">Responsável Concedente:</label>
+                        <div class="col-md-10">
+                            {{ form.fk_responsavel_concedente}}
+                            <div class="help-block">{{ form.fk_responsavel_concedente.errors }}</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row required {% if form.fk_responsavel_proponente.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputValue" class="col-md-2 control-label">Responsável Técnico:</label>
+                        <div class="col-md-10">
+                            {{ form.fk_responsavel_proponente}}
+                            <div class="help-block">{{ form.fk_responsavel_proponente.errors }}</div>
+                        </div>
+                    </div>
+
+                </fieldset>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="menu3" class="tab-pane fade">
+
+        <br>
+        <div class="panel panel-primary">
+            <div class="panel-heading"><b>PARTICIPANTES</b></div>
+            <div class="panel-body">
+
+                <fieldset class="well the-fieldset">
+
+                <div class="form-group row required">
+
+                    <label for="inputValue" class="col-md-2 control-label">Nome Completo:</label>
+                    <div class="col-md-10">
+                        {{ form.fk_bolsita}}
+                        <div class="help-block">{{ form.fk_bolsita.errors}}</div>
+                    </div>
+                </div>
+
+                <div class="form-group row required">
+                    <label for="inputValue" class="col-md-2 control-label">Função:</label>
+                    <div class="col-md-10">
+                        {{ form.fk_funcao}}
+                        <div class="help-block">{{ form.fk_funcao.errors}}</div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="inputValue" class="col-md-2 control-label">Ativo:</label>
+                    <div class="col-md-1">
+                        <input type="checkbox" class="form-control" id="inputValue" placeholder="">
+                    <br>
+                    </div>
+                </div>
+
+                <fieldset class="well the-fieldset">
+                    <legend class="the-legend">Especificação da Bolsa</legend>
+
+                    <div class="form-group row required">
+                        <label for="inputValue" class="col-md-2 control-label">Categoria da Bolsa:</label>
+                        <div class="col-md-4">
+                            <select class="form-control" id="sel1">
+                                <option selected="selected" disabled>Selecione uma opção</option>
+                                <option>Bolsa de Aux. Financeiro a Estudante</option>
+                                <option>Bolsa de Aux. a Pesquisador</option>
+                            </select>
+                        <br>
+                        </div>
+                        <label for="inputKey" class="col-md-2 control-label">Período Total Prevísto:</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="inputKey" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group row required">
+                        <label for="inputValue" class="col-md-2 control-label">Modalidade da Bolsa:</label>
+                        <div class="col-md-4">
+                            <select class="form-control" id="sel1">
+                                <option selected="selected" disabled>Selecione uma opção</option>
+                                <option>Mestrado</option>
+                                <option>Lista Item 1 e/ou Iniciação Científica</option>
+                                <option>Nível Médio</option>
+                                <option>Pesquisador Sênior</option>
+                                <option>Pesquisa Acadêmica</option>
+                                <option>Pesquisa, Desenvolvimento e Inovação PDI</option>
+                                <option>Apoio Operacional à Pesquisa</option>
+                            </select>
+                        <br>
+                        </div>
+                        <label for="inputKey" class="col-md-2 control-label">Número de horas semanais:</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="inputKey" placeholder="">
+                        <br>
+                        </div>
+                    </div>
+
+                    <div class="form-group row required">
+                        <label for="inputValue" class="col-md-2 control-label">Nível:</label>
+                        <div class="col-md-4">
+                            <select class="form-control" id="sel1">
+                                <option selected="selected" disabled>Selecione uma opção</option>
+                                <option>A</option>
+                                <option>B</option>
+                                <option>C</option>
+                                <option>D</option>
+                            </select>
+                        <br>
+                        </div>
+                        <label for="inputKey" class="col-md-2 control-label">Valor Mensal:</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="inputKey" placeholder="">
+                        <br>
+                        </div>
+                    </div>
+
+                    <div class="form-group row required">
+                        <label for="inputValue" class="col-md-2 control-label">Vigência Prevista:</label>
+                        <div class="col-md-4">
+                            <fieldset class="well the-fieldset">
+                                <label for="inputKey" class="col-md-3 control-label">Início:</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" id="inputKey" placeholder="">
+                                <br>
+                                </div>
+                                <label for="inputKey" class="col-md-3 control-label">Término:</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" id="inputKey" placeholder="">
+                                </div>
+                            </fieldset>
+                        </div>
+                        <label for="inputKey" class="col-md-2 control-label">Valor Total:</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="inputKey" placeholder="">
+                        <br>
+                        </div>
+                    </div>
+
+                </fieldset>
+
+                <button type="submit" class="btn btn-info">Adicionar</button>
+                <button type="submit" class="btn btn-default">Cancelar</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="menu4" class="tab-pane fade">
+
+        <br>
+        <div class="panel panel-primary">
+            <div class="panel-heading"><b>CRONOGRAMA DE EXECUÇÃO (META, ETAPA/FASE)</b></div>
+            <div class="panel-body">
+
+                <fieldset class="well the-fieldset">
+
+                <fieldset class="well the-fieldset">
+
+                    <legend class="the-legend">Cadastro de Meta</legend>
+
+                    <div class="form-group row required">
+                        <label for="inputKey" class="col-md-2 control-label">Título da meta:</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="inputKey" placeholder="">
+                        <br>
+                        </div>
+                    </div>
+
+                    <div class="form-group row required">
+                        <label for="inputKey" class="col-md-2 control-label">Descrição:</label>
+                        <div class="col-md-10">
+                            <textarea type="text" class="form-control" id="inputKey" placeholder=""></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputValue" class="col-md-2 control-label">Ativo:</label>
+                        <div class="col-md-1">
+                            <input type="checkbox" class="form-control" id="inputValue" placeholder="">
+                        </div>
+                    </div>
+
+                </fieldset>
+
+                <fieldset class="well the-fieldset">
+
+                    <legend class="the-legend">Atividade Vinculada</legend>
+
+
+                </fieldset>
+
+                </fieldset>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="menu5" class="tab-pane fade">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading"><b>Vincular Meta/Atividade/Bolsista</b></div>
+            <div class="panel-body">
+
+                <fieldset class="well the-fieldset">
+
+                <div class="form-group row required">
+                    <label for="inputValue" class="col-md-2 control-label">Meta:</label>
+                    <div class="col-md-10">
+                        <select class="form-control" id="sel1">
+                            <option selected="selected" disabled>Selecione uma opção</option>
+                            <option>Controle de Andamento do Projeto.</option>
+                            <option>Definição e Operacionalização da Arquitetura de Integração e Interoperação.</option>
+                            <option>Modelo de Arquitetura e Medidas de Segutança dos Sistemas de Informações.</option>
+                            <option>Acompanhamento da Operalização dos Processos de Gorvernança e TI na DPU.</option>
+                        </select>
+                    <br>
+                    </div>
+                </div>
+
+                <div class="form-group row required">
+                    <label for="inputValue" class="col-md-2 control-label">Atividade:</label>
+                    <div class="col-md-10">
+                        <select class="form-control" id="sel1">
+                            <option selected="selected" disabled>Selecione uma opção</option>
+                            <option>Teste</option>
+                            <option>Teste2</option>
+                            <option>Teste3</option>
+                            <option>Teste4</option>
+                        </select>
+                    </div>
+                </div>
+
+                </fieldset>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="menu6" class="tab-pane fade">
+
+        <br>
+        <div class="panel panel-primary">
+            <div class="panel-heading"><b>DESCRIÇÃO DAS METAS</b></div>
+            <div class="panel-body">
+
+                <fieldset class="well the-fieldset">
+
+
+
+                    <div class="form-group row required">
+                        <label for="inputKey" class="col-md-2 control-label">6.1. Meta Específica:</label>
+                        <div class="col-md-10">
+                            <textarea type="text" class="form-control" id="inputKey" placeholder=""></textarea>
+                        <br>
+                        </div>
+                    </div>
+
+                    <div class="form-group row required">
+                        <label for="inputKey" class="col-md-2 control-label">6.2. Descrição da Atividades previstas do
+                            Projeto:</label>
+                        <div class="col-md-10">
+                            <textarea type="text" class="form-control" id="inputKey" placeholder=""></textarea>
+                        <br>
+                        </div>
+                    </div>
+
+
+                <div class="form-group row required">
+                    <label for="inputKey" class="col-md-2 control-label">6.3. Metodologia:</label>
+                    <div class="col-md-10">
+                        <textarea type="text" class="form-control" id="inputKey" placeholder=""></textarea>
+                    <br>
+                    </div>
+                </div>
+
+                <div class="form-group row required">
+                    <label for="inputKey" class="col-md-2 control-label">6.4. Gestão de Projeto e Transferência de
+                        Tecnologia:</label>
+                    <div class="col-md-10">
+                        <textarea type="text" class="form-control" id="inputKey" placeholder=""></textarea>
+                    </div>
+
+                </div>
+
+                </fieldset>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="menu7" class="tab-pane fade">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading"><b>6 - DESCRIÇÃO DAS METAS</b></div>
+            <div class="panel-body">
+
+                <div class="form-group row required">
+                    <label for="inputKey" class="col-md-2 control-label">6.3. Metodologia:</label>
+                    <div class="col-md-10">
+                        <textarea type="text" class="form-control" id="inputKey" placeholder=""></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="menu8" class="tab-pane fade">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><b>6 - DESCRIÇÃO DAS METAS</b></div>
+            <div class="panel-body">
+                <div class="form-group row required">
+                    <label for="inputKey" class="col-md-2 control-label">6.3. Metodologia:</label>
+                    <div class="col-md-10">
+                        <textarea type="text" class="form-control" id="inputKey" placeholder=""></textarea>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+{% endblock %}
