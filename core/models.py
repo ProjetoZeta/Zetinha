@@ -24,8 +24,8 @@ class Entidade(models.Model):
     telefone = models.IntegerField('Telefone')
     cep = models.IntegerField('CEP')
     nu_municipio = models.IntegerField('Número do municipio')
-    co_esfera = models.CharField('Esfera', max_length=32, unique=True)
-    de_endereco = models.CharField('Endereço', max_length=128, unique=True)
+    co_esfera = models.CharField('Esfera', max_length=32)
+    de_endereco = models.CharField('Endereço', max_length=128)
 
     def __str__(self):
         return "{} - {}".format(self.no_entidade, self.sg_entidade)
@@ -150,11 +150,11 @@ class Bolsista(models.Model):
 
     tipo_vinculo = models.CharField('Tipo de Vínculo', max_length=1, choices=TIPOS_VINCULOS, default='3')
 
-    no_bolsista = models.CharField('Nome', max_length=32, unique=True)
+    no_bolsista = models.CharField('Nome', max_length=32)
     email = models.EmailField('Email', unique=True)
     cpf = models.CharField('CPF', max_length=14, unique=True, validators=[cpf])
     dt_nascimento = models.CharField('Data de Nascimento', max_length=10)
-    rg = models.CharField('RG', max_length=32, unique=True)
+    rg = models.CharField('RG', max_length=32)
     orgao_expedidor = models.CharField('Órgão Expedidor', max_length=32)
     telefone = models.CharField('Telefone', max_length=32, blank=True)
     celular = models.CharField('Celular', max_length=32, blank=True)
@@ -166,7 +166,7 @@ class Bolsista(models.Model):
 
     endereco = models.CharField('Endereço', max_length=128)
     cidade = models.CharField('Cidade', max_length=32)
-    cep = models.CharField('CEP', max_length=32, unique=True)
+    cep = models.CharField('CEP', max_length=32)
     uf = models.CharField('UF', max_length=2, choices=UFS, default='DF')
 
     banco = models.CharField('Banco', max_length=128, choices=COD_BANCO, default='001')
