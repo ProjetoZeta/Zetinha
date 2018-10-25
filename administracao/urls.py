@@ -1,12 +1,14 @@
 from django.conf.urls import url
 from django.urls import include, path
 from administracao import views
-from administracao.views import Pdf
+# from administracao.views import Pdf
 
 urlpatterns = [
     url(r'^$', views.main, name='main'),
-    url(r'relatorio$', Pdf.as_view(),name='relatorio'),
-    url(r'relatorio/(?P<pk>[0-9]+)$', Pdf.as_view(),name='relatorio-gerar'),
+    # url(r'relatorio$', Pdf.as_view(),name='relatorio'),
+    url(r'residencia/(?P<pk>[0-9]+)$', views.declaracao_residencia,name='relatorio-gerar-residencia'),
+    url(r'ciencia-bolsa/(?P<pk>[0-9]+)$', views.declaracao_bolsa,name='relatorio-gerar-ciencia-bolsista'),
+    url(r'sigilo/(?P<pk>[0-9]+)$', views.declaracao_sigilo,name='relatorio-gerar-sigilo'),
     url(r'^cargo$', views.cargo, name='cargo'),
     url(r'^cargo/(?P<pk>[0-9]+)/editar$', views.cargo, name='cargo-editar'),
     url(r'^cargo/(?P<pkdelete>[0-9]+)/remover$', views.cargo, name='cargo-remover'),

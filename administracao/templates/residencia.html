@@ -4,7 +4,6 @@
         <HEAD>
         <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <META http-equiv="X-UA-Compatible" content="IE=8">
-        <TITLE>bcl_1495977168.htm</TITLE>
         <META name="generator" content="BCL easyConverter SDK 5.0.140">
         <STYLE type="text/css">
         
@@ -65,14 +64,13 @@
         
         
         <DIV class="dclr"></DIV><br>
+
         <P style="padding-top: 15px;"class ="p0 ft0">DECLARAÇÃO DE RESIDÊNCIA</P>
-        {% for bolsista in bolsistas %}
             <P class="p1 ft3">Eu, <SPAN class="ft1">{{ bolsista.no_bolsista }}, </SPAN>brasileiro, inscrito no CPF sob o nº <NOBR><SPAN class="ft1"> {{bolsista.cpf}}</SPAN></NOBR><SPAN class="ft1"> </SPAN>e no RG nº <SPAN class="ft1">{{bolsista.rg}} {{bolsista.orgao_expedidor}}</SPAN>, conforme a Lei 7115, de 29 de agosto de 1983, declaro para os devidos fins de comprovação documental para implementação de Bolsa Pesquisa sob as penas da lei que tenho residência e domicílio em <SPAN class="ft1">{{bolsista.endereco}} - {{bolsista.cidade}} – {{bolsista.uf}}.</SPAN></P>
             <P class="p2 ft3">Por ser a expressão da verdade, firmo o presente para efeitos legais.</P>
             <P class="p3 ft3">Brasília, {{ today | date:"d/m/Y"}}.</P>
             <P class="p4 ft3">______________________________</P>
             <P class="p5 ft3">{{ bolsista.no_bolsista }}</P>
-        {% endfor %}
         <TABLE cellpadding=0 cellspacing=0 class="t0">
         <TR>
             <TD class="tr0 td0"><P class="p6 ft4">&nbsp;</P></TD>

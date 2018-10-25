@@ -176,26 +176,35 @@ def fetch_projeto(request, form,  pk):
                 'pk': pk
                 })
 
-class Pdf(View):
-
-    def get(self, request):
-        bolsistas = Bolsista.objects.all()
-        today = timezone.now()
-        params = {
+def declaracao_residencia(request, pk):
+    bolsista = Bolsista.objects.get(pk=pk)
+    today = timezone.now()
+    params = {
             'today': today,
-            'bolsistas': bolsistas,
+            'bolsista': bolsista,
             'request': request
         }
 
-        return Render.render('pdf.html', params)
+    return render(request,'residencia.html', params)
 
-    def get(self, request, pk):
-        bolsista = [Bolsista.objects.get(pk=pk)]
-        today = timezone.now()
-        params = {
+def declaracao_bolsa(request, pk):
+    bolsista = Bolsista.objects.get(pk=pk)
+    today = timezone.now()
+    params = {
             'today': today,
-            'bolsistas': bolsista,
+            'bolsista': bolsista,
             'request': request
         }
 
-        return Render.render('pdf.html', params)
+    return render(request,'declaracao-bolsista.html', params)
+
+def declaracao_sigilo(request, pk):
+    bolsista = Bolsista.objects.get(pk=pk)
+    today = timezone.now()
+    params = {
+            'today': today,
+            'bolsista': bolsista,
+            'request': request
+        }
+
+    return render(request,'declaracao-sigilo.html', params)

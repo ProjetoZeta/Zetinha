@@ -606,7 +606,7 @@
         </fieldset>
 
         <fieldset class="well the-fieldset opacity">
-            <legend class="the-legend">Relatórios</legend>
+            <legend class="the-legend">Declarações</legend>
 
             {% if not pk %}
                 <div style="color: #bab3b3;">Crie um bolsista e vincule-o a um projeto para depois gerar relatórios</div>
@@ -618,16 +618,27 @@
                         <tr>
 
                             <td class="col-sm-2"><i class="fa fa-file-pdf-o file-icon" aria-hidden="true"></i></td>
-                            <td class="col-sm-8"><a href="{% url 'relatorio-gerar' pk %}" class="open-file">Declaração de Residência</a></td>
+                            <td class="col-sm-8"><a href="{% url 'relatorio-gerar-residencia' pk %}" class="open-file">Declaração de Residência</a></td>
                         </tr>
 
+                        <tr>
+
+                            <td class="col-sm-2"><i class="fa fa-file-pdf-o file-icon" aria-hidden="true"></i></td>
+                            <td class="col-sm-8"><a href="{% url 'relatorio-gerar-ciencia-bolsista' pk %}" class="open-file">Declaração Ciência Bolsista</a></td>
+                        </tr>
+
+
+                        <tr>
+
+                            <td class="col-sm-2"><i class="fa fa-file-pdf-o file-icon" aria-hidden="true"></i></td>
+                            <td class="col-sm-8"><a href="{% url 'relatorio-gerar-sigilo' pk %}" class="open-file">Declaração Sigilo</a></td>
+                        </tr>
                     </table>
                 </div>
 
             {% endif %}
 
 
-                
 
 
 
