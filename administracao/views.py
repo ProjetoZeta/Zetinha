@@ -6,8 +6,8 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django import forms
 
-from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento,ProjetoDenominacao
-from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoDenominacaoForm, EmprestimoEquipamentoForm
+from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento,Projeto
+from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm
 from .render import Render
 from django.views.generic import View
 from django.utils import timezone
@@ -54,13 +54,13 @@ def usuario(request, pk=None, pkdelete=None):
 
 def projeto(request, pk=None, pkdelete=None):
     if pkdelete:
-        item = ProjetoDenominacao.objects.get(pk=pkdelete)
+        item = Projeto.objects.get(pk=pkdelete)
         if item:
             item.delete()
         return redirect('projeto')
     return render(request, 'administracao/crud-projeto.html', {
-        'data': ProjetoDenominacao.objects.all(),
-        'form': ProjetoDenominacaoForm(),
+        'data': Projeto.objects.all(),
+        'form': ProjetoForm(),
         'content_title': 'Projeto'
     })
 
@@ -159,12 +159,12 @@ def show_emprestimoequipamento(request, pk=None):
 
 def projeto_handle(request, pk=None, pkdelete=None):
     if request.method == 'POST':
-        form = ProjetoDenominacaoForm(request.POST, instance=ProjetoDenominacao.objects.get(pk=pk)) if pk else ProjetoDenominacaoForm(request.POST)
+        form = ProjetoForm(request.POST, instance=Projeto.objects.get(pk=pk)) if pk else ProjetoForm(request.POST)
         if form.is_valid() and form.save():
             return redirect('projeto')
 
     elif request.method == 'GET':
-        form = ProjetoDenominacaoForm(instance=ProjetoDenominacao.objects.get(pk=pk)) if pk else ProjetoDenominacaoForm()
+        form = ProjetoForm(instance=Projeto.objects.get(pk=pk)) if pk else ProjetoForm()
 
     return fetch_projeto(request, form, pk)
 

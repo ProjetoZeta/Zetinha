@@ -177,7 +177,7 @@ class Bolsista(models.Model):
     email_unb = models.EmailField('Email UnB', unique=True, blank=True)
     telefone_local = models.CharField('Telefone Local', max_length=32, blank=True)
 
-    projeto_atual = models.ForeignKey('ProjetoDenominacao', on_delete=models.CASCADE, related_name='atuacao', blank=True, null=True)
+    projeto_atual = models.ForeignKey('Projeto', on_delete=models.CASCADE, related_name='atuacao', blank=True, null=True)
 
     # funcao = models.CharField('Funcao', max_length=1, choices=FUNCAO, default='1')
     categoria = models.CharField('Categoria', max_length=1, choices=CATEGORIA, default='1')
@@ -288,7 +288,7 @@ class ProjetoDetalhes(models.Model):
         return "{} - {}".format(self.sigla, self.nome)
 
 
-class ProjetoDenominacao(models.Model):
+class Projeto(models.Model):
     nome = models.CharField('Nome do Projeto', max_length=32)
     sigla = models.CharField('Sigla', max_length=32, unique=True)
     projeto_detalhes = models.ForeignKey('ProjetoDetalhes', on_delete=models.CASCADE, related_name='detalhes', blank=True, null=True)

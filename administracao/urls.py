@@ -46,8 +46,8 @@ urlpatterns = [
 
     url(r'^projeto$', views.projeto, name='projeto'),
     url(r'^projeto/novo$', views.projeto_handle, name='projeto-criar'),
-    url(r'^projeto/(?P<pk>[0-9]+)/editar$', views.projeto_handle, name='projetodenominacao-editar'),
-    url(r'^projeto/(?P<pkdelete>[0-9]+)/remover$', views.projeto, name='projetodenominacao-remover'),
+    url(r'^projeto/(?P<pk>[0-9]+)/editar$', views.projeto_handle, name='projeto-editar'),
+    url(r'^projeto/(?P<pkdelete>[0-9]+)/remover$', views.projeto, name='projeto-remover'),
 
 
 

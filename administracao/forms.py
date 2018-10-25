@@ -1,6 +1,6 @@
 from django import forms
 from common.forms import BaseForm, BaseFormControl
-from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, ProjetoDenominacao
+from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, Projeto
 from django.conf import settings
 from utils.models import get_fields, get_clean_fields
 
@@ -65,9 +65,9 @@ class EmprestimoEquipamentoForm(BaseForm):
         model = EmprestimoEquipamento
         fields = get_fields(model, ignore=['dt_emprestimo'])
 
-class ProjetoDenominacaoForm(BaseFormControl):
+class ProjetoForm(BaseFormControl):
     preview = ['nome', 'sigla']
     #file = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
     class Meta:
-        model = ProjetoDenominacao
+        model = Projeto
         fields = ['nome', 'sigla']
