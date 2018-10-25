@@ -67,7 +67,7 @@ class EmprestimoEquipamentoForm(BaseForm):
 
 class ProjetoDenominacaoForm(BaseFormControl):
     preview = ['nome', 'sigla']
-    file = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    #file = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
     class Meta:
         model = ProjetoDenominacao
         fields = ['nome', 'sigla']
