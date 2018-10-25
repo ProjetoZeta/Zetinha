@@ -605,6 +605,34 @@
 
         </fieldset>
 
+        <fieldset class="well the-fieldset opacity">
+            <legend class="the-legend">Relatórios</legend>
+
+            {% if not pk %}
+                <div style="color: #bab3b3;">Crie um bolsista e vincule-o a um projeto para depois gerar relatórios</div>
+            {% else %}
+            
+                <div>
+                    <table class="table table-striped file-table">
+
+                        <tr>
+
+                            <td class="col-sm-2"><i class="fa fa-file-pdf-o file-icon" aria-hidden="true"></i></td>
+                            <td class="col-sm-8"><a href="{% url 'relatorio-gerar' pk %}" class="open-file">Declaração de Residência</a></td>
+                        </tr>
+
+                    </table>
+                </div>
+
+            {% endif %}
+
+
+                
+
+
+
+        </fieldset>
+
     </div>
 
 
