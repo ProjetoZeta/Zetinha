@@ -188,3 +188,14 @@ class Pdf(View):
         }
 
         return Render.render('pdf.html', params)
+
+    def get(self, request, pk):
+        bolsista = [Bolsista.objects.get(pk=pk)]
+        today = timezone.now()
+        params = {
+            'today': today,
+            'bolsistas': bolsista,
+            'request': request
+        }
+
+        return Render.render('pdf.html', params)
