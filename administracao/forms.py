@@ -70,4 +70,4 @@ class ProjetoDenominacaoForm(BaseFormControl):
     file = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
     class Meta:
         model = ProjetoDenominacao
-        fields = get_fields(model)
+        fields = ['nome', 'sigla']
