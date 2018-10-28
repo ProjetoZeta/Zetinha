@@ -41,9 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cadastro',
+    'autenticacao',
+    'relatorio',
     'utils',
     'bootstrap3',
-    'common',
     'django_cleanup'
 ]
 

@@ -15,7 +15,7 @@ from django.utils import timezone
 # Create your views here.
 
 def main(request):
-    return render(request, 'administracao/foo.html', {})
+    return render(request, 'cadastro/foo.html', {})
 
 def handler(model, request, pk, pkdelete):
     if pkdelete:
@@ -31,7 +31,7 @@ def handler(model, request, pk, pkdelete):
         form = globals()[model+'Form'](instance=globals()[model].objects.get(pk=pk)) if pk else globals()[model+'Form']()
     if pk:
         form.is_edit = True
-    return render(request, 'administracao/crud-withmodal.html', {
+    return render(request, 'cadastro/crud-withmodal.html', {
         'data': globals()[model].objects.all(),
         'form': form,
         'content_title': globals()[model]._meta.verbose_name_plural.title()
@@ -58,7 +58,7 @@ def projeto(request, pk=None, pkdelete=None):
         if item:
             item.delete()
         return redirect('projeto')
-    return render(request, 'administracao/crud-projeto.html', {
+    return render(request, 'cadastro/crud-projeto.html', {
         'data': Projeto.objects.all(),
         'form': ProjetoForm(),
         'content_title': 'Projeto'
@@ -70,7 +70,7 @@ def bolsista(request, pk=None, pkdelete=None):
         if item:
             item.delete()
         return redirect('bolsista')
-    return render(request, 'administracao/crud-bolsista.html', {
+    return render(request, 'cadastro/crud-bolsista.html', {
         'data': Bolsista.objects.all(),
         'form': BolsistaForm(),
         'content_title': 'Bolsistas'
@@ -78,7 +78,7 @@ def bolsista(request, pk=None, pkdelete=None):
 
 
 def fetch_bolsista(request, bolsista_form, documento_form, emprestimo_form, pk):
-    return render(request, 'administracao/bolsista.html', {
+    return render(request, 'cadastro/bolsista.html', {
         'content_title': 'Cadastrar Bolsistas / Pequisadores',
         'form': bolsista_form,
         'formf': documento_form,
@@ -145,14 +145,14 @@ def handle_emprestimo_equipamento_bolsista(request, pk=None, pkdelete=None):
 
 def show_document(request, pk=None):
     if request.method == 'GET':
-        return render(request, 'common/file-viewer.html', {
+        return render(request, 'cadastro/file-viewer.html', {
             'content_title': 'Preview de arquivo',
             'document': Documento.objects.get(pk=pk)
         })
 
 def show_emprestimoequipamento(request, pk=None):
     if request.method == 'GET':
-        return render(request, 'administracao/emprestimo-viewer.html', {
+        return render(request, 'cadastro/emprestimo-viewer.html', {
             'content_title': 'Empréstimo de Equipamento',
             'emprestimo': EmprestimoEquipamento.objects.get(pk=pk)
         })
@@ -170,7 +170,7 @@ def projeto_handle(request, pk=None, pkdelete=None):
 
 
 def fetch_projeto(request, form,  pk):
-    return render(request,'administracao/projeto.html', {
+    return render(request,'cadastro/projeto.html', {
                 'content_title': 'Manter Projeto',
                 'form': form,
                 'pk': pk
