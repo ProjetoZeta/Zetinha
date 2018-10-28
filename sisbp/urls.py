@@ -24,6 +24,5 @@ urlpatterns = [
     url(r'^$', RedirectView.as_view(pattern_name='login', permanent=False)),
     url(r'^login/?$', login, name='login'),
     url(r'^admin/', admin.site.urls),
-    url(r'^administracao/', include('administracao.urls')),
-    url(r'^bolsista/', include('bolsista.urls'))
+    url(r'^cadastro/', include('cadastro.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

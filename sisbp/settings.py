@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = 'core.Usuario'
+AUTH_USER_MODEL = 'cadastro.Usuario'
 
 DATE_INPUT_FORMATS = ['%d-%m-%Y']
 
@@ -40,12 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
+    'cadastro',
     'utils',
-    'administracao',
     'bootstrap3',
     'common',
-    'bolsista',
     'django_cleanup'
 ]
 

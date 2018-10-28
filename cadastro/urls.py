@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from django.urls import include, path
-from administracao import views
+from . import views
 # from administracao.views import Pdf
 
 urlpatterns = [
