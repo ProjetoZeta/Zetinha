@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from datetime import datetime
 from django.conf import settings
-from common.validators import cpf, lattes_url
+from .validators import cpf, lattes_url
 
 
 class Usuario(AbstractUser):

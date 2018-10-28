@@ -1,5 +1,5 @@
 from django import forms
-from common.forms import ModelForm
+from django.forms import ModelForm
 from utils.lists import remove
 from .models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, Projeto
 from django.conf import settings
