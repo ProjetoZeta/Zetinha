@@ -8,9 +8,7 @@ from django import forms
 
 from .models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento,Projeto
 from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm
-from .render import Render
 from django.views.generic import View
-from django.utils import timezone
 
 # Create your views here.
 
@@ -175,36 +173,3 @@ def fetch_projeto(request, form,  pk):
                 'form': form,
                 'pk': pk
                 })
-
-def declaracao_residencia(request, pk):
-    bolsista = Bolsista.objects.get(pk=pk)
-    today = timezone.now()
-    params = {
-            'today': today,
-            'bolsista': bolsista,
-            'request': request
-        }
-
-    return render(request,'residencia.html', params)
-
-def declaracao_bolsa(request, pk):
-    bolsista = Bolsista.objects.get(pk=pk)
-    today = timezone.now()
-    params = {
-            'today': today,
-            'bolsista': bolsista,
-            'request': request
-        }
-
-    return render(request,'declaracao-bolsista.html', params)
-
-def declaracao_sigilo(request, pk):
-    bolsista = Bolsista.objects.get(pk=pk)
-    today = timezone.now()
-    params = {
-            'today': today,
-            'bolsista': bolsista,
-            'request': request
-        }
-
-    return render(request,'declaracao-sigilo.html', params)

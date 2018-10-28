@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^login/?$', login, name='login'),
     url(r'^admin/', admin.site.urls),
     url(r'^cadastro/', include('cadastro.urls')),
+    url(r'^relatorio/', include('relatorio.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
