@@ -1,10 +1,30 @@
 from django import forms
-from common.forms import BaseForm, BaseFormControl
+from common.forms import ModelForm
+from utils.lists import remove
 from .models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, Projeto
 from django.conf import settings
 from utils.models import get_fields, get_clean_fields
 
 from django.contrib.auth.forms import UserChangeForm
+
+class BaseForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.preview = remove('id', self.preview)
+        super(ModelForm, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        m = super(ModelForm, self).save(commit=False)
+        # do custom stuff
+        if commit:
+            m.save()
+        return m
+
+class BaseFormControl(ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.preview = remove('id', self.preview)
+        super(ModelForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
 
 class UsuarioChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
