@@ -1,8 +1,14 @@
 from django import forms
 from common.forms import BaseForm, BaseFormControl
-from core.models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, Projeto
+from .models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, Projeto
 from django.conf import settings
 from utils.models import get_fields, get_clean_fields
+
+from django.contrib.auth.forms import UserChangeForm
+
+class UsuarioChangeForm(UserChangeForm):
+    class Meta(UserChangeForm.Meta):
+        model = Usuario
 
 class UsuarioForm(BaseForm):
     preview = ['email', 'no_completo', 'ic_ativo', 'ic_bolsista']
