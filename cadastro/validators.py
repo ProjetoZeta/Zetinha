@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-from utils.cpf import is_cpf_valid
+from .utils.cpf import is_cpf_valid
 import re
 
 def cpf(value):

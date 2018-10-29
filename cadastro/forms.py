@@ -1,9 +1,9 @@
 from django import forms
 from django.forms import ModelForm
-from utils.lists import remove
+from .utils.lists import remove
 from .models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, Projeto
 from django.conf import settings
-from utils.models import get_fields, get_clean_fields
+from .utils.models import get_fields, get_clean_fields
 
 from django.contrib.auth.forms import UserChangeForm
 
