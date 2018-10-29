@@ -14,7 +14,7 @@ def declaracao_residencia(request, pk):
             'request': request
         }
 
-    return render(request,'residencia.html', params)
+    return render(request,'relatorio/residencia.html', params)
 
 def declaracao_bolsa(request, pk):
     bolsista = Bolsista.objects.get(pk=pk)
@@ -25,7 +25,7 @@ def declaracao_bolsa(request, pk):
             'request': request
         }
 
-    return render(request,'declaracao-bolsista.html', params)
+    return render(request,'relatorio/declaracao-bolsista.html', params)
 
 def declaracao_sigilo(request, pk):
     bolsista = Bolsista.objects.get(pk=pk)
@@ -36,4 +36,4 @@ def declaracao_sigilo(request, pk):
             'request': request
         }
 
-    return render(request,'declaracao-sigilo.html', params)
+    return render(request,'relatorio/declaracao-sigilo.html', params)
