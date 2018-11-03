@@ -12,7 +12,7 @@ from django.views.generic import View
 
 from django.http import HttpResponse
 
-from .generic_view import GenericView
+from .abstract_views import GenericView
 
 class Cargo(GenericView):
     template_name = 'cadastro/crud-withmodal.html'
