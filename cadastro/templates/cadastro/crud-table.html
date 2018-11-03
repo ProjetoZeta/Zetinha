@@ -28,8 +28,17 @@
     <script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     {% block page-script %}
-
     {% endblock %}
+
+    <script type="text/javascript">
+            
+        function submit_form_delete(pk){
+            if (confirm('Tem certeza? O registro será apagado permanentemente')){
+                document.getElementById("form-delete-"+pk).submit()
+            }
+        }
+
+    </script>
 
 {% endblock %}
 
@@ -75,7 +84,10 @@
                                         <li><a href="{% url path item.pk %}">Modificar</a></li>
                                     {% endwith %}
                                     {% with name|add:"-remover" as path %}
-                                        <li><a href="{% url path item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
+                                        <form id="form-delete-{{ item.pk }}" method="delete" action="{% url path item.pk %}">
+                                            {% csrf_token %}
+                                        </form>
+                                        <li><a class="link-delete" onclick="return submit_form_delete({{ item.pk }})">Excluir</a></li>
                                     {% endwith %}
 
                                 </ul>
