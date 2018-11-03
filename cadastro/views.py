@@ -6,49 +6,72 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django import forms
 
-from .models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento,Projeto
+from .models import Cargo as CargoModel
+from .models import Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento,Projeto
 from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm
 from django.views.generic import View
 
-# Create your views here.
+from django.http import HttpResponse
+from django.views import View
+
+import importlib
+
+class GenericEntity(View):
+        
+    def dispatch(self, request, *args, **kwargs):
+        self.class_name = self.__class__.__name__
+        self.model_class = getattr(importlib.import_module('cadastro.models'), self.class_name)
+        self.form_class = getattr(importlib.import_module('cadastro.forms'), self.class_name+'Form')
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        pkdelete = kwargs.get('pkdelete', None)
+        if pkdelete:
+            return self.delete(request=request, pk=pkdelete)
+        else:
+            pk = kwargs.get('pk', None)
+            form = kwargs.get('form', None)
+            if form is None:
+                form = self.form_class(instance=self.model_class.objects.get(pk=pk)) if pk else self.form_class()
+            if pk:
+                form.is_edit = True
+            return render(request, 'cadastro/crud-withmodal.html', {
+                'data': self.model_class.objects.all(),
+                'form': form,
+                'content_title': self.model_class._meta.verbose_name_plural.title()
+            })
+
+    def post(self, request, *args, **kwargs):
+        pk = kwargs.get('pk', None)
+        form = self.form_class(request.POST, instance=self.model_class.objects.get(pk=pk)) if pk else self.form_class(request.POST)
+        if form.is_valid() and form.save():
+            return redirect(self.class_name.lower())
+        else:
+            return self.get(request=request, form=form)
+
+    def delete(self, request, *args, **kwargs):
+        item = self.model_class.objects.get(pk=kwargs.get('pk', None))
+        if item:
+            item.delete()
+        return redirect(self.class_name.lower())
+
+class Cargo(GenericEntity):
+    pass
+
+class Funcao(GenericEntity):
+    pass
+
+class Entidade(GenericEntity):
+    pass    
+
+class Responsavel(GenericEntity):
+    pass
+
+class Usuario(GenericEntity):
+    pass
 
 def main(request):
     return render(request, 'cadastro/foo.html', {})
-
-def handler(model, request, pk, pkdelete):
-    if pkdelete:
-        item = globals()[model].objects.get(pk=pkdelete)
-        if item:
-            item.delete()
-        return redirect(model.lower())
-    if request.method == 'POST':
-        form = globals()[model+'Form'](request.POST, instance=globals()[model].objects.get(pk=pk)) if pk else globals()[model+'Form'](request.POST)
-        if form.is_valid() and form.save():
-            return redirect(model.lower())
-    elif request.method == 'GET':
-        form = globals()[model+'Form'](instance=globals()[model].objects.get(pk=pk)) if pk else globals()[model+'Form']()
-    if pk:
-        form.is_edit = True
-    return render(request, 'cadastro/crud-withmodal.html', {
-        'data': globals()[model].objects.all(),
-        'form': form,
-        'content_title': globals()[model]._meta.verbose_name_plural.title()
-    })
-
-def cargo(request, pk=None, pkdelete=None):
-    return handler("Cargo", request, pk, pkdelete)
-
-def funcao(request, pk=None, pkdelete=None):
-    return handler("Funcao", request, pk, pkdelete)
-
-def entidade(request, pk=None, pkdelete=None):
-    return handler("Entidade", request, pk, pkdelete)
-
-def responsavel(request, pk=None, pkdelete=None):
-    return handler("Responsavel", request, pk, pkdelete)
-
-def usuario(request, pk=None, pkdelete=None):
-    return handler("Usuario", request, pk, pkdelete)
 
 def projeto(request, pk=None, pkdelete=None):
     if pkdelete:
