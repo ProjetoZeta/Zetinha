@@ -26,10 +26,10 @@ urlpatterns = [
     url(r'^usuario/(?P<pk>[0-9]+)/editar$', views.Usuario.as_view(), name='usuario-editar'),
     url(r'^usuario/(?P<pkdelete>[0-9]+)/remover$', views.Usuario.as_view(), name='usuario-remover'),
 
-    url(r'^bolsista$', views.bolsista, name='bolsista'),
-    url(r'^bolsista/novo$', views.bolsista_handle, name='bolsista-criar'),
-    url(r'^bolsista/(?P<pk>[0-9]+)/editar$', views.bolsista_handle, name='bolsista-editar'),
-    url(r'^bolsista/(?P<pkdelete>[0-9]+)/remover$', views.bolsista, name='bolsista-remover'),
+    url(r'^bolsista$', views.BolsistaList.as_view(), name='bolsista'),
+    url(r'^bolsista/novo$', views.Bolsista.as_view(), name='bolsista-criar'),
+    url(r'^bolsista/(?P<pk>[0-9]+)/editar$', views.Bolsista.as_view(), name='bolsista-editar'),
+    url(r'^bolsista/(?P<pkdelete>[0-9]+)/remover$', views.Bolsista.as_view(), name='bolsista-remover'),
 
     url(r'^bolsista/arquivo_upload$', views.handle_arquivo_bolsista, name='upload-arquivo-bolsista'),
     url(r'^bolsista/arquivo/(?P<pkdelete>[0-9]+)/remover$', views.handle_arquivo_bolsista, name='remover-arquivo-bolsista'),
@@ -41,7 +41,7 @@ urlpatterns = [
 
     url(r'emprestimo/(?P<pk>[0-9]+)', views.show_emprestimoequipamento, name='show-emprestimoequipamento'),
 
-    url(r'^projeto$', views.projeto, name='projeto'),
+    url(r'^projeto$', views.ProjetoList.as_view(), name='projeto'),
     url(r'^projeto/novo$', views.projeto_handle, name='projeto-criar'),
     url(r'^projeto/(?P<pk>[0-9]+)/editar$', views.projeto_handle, name='projeto-editar'),
     url(r'^projeto/(?P<pkdelete>[0-9]+)/remover$', views.projeto, name='projeto-remover'),
