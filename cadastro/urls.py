@@ -4,7 +4,6 @@ from . import views
 # from administracao.views import Pdf
 
 urlpatterns = [
-    url(r'^$', views.main, name='main'),
     
     url(r'^cargo$', views.Cargo.as_view(), name='cargo'),
     url(r'^cargo/(?P<pk>[0-9]+)/editar$', views.Cargo.as_view(), name='cargo-editar'),
@@ -31,15 +30,15 @@ urlpatterns = [
     url(r'^bolsista/(?P<pk>[0-9]+)/editar$', views.Bolsista.as_view(), name='bolsista-editar'),
     url(r'^bolsista/(?P<pkdelete>[0-9]+)/remover$', views.Bolsista.as_view(), name='bolsista-remover'),
 
-    url(r'^bolsista/arquivo_upload$', views.handle_arquivo_bolsista, name='upload-arquivo-bolsista'),
-    url(r'^bolsista/arquivo/(?P<pkdelete>[0-9]+)/remover$', views.handle_arquivo_bolsista, name='remover-arquivo-bolsista'),
+    url(r'^bolsista/arquivo_upload$', views.BolsistaDocumento.as_view(), name='upload-arquivo-bolsista'),
+    url(r'^bolsista/arquivo/(?P<pkdelete>[0-9]+)/remover$', views.BolsistaDocumento.as_view(), name='remover-arquivo-bolsista'),
 
-    url(r'^bolsista/emprestimoequipamento$', views.handle_emprestimo_equipamento_bolsista, name='emprestimo-equipamento-bolsista'),
-    url(r'^bolsista/emprestimoequipamento/(?P<pkdelete>[0-9]+)/remover$', views.handle_emprestimo_equipamento_bolsista, name='remover-emprestimo-equipamento-bolsista'),
+    url(r'^bolsista/emprestimoequipamento$', views.BolsistaEmprestimoEquipamento.as_view(), name='emprestimo-equipamento-bolsista'),
+    url(r'^bolsista/emprestimoequipamento/(?P<pkdelete>[0-9]+)/remover$', views.BolsistaEmprestimoEquipamento.as_view(), name='remover-emprestimo-equipamento-bolsista'),
 
-    url(r'documento/(?P<pk>[0-9]+)', views.show_document, name='show-document'),
+    url(r'documento/(?P<pk>[0-9]+)', views.Documento.as_view(), name='show-document'),
 
-    url(r'emprestimo/(?P<pk>[0-9]+)', views.show_emprestimoequipamento, name='show-emprestimoequipamento'),
+    url(r'emprestimo/(?P<pk>[0-9]+)', views.EmprestimoEquipamento.as_view(), name='show-emprestimoequipamento'),
 
     url(r'^projeto$', views.ProjetoList.as_view(), name='projeto'),
     url(r'^projeto/novo$', views.projeto_handle, name='projeto-criar'),

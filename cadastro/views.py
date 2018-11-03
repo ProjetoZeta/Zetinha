@@ -11,103 +11,35 @@ from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, Usuario
 from django.views.generic import View
 
 from django.http import HttpResponse
-from django.views import View
 
-import importlib
+from .generic_view import GenericView
 
-class GenericEntity(View):
-        
-    template_keys = {}
-
-    def dispatch(self, request, *args, **kwargs):
-
-        if not hasattr(self, 'model'):
-            self.model = getattr(importlib.import_module('cadastro.models'), self.__class__.__name__)
-        
-        self.class_name = self.model.__name__
-
-        if not hasattr(self, 'form'):
-            self.form = getattr(importlib.import_module('cadastro.forms'), self.class_name+'Form')
-
-        if not hasattr(self, 'sucess_redirect'):
-            self.sucess_redirect = self.class_name.lower()
-        
-        return super().dispatch(request, *args, **kwargs)
-
-    def get(self, request, *args, **kwargs):
-        pkdelete = kwargs.get('pkdelete', None)
-        if pkdelete:
-            return self.delete(request=request, pk=pkdelete)
-        else:
-            pk = kwargs.get('pk', None)
-            form = kwargs.get('form', None)
-            if form is None:
-                form = self.form(instance=self.model.objects.get(pk=pk)) if pk else self.form()
-            if pk:
-                form.is_edit = True
-            return render(request, self.template_name, {
-                'data': self.model.objects.all(),
-                'form': form,
-                'content_title': self.model._meta.verbose_name_plural.title(),
-                **self.template_keys
-            })
-
-    def post(self, request, *args, **kwargs):
-        pk = kwargs.get('pk', None)
-        form = self.form(request.POST, instance=self.model.objects.get(pk=pk)) if pk else self.form(request.POST)
-        if form.is_valid() and form.save():
-            return redirect(self.sucess_redirect)
-        else:
-            return self.get(request=request, form=form)
-
-    def delete(self, request, *args, **kwargs):
-        item = self.model.objects.get(pk=kwargs.get('pk', None))
-        if item:
-            item.delete()
-        return redirect(self.sucess_redirect)
-
-class Cargo(GenericEntity):
-    template_name = 'cadastro/crud-withmodal.html'
-    template_keys = {'content_title': 'shit'}
-
-class Funcao(GenericEntity):
+class Cargo(GenericView):
     template_name = 'cadastro/crud-withmodal.html'
 
-class Entidade(GenericEntity):
+class Funcao(GenericView):
     template_name = 'cadastro/crud-withmodal.html'
 
-class Responsavel(GenericEntity):
+class Entidade(GenericView):
     template_name = 'cadastro/crud-withmodal.html'
 
-class Usuario(GenericEntity):
+class Responsavel(GenericView):
     template_name = 'cadastro/crud-withmodal.html'
 
-def main(request):
-    return render(request, 'cadastro/foo.html', {})
+class Usuario(GenericView):
+    template_name = 'cadastro/crud-withmodal.html'
 
-def projeto(request, pk=None, pkdelete=None):
-    if pkdelete:
-        item = ProjetoModel.objects.get(pk=pkdelete)
-        if item:
-            item.delete()
-        return redirect('projeto')
-    return render(request, 'cadastro/crud-projeto.html', {
-        'data': ProjetoModel.objects.all(),
-        'form': ProjetoForm(),
-        'content_title': 'Projeto'
-    })
-
-class Projeto(GenericEntity):
+class Projeto(GenericView):
 
     template_name = 'cadastro/projeto.html'
 
-class ProjetoList(GenericEntity):
+class ProjetoList(GenericView):
     
     model = ProjetoModel
     template_name = 'cadastro/crud-projeto.html'
 
 
-class Bolsista(GenericEntity):
+class Bolsista(GenericView):
 
     template_name = 'cadastro/bolsista.html'
 
@@ -133,63 +65,57 @@ class Bolsista(GenericEntity):
 
         return super().dispatch(request, *args, **kwargs)
 
-class BolsistaList(GenericEntity):
+class BolsistaList(GenericView):
 
     model = BolsistaModel
     template_name = 'cadastro/crud-bolsista.html'
 
-def handle_arquivo_bolsista(request, pk=None, pkdelete=None):
-    if request.method == 'POST':
+
+class BolsistaMedia(Bolsista):
+
+    def post(self, request, *args, **kwargs):
         bolsista = BolsistaModel.objects.get(pk=request.POST.get('bolsista', None))
         form = DocumentoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('bolsista-editar', pk=bolsista.pk)
-        bolsista_form = BolsistaForm(instance=BolsistaModel.objects.get(pk=bolsista.pk)) if bolsista.pk else BolsistaForm()
-    elif request.method == 'GET':
-        bolsista = BolsistaModel.objects.get(pk=DocumentoModel.objects.get(pk=pkdelete if pkdelete else pk).bolsista.pk)
-        form = DocumentoForm()
-        bolsista_form = BolsistaForm(instance=bolsista)
-        if pkdelete:
-            item = DocumentoModel.objects.get(pk=pkdelete)
-            if item:
-                item.delete()
-        return redirect('bolsista-editar', pk=bolsista.pk)
-    return fetch_bolsista(request, bolsista_form, form, EmprestimoEquipamentoForm(), bolsista.pk)
+        else:
+            #form = BolsistaForm(instance=BolsistaModel.objects.get(pk=bolsista.pk)) if bolsista.pk else BolsistaForm()
+            return self.get(request=request, form=form)
 
+class BolsistaDocumento(BolsistaMedia):
 
-def handle_emprestimo_equipamento_bolsista(request, pk=None, pkdelete=None):
-    if request.method == 'POST':
-        bolsista = BolsistaModel.objects.get(pk=request.POST.get('bolsista', None))
-        form = EmprestimoEquipamentoForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('bolsista-editar', pk=bolsista.pk)
-        bolsista_form = BolsistaForm(instance=BolsistaModel.objects.get(pk=bolsista.pk)) if bolsista.pk else BolsistaForm()
-    elif request.method == 'GET':
-        bolsista = BolsistaModel.objects.get(pk=EmprestimoEquipamento.objects.get(pk=pkdelete if pkdelete else pk).bolsista.pk)
-        form = DocumentoForm()
-        bolsista_form = BolsistaForm(instance=bolsista)
-        if pkdelete:
-            item = EmprestimoEquipamento.objects.get(pk=pkdelete)
-            if item:
-                item.delete()
-        return redirect('bolsista-editar', pk=bolsista.pk)
-    return fetch_bolsista(request, bolsista_form, DocumentoForm(), form, bolsista.pk)
+    model = DocumentoModel
 
-def show_document(request, pk=None):
-    if request.method == 'GET':
-        return render(request, 'cadastro/file-viewer.html', {
+class BolsistaEmprestimoEquipamento(BolsistaMedia):
+
+    model = EmprestimoEquipamentoModel
+
+class Documento(GenericView):
+
+    template_name = 'cadastro/file-viewer.html'
+
+    def dispatch(self, request, *args, **kwargs):
+
+        self.template_keys = {
             'content_title': 'Preview de arquivo',
-            'document': DocumentoModel.objects.get(pk=pk)
-        })
+            'document': DocumentoModel.objects.get(pk=kwargs.get('pk', None))
+        }
 
-def show_emprestimoequipamento(request, pk=None):
-    if request.method == 'GET':
-        return render(request, 'cadastro/emprestimo-viewer.html', {
+        return super().dispatch(request, *args, **kwargs)
+
+class EmprestimoEquipamento(GenericView):
+
+    template_name = 'cadastro/emprestimo-viewer.html'
+
+    def dispatch(self, request, *args, **kwargs):
+
+        self.template_keys = {
             'content_title': 'Empréstimo de Equipamento',
-            'emprestimo': EmprestimoEquipamento.objects.get(pk=pk)
-        })
+            'emprestimo': EmprestimoEquipamentoModel.objects.get(pk=kwargs.get('pk', None))
+        }
+        
+        return super().dispatch(request, *args, **kwargs)
 
 def projeto_handle(request, pk=None, pkdelete=None):
     if request.method == 'POST':
@@ -209,3 +135,15 @@ def fetch_projeto(request, form,  pk):
                 'form': form,
                 'pk': pk
                 })
+
+def projeto(request, pk=None, pkdelete=None):
+    if pkdelete:
+        item = ProjetoModel.objects.get(pk=pkdelete)
+        if item:
+            item.delete()
+        return redirect('projeto')
+    return render(request, 'cadastro/crud-projeto.html', {
+        'data': ProjetoModel.objects.all(),
+        'form': ProjetoForm(),
+        'content_title': 'Projeto'
+    })
