@@ -12,24 +12,24 @@ from django.views.generic import View
 
 from django.http import HttpResponse
 
-from .abstract_views import GenericView
+from .abstract_views import GenericView, FormView
 
-class Cargo(GenericView):
+class Cargo(FormView):
     template_name = 'cadastro/crud-withmodal.html'
 
-class Funcao(GenericView):
+class Funcao(FormView):
     template_name = 'cadastro/crud-withmodal.html'
 
-class Entidade(GenericView):
+class Entidade(FormView):
     template_name = 'cadastro/crud-withmodal.html'
 
-class Responsavel(GenericView):
+class Responsavel(FormView):
     template_name = 'cadastro/crud-withmodal.html'
 
-class Usuario(GenericView):
+class Usuario(FormView):
     template_name = 'cadastro/crud-withmodal.html'
 
-class Projeto(GenericView):
+class Projeto(FormView):
 
     template_name = 'cadastro/projeto.html'
 
@@ -39,11 +39,11 @@ class ProjetoList(GenericView):
     template_name = 'cadastro/crud-projeto.html'
 
 
-class Bolsista(GenericView):
+class Bolsista(FormView):
 
     template_name = 'cadastro/bolsista.html'
 
-    def dispatch(self, request, *args, **kwargs):
+    def get(self, request, **kwargs):
 
         pk = kwargs.get('pk', None)
 
@@ -63,9 +63,20 @@ class Bolsista(GenericView):
             'pk': pk
         }
 
-        return super().dispatch(request, *args, **kwargs)
+        return super().get(request, **kwargs)
 
 class BolsistaList(GenericView):
+
+    def get(self, request, **kwargs):
+
+        self.template_keys = {
+            **self.template_keys,
+            'content_title': 'Bolsistas',
+            'data': self.model.objects.all(),
+            'form': BolsistaForm()
+        }
+
+        return super().get(request, **kwargs)     
 
     model = BolsistaModel
     template_name = 'cadastro/crud-bolsista.html'
@@ -73,7 +84,7 @@ class BolsistaList(GenericView):
 
 class BolsistaMedia(Bolsista):
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, **kwargs):
         bolsista = BolsistaModel.objects.get(pk=request.POST.get('bolsista', None))
         form = DocumentoForm(request.POST, request.FILES)
         if form.is_valid():
@@ -95,27 +106,29 @@ class Documento(GenericView):
 
     template_name = 'cadastro/file-viewer.html'
 
-    def dispatch(self, request, *args, **kwargs):
+    def get(self, request, **kwargs):
 
         self.template_keys = {
+            **self.template_keys,
             'content_title': 'Preview de arquivo',
             'document': DocumentoModel.objects.get(pk=kwargs.get('pk', None))
         }
 
-        return super().dispatch(request, *args, **kwargs)
+        return super().get(request, **kwargs)
 
 class EmprestimoEquipamento(GenericView):
 
     template_name = 'cadastro/emprestimo-viewer.html'
 
-    def dispatch(self, request, *args, **kwargs):
+    def get(self, request, **kwargs):
 
         self.template_keys = {
+            **self.template_keys,
             'content_title': 'Empréstimo de Equipamento',
             'emprestimo': EmprestimoEquipamentoModel.objects.get(pk=kwargs.get('pk', None))
         }
         
-        return super().dispatch(request, *args, **kwargs)
+        return super().get(request, **kwargs)
 
 def projeto_handle(request, pk=None, pkdelete=None):
     if request.method == 'POST':
