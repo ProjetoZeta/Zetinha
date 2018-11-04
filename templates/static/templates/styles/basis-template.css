@@ -45,3 +45,12 @@ footer {
 .top-buffer {
     margin-top:32px;
 }
+
+#logo{
+  float: center;
+  width: 10%;
+  text-align: center;
+  font-style: italic;
+  font-size: smaller;
+  text-indent: 0;
+}
