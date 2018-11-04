@@ -70,7 +70,6 @@ class BolsistaList(GenericView):
     def get(self, request, **kwargs):
 
         self.template_keys = {
-            **self.template_keys,
             'content_title': 'Bolsistas',
             'data': self.model.objects.all(),
             'form': BolsistaForm()
@@ -109,7 +108,6 @@ class Documento(GenericView):
     def get(self, request, **kwargs):
 
         self.template_keys = {
-            **self.template_keys,
             'content_title': 'Preview de arquivo',
             'document': DocumentoModel.objects.get(pk=kwargs.get('pk', None))
         }
@@ -123,40 +121,37 @@ class EmprestimoEquipamento(GenericView):
     def get(self, request, **kwargs):
 
         self.template_keys = {
-            **self.template_keys,
             'content_title': 'Empréstimo de Equipamento',
             'emprestimo': EmprestimoEquipamentoModel.objects.get(pk=kwargs.get('pk', None))
         }
         
         return super().get(request, **kwargs)
 
-def projeto_handle(request, pk=None, pkdelete=None):
-    if request.method == 'POST':
-        form = ProjetoForm(request.POST, instance=ProjetoModel.objects.get(pk=pk)) if pk else ProjetoForm(request.POST)
-        if form.is_valid() and form.save():
-            return redirect('projeto')
+class ProjetoList(GenericView):
 
-    elif request.method == 'GET':
-        form = ProjetoForm(instance=ProjetoModel.objects.get(pk=pk)) if pk else ProjetoForm()
+    def get(self, request, **kwargs):
 
-    return fetch_projeto(request, form, pk)
+        self.template_keys = {
+            'content_title': 'Projetos',
+            'data': self.model.objects.all(),
+            'form': ProjetoForm()
+        }
+
+        return super().get(request, **kwargs)     
+
+    model = ProjetoModel
+    template_name = 'cadastro/crud-projeto.html'
 
 
-def fetch_projeto(request, form,  pk):
-    return render(request,'cadastro/projeto.html', {
-                'content_title': 'Manter Projeto',
-                'form': form,
-                'pk': pk
-                })
+class Projeto(FormView):
 
-def projeto(request, pk=None, pkdelete=None):
-    if pkdelete:
-        item = ProjetoModel.objects.get(pk=pkdelete)
-        if item:
-            item.delete()
-        return redirect('projeto')
-    return render(request, 'cadastro/crud-projeto.html', {
-        'data': ProjetoModel.objects.all(),
-        'form': ProjetoForm(),
-        'content_title': 'Projeto'
-    })
+    template_name = 'cadastro/projeto.html'
+
+    def get(self, request, **kwargs):
+
+        self.template_keys = {
+            'content_title': 'Manter Projeto',
+            'pk': kwargs.get('pk', None)
+        }
+
+        return super().get(request, **kwargs)

@@ -61,10 +61,10 @@ class FormView(GenericView):
             form.is_edit = True
 
         self.template_keys = {
-            **self.template_keys,
             'data': self.model.objects.all(),
             'form': form,
             'content_title': self.model._meta.verbose_name_plural.title(),
+            **self.template_keys,
         }
 
         return super().get(request, **kwargs)

@@ -41,9 +41,9 @@ urlpatterns = [
     url(r'emprestimo/(?P<pk>[0-9]+)', views.EmprestimoEquipamento.as_view(), name='show-emprestimoequipamento'),
 
     url(r'^projeto$', views.ProjetoList.as_view(), name='projeto'),
-    url(r'^projeto/novo$', views.projeto_handle, name='projeto-criar'),
-    url(r'^projeto/(?P<pk>[0-9]+)/editar$', views.projeto_handle, name='projeto-editar'),
-    url(r'^projeto/(?P<pkdelete>[0-9]+)/remover$', views.projeto, name='projeto-remover'),
+    url(r'^projeto/novo$', views.Projeto.as_view(), name='projeto-criar'),
+    url(r'^projeto/(?P<pk>[0-9]+)/editar$', views.Projeto.as_view(), name='projeto-editar'),
+    url(r'^projeto/(?P<pkdelete>[0-9]+)/remover$', views.Projeto.as_view(), name='projeto-remover'),
 
 
 
