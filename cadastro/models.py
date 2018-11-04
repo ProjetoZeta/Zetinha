@@ -207,7 +207,7 @@ class Documento(models.Model):
         ('4', 'Certificado'),
     )
     bolsista = models.ForeignKey('Bolsista', on_delete=models.CASCADE)
-    tipo_documento = models.CharField('Tipo de Documento', max_length=1, choices=TIPOS, default='3')
+    tipo_documento = models.CharField('Tipo de Documentwidget=forms.Textareao', max_length=1, choices=TIPOS, default='3')
     no_documento = models.CharField('Descrição', max_length=512)
     dt_cadastro = models.DateTimeField('Momento do Upload', default=datetime.now, blank=True)
     arquivo = models.FileField()
@@ -291,7 +291,20 @@ class ProjetoDetalhes(models.Model):
 class Projeto(models.Model):
     nome = models.CharField('Nome do Projeto', max_length=32)
     sigla = models.CharField('Sigla', max_length=32, unique=True)
-    projeto_detalhes = models.ForeignKey('ProjetoDetalhes', on_delete=models.CASCADE, related_name='detalhes', blank=True, null=True)
+    
+    entidade_concedente = models.ForeignKey('Entidade', on_delete=models.CASCADE, related_name='entidadeconcedente', null=True, blank=True)
+    entidade_proponente = models.ForeignKey('Entidade', on_delete=models.CASCADE ,related_name='entidadeproponente', null=True, blank=True)
+
+    responsavel_concedente = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='rconcedente', null=True, blank=True)
+    responsavel_proponente = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='rproponente', null=True, blank=True)
+
+    responsavel_tecnico_concedente = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='rtconcedente', null=True, blank=True)
+    responsavel_tecnico_proponente = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='rtproponente', null=True, blank=True)
+
+    metodologia = models.CharField('Metodologia', max_length=1024, blank=True)
+
+    gestao_transferencia_tecnologia = models.CharField('Gestão de Projeto e Transferência de Tecnologia', max_length=1024, blank=True)
+
     class Meta:
         verbose_name_plural = "Projetos"
         verbose_name = "Projeto"

@@ -18,20 +18,18 @@
 
 {% block content %}
 
-    	{% csrf_token %}
-
 		<div class="tab-content">
 
 
 			<div class="panel with-nav-tabs panel-success">
                 <div class="panel-heading">
-                        <ul class="nav nav-tabs">
-                            <li class="dropdown">
+                        <ul class="nav nav-tabs nav-projeto">
+                            <li class="dropdown active">
                                 <a href="#" data-toggle="dropdown">Detalhes<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#descricao" data-toggle="tab">Descrição</a></li>
-                                    <li><a href="#dadosinteressados" data-toggle="tab">Dados dos Interessados</a></li>
-                                    <li><a href="#outros" data-toggle="tab">Outros</a></li>
+                                    <li class="active"><a href="#descricao" data-toggle="tab" class="detalhes">Descrição</a></li>
+                                    <li><a href="#dadosinteressados" data-toggle="tab" class="detalhes">Dados dos Interessados</a></li>
+                                    <li><a href="#outros" data-toggle="tab" class="detalhes">Outros</a></li>
                                 </ul>
                             </li>
                             <li><a href="#adbolsistas" data-toggle="tab">Adicionar bolsista</a></li>
@@ -43,7 +41,9 @@
                         </ul>
                 </div>
 
-				<form class="form" role="form" method="POST" action="{% if pk %} {% url 'projeto-editar' pk %} {% else %}{% url 'projeto-criar' %}{% endif %}">
+				<form class="form" id="form-detalhes" role="form" method="POST" action="{% if pk %} {% url 'projeto-editar' pk %} {% else %}{% url 'projeto-criar' %}{% endif %}">
+
+					{% csrf_token %}
 
 	                <div class="panel-body">
 	                    <div class="tab-content">
@@ -71,13 +71,31 @@
 
 				                    <legend class="the-legend">Proponente</legend>
 
-				                    <div class="form-group required {% if form.fk_entidade_proponente.errors %}{{ "has-error" }}{% endif %}">
-				                        <label for="name" class="control-label col-sm-2">Entidade:</label>
+				                    <div class="form-group row required  {% if form.entidade_proponente.errors %}{{ "has-error" }}{% endif %}">
+				                        <label for="inputValue" class="col-md-2 control-label">Instituição:</label>
 				                        <div class="col-sm-10">
-				                            {{ form.fk_entidade_proponente}}
-				                            <div class="help-block">{{ form.fk_entidade_proponente.errors }}</div>
+				                            {{ form.entidade_proponente }}
+				                            <div class="help-block">{{ form.entidade_proponente.errors }}</div>
 				                        </div>
 				                    </div>
+				                    
+
+				                    <div class="form-group row required {% if form.responsavel_proponente.errors %}{{ "has-error" }}{% endif %}">
+				                        <label for="inputValue" class="col-md-2 control-label">Responsável:</label>
+				                        <div class="col-md-10">
+				                            {{ form.responsavel_proponente }}
+				                            <div class="help-block">{{ form.responsavel_proponente.errors }}</div>
+				                        </div>
+				                    </div>
+
+				                    <div class="form-group row required {% if form.responsavel_tecnico_proponente.errors %}{{ "has-error" }}{% endif %}">
+				                        <label for="inputValue" class="col-md-2 control-label">Responsável Técnico:</label>
+				                        <div class="col-md-10">
+				                            {{ form.responsavel_tecnico_proponente }}
+				                            <div class="help-block">{{ form.responsavel_tecnico_proponente.errors }}</div>
+				                        </div>
+				                    </div>
+
 
 
 
@@ -87,28 +105,28 @@
 
 				                    <legend class="the-legend">Concedente</legend>
 
-				                    <div class="form-group row required  {% if form.fk_entidade_concedente.errors %}{{ "has-error" }}{% endif %}">
-				                        <label for="inputValue" class="col-md-2 control-label">Entidade:</label>
+				                    <div class="form-group row required  {% if form.entidade_concedente.errors %}{{ "has-error" }}{% endif %}">
+				                        <label for="inputValue" class="col-md-2 control-label">Instituição:</label>
 				                        <div class="col-sm-10">
-				                            {{ form.fk_entidade_concedente}}
-				                            <div class="help-block">{{ form.fk_entidade_concedente.errors }}</div>
+				                            {{ form.entidade_concedente}}
+				                            <div class="help-block">{{ form.entidade_concedente.errors }}</div>
 				                        </div>
 				                    </div>
 				                    
 
-				                    <div class="form-group row required {% if form.fk_responsavel_concedente.errors %}{{ "has-error" }}{% endif %}">
+				                    <div class="form-group row required {% if form.responsavel_concedente.errors %}{{ "has-error" }}{% endif %}">
 				                        <label for="inputValue" class="col-md-2 control-label">Responsável:</label>
 				                        <div class="col-md-10">
-				                            {{ form.fk_responsavel_concedente}}
-				                            <div class="help-block">{{ form.fk_responsavel_concedente.errors }}</div>
+				                            {{ form.responsavel_concedente }}
+				                            <div class="help-block">{{ form.responsavel_concedente.errors }}</div>
 				                        </div>
 				                    </div>
 
-				                    <div class="form-group row required {% if form.fk_responsavel_proponente.errors %}{{ "has-error" }}{% endif %}">
+				                    <div class="form-group row required {% if form.responsavel_tecnico_concedente.errors %}{{ "has-error" }}{% endif %}">
 				                        <label for="inputValue" class="col-md-2 control-label">Responsável Técnico:</label>
 				                        <div class="col-md-10">
-				                            {{ form.fk_responsavel_proponente}}
-				                            <div class="help-block">{{ form.fk_responsavel_proponente.errors }}</div>
+				                            {{ form.responsavel_tecnico_concedente }}
+				                            <div class="help-block">{{ form.responsavel_tecnico_concedente.errors }}</div>
 				                        </div>
 				                    </div>
 
@@ -119,12 +137,23 @@
 
 	                        <div class="tab-pane fade" id="outros">
 
-	                        	<fieldset class="well the-fieldset">
 
-				                    <legend class="the-legend">Outros</legend>
+			                    <div class="form-group row required {% if form.metodologia.errors %}{{ "has-error" }}{% endif %}">
+			                        <label for="inputValue" class="col-md-2 control-label">Metodologia:</label>
+			                        <div class="col-md-10">
+			                            {{ form.metodologia }}
+			                            <div class="help-block">{{ form.metodologia.errors }}</div>
+			                        </div>
+			                    </div>
 
+			                    <div class="form-group row required {% if form.gestao_transferencia_tecnologia.errors %}{{ "has-error" }}{% endif %}">
+			                        <label for="inputValue" class="col-md-2 control-label">Gestão de Projeto e Transferência de Tecnologia:</label>
+			                        <div class="col-md-10">
+			                            {{ form.gestao_transferencia_tecnologia }}
+			                            <div class="help-block">{{ form.gestao_transferencia_tecnologia.errors }}</div>
+			                        </div>
+			                    </div>
 
-				                </fieldset>
 
 	                        </div>
 	              			
@@ -324,7 +353,10 @@
 
 		</div>
 
-		<button type="submit" class="btn btn-info">Salvar</button>
-		<a href="{% url 'projeto' %}" class="btn btn-default">Voltar</a>
+		<div id="form-buttons">
+			<button class="btn btn-info" id="confirm-button">Salvar</button>
+			<a href="{% url 'projeto' %}" class="btn btn-default">Voltar</a>
+		</div>
+			
 
 {% endblock %}

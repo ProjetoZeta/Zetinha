@@ -94,6 +94,18 @@ class EmprestimoEquipamentoForm(BaseForm):
 class ProjetoForm(BaseFormControl):
     preview = ['nome', 'sigla']
     #file = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    empty_m = 'Selecione uma opção'
+    entidade_proponente = forms.ModelChoiceField(queryset=Entidade.objects.filter(ic_ativo=True), empty_label=empty_m)
+    entidade_concedente = forms.ModelChoiceField(queryset=Entidade.objects.filter(ic_ativo=True), empty_label=empty_m)
+
+    responsavel_proponente = forms.ModelChoiceField(queryset=Responsavel.objects.filter(ic_ativo=True), empty_label=empty_m)
+    responsavel_concedente = forms.ModelChoiceField(queryset=Responsavel.objects.filter(ic_ativo=True), empty_label=empty_m)
+
+    responsavel_tecnico_proponente = forms.ModelChoiceField(queryset=Responsavel.objects.filter(ic_ativo=True), empty_label=empty_m)
+    responsavel_tecnico_concedente = forms.ModelChoiceField(queryset=Responsavel.objects.filter(ic_ativo=True), empty_label=empty_m)
+
+    metodologia = forms.CharField(widget=forms.Textarea)
+    gestao_transferencia_tecnologia = forms.CharField(widget=forms.Textarea)
     class Meta:
         model = Projeto
-        fields = ['nome', 'sigla']
+        fields = get_fields(model)
