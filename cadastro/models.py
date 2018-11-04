@@ -303,12 +303,13 @@ class Participante(models.Model):
     bolsista = models.ForeignKey('Bolsista', on_delete=models.CASCADE)
     projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE)
     funcao = models.ForeignKey('Funcao', on_delete=models.CASCADE)
+    ic_ativo = models.BooleanField('Ativo')
 
     CATEGORIA = (
         ('1', 'Bolsa de aux. ao estudante'),
         ('2', 'Bolsa de aux. ao pesquisador '),
     )
-    
+
     MODALIDADE = (
         ('1', 'Mestrado'),
         ('2', 'Iniciação Científica'),
