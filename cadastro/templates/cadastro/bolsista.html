@@ -14,8 +14,21 @@
 <!-- <script src="https://rawgit.com/Lautert/helpers/master/javascript.helpers.js"></script> -->
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
-  <script type="text/javascript" src="{% static 'cadastro/bolsistas-scripts.js' %}"></script>
+  <script type="text/javascript" src="{% static 'cadastro/bolsista-scripts.js' %}"></script>
   <script type="text/javascript" src="{% static 'cadastro/lock-poupanca-caixa.js' %}"></script>
+
+  <script type="text/javascript">
+      
+        $(document).ready(function () {
+            $('#modal-file').modal({% if formf.errors %}'show'{% else %}''{% endif %});
+        });
+
+        $(document).ready(function () {
+            $('#modal-emprestimo').modal({% if forme.errors %}'show'{% else %}''{% endif %});
+        });
+
+  </script>
+
 {% endblock %}
 
 {% block content %}
