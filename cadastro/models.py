@@ -184,7 +184,7 @@ class Bolsista(models.Model):
     modalidade = models.CharField('Modalidade', max_length=1, choices=MODALIDADE, default='1')
     nivel = models.CharField('Nivel', max_length=1, choices=NIVEL, default='1')
 ##Talvez isso precise de um refactoring
-    inicio_vigencia = models.CharField('Início da Vigência', max_length=100, blank=True )
+    inicio_vigencia = models.CharField('Início da Vigência', max_length=100, blank=True)
     termino_vigencia = models.CharField('Término da Vigência', max_length=100, blank=True )
     periodo_total = models.CharField('Período Total Previsto', max_length=100, blank=True )
     valor_mensal = models.CharField('Valor Mensal', max_length=100, blank=True )
@@ -297,3 +297,43 @@ class Projeto(models.Model):
         verbose_name = "Projeto"
     def __str__(self):
         return "{} - {}".format(self.sigla, self.nome)
+
+
+class Participante(models.Model):
+    bolsista = models.ForeignKey('Bolsista', on_delete=models.CASCADE)
+    projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE)
+    funcao = models.ForeignKey('Funcao', on_delete=models.CASCADE)
+
+    CATEGORIA = (
+        ('1', 'Bolsa de aux. ao estudante'),
+        ('2', 'Bolsa de aux. ao pesquisador '),
+    )
+    
+    MODALIDADE = (
+        ('1', 'Mestrado'),
+        ('2', 'Iniciação Científica'),
+        ('3', 'Nível Médio'),
+        ('4', 'Pesquisador Sênior'),
+        ('5', 'Pesquisa Acadêmica'),
+        ('6', 'Pesquisa, Desenvolvimento e Inovação PDI'),
+        ('7', 'Apoio Operacional à Pesquisa'),
+
+    )
+
+    NIVEL = (
+        ('1', 'A'),
+        ('2', 'B'),
+        ('2', 'C'),
+        ('4', 'D')
+    )
+
+    categoria = models.CharField('Categoria', max_length=1, choices=CATEGORIA, default='1')
+    modalidade = models.CharField('Modalidade', max_length=1, choices=MODALIDADE, default='1')
+    nivel = models.CharField('Nível', max_length=1, choices=NIVEL, default='1')
+
+    inicio_vigencia = models.CharField('Início da Vigência', max_length=100, blank=True)
+    termino_vigencia = models.CharField('Término da Vigência', max_length=100, blank=True)
+    periodo_total = models.CharField('Início da Vigência', max_length=100, blank=True)
+    horas_semanais = models.CharField('Início da Vigência', max_length=100, blank=True)
+    valor_mensal = models.CharField('Início da Vigência', max_length=100, blank=True)
+    valor_total = models.CharField('Início da Vigência', max_length=100, blank=True)
