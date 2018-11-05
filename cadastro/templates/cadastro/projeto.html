@@ -22,18 +22,20 @@
 
 {% block content %}
 
+	{% with request.resolver_match.url_name as url %}
+
 			<div class="panel with-nav-tabs panel-success">
                 <div class="panel-heading">
                     <ul class="nav nav-tabs nav-projeto">
-                        <li class="dropdown active">
+                        <li class="dropdown {% if 'projeto-' in url %} active {% endif %}">
                             <a href="#" data-toggle="dropdown">Detalhes<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li class="active"><a href="#descricao" data-toggle="tab" class="detalhes">Descrição</a></li>
+                                <li class="{% if 'projeto-' in url %} active {% endif %}"><a href="#descricao" data-toggle="tab" class="detalhes">Descrição</a></li>
                                 <li><a href="#dadosinteressados" data-toggle="tab" class="detalhes">Dados dos Interessados</a></li>
                                 <li><a href="#outros" data-toggle="tab" class="detalhes">Outros</a></li>
                             </ul>
                         </li>
-                        <li><a href="#adbolsistas" data-toggle="tab">Vincular bolsista</a></li>
+                        <li class="{% if 'participante-' in url %} active {% endif %}"><a href="#adbolsistas" data-toggle="tab">Vincular bolsista</a></li>
                         <li><a href="#vatividade" data-toggle="tab">Vincular atividade</a></li>
                         <li><a href="#cronograma" data-toggle="tab">Cronograma</a></li>
                         <li><a href="#anexos" data-toggle="tab">Anexos</a></li>
@@ -54,7 +56,7 @@
 
 
                     <div class="tab-content">
-                        <div class="tab-pane fade in active" id="descricao">
+                        <div class="tab-pane fade {% if 'projeto-' in url %} in active {% endif %}" id="descricao">
 
                         	<form class="form" id="form-detalhes" role="form" method="POST" action="{% if pk %} {% url 'projeto-editar' pk %} {% else %}{% url 'projeto-criar' %}{% endif %}">
 
@@ -170,9 +172,9 @@
 
                         </form>
 	              			
-                        <div class="tab-pane fade" id="adbolsistas">
+                        <div class="tab-pane fade {% if 'participante-' in url %} in active {% endif %}" id="adbolsistas">
 
-                        	<form class="form" method="POST" action="{% if pk and pkparticipante %}{% url 'participante-projeto-editar' pk pkparticipante %} {% endif %}{% if pk and not pkparticipante %} {% url 'participante-projeto-criar' pk %}{% endif %}">
+                        	<form class="form" method="POST" action="{% if pk and pkparticipante %}{% url 'participante-proj-editar' pk pkparticipante %} {% endif %}{% if pk and not pkparticipante %} {% url 'participante-proj-criar' pk %}{% endif %}">
 
 							{% csrf_token %}
 
@@ -339,7 +341,7 @@
 						                                <span class="caret"></span>
 						                            </button>
 					                                <ul class="dropdown-menu" role="menu">
-					                                    <li><a href="{% url 'participante-projeto-editar' pk item.pk %}">Modificar</a></li>
+					                                    <li><a href="{% url 'participante-proj-editar' pk item.pk %}">Modificar</a></li>
 					                                    <li><a href="{% url 'participante-remover' item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
 
 					                                </ul>
@@ -428,6 +430,7 @@
 			<button class="btn btn-info" id="confirm-button">Salvar</button>
 			<a href="{% url 'projeto' %}" class="btn btn-default">Voltar</a>
 		</div>
+	{% endwith %}
 			
 
 {% endblock %}
