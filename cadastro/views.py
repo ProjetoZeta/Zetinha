@@ -162,18 +162,20 @@ class ParticipanteProjeto(Projeto):
 
         pk = kwargs.get(self.pk_alias, None)
 
-        form = self.form(request.POST, instance=self.model.objects.get(pk=pk)) if pk else self.form(request.POST)
+        initial = {'projeto': ProjetoModel.objects.get(pk=kwargs.get('pk', None))}
+
+        form = ParticipanteForm(request.POST, initial=initial, instance=self.model.objects.get(pk=pk)) if pk else ParticipanteForm(request.POST)
 
         if form.is_valid() and form.save():
             return redirect(self.sucess_redirect)
         else:
-            return self.get(request=request, form_participante=form, **kwargs)
+            return self.get(request=request, formp=form, **kwargs)
 
     def template_keys(self, **kwargs):
 
         pk = kwargs.get('pk', None)
 
-        formp = ParticipanteForm(initial={'projeto': ProjetoModel.objects.get(pk=pk)}) if pk else ParticipanteForm()
+        formp = ParticipanteForm() if pk else ParticipanteForm()
         formp.fields['projeto'].widget = forms.HiddenInput() if pk else formp.fields['projeto'].widget
 
         return {

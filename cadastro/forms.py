@@ -116,7 +116,7 @@ class ParticipanteForm(BaseFormControl):
     empty_m = 'Selecione uma opção'
 
     bolsista = forms.ModelChoiceField(queryset=Bolsista.objects.filter(ic_ativo=True), empty_label=empty_m)
-    projeto = forms.ModelChoiceField(queryset=Projeto.objects.all(), empty_label=empty_m)
+    projeto = forms.ModelChoiceField(queryset=Projeto.objects.all(), empty_label=empty_m, widget=forms.HiddenInput())
     funcao = forms.ModelChoiceField(queryset=Funcao.objects.filter(ic_ativo=True), empty_label=empty_m)
     class Meta:
         model = Participante
