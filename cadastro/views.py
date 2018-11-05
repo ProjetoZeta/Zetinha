@@ -6,8 +6,8 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django import forms
 
-from .models import Cargo as CargoModel, Entidade as EntidadeModel, Funcao as FuncaoModel, Usuario as  UsuarioModel, Bolsista as BolsistaModel, Documento as DocumentoModel, EmprestimoEquipamento as EmprestimoEquipamentoModel, Projeto as ProjetoModel
-from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm
+from .models import Cargo as CargoModel, Entidade as EntidadeModel, Funcao as FuncaoModel, Usuario as  UsuarioModel, Bolsista as BolsistaModel, Documento as DocumentoModel, EmprestimoEquipamento as EmprestimoEquipamentoModel, Projeto as ProjetoModel, Participante as ParticipanteModel
+from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm, ParticipanteForm
 from django.views.generic import View
 
 from django.http import HttpResponse
@@ -139,8 +139,38 @@ class Projeto(FormView):
     template_name = 'cadastro/projeto.html'
 
     def template_keys(self, **kwargs):
+        pk = kwargs.get('pk', None)
         return {
             **super().template_keys(**kwargs),
             'content_title': 'Manter Projeto',
+            'formp': ParticipanteForm(initial={'projeto': ProjetoModel.objects.get(pk=pk)}) if pk else ParticipanteForm(),
             'pk': kwargs.get('pk', None)
         }
+
+class ParticipanteProjeto(Projeto):
+
+    model = ParticipanteModel
+    template_name = 'cadastro/projeto.html'
+    pk_alias = 'pkparticipante'
+
+    def post(self, request, **kwargs):
+
+        pk = kwargs.get(self.pk_alias, None)
+
+        form = self.form(request.POST, instance=self.model.objects.get(pk=pk)) if pk else self.form(request.POST)
+        if form.is_valid() and form.save():
+            return redirect(self.sucess_redirect)
+        else:
+            return self.get(request=request, form_participante=form, **kwargs)
+
+    def template_keys(self, **kwargs):
+        pk = kwargs.get('pk', None)
+        return {
+            **super().template_keys(**kwargs),
+            'content_title': 'Manter Projeto',
+            'pk': pk,
+            'pkparticipante': kwargs.get('pkparticipante', None),
+            'formp': ParticipanteForm(initial={'projeto': ProjetoModel.objects.get(pk=pk)}) if pk else ParticipanteForm(),
+            'form': ProjetoForm(instance=ProjetoModel.objects.get(pk=pk))
+        }
+

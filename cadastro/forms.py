@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from .utils.lists import remove
-from .models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, Projeto
+from .models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, Projeto, Participante
 from django.conf import settings
 from .utils.models import get_fields, get_clean_fields
 
@@ -108,4 +108,19 @@ class ProjetoForm(BaseFormControl):
     gestao_transferencia_tecnologia = forms.CharField(widget=forms.Textarea)
     class Meta:
         model = Projeto
+        fields = get_fields(model)
+
+class ParticipanteForm(BaseFormControl):
+    preview = ['bolsista', 'projeto', 'funcao']
+
+    empty_m = 'Selecione uma opção'
+
+    bolsista = forms.ModelChoiceField(queryset=Bolsista.objects.filter(ic_ativo=True), empty_label=empty_m)
+    projeto = forms.ModelChoiceField(queryset=Projeto.objects.all(), empty_label=empty_m)
+    funcao = forms.ModelChoiceField(queryset=Funcao.objects.filter(ic_ativo=True), empty_label=empty_m)
+
+    metodologia = forms.CharField(widget=forms.Textarea)
+    gestao_transferencia_tecnologia = forms.CharField(widget=forms.Textarea)
+    class Meta:
+        model = Participante
         fields = get_fields(model)

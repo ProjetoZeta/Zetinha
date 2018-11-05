@@ -44,6 +44,9 @@ class Funcao(models.Model):
         verbose_name_plural = "funções"
         verbose_name = "função"
 
+    def __str__(self):
+        return self.no_funcao
+
 
 class Responsavel(models.Model):
     no_responsavel = models.CharField('Nome', max_length=32, unique=True)
@@ -345,9 +348,9 @@ class Participante(models.Model):
     modalidade = models.CharField('Modalidade', max_length=1, choices=MODALIDADE, default='1')
     nivel = models.CharField('Nível', max_length=1, choices=NIVEL, default='1')
 
-    inicio_vigencia = models.CharField('Início da Vigência', max_length=100, blank=True)
-    termino_vigencia = models.CharField('Término da Vigência', max_length=100, blank=True)
-    periodo_total = models.CharField('Início da Vigência', max_length=100, blank=True)
-    horas_semanais = models.CharField('Início da Vigência', max_length=100, blank=True)
-    valor_mensal = models.CharField('Início da Vigência', max_length=100, blank=True)
-    valor_total = models.CharField('Início da Vigência', max_length=100, blank=True)
+    inicio_vigencia = models.DateField('Início da Vigência', blank=True)
+    termino_vigencia = models.DateField('Término da Vigência', max_length=100, blank=True)
+    periodo_total = models.IntegerField('Período Total', blank=True)
+    horas_semanais = models.IntegerField('Horas semanais', blank=True)
+    valor_mensal = models.DecimalField('Valor mensal', max_digits=10, decimal_places=2, blank=True)
+    valor_total = models.DecimalField('Valor total', max_digits=10, decimal_places=2, blank=True)

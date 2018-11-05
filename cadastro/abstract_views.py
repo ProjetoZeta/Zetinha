@@ -8,6 +8,8 @@ class GenericView(View):
         
     template_keys = {}
 
+    pk_alias = 'pk'
+
     def __init__(self, **kwargs):
 
         super().__init__(**kwargs)
@@ -47,7 +49,7 @@ class FormView(GenericView):
 
     def post(self, request, **kwargs):
 
-        pk = kwargs.get('pk', None)
+        pk = kwargs.get(self.pk_alias, None)
 
         form = self.form(request.POST, instance=self.model.objects.get(pk=pk)) if pk else self.form(request.POST)
         if form.is_valid() and form.save():
@@ -57,7 +59,7 @@ class FormView(GenericView):
 
     def template_keys(self, **kwargs):
 
-        pk = kwargs.get('pk', None)
+        pk = kwargs.get(self.pk_alias, None)
         form = kwargs.get('form', None)
         if form is None:
             form = self.form(instance=self.model.objects.get(pk=pk)) if pk else self.form()

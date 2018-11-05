@@ -18,275 +18,307 @@
 
 {% block content %}
 
-		<div class="tab-content">
+		
+<div class="form-group row ">
+                    <div class="{% if form.matricula.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">Matrícula:</label>
+                        <div class="col-md-4">
+                            {{ form.matricula }}
+                            <div class="help-block">{{ form.matricula.errors }}</div>
+                        </div>
+                    </div>
 
+                    <div class="{% if form.ic_ativo.errors %}{{ "has-error" }}{% endif %}">
+                        <label for="inputValue" class="col-md-3 control-label">Ativo:</label>
+                        <div class="col-md-1">
+                            {{ form.ic_ativo }}
+                            <div class="help-block">{{ form.ic_ativo.errors }}</div>
+                        </div>
+                    </div>
+                </div>
 
 			<div class="panel with-nav-tabs panel-success">
                 <div class="panel-heading">
-                        <ul class="nav nav-tabs nav-projeto">
-                            <li class="dropdown active">
-                                <a href="#" data-toggle="dropdown">Detalhes<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li class="active"><a href="#descricao" data-toggle="tab" class="detalhes">Descrição</a></li>
-                                    <li><a href="#dadosinteressados" data-toggle="tab" class="detalhes">Dados dos Interessados</a></li>
-                                    <li><a href="#outros" data-toggle="tab" class="detalhes">Outros</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#adbolsistas" data-toggle="tab">Adicionar bolsista</a></li>
-                            <li><a href="#vatividade" data-toggle="tab">Vincular atividade</a></li>
-                            <li><a href="#cronograma" data-toggle="tab">Cronograma</a></li>
-                            <li><a href="#anexos" data-toggle="tab">Anexos</a></li>
-                            <li><a href="#resumo" data-toggle="tab">Resumo</a></li>
-                            
-                        </ul>
+                    <ul class="nav nav-tabs nav-projeto">
+                        <li class="dropdown active">
+                            <a href="#" data-toggle="dropdown">Detalhes<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li class="active"><a href="#descricao" data-toggle="tab" class="detalhes">Descrição</a></li>
+                                <li><a href="#dadosinteressados" data-toggle="tab" class="detalhes">Dados dos Interessados</a></li>
+                                <li><a href="#outros" data-toggle="tab" class="detalhes">Outros</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#adbolsistas" data-toggle="tab">Vincular bolsista</a></li>
+                        <li><a href="#vatividade" data-toggle="tab">Vincular atividade</a></li>
+                        <li><a href="#cronograma" data-toggle="tab">Cronograma</a></li>
+                        <li><a href="#anexos" data-toggle="tab">Anexos</a></li>
+                        <li><a href="#resumo" data-toggle="tab">Resumo</a></li>
+                        
+                    </ul>
                 </div>
 
-				<form class="form" id="form-detalhes" role="form" method="POST" action="{% if pk %} {% url 'projeto-editar' pk %} {% else %}{% url 'projeto-criar' %}{% endif %}">
+                <div class="panel-body">
 
-					{% csrf_token %}
+                	{% if form.errors %}
 
-	                <div class="panel-body">
+                		<div class="alert alert-danger">
+						  <strong>Erros no formulário!</strong> Não foi possível salvar a aba Detalhes
+						</div>
 
-	                	{% if form.errors %}
-
-	                		<div class="alert alert-danger">
-							  <strong>Erros no formulário!</strong> Não foi possível salvar a aba Detalhes
-							</div>
-
-	                	{% endif %}
+                	{% endif %}
 
 
-	                    <div class="tab-content">
-	                        <div class="tab-pane fade in active" id="descricao">
-	                        	<div class="form-group row required">
-			                        <label for="inputKey" class="col-md-2 control-label">Nome do Projeto:</label>
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="descricao">
+
+                        	<form class="form" id="form-detalhes" role="form" method="POST" action="{% if pk %} {% url 'projeto-editar' pk %} {% else %}{% url 'projeto-criar' %}{% endif %}">
+
+							{% csrf_token %}
+
+
+                        	<div class="form-group row required">
+		                        <label for="inputKey" class="col-md-2 control-label">Nome do Projeto:</label>
+		                        <div class="col-md-10">
+		                            {{ form.nome }}
+		                            <div class="help-block">{{ form.nome.errors }}</div>
+		                        </div>
+		                    </div>
+
+		                    <div class="form-group row required">
+		                        <label for="inputKey" class="col-md-2 control-label">Sigla:</label>
+		                        <div class="col-md-10">
+		                            {{ form.sigla }}
+		                            <div class="help-block">{{ form.sigla.errors }}</div>
+		                        </div>
+		                    </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="dadosinteressados">
+                        	
+	                        <fieldset class="well the-fieldset">
+
+			                    <legend class="the-legend">Proponente</legend>
+
+			                    <div class="form-group row required  {% if form.entidade_proponente.errors %}{{ 'has-error' }}{% endif %}">
+			                        <label for="inputValue" class="col-md-2 control-label">Instituição:</label>
+			                        <div class="col-sm-10">
+			                            {{ form.entidade_proponente }}
+			                            <div class="help-block">{{ form.entidade_proponente.errors }}</div>
+			                        </div>
+			                    </div>
+			                    
+
+			                    <div class="form-group row required {% if form.responsavel_proponente.errors %}{{ 'has-error' }}{% endif %}">
+			                        <label for="inputValue" class="col-md-2 control-label">Responsável:</label>
 			                        <div class="col-md-10">
-			                            {{ form.nome }}
-			                            <div class="help-block">{{ form.nome.errors }}</div>
+			                            {{ form.responsavel_proponente }}
+			                            <div class="help-block">{{ form.responsavel_proponente.errors }}</div>
 			                        </div>
 			                    </div>
 
-			                    <div class="form-group row required">
-			                        <label for="inputKey" class="col-md-2 control-label">Sigla:</label>
+			                    <div class="form-group row required {% if form.responsavel_tecnico_proponente.errors %}{{ 'has-error' }}{% endif %}">
+			                        <label for="inputValue" class="col-md-2 control-label">Responsável Técnico:</label>
 			                        <div class="col-md-10">
-			                            {{ form.sigla }}
-			                            <div class="help-block">{{ form.sigla.errors }}</div>
-			                        </div>
-			                    </div>
-
-	                        </div>
-	                        <div class="tab-pane fade" id="dadosinteressados">
-	                        	
-		                        <fieldset class="well the-fieldset">
-
-				                    <legend class="the-legend">Proponente</legend>
-
-				                    <div class="form-group row required  {% if form.entidade_proponente.errors %}{{ "has-error" }}{% endif %}">
-				                        <label for="inputValue" class="col-md-2 control-label">Instituição:</label>
-				                        <div class="col-sm-10">
-				                            {{ form.entidade_proponente }}
-				                            <div class="help-block">{{ form.entidade_proponente.errors }}</div>
-				                        </div>
-				                    </div>
-				                    
-
-				                    <div class="form-group row required {% if form.responsavel_proponente.errors %}{{ "has-error" }}{% endif %}">
-				                        <label for="inputValue" class="col-md-2 control-label">Responsável:</label>
-				                        <div class="col-md-10">
-				                            {{ form.responsavel_proponente }}
-				                            <div class="help-block">{{ form.responsavel_proponente.errors }}</div>
-				                        </div>
-				                    </div>
-
-				                    <div class="form-group row required {% if form.responsavel_tecnico_proponente.errors %}{{ "has-error" }}{% endif %}">
-				                        <label for="inputValue" class="col-md-2 control-label">Responsável Técnico:</label>
-				                        <div class="col-md-10">
-				                            {{ form.responsavel_tecnico_proponente }}
-				                            <div class="help-block">{{ form.responsavel_tecnico_proponente.errors }}</div>
-				                        </div>
-				                    </div>
-
-
-
-
-				                </fieldset>
-
-				                <fieldset class="well the-fieldset">
-
-				                    <legend class="the-legend">Concedente</legend>
-
-				                    <div class="form-group row required  {% if form.entidade_concedente.errors %}{{ "has-error" }}{% endif %}">
-				                        <label for="inputValue" class="col-md-2 control-label">Instituição:</label>
-				                        <div class="col-sm-10">
-				                            {{ form.entidade_concedente}}
-				                            <div class="help-block">{{ form.entidade_concedente.errors }}</div>
-				                        </div>
-				                    </div>
-				                    
-
-				                    <div class="form-group row required {% if form.responsavel_concedente.errors %}{{ "has-error" }}{% endif %}">
-				                        <label for="inputValue" class="col-md-2 control-label">Responsável:</label>
-				                        <div class="col-md-10">
-				                            {{ form.responsavel_concedente }}
-				                            <div class="help-block">{{ form.responsavel_concedente.errors }}</div>
-				                        </div>
-				                    </div>
-
-				                    <div class="form-group row required {% if form.responsavel_tecnico_concedente.errors %}{{ "has-error" }}{% endif %}">
-				                        <label for="inputValue" class="col-md-2 control-label">Responsável Técnico:</label>
-				                        <div class="col-md-10">
-				                            {{ form.responsavel_tecnico_concedente }}
-				                            <div class="help-block">{{ form.responsavel_tecnico_concedente.errors }}</div>
-				                        </div>
-				                    </div>
-
-				                </fieldset>
-
-
-	                        </div>
-
-	                        <div class="tab-pane fade" id="outros">
-
-
-			                    <div class="form-group row required {% if form.metodologia.errors %}{{ "has-error" }}{% endif %}">
-			                        <label for="inputValue" class="col-md-2 control-label">Metodologia:</label>
-			                        <div class="col-md-10">
-			                            {{ form.metodologia }}
-			                            <div class="help-block">{{ form.metodologia.errors }}</div>
-			                        </div>
-			                    </div>
-
-			                    <div class="form-group row required {% if form.gestao_transferencia_tecnologia.errors %}{{ "has-error" }}{% endif %}">
-			                        <label for="inputValue" class="col-md-2 control-label">Gestão de Projeto e Transferência de Tecnologia:</label>
-			                        <div class="col-md-10">
-			                            {{ form.gestao_transferencia_tecnologia }}
-			                            <div class="help-block">{{ form.gestao_transferencia_tecnologia.errors }}</div>
+			                            {{ form.responsavel_tecnico_proponente }}
+			                            <div class="help-block">{{ form.responsavel_tecnico_proponente.errors }}</div>
 			                        </div>
 			                    </div>
 
 
-	                        </div>
-	              			
-						</form>
 
-                        <div class="tab-pane fade" id="adbolsistas">
-	                    	<fieldset class="well the-fieldset">
 
-	                    		<legend class="the-legend">Bolsista</legend>
-
-				                <div class="form-group row required">
-
-				                    <label for="inputValue" class="col-md-2 control-label">Nome Completo:</label>
-				                    <div class="col-md-10">
-				                        {{ form.fk_bolsita}}
-				                        <div class="help-block">{{ form.fk_bolsita.errors}}</div>
-				                    </div>
-				                </div>
-
-				                <div class="form-group row required">
-				                    <label for="inputValue" class="col-md-2 control-label">Função:</label>
-				                    <div class="col-md-10">
-				                        {{ form.fk_funcao}}
-				                        <div class="help-block">{{ form.fk_funcao.errors}}</div>
-				                    </div>
-				                </div>
-
-				                <div class="form-group row">
-				                    <label for="inputValue" class="col-md-2 control-label">Ativo:</label>
-				                    <div class="col-md-1">
-				                        <input type="checkbox" class="form-control" id="inputValue" placeholder="">
-				                    <br>
-				                    </div>
-				                </div>
-				            </fieldset>
+			                </fieldset>
 
 			                <fieldset class="well the-fieldset">
-			                    <legend class="the-legend">Especificação da Bolsa</legend>
 
-			                    <div class="form-group row required">
-			                        <label for="inputValue" class="col-md-2 control-label">Categoria da Bolsa:</label>
-			                        <div class="col-md-4">
-			                            <select class="form-control" id="sel1">
-			                                <option selected="selected" disabled>Selecione uma opção</option>
-			                                <option>Bolsa de Aux. Financeiro a Estudante</option>
-			                                <option>Bolsa de Aux. a Pesquisador</option>
-			                            </select>
-			                        <br>
+			                    <legend class="the-legend">Concedente</legend>
+
+			                    <div class="form-group row required  {% if form.entidade_concedente.errors %}{{ 'has-error' }}{% endif %}">
+			                        <label for="inputValue" class="col-md-2 control-label">Instituição:</label>
+			                        <div class="col-sm-10">
+			                            {{ form.entidade_concedente}}
+			                            <div class="help-block">{{ form.entidade_concedente.errors }}</div>
 			                        </div>
-			                        <label for="inputKey" class="col-md-2 control-label">Período Total Prevísto:</label>
-			                        <div class="col-md-4">
-			                            <input type="text" class="form-control" id="inputKey" placeholder="">
+			                    </div>
+			                    
+
+			                    <div class="form-group row required {% if form.responsavel_concedente.errors %}{{ 'has-error' }}{% endif %}">
+			                        <label for="inputValue" class="col-md-2 control-label">Responsável:</label>
+			                        <div class="col-md-10">
+			                            {{ form.responsavel_concedente }}
+			                            <div class="help-block">{{ form.responsavel_concedente.errors }}</div>
 			                        </div>
 			                    </div>
 
-			                    <div class="form-group row required">
-			                        <label for="inputValue" class="col-md-2 control-label">Modalidade da Bolsa:</label>
-			                        <div class="col-md-4">
-			                            <select class="form-control" id="sel1">
-			                                <option selected="selected" disabled>Selecione uma opção</option>
-			                                <option>Mestrado</option>
-			                                <option>Lista Item 1 e/ou Iniciação Científica</option>
-			                                <option>Nível Médio</option>
-			                                <option>Pesquisador Sênior</option>
-			                                <option>Pesquisa Acadêmica</option>
-			                                <option>Pesquisa, Desenvolvimento e Inovação PDI</option>
-			                                <option>Apoio Operacional à Pesquisa</option>
-			                            </select>
-			                        <br>
-			                        </div>
-			                        <label for="inputKey" class="col-md-2 control-label">Número de horas semanais:</label>
-			                        <div class="col-md-4">
-			                            <input type="text" class="form-control" id="inputKey" placeholder="">
-			                        <br>
-			                        </div>
-			                    </div>
-
-			                    <div class="form-group row required">
-			                        <label for="inputValue" class="col-md-2 control-label">Nível:</label>
-			                        <div class="col-md-4">
-			                            <select class="form-control" id="sel1">
-			                                <option selected="selected" disabled>Selecione uma opção</option>
-			                                <option>A</option>
-			                                <option>B</option>
-			                                <option>C</option>
-			                                <option>D</option>
-			                            </select>
-			                        <br>
-			                        </div>
-			                        <label for="inputKey" class="col-md-2 control-label">Valor Mensal:</label>
-			                        <div class="col-md-4">
-			                            <input type="text" class="form-control" id="inputKey" placeholder="">
-			                        <br>
-			                        </div>
-			                    </div>
-
-			                    <div class="form-group row required">
-			                        <label for="inputValue" class="col-md-2 control-label">Vigência Prevista:</label>
-			                        <div class="col-md-4">
-			                            <fieldset class="well the-fieldset">
-			                                <label for="inputKey" class="col-md-3 control-label">Início:</label>
-			                                <div class="col-md-9">
-			                                    <input type="text" class="form-control" id="inputKey" placeholder="">
-			                                <br>
-			                                </div>
-			                                <label for="inputKey" class="col-md-3 control-label">Término:</label>
-			                                <div class="col-md-9">
-			                                    <input type="text" class="form-control" id="inputKey" placeholder="">
-			                                </div>
-			                            </fieldset>
-			                        </div>
-			                        <label for="inputKey" class="col-md-2 control-label">Valor Total:</label>
-			                        <div class="col-md-4">
-			                            <input type="text" class="form-control" id="inputKey" placeholder="">
-			                        <br>
+			                    <div class="form-group row required {% if form.responsavel_tecnico_concedente.errors %}{{ 'has-error' }}{% endif %}">
+			                        <label for="inputValue" class="col-md-2 control-label">Responsável Técnico:</label>
+			                        <div class="col-md-10">
+			                            {{ form.responsavel_tecnico_concedente }}
+			                            <div class="help-block">{{ form.responsavel_tecnico_concedente.errors }}</div>
 			                        </div>
 			                    </div>
 
 			                </fieldset>
 
-			                <button type="submit" class="btn btn-info">Adicionar</button>
+
+                        </div>
+
+                        <div class="tab-pane fade" id="outros">
+
+
+		                    <div class="form-group row required {% if form.metodologia.errors %}{{ 'has-error' }}{% endif %}">
+		                        <label for="inputValue" class="col-md-2 control-label">Metodologia:</label>
+		                        <div class="col-md-10">
+		                            {{ form.metodologia }}
+		                            <div class="help-block">{{ form.metodologia.errors }}</div>
+		                        </div>
+		                    </div>
+
+		                    <div class="form-group row required {% if form.gestao_transferencia_tecnologia.errors %}{{ 'has-error' }}{% endif %}">
+		                        <label for="inputValue" class="col-md-2 control-label">Gestão de Projeto e Transferência de Tecnologia:</label>
+		                        <div class="col-md-10">
+		                            {{ form.gestao_transferencia_tecnologia }}
+		                            <div class="help-block">{{ form.gestao_transferencia_tecnologia.errors }}</div>
+		                        </div>
+		                    </div>
+
+		                    </form>
+
+                        </div>
+	              			
+                        <div class="tab-pane fade" id="adbolsistas">
+
+                        	<form class="form" id="form-detalhes" role="form" method="POST" action="{% if pk and pkparticipante %}{% url 'participante-projeto-editar' pk pkparticipante %} {% endif %}{% if pk and not pkparticipante %} {% url 'participante-projeto-criar' pk %}{% endif %}">
+
+							{% csrf_token %}
+
+	                    	<fieldset class="well the-fieldset">
+
+	                    		<legend class="the-legend">Bolsista</legend>
+
+				                <div class="form-group row required {% if formp.bolsista.errors %}{{ 'has-error' }}{% endif %}">
+			                        <label for="inputValue" class="col-md-2 control-label">Bolsista:</label>
+			                        <div class="col-md-10">
+			                            {{ formp.bolsista }}
+			                            <div class="help-block">{{ formp.bolsista.errors }}</div>
+			                        </div>
+			                    </div>
+
+
+			                    <div class="form-group row ">
+				                    <div class="{% if formp.funcao.errors %}{{ "has-error" }}{% endif %}">
+				                        <label for="inputKey" class="col-md-2 control-label">Matrícula:</label>
+				                        <div class="col-md-7">
+				                            {{ formp.funcao }}
+				                            <div class="help-block">{{ formp.funcao.errors }}</div>
+				                        </div>
+				                    </div>
+
+				                    <div class="{% if formp.ic_ativo.errors %}{{ "has-error" }}{% endif %}">
+				                        <label for="inputValue" class="col-md-1 control-label">Ativo:</label>
+				                        <div class="col-md-1">
+				                            {{ formp.ic_ativo }}
+				                            <div class="help-block">{{ formp.ic_ativo.errors }}</div>
+				                        </div>
+				                    </div>
+				                </div>
+
+				            </fieldset>
+
+			                <fieldset class="well the-fieldset">
+			                    <legend class="the-legend">Especificação da Bolsa</legend>
+
+			                    <div class="form-group row ">
+					                <div class="{% if formp.categoria.errors %}{{ 'has-error' }}{% endif %}">
+					                    <label for="inputKey" class="col-md-2 control-label">Categoria:</label>
+					                    <div class="col-md-4">
+					                        {{ formp.categoria }}
+					                        <div class="help-block">{{ formp.categoria.errors }}</div>
+					                    </div>
+					                </div>
+					                <div class="{% if formp.periodo_total.errors %}{{ 'has-error' }}{% endif %}">
+					                    <label for="inputValue" class="col-md-3 control-label">Período Total Previsto:</label>
+					                    <div class="col-md-3">
+					                        {{ formp.periodo_total }}
+					                        <div class="help-block">{{ formp.periodo_total.errors }}</div>
+					                    </div>
+					                </div>
+					            </div>
+
+					            <div class="form-group row ">
+					                <div class="{% if formp.modalidade.errors %}{{ 'has-error' }}{% endif %}">
+					                    <label for="inputKey" class="col-md-2 control-label">Modalidade:</label>
+					                    <div class="col-md-4">
+					                        {{ formp.modalidade }}
+					                        <div class="help-block">{{ formp.modalidade.errors }}</div>
+					                    </div>
+					                </div>
+					                <div class="{% if formp.horas_semanais.errors %}{{ 'has-error' }}{% endif %}">
+					                    <label for="inputValue" class="col-md-3 control-label">Número de Horas Semanais:</label>
+					                    <div class="col-md-3">
+					                        {{ formp.horas_semanais }}
+					                        <div class="help-block">{{ formp.horas_semanais.errors }}</div>
+					                    </div>
+					                </div>
+					            </div>
+
+					            <div class="form-group row ">
+					                <div class="{% if formp.nivel.errors %}{{ 'has-error' }}{% endif %}">
+					                    <label for="inputKey" class="col-md-2 control-label">Nível:</label>
+					                    <div class="col-md-4">
+					                        {{ formp.nivel }}
+					                        <div class="help-block">{{ formp.nivel.errors }}</div>
+					                    </div>
+					                </div>
+					                <div class="{% if formp.valor_mensal.errors %}{{ 'has-error' }}{% endif %}">
+					                    <label for="inputValue" class="col-md-3 control-label">Valor Mensal:</label>
+					                    <div class="col-md-3">
+					                        {{ formp.valor_mensal }}
+					                        <div class="help-block">{{ formp.valor_mensal.errors }}</div>
+					                    </div>
+					                </div>
+					            </div>
+
+
+					            <div class="form-group row ">
+					                <div class="{% if formp.nivel.errors %}{{ 'has-error' }}{% endif %}">
+					                    <label for="inputValue" class="col-md-2 control-label">Vigência Prevista:</label>
+				                        <div class="col-md-4">
+				                            <fieldset class="well the-fieldset">
+
+				                            	<div class="{% if formp.inicio_vigencia.errors %}{{ 'has-error' }}{% endif %}">
+					                                <label for="inputKey" class="col-md-3 control-label">Início:</label>
+					                                <div class="col-md-9">
+					                                    {{ formp.inicio_vigencia }}
+					                                </div>
+				                                </div>
+
+				                                <br><br>
+
+				                                <div class="{% if formp.termino_vigencia.errors %}{{ 'has-error' }}{% endif %}">
+					                                <label for="inputKey" class="col-md-3 control-label">Término:</label>
+					                                <div class="col-md-9">
+					                                    {{ formp.termino_vigencia }}
+					                                </div>
+				                                </div>
+				                            </fieldset>
+				                        </div>
+					                </div>
+					                <div class="{% if formp.valor_total.errors %}{{ 'has-error' }}{% endif %}">
+					                    <label for="inputValue" class="col-md-3 control-label">Valor Total:</label>
+					                    <div class="col-md-3">
+					                        {{ formp.valor_total }}
+					                        <div class="help-block">{{ formp.valor_total.errors }}</div>
+					                    </div>
+					                </div>
+					            </div>
+
+			                </fieldset>
+
+			                <button type="submit" class="btn btn-info">Adicionar Bolsista</button>
 			                <button type="submit" class="btn btn-default">Cancelar</button>
 
+			                </form>
                         </div>
                         <div class="tab-pane fade" id="vatividade">
 
@@ -358,10 +390,6 @@
 
                         </div>
                     </div>
-                </div>
-            </div>
-
-		</div>
 
 		<div id="form-buttons">
 			<button class="btn btn-info" id="confirm-button">Salvar</button>
