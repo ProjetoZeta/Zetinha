@@ -316,9 +316,9 @@ class Projeto(models.Model):
 
 
 class Participante(models.Model):
-    bolsista = models.ForeignKey('Bolsista', on_delete=models.CASCADE)
-    projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE)
-    funcao = models.ForeignKey('Funcao', on_delete=models.CASCADE)
+    bolsista = models.ForeignKey('Bolsista', on_delete=models.CASCADE, verbose_name="Bolsista")
+    projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE, verbose_name="Projeto")
+    funcao = models.ForeignKey('Funcao', on_delete=models.CASCADE, verbose_name="Função")
     ic_ativo = models.BooleanField('Ativo')
 
     CATEGORIA = (

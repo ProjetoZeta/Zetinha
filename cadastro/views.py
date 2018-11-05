@@ -144,7 +144,8 @@ class Projeto(FormView):
             **super().template_keys(**kwargs),
             'content_title': 'Manter Projeto',
             'formp': ParticipanteForm(initial={'projeto': ProjetoModel.objects.get(pk=pk)}) if pk else ParticipanteForm(),
-            'pk': kwargs.get('pk', None)
+            'pk': kwargs.get('pk', None),
+            'datap': ParticipanteModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk))   
         }
 
 class ParticipanteProjeto(Projeto):
@@ -184,6 +185,7 @@ class ParticipanteProjeto(Projeto):
             'pk': pk,
             'pkparticipante': kwargs.get('pkparticipante', None),
             'formp': formp,
-            'form': ProjetoForm(instance=ProjetoModel.objects.get(pk=pk))
+            'form': ProjetoForm(instance=ProjetoModel.objects.get(pk=pk)),
+            'datap': ParticipanteModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk))
         }
 
