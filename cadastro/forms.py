@@ -111,7 +111,7 @@ class ProjetoForm(BaseFormControl):
         fields = get_fields(model)
 
 class ParticipanteForm(BaseFormControl):
-    preview = ['bolsista', 'projeto', 'funcao']
+    preview = ['bolsista', 'funcao', 'valor_mensal']
 
     empty_m = 'Selecione uma opção'
 

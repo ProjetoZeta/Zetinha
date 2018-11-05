@@ -145,7 +145,7 @@ class Projeto(FormView):
             'content_title': 'Manter Projeto',
             'formp': ParticipanteForm(initial={'projeto': ProjetoModel.objects.get(pk=pk)}) if pk else ParticipanteForm(),
             'pk': kwargs.get('pk', None),
-            'datap': ParticipanteModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk))   
+            'datap': ParticipanteModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else []
         }
 
 class ParticipanteProjeto(Projeto):
@@ -162,8 +162,9 @@ class ParticipanteProjeto(Projeto):
     def post(self, request, **kwargs):
 
         pk = kwargs.get(self.pk_alias, None)
+        projetopk = kwargs.get('pk', None)
 
-        initial = {'projeto': ProjetoModel.objects.get(pk=kwargs.get('pk', None))}
+        initial = {'projeto': ProjetoModel.objects.get(pk=projetopk)} if projetopk else ParticipanteForm()
 
         form = ParticipanteForm(request.POST, initial=initial, instance=self.model.objects.get(pk=pk)) if pk else ParticipanteForm(request.POST)
 
@@ -176,8 +177,7 @@ class ParticipanteProjeto(Projeto):
 
         pk = kwargs.get('pk', None)
 
-        formp = ParticipanteForm() if pk else ParticipanteForm()
-        formp.fields['projeto'].widget = forms.HiddenInput() if pk else formp.fields['projeto'].widget
+        formp = ParticipanteForm(instance=self.model.objects.get(pk=kwargs.get('pkparticipante', None))) if pk else ParticipanteForm()
 
         return {
             **super().template_keys(**kwargs),
@@ -186,6 +186,6 @@ class ParticipanteProjeto(Projeto):
             'pkparticipante': kwargs.get('pkparticipante', None),
             'formp': formp,
             'form': ProjetoForm(instance=ProjetoModel.objects.get(pk=pk)),
-            'datap': ParticipanteModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk))
+            'datap': ParticipanteModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else []
         }
 
