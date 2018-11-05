@@ -46,6 +46,16 @@
 					{% csrf_token %}
 
 	                <div class="panel-body">
+
+	                	{% if form.errors %}
+
+	                		<div class="alert alert-danger">
+							  <strong>Erros no formulário!</strong> Não foi possível salvar a aba Detalhes
+							</div>
+
+	                	{% endif %}
+
+
 	                    <div class="tab-content">
 	                        <div class="tab-pane fade in active" id="descricao">
 	                        	<div class="form-group row required">

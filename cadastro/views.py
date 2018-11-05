@@ -43,7 +43,7 @@ class Bolsista(FormView):
 
     template_name = 'cadastro/bolsista.html'
 
-    def get(self, request, **kwargs):
+    def template_keys(self, **kwargs):
 
         pk = kwargs.get('pk', None)
 
@@ -53,7 +53,8 @@ class Bolsista(FormView):
         emprestimo_form = EmprestimoEquipamentoForm(initial={'bolsista': BolsistaModel.objects.get(pk=pk)}) if pk else EmprestimoEquipamentoForm()
         emprestimo_form.fields['bolsista'].widget = forms.HiddenInput() if pk else documento_form.fields['bolsista'].widget
 
-        self.template_keys = {
+        return {
+            **super().template_keys(**kwargs),
             'content_title': 'Cadastrar Bolsistas / Pequisadores',
             'formf': documento_form,
             'forme': emprestimo_form,
@@ -63,22 +64,18 @@ class Bolsista(FormView):
             'pk': pk
         }
 
-        return super().get(request, **kwargs)
-
 class BolsistaList(GenericView):
 
-    def get(self, request, **kwargs):
+    model = BolsistaModel
+    template_name = 'cadastro/crud-bolsista.html'
 
-        self.template_keys = {
+    def template_keys(self, **kwargs):
+        return {
+            **super().template_keys(**kwargs),
             'content_title': 'Bolsistas',
             'data': self.model.objects.all(),
             'form': BolsistaForm()
         }
-
-        return super().get(request, **kwargs)     
-
-    model = BolsistaModel
-    template_name = 'cadastro/crud-bolsista.html'
 
 
 class BolsistaMedia(Bolsista):
@@ -105,53 +102,45 @@ class Documento(GenericView):
 
     template_name = 'cadastro/file-viewer.html'
 
-    def get(self, request, **kwargs):
-
-        self.template_keys = {
+    def template_keys(self, **kwargs):
+        return {
+            **super().template_keys(**kwargs),
             'content_title': 'Preview de arquivo',
             'document': DocumentoModel.objects.get(pk=kwargs.get('pk', None))
         }
-
-        return super().get(request, **kwargs)
 
 class EmprestimoEquipamento(GenericView):
 
     template_name = 'cadastro/emprestimo-viewer.html'
 
-    def get(self, request, **kwargs):
-
-        self.template_keys = {
+    def template_keys(self, **kwargs):
+        return {
+            **super().template_keys(**kwargs),
             'content_title': 'Empréstimo de Equipamento',
             'emprestimo': EmprestimoEquipamentoModel.objects.get(pk=kwargs.get('pk', None))
         }
-        
-        return super().get(request, **kwargs)
 
 class ProjetoList(GenericView):
 
-    def get(self, request, **kwargs):
+    model = ProjetoModel
+    template_name = 'cadastro/crud-projeto.html'
 
-        self.template_keys = {
+    def template_keys(self, **kwargs):
+        return {
+            **super().template_keys(**kwargs),
             'content_title': 'Projetos',
             'data': self.model.objects.all(),
             'form': ProjetoForm()
         }
-
-        return super().get(request, **kwargs)     
-
-    model = ProjetoModel
-    template_name = 'cadastro/crud-projeto.html'
 
 
 class Projeto(FormView):
 
     template_name = 'cadastro/projeto.html'
 
-    def get(self, request, **kwargs):
-
-        self.template_keys = {
+    def template_keys(self, **kwargs):
+        return {
+            **super().template_keys(**kwargs),
             'content_title': 'Manter Projeto',
             'pk': kwargs.get('pk', None)
         }
-
-        return super().get(request, **kwargs)

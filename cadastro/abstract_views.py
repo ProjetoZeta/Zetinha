@@ -24,13 +24,17 @@ class GenericView(View):
         return redirect(self.sucess_redirect)
 
     def get(self, request, **kwargs):
+
         pkdelete = kwargs.get('pkdelete', None)
         if pkdelete:
             return self.delete(request=request, pk=pkdelete)
         else:
             return render(request, self.template_name, {
-                **self.template_keys
+                **self.template_keys(**kwargs)
             })
+
+    def template_keys(self, **kwargs):
+        return {}
 
 class FormView(GenericView):
 
@@ -49,9 +53,9 @@ class FormView(GenericView):
         if form.is_valid() and form.save():
             return redirect(self.sucess_redirect)
         else:
-            return self.get(request=request, form=form)
+            return self.get(request=request, form=form, **kwargs)
 
-    def get(self, request, **kwargs):
+    def template_keys(self, **kwargs):
 
         pk = kwargs.get('pk', None)
         form = kwargs.get('form', None)
@@ -60,12 +64,11 @@ class FormView(GenericView):
         if pk:
             form.is_edit = True
 
-        self.template_keys = {
+        return {
+            **super().template_keys(**kwargs),
             'data': self.model.objects.all(),
             'form': form,
             'content_title': self.model._meta.verbose_name_plural.title(),
-            **self.template_keys,
         }
 
-        return super().get(request, **kwargs)
 
