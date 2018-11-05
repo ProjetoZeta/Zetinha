@@ -118,9 +118,6 @@ class ParticipanteForm(BaseFormControl):
     bolsista = forms.ModelChoiceField(queryset=Bolsista.objects.filter(ic_ativo=True), empty_label=empty_m)
     projeto = forms.ModelChoiceField(queryset=Projeto.objects.all(), empty_label=empty_m)
     funcao = forms.ModelChoiceField(queryset=Funcao.objects.filter(ic_ativo=True), empty_label=empty_m)
-
-    metodologia = forms.CharField(widget=forms.Textarea)
-    gestao_transferencia_tecnologia = forms.CharField(widget=forms.Textarea)
     class Meta:
         model = Participante
         fields = get_fields(model)

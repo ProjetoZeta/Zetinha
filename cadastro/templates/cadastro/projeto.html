@@ -56,7 +56,6 @@
 
 							{% csrf_token %}
 
-
                         	<div class="form-group row required">
 		                        <label for="inputKey" class="col-md-2 control-label">Nome do Projeto:</label>
 		                        <div class="col-md-10">
@@ -140,8 +139,6 @@
 			                    </div>
 
 			                </fieldset>
-
-
                         </div>
 
                         <div class="tab-pane fade" id="outros">
@@ -163,19 +160,23 @@
 		                        </div>
 		                    </div>
 
-		                    </form>
+		                    
 
                         </div>
+
+                        </form>
 	              			
                         <div class="tab-pane fade" id="adbolsistas">
 
-                        	<form class="form" id="form-detalhes" role="form" method="POST" action="{% if pk and pkparticipante %}{% url 'participante-projeto-editar' pk pkparticipante %} {% endif %}{% if pk and not pkparticipante %} {% url 'participante-projeto-criar' pk %}{% endif %}">
+                        	<form class="form" method="POST" action="{% if pk and pkparticipante %}{% url 'participante-projeto-editar' pk pkparticipante %} {% endif %}{% if pk and not pkparticipante %} {% url 'participante-projeto-criar' pk %}{% endif %}">
 
 							{% csrf_token %}
 
 	                    	<fieldset class="well the-fieldset">
 
 	                    		<legend class="the-legend">Bolsista</legend>
+
+	                    		{{ formp.projeto }}
 
 				                <div class="form-group row required {% if formp.bolsista.errors %}{{ 'has-error' }}{% endif %}">
 			                        <label for="inputValue" class="col-md-2 control-label">Bolsista:</label>
