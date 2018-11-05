@@ -45,8 +45,7 @@ class FormView(GenericView):
         super().__init__(**kwargs)
 
         self.form = getattr(importlib.import_module('cadastro.forms'), self.class_name+'Form')
-        if self.sucess_redirect is None:
-            self.sucess_redirect = self.class_name.lower()
+        self.sucess_redirect = self.class_name.lower()
 
     def post(self, request, **kwargs):
 

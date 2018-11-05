@@ -152,15 +152,17 @@ class ParticipanteProjeto(Projeto):
     model = ParticipanteModel
     template_name = 'cadastro/projeto.html'
     pk_alias = 'pkparticipante'
-    sucess_redirect = 'projeto'
+
+    def __init__(self, **kwargs):
+        
+        super().__init__(**kwargs)
+        self.sucess_redirect = 'projeto'
 
     def post(self, request, **kwargs):
 
         pk = kwargs.get(self.pk_alias, None)
 
         form = self.form(request.POST, instance=self.model.objects.get(pk=pk)) if pk else self.form(request.POST)
-
-        print('eaeí', form.errors)
 
         if form.is_valid() and form.save():
             return redirect(self.sucess_redirect)
