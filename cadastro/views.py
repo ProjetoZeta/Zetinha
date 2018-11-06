@@ -43,6 +43,12 @@ class Bolsista(FormView):
 
     template_name = 'cadastro/bolsista.html'
 
+    def dispatch(self, request, **kwargs):
+
+        self.sucess_redirect = ('bolsista-editar', kwargs.get('pk', None))
+        
+        return super().dispatch(request, **kwargs)
+
     def template_keys(self, **kwargs):
 
         pk = kwargs.get('pk', None)
