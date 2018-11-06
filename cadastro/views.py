@@ -140,9 +140,21 @@ class Projeto(FormView):
 
     def dispatch(self, request, **kwargs):
 
-        self.sucess_redirect = ('projeto-editar', kwargs.get('pk', None))
+        self.delete_redirect = ('projeto',)
         
         return super().dispatch(request, **kwargs)
+
+    def post(self, request, **kwargs):
+
+        pk = kwargs.get(self.pk_alias, None)
+
+        form = self.form(request.POST, instance=self.model.objects.get(pk=pk)) if pk else self.form(request.POST)
+        v = form.is_valid()
+        nprojeto = form.save() if v else None
+        if nprojeto:
+                return redirect(*('projeto-editar', nprojeto.pk,))
+        else:
+            return self.get(request=request, form=form, **kwargs)
 
     def template_keys(self, **kwargs):
         pk = kwargs.get('pk', None)
@@ -154,7 +166,13 @@ class Projeto(FormView):
             'datap': ParticipanteModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else []
         }
 
-class ParticipanteProjeto(Projeto):
+class ParticipanteProjeto(FormView):
+
+    def dispatch(self, request, **kwargs):
+
+        self.delete_redirect = ('participante-proj-criar', kwargs.get('pk', None),)
+        
+        return super().dispatch(request, **kwargs)
 
     model = ParticipanteModel
     template_name = 'cadastro/projeto.html'
@@ -167,20 +185,21 @@ class ParticipanteProjeto(Projeto):
 
         initial = {'projeto': ProjetoModel.objects.get(pk=projetopk)} if projetopk else ParticipanteForm()
 
-        self.sucess_redirect = ('participante-proj-editar', kwargs.get('pk', None), kwargs.get(self.pk_alias, None))
-
         form = ParticipanteForm(request.POST, initial=initial, instance=self.model.objects.get(pk=pk)) if pk else ParticipanteForm(request.POST)
 
-        if form.is_valid() and form.save():
-            return redirect(*self.sucess_redirect)
+        v = form.is_valid()
+        nparticipante = form.save() if v else None
+        if nparticipante:
+                return redirect(*('participante-proj-editar', nparticipante.projeto.pk, nparticipante.pk,))
         else:
             return self.get(request=request, formp=form, **kwargs)
 
     def template_keys(self, **kwargs):
 
         pk = kwargs.get('pk', None)
+        pkparticipante = kwargs.get('pkparticipante', None)
 
-        formp = ParticipanteForm(instance=self.model.objects.get(pk=kwargs.get('pkparticipante', None))) if pk else ParticipanteForm()
+        formp = ParticipanteForm(instance=self.model.objects.get(pk=pkparticipante)) if pkparticipante else ParticipanteForm()
 
         return {
             **super().template_keys(**kwargs),

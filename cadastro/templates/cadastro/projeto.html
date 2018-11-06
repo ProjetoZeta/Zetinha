@@ -352,7 +352,7 @@
 						                            </button>
 					                                <ul class="dropdown-menu" role="menu">
 					                                    <li><a href="{% url 'participante-proj-editar' pk item.pk %}">Modificar</a></li>
-					                                    <li><a href="{% url 'participante-remover' item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
+					                                    <li><a href="{% url 'participante-remover' pk item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
 
 					                                </ul>
 						                        </div>

@@ -48,5 +48,5 @@ urlpatterns = [
     url(r'^projeto/(?P<pk>[0-9]+)/participante/novo$', views.ParticipanteProjeto.as_view(), name='participante-proj-criar'),
     url(r'^projeto/(?P<pk>[0-9]+)/participante/(?P<pkparticipante>[0-9]+)/editar$', views.ParticipanteProjeto.as_view(), name='participante-proj-editar'),
 
-    url(r'^participante/(?P<pkdelete>[0-9]+)/remover$', views.ParticipanteProjeto.as_view(), name='participante-remover'),
+    url(r'^projeto/(?P<pk>[0-9]+)/participante/(?P<pkdelete>[0-9]+)/remover$', views.ParticipanteProjeto.as_view(), name='participante-remover'),
 ]
