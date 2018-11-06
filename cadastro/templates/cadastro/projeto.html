@@ -27,15 +27,9 @@
 			<div class="panel with-nav-tabs panel-success">
                 <div class="panel-heading">
                     <ul class="nav nav-tabs nav-projeto">
-                        <li class="dropdown {% if 'projeto-' in url %} active {% endif %}">
-                            <a href="#" data-toggle="dropdown">Detalhes<span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li class="{% if 'projeto-' in url %} active {% endif %}"><a href="#descricao" data-toggle="tab" class="detalhes">Descrição</a></li>
-                                <li><a href="#dadosinteressados" data-toggle="tab" class="detalhes">Dados dos Interessados</a></li>
-                                <li><a href="#outros" data-toggle="tab" class="detalhes">Outros</a></li>
-                            </ul>
-                        </li>
+                        <li class="{% if 'projeto-' in url %} active {% endif %}"><a href="#descricao" data-toggle="tab" class="detalhes">Descrição</a></li>
                         <li class="{% if 'participante-' in url %} active {% endif %}"><a href="#adbolsistas" data-toggle="tab">Vincular bolsista</a></li>
+                        <li></li>
                         <li><a href="#vatividade" data-toggle="tab">Vincular atividade</a></li>
                         <li><a href="#cronograma" data-toggle="tab">Cronograma</a></li>
                         <li><a href="#anexos" data-toggle="tab">Anexos</a></li>
@@ -70,26 +64,28 @@
 
 							{% csrf_token %}
 
-                        	<div class="form-group row required">
-		                        <label for="inputKey" class="col-md-2 control-label">Nome do Projeto:</label>
-		                        <div class="col-md-10">
-		                            {{ form.nome }}
-		                            <div class="help-block">{{ form.nome.errors }}</div>
-		                        </div>
-		                    </div>
+							<fieldset class="well the-fieldset">
 
-		                    <div class="form-group row required">
-		                        <label for="inputKey" class="col-md-2 control-label">Sigla:</label>
-		                        <div class="col-md-10">
-		                            {{ form.sigla }}
-		                            <div class="help-block">{{ form.sigla.errors }}</div>
-		                        </div>
-		                    </div>
+			                    <legend class="the-legend">Descrição</legend>
 
-                        </div>
-                        <div class="tab-pane fade" id="dadosinteressados">
-                        	
-	                        <fieldset class="well the-fieldset">
+	                        	<div class="form-group row required">
+			                        <label for="inputKey" class="col-md-2 control-label">Nome do Projeto:</label>
+			                        <div class="col-md-10">
+			                            {{ form.nome }}
+			                            <div class="help-block">{{ form.nome.errors }}</div>
+			                        </div>
+			                    </div>
+
+			                    <div class="form-group row required">
+			                        <label for="inputKey" class="col-md-2 control-label">Sigla:</label>
+			                        <div class="col-md-10">
+			                            {{ form.sigla }}
+			                            <div class="help-block">{{ form.sigla.errors }}</div>
+			                        </div>
+			                    </div>
+			                </fieldset>
+
+		                    <fieldset class="well the-fieldset">
 
 			                    <legend class="the-legend">Proponente</legend>
 
@@ -117,9 +113,6 @@
 			                            <div class="help-block">{{ form.responsavel_tecnico_proponente.errors }}</div>
 			                        </div>
 			                    </div>
-
-
-
 
 			                </fieldset>
 
@@ -153,28 +146,27 @@
 			                    </div>
 
 			                </fieldset>
-                        </div>
 
-                        <div class="tab-pane fade" id="outros">
+			                <fieldset class="well the-fieldset">
 
+			                    <legend class="the-legend">Outros</legend>
 
-		                    <div class="form-group row required {% if form.metodologia.errors %}{{ 'has-error' }}{% endif %}">
-		                        <label for="inputValue" class="col-md-2 control-label">Metodologia:</label>
-		                        <div class="col-md-10">
-		                            {{ form.metodologia }}
-		                            <div class="help-block">{{ form.metodologia.errors }}</div>
-		                        </div>
-		                    </div>
+				                <div class="form-group row required {% if form.metodologia.errors %}{{ 'has-error' }}{% endif %}">
+			                        <label for="inputValue" class="col-md-2 control-label">Metodologia:</label>
+			                        <div class="col-md-10">
+			                            {{ form.metodologia }}
+			                            <div class="help-block">{{ form.metodologia.errors }}</div>
+			                        </div>
+			                    </div>
 
-		                    <div class="form-group row required {% if form.gestao_transferencia_tecnologia.errors %}{{ 'has-error' }}{% endif %}">
-		                        <label for="inputValue" class="col-md-2 control-label">Gestão de Projeto e Transferência de Tecnologia:</label>
-		                        <div class="col-md-10">
-		                            {{ form.gestao_transferencia_tecnologia }}
-		                            <div class="help-block">{{ form.gestao_transferencia_tecnologia.errors }}</div>
-		                        </div>
-		                    </div>
-
-		                    
+			                    <div class="form-group row required {% if form.gestao_transferencia_tecnologia.errors %}{{ 'has-error' }}{% endif %}">
+			                        <label for="inputValue" class="col-md-2 control-label">Gestão de Projeto e Transferência de Tecnologia:</label>
+			                        <div class="col-md-10">
+			                            {{ form.gestao_transferencia_tecnologia }}
+			                            <div class="help-block">{{ form.gestao_transferencia_tecnologia.errors }}</div>
+			                        </div>
+			                    </div>
+			                </fieldset>
 
                         </div>
 
