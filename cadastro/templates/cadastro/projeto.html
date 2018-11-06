@@ -54,6 +54,14 @@
 
                 	{% endif %}
 
+                	{% if formp.errors %}
+
+                		<div class="alert alert-danger">
+						  <strong>Erros no formulário!</strong> Não foi possível salvar a aba Vincular bolsista
+						</div>
+
+                	{% endif %}
+
 
                     <div class="tab-content">
                         <div class="tab-pane fade {% if 'projeto-' in url %} in active {% endif %}" id="descricao">

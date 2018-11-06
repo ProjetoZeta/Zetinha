@@ -23,7 +23,7 @@ class GenericView(View):
         item = self.model.objects.get(pk=pk)
         if item:
             item.delete()
-        return redirect(self.sucess_redirect)
+        return redirect(*self.sucess_redirect)
 
     def get(self, request, **kwargs):
 
@@ -53,7 +53,7 @@ class FormView(GenericView):
 
         form = self.form(request.POST, instance=self.model.objects.get(pk=pk)) if pk else self.form(request.POST)
         if form.is_valid() and form.save():
-            return redirect(self.sucess_redirect)
+            return redirect(*self.sucess_redirect)
         else:
             return self.get(request=request, form=form, **kwargs)
 

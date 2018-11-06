@@ -138,6 +138,12 @@ class Projeto(FormView):
 
     template_name = 'cadastro/projeto.html'
 
+    def dispatch(self, request, **kwargs):
+
+        self.sucess_redirect = ('projeto-editar', kwargs.get('pk', None))
+        
+        return super().dispatch(request, **kwargs)
+
     def template_keys(self, **kwargs):
         pk = kwargs.get('pk', None)
         return {
@@ -154,11 +160,6 @@ class ParticipanteProjeto(Projeto):
     template_name = 'cadastro/projeto.html'
     pk_alias = 'pkparticipante'
 
-    def __init__(self, **kwargs):
-        
-        super().__init__(**kwargs)
-        self.sucess_redirect = 'projeto'
-
     def post(self, request, **kwargs):
 
         pk = kwargs.get(self.pk_alias, None)
@@ -166,10 +167,12 @@ class ParticipanteProjeto(Projeto):
 
         initial = {'projeto': ProjetoModel.objects.get(pk=projetopk)} if projetopk else ParticipanteForm()
 
+        self.sucess_redirect = ('participante-proj-editar', kwargs.get('pk', None), kwargs.get(self.pk_alias, None))
+
         form = ParticipanteForm(request.POST, initial=initial, instance=self.model.objects.get(pk=pk)) if pk else ParticipanteForm(request.POST)
 
         if form.is_valid() and form.save():
-            return redirect(self.sucess_redirect)
+            return redirect(*self.sucess_redirect)
         else:
             return self.get(request=request, formp=form, **kwargs)
 
