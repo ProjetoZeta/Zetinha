@@ -5,8 +5,6 @@ from django.shortcuts import render, redirect
 import importlib
 
 class GenericView(View):
-        
-    template_keys = {}
 
     pk_alias = 'pk'
 
@@ -19,11 +17,16 @@ class GenericView(View):
         
         self.class_name = self.model.__name__
 
+        self.save_redirect = (self.class_name.lower(),)
+
+        self.delete_redirect = (self.class_name.lower(),)
+
+
     def delete(self, request, pk):
         item = self.model.objects.get(pk=pk)
         if item:
             item.delete()
-        return redirect(*self.sucess_redirect)
+        return redirect(*self.delete_redirect)
 
     def get(self, request, **kwargs):
 
@@ -45,7 +48,6 @@ class FormView(GenericView):
         super().__init__(**kwargs)
 
         self.form = getattr(importlib.import_module('cadastro.forms'), self.class_name+'Form')
-        self.sucess_redirect = self.class_name.lower()
 
     def post(self, request, **kwargs):
 
@@ -53,7 +55,7 @@ class FormView(GenericView):
 
         form = self.form(request.POST, instance=self.model.objects.get(pk=pk)) if pk else self.form(request.POST)
         if form.is_valid() and form.save():
-            return redirect(*self.sucess_redirect)
+            return redirect(*self.save_redirect)
         else:
             return self.get(request=request, form=form, **kwargs)
 
