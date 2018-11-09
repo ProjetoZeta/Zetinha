@@ -51,7 +51,9 @@
                 	{% if formp.errors %}
 
                 		<div class="alert alert-danger">
-						  <strong>Erros no formulário!</strong> Não foi possível salvar a aba Vincular bolsista
+						  <strong>Erros no formulário!</strong> Não foi possível salvar a aba Vincular bolsista.
+
+						  {{formp.errors}}
 						</div>
 
                 	{% endif %}

@@ -4,7 +4,7 @@ from .utils.lists import remove
 from .models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, Projeto, Participante
 from django.conf import settings
 from .utils.models import get_fields, get_clean_fields
-
+from django.core.exceptions import NON_FIELD_ERRORS
 from django.contrib.auth.forms import UserChangeForm
 
 class BaseForm(ModelForm):
@@ -121,3 +121,8 @@ class ParticipanteForm(BaseFormControl):
     class Meta:
         model = Participante
         fields = get_fields(model)
+        error_messages = {
+            NON_FIELD_ERRORS: {
+                'unique_together': "Este bolsista já é participante deste projeto"
+            }
+        }   

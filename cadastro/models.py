@@ -354,3 +354,7 @@ class Participante(models.Model):
     horas_semanais = models.IntegerField('Horas semanais', blank=True)
     valor_mensal = models.DecimalField('Valor mensal', max_digits=10, decimal_places=2, blank=True)
     valor_total = models.DecimalField('Valor total', max_digits=10, decimal_places=2, blank=True)
+
+
+    class Meta:
+        unique_together = ('projeto', 'bolsista',)

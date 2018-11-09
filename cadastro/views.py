@@ -196,7 +196,7 @@ class ParticipanteProjeto(FormView):
         v = form.is_valid()
         nparticipante = form.save() if v else None
         if nparticipante:
-                return redirect(*('participante-proj-editar', nparticipante.projeto.pk, nparticipante.pk,))
+            return redirect(*('participante-proj-editar', nparticipante.projeto.pk, nparticipante.pk,))
         else:
             return self.get(request=request, formp=form, **kwargs)
 
@@ -205,7 +205,8 @@ class ParticipanteProjeto(FormView):
         pk = kwargs.get('pk', None)
         pkparticipante = kwargs.get('pkparticipante', None)
 
-        formp = ParticipanteForm(instance=self.model.objects.get(pk=pkparticipante)) if pkparticipante else ParticipanteForm()
+        fp = kwargs.get('formp', None)
+        formp = fp if fp else (ParticipanteForm(instance=self.model.objects.get(pk=pkparticipante)) if pkparticipante else ParticipanteForm())
 
         return {
             **super().template_keys(**kwargs),
