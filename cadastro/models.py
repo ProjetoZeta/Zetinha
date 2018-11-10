@@ -210,7 +210,7 @@ class Documento(models.Model):
         ('4', 'Certificado'),
     )
     bolsista = models.ForeignKey('Bolsista', on_delete=models.CASCADE)
-    tipo_documento = models.CharField('Tipo de Documentwidget=forms.Textareao', max_length=1, choices=TIPOS, default='3')
+    tipo_documento = models.CharField('Tipo de Documento', max_length=1, choices=TIPOS, default='3')
     no_documento = models.CharField('Descrição', max_length=512)
     dt_cadastro = models.DateTimeField('Momento do Upload', default=datetime.now, blank=True)
     arquivo = models.FileField()
