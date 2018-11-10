@@ -245,52 +245,6 @@ class EmprestimoEquipamento(models.Model):
     def __str__(self):
         return dict(EmprestimoEquipamento.TIPOS).get(self.tipo_equipamento)
 
-
-
-class ProjetoDetalhes(models.Model):
-    META = (
-        ('1', 'Controle de Andamento do Projeto'),
-        ('2', 'Definição e Operacionalização da Arquitetura de Integração e Interoperação'),
-        ('2', 'Modelo de Arquitetura e Medidas de Segutança dos Sistemas de Informações'),
-        ('4', 'Acompanhamento da Operalização dos Processos de Gorvernança e TI na DPU'),
-    )
-
-    ATIVIDADE = (
-        ('1', 'INSERIR'),
-        ('2', 'INSERIR'),
-        ('2', 'INSERIR'),
-        ('4', 'INSERIR'),
-        ('5', 'INSERIR'),
-    )
-
-    entidade_proponente = models.ManyToManyField('Entidade', related_name='proponente')
-    responsavel_proponente = models.ManyToManyField('Responsavel', related_name='proponente')
-    entidade_concedente = models.ManyToManyField('Entidade', related_name='concedente')
-    responsavel_concedente = models.ManyToManyField('Responsavel', related_name='concedente')
-
-    participante = models.ManyToManyField('Bolsista')
-
-    meta = models.CharField('Titulo da meta', max_length=64, default = "")
-    descricao_meta = models.TextField('Descrição da meta', max_length=1024, default = "")
-    atividade_vinvulada = models.TextField('Atividade vinculada', max_length=1024, default = "")
-    meta_especifica = models.TextField('Meta Específica', max_length=1024, default = "")
-    metodologia = models.TextField('Metodologia', max_length=1024, default = "")
-    atividades_previstas = models.TextField('Atividades previstas', max_length=1024, default = "")
-    gestao_transferencia_tecnologia = models.TextField('Gestão de Transferência de Tecnologia', max_length=1024, default = "")
-
-    meta_geral = models.CharField('Meta', max_length=1, choices=META, default='')
-    atividade_geral = models.CharField('Atividade', max_length=1, choices=ATIVIDADE, default='')
-
-    resumo = models.TextField('Resumo do projeto', max_length=1024, default = "")
-
-    file = models.ImageField('Anexos',upload_to=None, height_field=None, width_field=None, max_length=100)
-    class Meta:
-        verbose_name_plural = "Projetos"
-        verbose_name = "Projeto"
-    def __str__(self):
-        return "{} - {}".format(self.sigla, self.nome)
-
-
 class Projeto(models.Model):
     nome = models.CharField('Nome do Projeto', max_length=32)
     sigla = models.CharField('Sigla', max_length=32, unique=True)
