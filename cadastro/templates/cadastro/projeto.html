@@ -43,9 +43,9 @@
                 <div class="panel-heading">
                     <ul class="nav nav-tabs nav-projeto">
                         <li class="{% if 'projeto-' in url %} active {% endif %}"><a href="#descricao" data-toggle="tab" class="detalhes">Detalhes</a></li>
-                        <li class="{% if 'participante-' in url %} active {% endif %} {% if not pk %} disabled {% endif %}"><a href="#adbolsistas" data-toggle="tab">Vincular bolsista</a></li>
+                        <li class="{% if 'participante-' in url %} active {% endif %} {% if not pk %} disabled {% endif %}"><a href="#adbolsistas" data-toggle="tab">Participantes</a></li>
+                        <li class="{% if 'meta-' in url %} active {% endif %} {% if not pk %} disabled {% endif %}"><a href="#cronograma" data-toggle="tab">Cronograma</a></li>
                         <li class="{% if not pk %} disabled {% endif %}"><a href="#vatividade" data-toggle="tab">Vincular atividade</a></li>
-                        <li class="{% if not pk %} disabled {% endif %}"><a href="#cronograma" data-toggle="tab">Cronograma</a></li>
                         <li class="{% if 'anexo-' in url %} active {% endif %} {% if not pk %} disabled {% endif %}"><a href="#anexos" data-toggle="tab">Anexos</a></li>
                         <li class="{% if not pk %} disabled {% endif %}"><a href="#resumo" data-toggle="tab">Resumo</a></li>
                         
@@ -373,35 +373,51 @@
 							    </table>
 
                         </div>
-                        <div class="tab-pane fade" id="vatividade">
+                        <div class="tab-pane fade {% if 'meta-' in url %} in active {% endif %}" id="cronograma">
 
                         	<fieldset class="well the-fieldset">
 
 			                    <legend class="the-legend">Cadastro de Meta</legend>
 
-			                    <div class="form-group row required {% if formm.titulo.errors %}{{ 'has-error' }}{% endif %}">
-			                        <label for="inputValue" class="col-md-2 control-label">Título da Meta:</label>
-			                        <div class="col-md-10">
-			                            {{ formm.titulo }}
-			                            <div class="help-block">{{ formm.titulo.errors }}</div>
-			                        </div>
-			                    </div>
+			                    <form class="form" method="POST" action="{% if pk and pkmeta %}{% url 'meta-proj-editar' pk pkmeta %} {% endif %}{% if pk and not pkmeta %} {% url 'meta-proj-criar' pk %}{% endif %}">
+			                    		
+			                    	{% csrf_token %}
 
-			                    <div class="form-group row required {% if formm.descricao.errors %}{{ 'has-error' }}{% endif %}">
-			                        <label for="inputValue" class="col-md-2 control-label">Descrição:</label>
-			                        <div class="col-md-10">
-			                            {{ formm.descricao }}
-			                            <div class="help-block">{{ formm.descricao.errors }}</div>
-			                        </div>
-			                    </div>
+			                    	{{ formm.projeto }}
 
-			                    <div class="form-group row required {% if formm.ic_ativo.errors %}{{ 'has-error' }}{% endif %}">
-			                        <label for="inputValue" class="col-md-2 control-label">Ativo:</label>
-			                        <div class="col-md-1">
-			                            {{ formm.ic_ativo }}
-			                            <div class="help-block">{{ formm.ic_ativo.errors }}</div>
-			                        </div>
-			                    </div>
+				                    <div class="form-group row required {% if formm.titulo.errors %}{{ 'has-error' }}{% endif %}">
+				                        <label for="inputValue" class="col-md-2 control-label">Título da Meta:</label>
+				                        <div class="col-md-10">
+				                            {{ formm.titulo }}
+				                            <div class="help-block">{{ formm.titulo.errors }}</div>
+				                        </div>
+				                    </div>
+
+				                    <div class="form-group row required {% if formm.descricao.errors %}{{ 'has-error' }}{% endif %}">
+				                        <label for="inputValue" class="col-md-2 control-label">Descrição:</label>
+				                        <div class="col-md-10">
+				                            {{ formm.descricao }}
+				                            <div class="help-block">{{ formm.descricao.errors }}</div>
+				                        </div>
+				                    </div>
+
+				                    <div class="form-group row required {% if formm.ic_ativo.errors %}{{ 'has-error' }}{% endif %}">
+				                        <label for="inputValue" class="col-md-2 control-label">Ativo:</label>
+				                        <div class="col-md-1">
+				                            {{ formm.ic_ativo }}
+				                            <div class="help-block">{{ formm.ic_ativo.errors }}</div>
+				                        </div>
+				                    </div>
+
+
+
+			                    	<div class="btn-group">
+										<button class="btn btn-info" id="confirm-button">Salvar</button>
+										<a href="{% url 'projeto' %}" class="btn btn-default">Voltar</a>
+									</div>
+
+			                    </form>
+			                    
 
 			                </fieldset>
 
@@ -411,43 +427,12 @@
 
 
 			                </fieldset>
+                        	
 
                         </div>
-                        <div class="tab-pane fade" id="cronograma">
-	                        <fieldset class="well the-fieldset">
-
-			                    <legend class="the-legend">Cadastro de Meta</legend>
-
-			                    <div class="form-group row required">
-			                        <label for="inputKey" class="col-md-2 control-label">Título da meta:</label>
-			                        <div class="col-md-10">
-			                            <input type="text" class="form-control" id="inputKey" placeholder="">
-			                        <br>
-			                        </div>
-			                    </div>
-
-			                    <div class="form-group row required">
-			                        <label for="inputKey" class="col-md-2 control-label">Descrição:</label>
-			                        <div class="col-md-10">
-			                            <textarea type="text" class="form-control" id="inputKey" placeholder=""></textarea>
-			                        </div>
-			                    </div>
-
-			                    <div class="form-group row">
-			                        <label for="inputValue" class="col-md-2 control-label">Ativo:</label>
-			                        <div class="col-md-1">
-			                            <input type="checkbox" class="form-control" id="inputValue" placeholder="">
-			                        </div>
-			                    </div>
-
-			                </fieldset>
-
-			                <fieldset class="well the-fieldset">
-
-			                    <legend class="the-legend">Atividade Vinculada</legend>
-
-
-			                </fieldset>
+                        <div class="tab-pane fade" id="vatividade">
+	                       
+	                       
 
                         </div>
 

@@ -217,7 +217,7 @@ class Projeto(FormView):
             'form': form,
             'formp': ParticipanteProjetoForm(initial={'projeto': ProjetoModel.objects.get(pk=pk)}) if pk else ParticipanteProjetoForm(),
             'pk': kwargs.get('pk', None),
-            'formm': MetaForm(),
+            'formm': MetaForm(initial={'projeto': ProjetoModel.objects.get(pk=pk)}) if pk else MetaForm(),
             'formfp': AnexoForm(initial={'projeto': ProjetoModel.objects.get(pk=pk)}) if pk else AnexoForm(),
             'datap': ParticipanteModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else [],
             'attachments': AnexoModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else [],
@@ -297,5 +297,49 @@ class AnexoProjeto(Projeto):
         if item:
             item.delete()
         return redirect(*('anexo-proj-upload', projeto.pk))
+
+class MetaProjeto(Projeto):
+
+    def dispatch(self, request, **kwargs):
+
+        self.delete_redirect = ('meta-proj-criar', kwargs.get('pk', None),)
+        
+        return super().dispatch(request, **kwargs)
+
+    model = MetaModel
+    template_name = 'cadastro/projeto.html'
+    pk_alias = 'pkmeta'
+
+    def post(self, request, **kwargs):
+
+        pk = kwargs.get(self.pk_alias, None)
+        projetopk = kwargs.get('pk', None)
+
+        initial = {'projeto': ProjetoModel.objects.get(pk=projetopk)} if projetopk else MetaForm()
+
+        form = MetaForm(request.POST, initial=initial, instance=self.model.objects.get(pk=pk)) if pk else MetaForm(request.POST)
+
+        v = form.is_valid()
+        nmeta = form.save() if v else None
+        if nmeta:
+            return redirect(*('meta-proj-editar', nmeta.projeto.pk, nmeta.pk,))
+        else:
+            return self.get(request=request, formm=form, **kwargs)
+
+    def template_keys(self, **kwargs):
+
+        pk = kwargs.get('pk', None)
+        pkmeta = kwargs.get('pkmeta', None)
+        projeto = ProjetoModel.objects.get(pk=pk)
+
+        fp = kwargs.get('formm', None)
+        formm = fp if fp else (MetaForm(initial={'projeto': projeto}, instance=(self.model.objects.get(pk=pkmeta)) if pkmeta else None))
+
+        return {
+            **super().template_keys(**kwargs),
+            'pkmeta': kwargs.get('pkmeta', None),
+            'formm': formm,
+            'datap': MetaModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else []
+        }
         
         

@@ -47,13 +47,16 @@ urlpatterns = [
 
     url(r'^projeto/(?P<pk>[0-9]+)/participante/novo$', views.ParticipanteProjeto.as_view(), name='participante-proj-criar'),
     url(r'^projeto/(?P<pk>[0-9]+)/participante/(?P<pkparticipante>[0-9]+)/editar$', views.ParticipanteProjeto.as_view(), name='participante-proj-editar'),
-
     url(r'^projeto/(?P<pk>[0-9]+)/participante/(?P<pkdelete>[0-9]+)/remover$', views.ParticipanteProjeto.as_view(), name='participante-remover'),
 
     url(r'projeto/(?P<pk>[0-9]+)/anexo/upload', views.AnexoProjeto.as_view(), name='anexo-proj-upload'),
     url(r'projeto/anexo/(?P<pkdelete>[0-9]+)/remover', views.AnexoProjeto.as_view(), name='anexo-proj-remover'),
 
     url(r'anexo/(?P<pk>[0-9]+)', views.Anexo.as_view(), name='show-anexo'),
+
+    url(r'^projeto/(?P<pk>[0-9]+)/meta/novo$', views.MetaProjeto.as_view(), name='meta-proj-criar'),
+    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/editar$', views.MetaProjeto.as_view(), name='meta-proj-editar'),
+    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkdelete>[0-9]+)/remover$', views.MetaProjeto.as_view(), name='meta-remover'),
 
 
 ]

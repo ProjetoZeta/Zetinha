@@ -142,6 +142,8 @@ class MetaForm(BaseFormControl):
 
     descricao = forms.CharField(widget=forms.Textarea)
 
+    projeto = forms.ModelChoiceField(queryset=Projeto.objects.all(), widget=forms.HiddenInput())
+
     class Meta:
         model = Meta
         fields = get_fields(model)
