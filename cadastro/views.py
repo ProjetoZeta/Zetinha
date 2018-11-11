@@ -223,7 +223,7 @@ class Projeto(FormView):
             'attachments': AnexoModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else [],
         }
 
-class ParticipanteProjeto(FormView):
+class ParticipanteProjeto(Projeto):
 
     def dispatch(self, request, **kwargs):
 
@@ -261,11 +261,8 @@ class ParticipanteProjeto(FormView):
 
         return {
             **super().template_keys(**kwargs),
-            'content_title': 'Manter Projeto',
-            'pk': pk,
             'pkparticipante': kwargs.get('pkparticipante', None),
             'formp': formp,
-            'form': ProjetoForm(instance=ProjetoModel.objects.get(pk=pk)),
             'datap': ParticipanteModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else []
         }
 
