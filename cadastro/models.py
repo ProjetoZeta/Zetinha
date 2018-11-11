@@ -290,3 +290,17 @@ class Atividade(models.Model):
     def __str__(self):
         return "{}".format(self.descricao)
 
+
+class Anexo(models.Model):
+    
+    projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE)
+    arquivo = models.FileField()
+
+    @property
+    def filename(self):
+        return self.arquivo.name.replace(settings.MEDIA_URL, '')
+
+    def __str__(self):
+        return self.tipo_documento
+
+
