@@ -124,7 +124,7 @@ class BolsistaMedia(Bolsista):
         form = DocumentoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('bolsista-editar', pk=bolsista.pk)
+            return redirect(*('bolsista-editar', bolsista.pk,))
         else:
             #form = BolsistaForm(instance=BolsistaModel.objects.get(pk=bolsista.pk)) if bolsista.pk else BolsistaForm()
             return self.get(request=request, form=form)
@@ -197,14 +197,22 @@ class Projeto(FormView):
 
     def template_keys(self, **kwargs):
         pk = kwargs.get('pk', None)
+
+        form = kwargs.get('form', None)
+        if form is None:
+            form = ProjetoForm(instance=ProjetoModel.objects.get(pk=pk)) if pk else ProjetoForm()
+        if pk:
+            form.is_edit = True
+
         return {
-            **super().template_keys(**kwargs),
             'content_title': 'Manter Projeto',
+            'form': form,
             'formp': ParticipanteProjetoForm(initial={'projeto': ProjetoModel.objects.get(pk=pk)}) if pk else ParticipanteProjetoForm(),
             'pk': kwargs.get('pk', None),
             'formm': MetaForm(),
-            'formfp': AnexoForm(),
-            'datap': ParticipanteModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else []
+            'formfp': AnexoForm(initial={'projeto': ProjetoModel.objects.get(pk=pk)}) if pk else AnexoForm(),
+            'datap': ParticipanteModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else [],
+            'attachments': AnexoModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else [],
         }
 
 class ParticipanteProjeto(FormView):
@@ -253,3 +261,27 @@ class ParticipanteProjeto(FormView):
             'datap': ParticipanteModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else []
         }
 
+
+class Anexo(GenericView):
+
+    template_name = 'cadastro/file-viewer.html'
+
+    def template_keys(self, **kwargs):
+        return {
+            **super().template_keys(**kwargs),
+            'content_title': 'Preview de Anexo',
+            'document': AnexoForm.objects.get(pk=kwargs.get('pk', None))
+        }
+
+class AnexoProjeto(Projeto):
+
+    model = AnexoModel
+
+    def post(self, request, **kwargs):
+        projeto = ProjetoModel.objects.get(pk=kwargs.get('pk', None))
+        form = self.form(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(*('anexo-proj-upload', kwargs.get('pk', None),))
+        else:
+            return self.get(request=request, formfp=form, **kwargs)

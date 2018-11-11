@@ -31,7 +31,7 @@
                         <li class="{% if 'participante-' in url %} active {% endif %} {% if not pk %} disabled {% endif %}"><a href="#adbolsistas" data-toggle="tab">Vincular bolsista</a></li>
                         <li class="{% if not pk %} disabled {% endif %}"><a href="#vatividade" data-toggle="tab">Vincular atividade</a></li>
                         <li class="{% if not pk %} disabled {% endif %}"><a href="#cronograma" data-toggle="tab">Cronograma</a></li>
-                        <li class="{% if not pk %} disabled {% endif %}"><a href="#anexos" data-toggle="tab">Anexos</a></li>
+                        <li class="{% if 'anexo-' in url %} active {% endif %} {% if not pk %} disabled {% endif %}"><a href="#anexos" data-toggle="tab">Anexos</a></li>
                         <li class="{% if not pk %} disabled {% endif %}"><a href="#resumo" data-toggle="tab">Resumo</a></li>
                         
                     </ul>
@@ -436,24 +436,31 @@
 
                         </div>
 
-                        <div class="tab-pane fade" id="anexos">
+                        <div class="tab-pane fade {% if 'anexo-' in url %} in active {% endif %}" id="anexos">
                         
 			                <fieldset class="well the-fieldset">
 
 					            <legend class="the-legend">Anexos do Projeto</legend>
-					            
-					            <form action="{% url 'upload-arquivo-bolsista' %}" method="post" class="form" enctype="multipart/form-data">
-			                        {% csrf_token %}
+					            <center>
 
-			                        {% bootstrap_form formfp %}
+					            	{% if pk %}
 
-			                        <br>
-			                        {% buttons %}
-			                            <button type="submit" class="btn btn-primary">
-			                                {% bootstrap_icon "star" %} Salvar
-			                            </button>
-			                        {% endbuttons %}
-			                    </form>
+						            <form action="{% url 'anexo-proj-upload' pk %}" method="post" class="form" enctype="multipart/form-data">
+				                        {% csrf_token %}
+
+				                        {% bootstrap_form formfp %}
+
+				                        <br>
+				                        {% buttons %}
+				                            <button type="submit" class="btn btn-primary">
+				                                {% bootstrap_icon "star" %} Salvar
+				                            </button>
+				                        {% endbuttons %}
+				                    </form>
+
+				                    {% endif %}
+
+			                    </center>
 
 					            <br><br>
 
@@ -462,9 +469,9 @@
 
 					                    {% for document in attachments %}
 					                        <tr>
-					                            <td class="col-sm-2"><a href="{% url 'remover-arquivo-bolsista' document.pk %}" class="delete-file-x" onclick="return confirm('Tem certeza? O arquivo será apagado permanentemente')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+					                            <td class="col-sm-2"><a href="{% url 'anexo-proj-remover' document.pk %}" class="delete-file-x" onclick="return confirm('Tem certeza? O arquivo será apagado permanentemente')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
 					                            <td class="col-sm-2"><i class="fa fa-file-word-o file-icon" aria-hidden="true"></i></td>
-					                            <td class="col-sm-8"><a target="_blank" href="{% url 'show-document' document.pk %}" class="open-file">{{ document.filename }}</a></td>
+					                            <td class="col-sm-8"><a target="_blank" href="{% url 'show-anexo' document.pk %}" class="open-file">{{ document.filename }}</a></td>
 					                            <!--<td><img src="{{ document.arquivo.url }}" alt=""></td>-->
 					                        </tr>
 					                    {% endfor %}
