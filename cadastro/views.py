@@ -121,13 +121,21 @@ class BolsistaMedia(Bolsista):
 
     def post(self, request, **kwargs):
         bolsista = BolsistaModel.objects.get(pk=request.POST.get('bolsista', None))
-        form = DocumentoForm(request.POST, request.FILES)
+        form = self.form(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect(*('bolsista-editar', bolsista.pk,))
         else:
             #form = BolsistaForm(instance=BolsistaModel.objects.get(pk=bolsista.pk)) if bolsista.pk else BolsistaForm()
             return self.get(request=request, form=form)
+
+    def delete(self, request, **kwargs):
+        item = self.model.objects.get(pk=kwargs.get('pkdelete', None))
+        bolsista = item.bolsista
+        if item:
+            item.delete()
+        return redirect(*('bolsista-editar', bolsista.pk,))
+
 
 class BolsistaDocumento(BolsistaMedia):
 
@@ -285,3 +293,12 @@ class AnexoProjeto(Projeto):
             return redirect(*('anexo-proj-upload', kwargs.get('pk', None),))
         else:
             return self.get(request=request, formfp=form, **kwargs)
+
+    def delete(self, request, **kwargs):
+        item = self.model.objects.get(pk=kwargs.get('pkdelete', None))
+        projeto = item.projeto
+        if item:
+            item.delete()
+        return redirect(*('anexo-proj-upload', projeto.pk))
+        
+        

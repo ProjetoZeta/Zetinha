@@ -22,8 +22,8 @@ class GenericView(View):
         self.delete_redirect = (self.class_name.lower(),)
 
 
-    def delete(self, request, pk):
-        item = self.model.objects.get(pk=pk)
+    def delete(self, request, **kwargs):
+        item = self.model.objects.get(pk=kwargs.get('pkdelete', None))
         if item:
             item.delete()
         return redirect(*self.delete_redirect)
@@ -32,7 +32,7 @@ class GenericView(View):
 
         pkdelete = kwargs.get('pkdelete', None)
         if pkdelete:
-            return self.delete(request=request, pk=pkdelete)
+            return self.delete(request=request, **kwargs)
         else:
             return render(request, self.template_name, {
                 **self.template_keys(**kwargs)
