@@ -6,8 +6,8 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django import forms
 
-from .models import Cargo as CargoModel, Entidade as EntidadeModel, Funcao as FuncaoModel, Usuario as  UsuarioModel, Bolsista as BolsistaModel, Documento as DocumentoModel, EmprestimoEquipamento as EmprestimoEquipamentoModel, Projeto as ProjetoModel, Participante as ParticipanteModel
-from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm, ParticipanteProjetoForm, ParticipanteBolsistaForm
+from .models import Cargo as CargoModel, Entidade as EntidadeModel, Funcao as FuncaoModel, Usuario as  UsuarioModel, Bolsista as BolsistaModel, Documento as DocumentoModel, EmprestimoEquipamento as EmprestimoEquipamentoModel, Projeto as ProjetoModel, Participante as ParticipanteModel, Meta as MetaModel
+from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm, ParticipanteProjetoForm, ParticipanteBolsistaForm, MetaForm
 from django.views.generic import View
 
 from django.http import HttpResponse
@@ -202,6 +202,7 @@ class Projeto(FormView):
             'content_title': 'Manter Projeto',
             'formp': ParticipanteProjetoForm(initial={'projeto': ProjetoModel.objects.get(pk=pk)}) if pk else ParticipanteProjetoForm(),
             'pk': kwargs.get('pk', None),
+            'formm': MetaForm(),
             'datap': ParticipanteModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else []
         }
 

@@ -362,7 +362,37 @@
 
                         	<fieldset class="well the-fieldset">
 
-			                    <legend class="the-legend">Vincular Atividade</legend>
+			                    <legend class="the-legend">Cadastro de Meta</legend>
+
+			                    <div class="form-group row required {% if formm.titulo.errors %}{{ 'has-error' }}{% endif %}">
+			                        <label for="inputValue" class="col-md-2 control-label">Título da Meta:</label>
+			                        <div class="col-md-10">
+			                            {{ formm.titulo }}
+			                            <div class="help-block">{{ formm.titulo.errors }}</div>
+			                        </div>
+			                    </div>
+
+			                    <div class="form-group row required {% if formm.descricao.errors %}{{ 'has-error' }}{% endif %}">
+			                        <label for="inputValue" class="col-md-2 control-label">Descrição:</label>
+			                        <div class="col-md-10">
+			                            {{ formm.descricao }}
+			                            <div class="help-block">{{ formm.descricao.errors }}</div>
+			                        </div>
+			                    </div>
+
+			                    <div class="form-group row required {% if formm.ic_ativo.errors %}{{ 'has-error' }}{% endif %}">
+			                        <label for="inputValue" class="col-md-2 control-label">Ativo:</label>
+			                        <div class="col-md-1">
+			                            {{ formm.ic_ativo }}
+			                            <div class="help-block">{{ formm.ic_ativo.errors }}</div>
+			                        </div>
+			                    </div>
+
+			                </fieldset>
+
+			                <fieldset class="well the-fieldset">
+
+			                    <legend class="the-legend">Atividade Vinculada</legend>
 
 
 			                </fieldset>

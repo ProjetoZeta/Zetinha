@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from .utils.lists import remove
-from .models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, Projeto, Participante
+from .models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, Projeto, Participante, Meta
 from django.conf import settings
 from .utils.models import get_fields, get_clean_fields
 from django.core.exceptions import NON_FIELD_ERRORS
@@ -135,3 +135,13 @@ class ParticipanteBolsistaForm(ParticipanteForm):
 
     bolsista = forms.ModelChoiceField(queryset=Bolsista.objects.filter(ic_ativo=True), empty_label=ParticipanteForm.empty_m, widget=forms.HiddenInput())
     projeto = forms.ModelChoiceField(queryset=Projeto.objects.all(), empty_label=ParticipanteForm.empty_m)
+
+
+class MetaForm(BaseFormControl):
+    preview = get_clean_fields(Meta)
+
+    descricao = forms.CharField(widget=forms.Textarea)
+
+    class Meta:
+        model = Meta
+        fields = get_fields(model)
