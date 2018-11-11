@@ -114,9 +114,7 @@ class ParticipanteForm(BaseFormControl):
     preview = ['bolsista', 'funcao', 'valor_mensal']
 
     empty_m = 'Selecione uma opção'
-
-    bolsista = forms.ModelChoiceField(queryset=Bolsista.objects.filter(ic_ativo=True), empty_label=empty_m)
-    projeto = forms.ModelChoiceField(queryset=Projeto.objects.all(), empty_label=empty_m, widget=forms.HiddenInput())
+    
     funcao = forms.ModelChoiceField(queryset=Funcao.objects.filter(ic_ativo=True), empty_label=empty_m)
     class Meta:
         model = Participante
@@ -125,4 +123,15 @@ class ParticipanteForm(BaseFormControl):
             NON_FIELD_ERRORS: {
                 'unique_together': "Este bolsista já é participante deste projeto"
             }
-        }   
+        }
+
+class ParticipanteProjetoForm(ParticipanteForm):
+
+    bolsista = forms.ModelChoiceField(queryset=Bolsista.objects.filter(ic_ativo=True), empty_label=ParticipanteForm.empty_m)
+    projeto = forms.ModelChoiceField(queryset=Projeto.objects.all(), empty_label=ParticipanteForm.empty_m, widget=forms.HiddenInput())
+
+
+class ParticipanteBolsistaForm(ParticipanteForm):
+
+    bolsista = forms.ModelChoiceField(queryset=Bolsista.objects.filter(ic_ativo=True), empty_label=ParticipanteForm.empty_m, widget=forms.HiddenInput())
+    projeto = forms.ModelChoiceField(queryset=Projeto.objects.all(), empty_label=ParticipanteForm.empty_m)

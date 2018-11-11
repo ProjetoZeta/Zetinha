@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django import forms
 
 from .models import Cargo as CargoModel, Entidade as EntidadeModel, Funcao as FuncaoModel, Usuario as  UsuarioModel, Bolsista as BolsistaModel, Documento as DocumentoModel, EmprestimoEquipamento as EmprestimoEquipamentoModel, Projeto as ProjetoModel, Participante as ParticipanteModel
-from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm, ParticipanteForm
+from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm, ParticipanteProjetoForm, ParticipanteBolsistaForm
 from django.views.generic import View
 
 from django.http import HttpResponse
@@ -43,30 +43,63 @@ class Bolsista(FormView):
 
     template_name = 'cadastro/bolsista.html'
 
-    def dispatch(self, request, **kwargs):
+    def post(self, request, **kwargs):
 
-        self.sucess_redirect = ('bolsista-editar', kwargs.get('pk', None))
-        
-        return super().dispatch(request, **kwargs)
+        pk = kwargs.get(self.pk_alias, None)
+
+        bolsista = self.model.objects.get(pk=pk) if pk else None
+
+        participantes = ParticipanteModel.objects.filter(bolsista=bolsista, ic_ativo=True) if pk else None
+
+        last_participante = participantes.latest('id') if participantes else None
+
+        formp = ParticipanteBolsistaForm(request.POST,instance=last_participante)
+        form = self.form(request.POST, instance=(bolsista if bolsista else None))
+
+        if form.is_valid():
+            b = form.save()
+            post = request.POST.copy() # to make it mutable
+            post['bolsista'] = b.pk
+            request.POST = post
+            formp = ParticipanteBolsistaForm(request.POST,instance=last_participante)
+            if formp.is_valid():
+                formp.save()
+                return redirect(*('bolsista-editar', b.pk,))
+            else:
+                print(formp.errors)
+                return self.get(request=request, form=form, formp=formp, pk=b.pk)
+        else:
+            return self.get(request=request, form=form, formp=formp, **kwargs)
 
     def template_keys(self, **kwargs):
 
         pk = kwargs.get('pk', None)
 
-        documento_form = DocumentoForm(initial={'bolsista': BolsistaModel.objects.get(pk=pk)}) if pk else DocumentoForm()
+        bolsista = BolsistaModel.objects.get(pk=pk) if pk else None
+
+        documento_form = DocumentoForm(initial={'bolsista': bolsista}) if pk else DocumentoForm()
         documento_form.fields['bolsista'].widget = forms.HiddenInput() if pk else documento_form.fields['bolsista'].widget
 
-        emprestimo_form = EmprestimoEquipamentoForm(initial={'bolsista': BolsistaModel.objects.get(pk=pk)}) if pk else EmprestimoEquipamentoForm()
+        emprestimo_form = EmprestimoEquipamentoForm(initial={'bolsista': bolsista}) if pk else EmprestimoEquipamentoForm()
         emprestimo_form.fields['bolsista'].widget = forms.HiddenInput() if pk else documento_form.fields['bolsista'].widget
+
+        participantes = ParticipanteModel.objects.filter(bolsista=bolsista, ic_ativo=True) if pk else None
+
+        last_participante = participantes.latest('id') if participantes else None
+
+        formp = kwargs.get('formp', None)
+
+        if formp is None:
+            formp = ParticipanteBolsistaForm(initial=({'bolsista': bolsista} if pk else None), instance=last_participante)
 
         return {
             **super().template_keys(**kwargs),
             'content_title': 'Cadastrar Bolsistas / Pequisadores',
             'formf': documento_form,
             'forme': emprestimo_form,
-            'documents': DocumentoModel.objects.filter(bolsista=BolsistaModel.objects.get(pk=pk) if pk else None),
-            'emprestimos': EmprestimoEquipamentoModel.objects.filter(bolsista=BolsistaModel.objects.get(pk=pk) if pk else None),
-            'projects': BolsistaModel.objects.get(pk=pk).projeto_atual if pk else None,
+            'formp': formp,
+            'documents': DocumentoModel.objects.filter(bolsista=bolsista if pk else None),
+            'emprestimos': EmprestimoEquipamentoModel.objects.filter(bolsista=bolsista if pk else None),
             'pk': pk
         }
 
@@ -167,7 +200,7 @@ class Projeto(FormView):
         return {
             **super().template_keys(**kwargs),
             'content_title': 'Manter Projeto',
-            'formp': ParticipanteForm(initial={'projeto': ProjetoModel.objects.get(pk=pk)}) if pk else ParticipanteForm(),
+            'formp': ParticipanteProjetoForm(initial={'projeto': ProjetoModel.objects.get(pk=pk)}) if pk else ParticipanteProjetoForm(),
             'pk': kwargs.get('pk', None),
             'datap': ParticipanteModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else []
         }
@@ -189,9 +222,9 @@ class ParticipanteProjeto(FormView):
         pk = kwargs.get(self.pk_alias, None)
         projetopk = kwargs.get('pk', None)
 
-        initial = {'projeto': ProjetoModel.objects.get(pk=projetopk)} if projetopk else ParticipanteForm()
+        initial = {'projeto': ProjetoModel.objects.get(pk=projetopk)} if projetopk else ParticipanteProjetoForm()
 
-        form = ParticipanteForm(request.POST, initial=initial, instance=self.model.objects.get(pk=pk)) if pk else ParticipanteForm(request.POST)
+        form = ParticipanteProjetoForm(request.POST, initial=initial, instance=self.model.objects.get(pk=pk)) if pk else ParticipanteProjetoForm(request.POST)
 
         v = form.is_valid()
         nparticipante = form.save() if v else None
@@ -206,7 +239,7 @@ class ParticipanteProjeto(FormView):
         pkparticipante = kwargs.get('pkparticipante', None)
 
         fp = kwargs.get('formp', None)
-        formp = fp if fp else (ParticipanteForm(instance=self.model.objects.get(pk=pkparticipante)) if pkparticipante else ParticipanteForm())
+        formp = fp if fp else (ParticipanteProjetoForm(instance=self.model.objects.get(pk=pkparticipante)) if pkparticipante else ParticipanteProjetoForm())
 
         return {
             **super().template_keys(**kwargs),

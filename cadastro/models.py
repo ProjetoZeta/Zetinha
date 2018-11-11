@@ -122,34 +122,6 @@ class Bolsista(models.Model):
         ('SE', 'SE - Sergipe'),
         ('TO', 'TO - Tocantins')
     )
-    FUNCAO = (
-        ('1', '5'),
-        ('2', '4'),
-        ('2', '3'),
-        ('4', '2'),
-        ('5', '1'),
-    )
-    CATEGORIA = (
-        ('1', 'Bolsa de aux. ao estudante'),
-        ('2', 'Bolsa de aux. ao pesquisador '),
-    )
-    MODALIDADE = (
-        ('1', 'Mestrado'),
-        ('2', 'Iniciação Científica'),
-        ('3', 'Nível Médio'),
-        ('4', 'Pesquisador Sênior'),
-        ('5', 'Pesquisa Acadêmica'),
-        ('6', 'Pesquisa, Desenvolvimento e Inovação PDI'),
-        ('7', 'Apoio Operacional à Pesquisa'),
-
-    )
-    NIVEL = (
-        ('1', '5'),
-        ('2', '4'),
-        ('2', '3'),
-        ('4', '2'),
-        ('5', '1'),
-    )
 
     tipo_vinculo = models.CharField('Tipo de Vínculo', max_length=1, choices=TIPOS_VINCULOS, default='3')
 
@@ -179,20 +151,6 @@ class Bolsista(models.Model):
 
     email_unb = models.EmailField('Email UnB', unique=True, blank=True)
     telefone_local = models.CharField('Telefone Local', max_length=32, blank=True)
-
-    projeto_atual = models.ForeignKey('Projeto', on_delete=models.CASCADE, related_name='atuacao', blank=True, null=True)
-
-    # funcao = models.CharField('Funcao', max_length=1, choices=FUNCAO, default='1')
-    categoria = models.CharField('Categoria', max_length=1, choices=CATEGORIA, default='1')
-    modalidade = models.CharField('Modalidade', max_length=1, choices=MODALIDADE, default='1')
-    nivel = models.CharField('Nivel', max_length=1, choices=NIVEL, default='1')
-##Talvez isso precise de um refactoring
-    inicio_vigencia = models.CharField('Início da Vigência', max_length=100, blank=True)
-    termino_vigencia = models.CharField('Término da Vigência', max_length=100, blank=True )
-    periodo_total = models.CharField('Período Total Previsto', max_length=100, blank=True )
-    valor_mensal = models.CharField('Valor Mensal', max_length=100, blank=True )
-    horas_semanais = models.CharField('Número de Horas semanais', max_length=100, blank=True )
-    valor_total = models.CharField('Valor Total', max_length=100, blank=True )
 
     class Meta:
         verbose_name_plural = "Bolsistas"
