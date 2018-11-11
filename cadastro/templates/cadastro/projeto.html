@@ -27,13 +27,12 @@
 			<div class="panel with-nav-tabs panel-success">
                 <div class="panel-heading">
                     <ul class="nav nav-tabs nav-projeto">
-                        <li class="{% if 'projeto-' in url %} active {% endif %}"><a href="#descricao" data-toggle="tab" class="detalhes">Descrição</a></li>
-                        <li class="{% if 'participante-' in url %} active {% endif %}"><a href="#adbolsistas" data-toggle="tab">Vincular bolsista</a></li>
-                        <li></li>
-                        <li><a href="#vatividade" data-toggle="tab">Vincular atividade</a></li>
-                        <li><a href="#cronograma" data-toggle="tab">Cronograma</a></li>
-                        <li><a href="#anexos" data-toggle="tab">Anexos</a></li>
-                        <li><a href="#resumo" data-toggle="tab">Resumo</a></li>
+                        <li class="{% if 'projeto-' in url %} active {% endif %}"><a href="#descricao" data-toggle="tab" class="detalhes">Detalhes</a></li>
+                        <li class="{% if 'participante-' in url %} active {% endif %} {% if not pk %} disabled {% endif %}"><a href="#adbolsistas" data-toggle="tab">Vincular bolsista</a></li>
+                        <li class="{% if not pk %} disabled {% endif %}"><a href="#vatividade" data-toggle="tab">Vincular atividade</a></li>
+                        <li class="{% if not pk %} disabled {% endif %}"><a href="#cronograma" data-toggle="tab">Cronograma</a></li>
+                        <li class="{% if not pk %} disabled {% endif %}"><a href="#anexos" data-toggle="tab">Anexos</a></li>
+                        <li class="{% if not pk %} disabled {% endif %}"><a href="#resumo" data-toggle="tab">Resumo</a></li>
                         
                     </ul>
                 </div>

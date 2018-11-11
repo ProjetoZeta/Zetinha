@@ -113,6 +113,16 @@
 	border-color: #d6e9c6;
 	border-bottom-color: transparent;
 }
+
+.with-nav-tabs.panel-success .nav-tabs > li.disabled > a,
+.with-nav-tabs.panel-success .nav-tabs > li.disabled > a:focus {
+    color: #B0B0B0;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    border-bottom-color: transparent;
+    pointer-events: none;
+}
+
 .with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu {
     background-color: #dff0d8;
     border-color: #d6e9c6;
