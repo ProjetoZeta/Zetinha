@@ -465,26 +465,14 @@
 
 			                        {{ formfp.projeto }}
 
-								    <div class="form-group row ">
-					                    <div class="{% if formfp.arquivo.errors %}{{ 'has-error' }}{% endif %}">  
-					                        <div class="col-md-4">
-					                        	<label class="file-upload btn btn-warning">
-									                Procurar ... {{ formfp.arquivo }}
-									            </label>
-					                            <div class="help-block">{{ formfp.arquivo.errors }}</div>
-					                        </div>
-					                    </div>
-
-					                    <div class="">
-					                        <div class="col-md-1">
-					                            {% buttons %}
-						                            <button type="submit" class="btn btn-primary" id="submit-anexo" disabled="">
-						                            	Salvar anexo
-						                            </button>
-						                        {% endbuttons %}
-					                        </div>
-					                    </div>
-					                </div>
+					                <div class="btn-group">
+										<label class="file-upload btn btn-warning">
+						                	Procurar ... {{ formfp.arquivo }}
+						            	</label>
+									  	<button type="submit" class="btn btn-primary" id="submit-anexo" disabled="">
+											Salvar anexo
+										</button>
+									</div>
 			                        
 			                    </form>
 
