@@ -11,12 +11,27 @@
 {% block css %}
 
 	<link rel="stylesheet" type="text/css" href="{% static 'cadastro/projeto-style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'templates/bootstrap-file-upload/file-upload.css' %}">
 
 {% endblock %}
 
 {% block js %}
 	
 	<script type="text/javascript" src="{% static 'cadastro/projeto.js' %}"></script>
+	<script src="{% static 'templates/bootstrap-file-upload/file-upload.js' %}"></script>
+
+	<script type="text/javascript">
+
+	    $(document).ready(function() {
+
+	        $('.file-upload').file_upload();
+
+	        $('.file-upload-text').on('DOMSubtreeModified',function(){
+	        	$( "#submit-anexo" ).prop( "disabled", false );
+			})
+
+	    });
+	</script>
 
 {% endblock %}
 
@@ -441,26 +456,39 @@
 			                <fieldset class="well the-fieldset">
 
 					            <legend class="the-legend">Anexos do Projeto</legend>
-					            <center>
 
-					            	{% if pk %}
+				            	{% if pk %}
 
-						            <form action="{% url 'anexo-proj-upload' pk %}" method="post" class="form" enctype="multipart/form-data">
-				                        {% csrf_token %}
+					            <form action="{% url 'anexo-proj-upload' pk %}" method="post" class="form" enctype="multipart/form-data">
 
-				                        {% bootstrap_form formfp %}
+			                        {% csrf_token %}
 
-				                        <br>
-				                        {% buttons %}
-				                            <button type="submit" class="btn btn-primary">
-				                                {% bootstrap_icon "star" %} Salvar
-				                            </button>
-				                        {% endbuttons %}
-				                    </form>
+			                        {{ formfp.projeto }}
 
-				                    {% endif %}
+								    <div class="form-group row ">
+					                    <div class="{% if formfp.arquivo.errors %}{{ 'has-error' }}{% endif %}">  
+					                        <div class="col-md-4">
+					                        	<label class="file-upload btn btn-warning">
+									                Procurar ... {{ formfp.arquivo }}
+									            </label>
+					                            <div class="help-block">{{ formfp.arquivo.errors }}</div>
+					                        </div>
+					                    </div>
 
-			                    </center>
+					                    <div class="">
+					                        <div class="col-md-1">
+					                            {% buttons %}
+						                            <button type="submit" class="btn btn-primary" id="submit-anexo" disabled="">
+						                            	Salvar anexo
+						                            </button>
+						                        {% endbuttons %}
+					                        </div>
+					                    </div>
+					                </div>
+			                        
+			                    </form>
+
+			                    {% endif %}
 
 					            <br><br>
 
