@@ -6,8 +6,8 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django import forms
 
-from .models import Cargo as CargoModel, Entidade as EntidadeModel, Funcao as FuncaoModel, Usuario as  UsuarioModel, Bolsista as BolsistaModel, Documento as DocumentoModel, EmprestimoEquipamento as EmprestimoEquipamentoModel, Projeto as ProjetoModel, Participante as ParticipanteModel, Meta as MetaModel, Anexo as AnexoModel
-from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm, ParticipanteProjetoForm, ParticipanteBolsistaForm, MetaForm, AnexoForm
+from .models import Cargo as CargoModel, Entidade as EntidadeModel, Funcao as FuncaoModel, Usuario as  UsuarioModel, Bolsista as BolsistaModel, Documento as DocumentoModel, EmprestimoEquipamento as EmprestimoEquipamentoModel, Projeto as ProjetoModel, Participante as ParticipanteModel, Meta as MetaModel, Atividade as AtividadeModel, Anexo as AnexoModel
+from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm, ParticipanteProjetoForm, ParticipanteBolsistaForm, MetaForm, AtividadeForm, AnexoForm
 from django.views.generic import View
 
 from django.http import HttpResponse
@@ -221,6 +221,8 @@ class Projeto(FormView):
             'formfp': AnexoForm(initial={'projeto': ProjetoModel.objects.get(pk=pk)}) if pk else AnexoForm(),
             'datap': ParticipanteModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else [],
             'attachments': AnexoModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else [],
+            'metas': MetaModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else [],
+            'forma': AtividadeForm(),
         }
 
 class ParticipanteProjeto(Projeto):
@@ -266,18 +268,6 @@ class ParticipanteProjeto(Projeto):
             'datap': ParticipanteModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else []
         }
 
-
-class Anexo(GenericView):
-
-    template_name = 'cadastro/file-viewer.html'
-
-    def template_keys(self, **kwargs):
-        return {
-            **super().template_keys(**kwargs),
-            'content_title': 'Preview de Anexo',
-            'document': AnexoForm.objects.get(pk=kwargs.get('pk', None))
-        }
-
 class AnexoProjeto(Projeto):
 
     model = AnexoModel
@@ -299,12 +289,6 @@ class AnexoProjeto(Projeto):
         return redirect(*('anexo-proj-upload', projeto.pk))
 
 class MetaProjeto(Projeto):
-
-    def dispatch(self, request, **kwargs):
-
-        self.delete_redirect = ('meta-proj-criar', kwargs.get('pk', None),)
-        
-        return super().dispatch(request, **kwargs)
 
     model = MetaModel
     template_name = 'cadastro/projeto.html'
@@ -339,7 +323,15 @@ class MetaProjeto(Projeto):
             **super().template_keys(**kwargs),
             'pkmeta': kwargs.get('pkmeta', None),
             'formm': formm,
-            'datap': MetaModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else []
+            'datap': MetaModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else [],
+            'atividades': AtividadeModel.objects.filter(meta=MetaModel.objects.get(pk=pkmeta)) if pkmeta else [],
         }
+
+    def delete(self, request, **kwargs):
+        item = self.model.objects.get(pk=kwargs.get('pkdelete', None))
+        projeto = item.projeto
+        if item:
+            item.delete()
+        return redirect(*('meta-proj-criar', projeto.pk,))
         
         

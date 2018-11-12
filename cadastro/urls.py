@@ -52,11 +52,12 @@ urlpatterns = [
     url(r'projeto/(?P<pk>[0-9]+)/anexo/upload', views.AnexoProjeto.as_view(), name='anexo-proj-upload'),
     url(r'projeto/anexo/(?P<pkdelete>[0-9]+)/remover', views.AnexoProjeto.as_view(), name='anexo-proj-remover'),
 
-    url(r'anexo/(?P<pk>[0-9]+)', views.Anexo.as_view(), name='show-anexo'),
-
     url(r'^projeto/(?P<pk>[0-9]+)/meta/novo$', views.MetaProjeto.as_view(), name='meta-proj-criar'),
     url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/editar$', views.MetaProjeto.as_view(), name='meta-proj-editar'),
-    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkdelete>[0-9]+)/remover$', views.MetaProjeto.as_view(), name='meta-remover'),
+    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkdelete>[0-9]+)/remover$', views.MetaProjeto.as_view(), name='meta-proj-remover'),
 
+    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/editar/atividade/novo$', views.MetaProjeto.as_view(), name='atividade-meta-proj-criar'),
+    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/editar/atividade/(?P<pkatividade>[0-9]+)/editar$', views.MetaProjeto.as_view(), name='atividade-meta-proj-editar'),
+    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/editar/atividade/(?P<pkdelete>[0-9]+)/remover$', views.MetaProjeto.as_view(), name='atividade-meta-proj-remover'),
 
 ]

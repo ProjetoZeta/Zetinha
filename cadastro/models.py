@@ -282,6 +282,7 @@ class Meta(models.Model):
 
 class Atividade(models.Model):
     meta = models.ForeignKey('Meta', on_delete=models.CASCADE, verbose_name="Meta")
+    titulo = models.CharField('Título', max_length=100, blank=True)
     descricao = models.CharField('Descrição', max_length=1024, blank=True)
     data_inicio = models.CharField('Data de Início', max_length=100,blank=True)
     data_fim = models.CharField('Data de Fim', max_length=100, blank=True)
