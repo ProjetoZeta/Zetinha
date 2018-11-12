@@ -317,7 +317,7 @@ class MetaProjeto(Projeto):
         projeto = ProjetoModel.objects.get(pk=pk)
 
         fp = kwargs.get('formm', None)
-        formm = fp if fp else (MetaForm(initial={'projeto': projeto}, instance=(self.model.objects.get(pk=pkmeta)) if pkmeta else None))
+        formm = fp if fp else (MetaForm(initial={'projeto': projeto}, instance=(MetaModel.objects.get(pk=pkmeta)) if pkmeta else None))
 
         return {
             **super().template_keys(**kwargs),
@@ -325,6 +325,7 @@ class MetaProjeto(Projeto):
             'formm': formm,
             'datap': MetaModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else [],
             'atividades': AtividadeModel.objects.filter(meta=MetaModel.objects.get(pk=pkmeta)) if pkmeta else [],
+            'forma': AtividadeForm(initial={'meta': MetaModel.objects.get(pk=pkmeta)}) if pkmeta else AtividadeForm(),
         }
 
     def delete(self, request, **kwargs):
@@ -333,5 +334,51 @@ class MetaProjeto(Projeto):
         if item:
             item.delete()
         return redirect(*('meta-proj-criar', projeto.pk,))
+
+class AtividadeMeta(MetaProjeto):
+
+    model = AtividadeModel
+    template_name = 'cadastro/projeto.html'
+    pk_alias = 'pkatividade'
+
+    def post(self, request, **kwargs):
+
+        pk = kwargs.get(self.pk_alias, None)
+        pkmeta = kwargs.get('pkmeta', None)
+        projetopk = kwargs.get('pk', None)
+
+        initial = {'meta': MetaModel.objects.get(pk=pkmeta)} if pkmeta else AtividadeForm()
+
+        form = AtividadeForm(request.POST, initial=initial, instance=AtividadeModel.objects.get(pk=pk)) if pk else AtividadeForm(request.POST)
+
+        v = form.is_valid()
+        natividade = form.save() if v else None
+        if natividade:
+            return redirect(*('meta-proj-editar', natividade.meta.projeto.pk, natividade.meta.pk,))
+        else:
+            return self.get(request=request, formm=form, **kwargs)
+
+    def template_keys(self, **kwargs):
+
+        pk = kwargs.get('pk', None)
+        pkmeta = kwargs.get('pkmeta', None)
+        pkatividade = kwargs.get('pkatividade', None)
+        meta = MetaModel.objects.get(pk=pkmeta)
+
+        fp = kwargs.get('forma', None)
+        forma = fp if fp else (AtividadeForm(initial={'meta': meta}, instance=(self.model.objects.get(pk=pkatividade)) if pkatividade else None))
+
+        return {
+            **super().template_keys(**kwargs),
+            'pkatividade': pkatividade,
+            'forma': forma,
+        }
+
+    def delete(self, request, **kwargs):
+        item = self.model.objects.get(pk=kwargs.get('pkdelete', None))
+        meta = item.meta
+        if item:
+            item.delete()
+        return redirect(*('meta-proj-editar', kwargs.get('pk', None), meta.pk,))
         
         

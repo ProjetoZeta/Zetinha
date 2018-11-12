@@ -33,10 +33,13 @@
 	    });
 	</script>
 	<script type="text/javascript">
-      
-        $(document).ready(function () {
-            $('#modal-atividade').modal({% if formf.errors %}'show'{% else %}''{% endif %});
-        });
+      	
+      	{% with request.resolver_match.url_name as url %}
+
+	        $(document).ready(function () {
+	            $('#modal-atividade').modal({% if formf.errors or 'atividade-meta-proj-editar' in url %}'show'{% else %}''{% endif %});
+	        });
+	    {% endwith %}
 
 	</script>
 
@@ -465,8 +468,8 @@
 						                                <span class="caret"></span>
 						                            </button>
 					                                <ul class="dropdown-menu" role="menu">
-					                                    <li><a href="{% url 'participante-proj-editar' pk item.pk %}">Modificar</a></li>
-					                                    <li><a href="{% url 'participante-remover' pk item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
+					                                    <li><a href="{% url 'atividade-meta-proj-editar' pk item.meta.pk item.pk %}">Modificar</a></li>
+					                                    <li><a href="{% url 'atividade-meta-proj-remover' pk item.meta.pk item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
 
 					                                </ul>
 						                        </div>

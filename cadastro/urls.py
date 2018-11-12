@@ -56,8 +56,8 @@ urlpatterns = [
     url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/editar$', views.MetaProjeto.as_view(), name='meta-proj-editar'),
     url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkdelete>[0-9]+)/remover$', views.MetaProjeto.as_view(), name='meta-proj-remover'),
 
-    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/editar/atividade/novo$', views.MetaProjeto.as_view(), name='atividade-meta-proj-criar'),
-    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/editar/atividade/(?P<pkatividade>[0-9]+)/editar$', views.MetaProjeto.as_view(), name='atividade-meta-proj-editar'),
-    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/editar/atividade/(?P<pkdelete>[0-9]+)/remover$', views.MetaProjeto.as_view(), name='atividade-meta-proj-remover'),
+    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/editar/atividade/novo$', views.AtividadeMeta.as_view(), name='atividade-meta-proj-criar'),
+    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/editar/atividade/(?P<pkatividade>[0-9]+)/editar$', views.AtividadeMeta.as_view(), name='atividade-meta-proj-editar'),
+    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/editar/atividade/(?P<pkdelete>[0-9]+)/remover$', views.AtividadeMeta.as_view(), name='atividade-meta-proj-remover'),
 
 ]

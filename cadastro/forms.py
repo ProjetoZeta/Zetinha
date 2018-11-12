@@ -149,7 +149,7 @@ class MetaForm(BaseFormControl):
 
 class AtividadeForm(BaseFormControl):
 
-    preview = ['descricao', 'data_inicio', 'data_fim', 'ic_ativo']
+    preview = ['titulo', 'descricao', 'data_inicio', 'data_fim', 'ic_ativo']
     descricao = forms.CharField(widget=forms.Textarea(attrs={'rows': 1}))
     meta = forms.ModelChoiceField(queryset=Meta.objects.all(), widget=forms.HiddenInput())
 
