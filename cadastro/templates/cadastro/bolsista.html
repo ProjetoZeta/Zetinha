@@ -37,7 +37,15 @@
         {% if form.errors or formp.errors %}
 
             <div class="alert alert-danger">
-              <strong>Erros no formulário!</strong> Verifique os campos e tente novamente
+              <strong><a data-toggle="collapse" href="#errors-form" role="button" aria-expanded="false" aria-controls="errors-form">Erros</a> no formulário!</strong> Verifique os campos e tente novamente
+
+            
+            </div>
+
+            <div class="collapse multi-collapse alert alert-warning" id="errors-form">
+              <div class="card card-body">
+                {{ form.errors }}
+              </div>
             </div>
 
         {% endif %}

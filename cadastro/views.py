@@ -58,10 +58,9 @@ class Bolsista(FormView):
 
         if form.is_valid():
             b = form.save()
-            post = request.POST.copy() # to make it mutable
-            post['bolsista'] = b.pk
-            request.POST = post
-            formp = ParticipanteBolsistaForm(request.POST,instance=last_participante)
+            datap = formp.data.copy()
+            datap['bolsista'] = b.pk
+            formp.data = datap
             if formp.is_valid():
                 formp.save()
                 return redirect(*('bolsista-editar', b.pk,))
