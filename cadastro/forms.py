@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import ModelForm
+from django.forms import ModelForm, Form
 from .utils.lists import remove
 from .models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, Projeto, Participante, Meta, Atividade, Anexo
 from django.conf import settings
@@ -165,3 +165,11 @@ class AnexoForm(BaseForm):
     class Meta:
         model = Anexo
         fields = get_fields(model)
+
+class AtividadeSelect(Form):
+    def __init__(self, pkmeta, **kwargs):
+        super().__init__(**kwargs)
+        meta = Meta.objects.get(pk=pkmeta)
+        self.fields['atividades'].queryset = Atividade.objects.filter(meta=meta, ic_ativo=True)
+
+    atividades = forms.ModelChoiceField(queryset=Projeto.objects.all(), empty_label='Selecione uma atividade')

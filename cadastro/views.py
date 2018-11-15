@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django import forms
 
 from .models import Cargo as CargoModel, Entidade as EntidadeModel, Funcao as FuncaoModel, Usuario as  UsuarioModel, Bolsista as BolsistaModel, Documento as DocumentoModel, EmprestimoEquipamento as EmprestimoEquipamentoModel, Projeto as ProjetoModel, Participante as ParticipanteModel, Meta as MetaModel, Atividade as AtividadeModel, Anexo as AnexoModel
-from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm, ParticipanteProjetoForm, ParticipanteBolsistaForm, MetaForm, AtividadeForm, AnexoForm
+from .forms import CargoForm, EntidadeForm, FuncaoForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm, ParticipanteProjetoForm, ParticipanteBolsistaForm, MetaForm, AtividadeForm, AnexoForm, AtividadeSelect
 from django.views.generic import View
 
 from django.http import HttpResponse
@@ -379,5 +379,10 @@ class AtividadeMeta(MetaProjeto):
         if item:
             item.delete()
         return redirect(*('meta-proj-editar', kwargs.get('pk', None), meta.pk,))
+
+def get_atividades(self, pk):
+    form = AtividadeSelect(pkmeta=pk)
+    return HttpResponse(form)
+
         
         
