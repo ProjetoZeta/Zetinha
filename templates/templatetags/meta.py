@@ -10,3 +10,10 @@ def model_name(instance):
 def is_bool(value):
     return type(value) is bool
 
+@register.simple_tag
+def get_value(form, field, value):
+	try:
+		return dict(form.fields[field].choices)[value]
+	except AttributeError: 
+		return value
+

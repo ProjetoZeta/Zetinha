@@ -1,0 +1,40 @@
+{% extends 'cadastro/default.html' %}
+
+{% load bootstrap3 %}
+
+{% load static %}
+
+{% block css %}
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-9">
+
+        {% if form.errors %}
+
+            <div class="alert alert-danger">
+              <strong><a data-toggle="collapse" href="#errors-form" role="button" aria-expanded="false" aria-controls="errors-form">Erros</a> no formulário!</strong> Verifique os campos e tente novamente
+            </div>
+
+            <div class="collapse multi-collapse alert alert-warning" id="errors-form">
+              <div class="card card-body">
+                {{ form.errors }}
+              </div>
+            </div>
+
+        {% endif %}
+
+        <form class="form-horizontal" role="form" method="POST" action="{% if pk %} {% url 'entidade-editar' pk %} {% else %}{% url 'entidade-criar' %}{% endif %}">
+            {% csrf_token %}
+            
+            <div id="form-buttons">
+                <button class="btn btn-info">Salvar</button>
+                <a href="{% url 'entidade' %}" class="btn btn-default">Voltar</a>
+            </div>
+
+        </form>
+
+{% endblock %}

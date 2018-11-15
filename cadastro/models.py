@@ -308,4 +308,16 @@ class Anexo(models.Model):
     def __str__(self):
         return self.tipo_documento
 
+class Emprego(models.Model):
+    TIPOS = (
+        ('1', 'Função'),
+        ('2', 'Cargo')
+    )
+    nome = models.CharField('Nome', max_length=100)
+    tipo = models.CharField('Tipo', choices=TIPOS, max_length=1)
+
+    class Meta:
+        verbose_name_plural = "Funções ou Cargos"
+        verbose_name = "Função ou Cargo"
+
 

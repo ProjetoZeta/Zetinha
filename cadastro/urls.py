@@ -13,6 +13,10 @@ urlpatterns = [
     url(r'^entidade/(?P<pk>[0-9]+)/editar$', views.Entidade.as_view(), name='entidade-editar'),
     url(r'^entidade/(?P<pkdelete>[0-9]+)/remover$', views.Entidade.as_view(), name='entidade-remover'),
 
+    url(r'^emprego$', views.Emprego.as_view(), name='emprego'),
+    url(r'^emprego/(?P<pk>[0-9]+)/editar$', views.Emprego.as_view(), name='emprego-editar'),
+    url(r'^emprego/(?P<pkdelete>[0-9]+)/remover$', views.Emprego.as_view(), name='emprego-remover'),
+
     url(r'^funcao$', views.Funcao.as_view(), name='funcao'),
     url(r'^funcao/(?P<pk>[0-9]+)/editar$', views.Funcao.as_view(), name='funcao-editar'),
     url(r'^funcao/(?P<pkdelete>[0-9]+)/remover$', views.Funcao.as_view(), name='funcao-remover'),

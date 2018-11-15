@@ -52,12 +52,13 @@
             {% for item in data %}
                 <tr class="odd gradeX">
                     {% for field in form.preview %}
+
                         {% with item|getattr:field as value %}
                             <td>
                                 {% if value|is_bool %}
                                     <input type="checkbox" {% if value %} checked {% endif %} disabled>
                                 {% else %}
-                                    {{ value }}
+                                    {% get_value form field value %}
                                 {% endif %}
                             </td>
                         {% endwith %}

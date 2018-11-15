@@ -20,24 +20,22 @@ class Cargo(FormView):
 class Funcao(FormView):
     template_name = 'cadastro/crud-withmodal.html'
 
-class Entidade(FormView):
-    template_name = 'cadastro/crud-withmodal.html'
-
 class Responsavel(FormView):
     template_name = 'cadastro/crud-withmodal.html'
 
 class Usuario(FormView):
     template_name = 'cadastro/crud-withmodal.html'
 
-class Projeto(FormView):
-
-    template_name = 'cadastro/projeto.html'
+class Emprego(FormView):
+    template_name = 'cadastro/crud-withmodal.html'
 
 class ProjetoList(GenericView):
     
     model = ProjetoModel
     template_name = 'cadastro/crud-projeto.html'
 
+class Entidade(FormView):
+    template_name = 'cadastro/crud-withmodal.html'
 
 class Bolsista(FormView):
 
