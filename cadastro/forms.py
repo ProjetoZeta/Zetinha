@@ -133,7 +133,7 @@ class ParticipanteProjetoForm(ParticipanteForm):
 
 class ParticipanteBolsistaForm(ParticipanteForm):
 
-    bolsista = forms.ModelChoiceField(queryset=Bolsista.objects.filter(ic_ativo=True), empty_label=ParticipanteForm.empty_m, widget=forms.HiddenInput())
+    bolsista = forms.ModelChoiceField(queryset=Bolsista.objects.all(), empty_label=ParticipanteForm.empty_m, widget=forms.HiddenInput())
     projeto = forms.ModelChoiceField(queryset=Projeto.objects.all(), empty_label=ParticipanteForm.empty_m)
 
 
