@@ -287,6 +287,7 @@ class Atividade(models.Model):
     data_inicio = models.CharField('Data de Início', max_length=100,blank=True)
     data_fim = models.CharField('Data de Fim', max_length=100, blank=True)
     ic_ativo = models.BooleanField('Ativo')
+    bolsistas = models.ManyToManyField(Bolsista)
 
     def __str__(self):
         return "{}".format(self.descricao)
