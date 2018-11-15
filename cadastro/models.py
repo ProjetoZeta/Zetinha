@@ -271,6 +271,9 @@ class Participante(models.Model):
     class Meta:
         unique_together = ('projeto', 'bolsista',)
 
+    def __str__(self):
+        return "{}".format(self.bolsista.no_bolsista)
+
 class Meta(models.Model):
     projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE, verbose_name="Projeto")
     titulo = models.CharField('Título', max_length=100, blank=True)
@@ -287,10 +290,10 @@ class Atividade(models.Model):
     data_inicio = models.CharField('Data de Início', max_length=100,blank=True)
     data_fim = models.CharField('Data de Fim', max_length=100, blank=True)
     ic_ativo = models.BooleanField('Ativo')
-    bolsistas = models.ManyToManyField(Bolsista)
+    participantes = models.ManyToManyField(Participante)
 
     def __str__(self):
-        return "{}".format(self.descricao)
+        return "{}".format(self.titulo)
 
 
 class Anexo(models.Model):

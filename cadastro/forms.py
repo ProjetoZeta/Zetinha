@@ -172,4 +172,16 @@ class AtividadeSelect(Form):
         meta = Meta.objects.get(pk=pkmeta)
         self.fields['atividades'].queryset = Atividade.objects.filter(meta=meta, ic_ativo=True)
 
-    atividades = forms.ModelChoiceField(queryset=Projeto.objects.all(), empty_label='Selecione uma atividade')
+    atividades = forms.ModelChoiceField(queryset=Atividade.objects.all(), empty_label='Selecione uma atividade')
+
+
+class AtividadeBolsistaSelect(ModelForm):
+    def __init__(self, pkprojeto, **kwargs):
+        super().__init__(**kwargs)
+        projeto = Projeto.objects.get(pk=pkprojeto)
+        self.fields['participantes'].queryset = Participante.objects.filter(projeto=projeto, ic_ativo=True)
+
+    participantes = forms.ModelMultipleChoiceField(queryset=Participante.objects.filter(), widget=forms.CheckboxSelectMultiple())
+    class Meta:
+        model = Atividade
+        fields = ['participantes']
