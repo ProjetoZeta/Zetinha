@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm, Form
 from .utils.lists import remove
-from .models import Entidade, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, Projeto, Participante, Meta, Atividade, Anexo, Emprego
+from .models import Entidade, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, Projeto, Participante, Meta, Atividade, Anexo, Emprego, Responsabilidade
 from django.conf import settings
 from .utils.models import get_fields, get_clean_fields
 from django.core.exceptions import NON_FIELD_ERRORS
@@ -20,6 +20,7 @@ class BaseForm(ModelForm):
         return m
 
 class BaseFormControl(ModelForm):
+    empty_m = 'Selecione uma opção'
     def __init__(self, *args, **kwargs):
         self.preview = remove('id', self.preview)
         super(ModelForm, self).__init__(*args, **kwargs)
@@ -179,4 +180,15 @@ class EmpregoForm(BaseForm):
     tipo = forms.ChoiceField(choices=Emprego.TIPOS, widget=forms.RadioSelect())
     class Meta:
         model = Emprego
+        fields = get_fields(model)
+
+class ResponsabilidadeForm(BaseFormControl):
+    preview = ['responsavel', 'cargo']
+    entidade = forms.ModelChoiceField(queryset=Projeto.objects.all(), widget=forms.HiddenInput())
+
+    responsavel = forms.ModelChoiceField(queryset=Responsavel.objects.filter(ic_ativo=True), empty_label=BaseFormControl.empty_m)
+    cargo = forms.ModelChoiceField(queryset=Emprego.objects.filter(tipo=Emprego.CARGO), empty_label=BaseFormControl.empty_m)
+
+    class Meta:
+        model = Responsabilidade
         fields = get_fields(model)

@@ -10,6 +10,10 @@ urlpatterns = [
     url(r'^entidade/(?P<pk>[0-9]+)/editar$', views.Entidade.as_view(), name='entidade-editar'),
     url(r'^entidade/(?P<pkdelete>[0-9]+)/remover$', views.Entidade.as_view(), name='entidade-remover'),
 
+    url(r'^entidade/(?P<pk>[0-9]+)/responsabilidade/novo$', views.Responsabilidade.as_view(), name='responsabilidade-entidade-criar'),
+    url(r'^entidade/(?P<pk>[0-9]+)/responsabilidade/(?P<pkreponsabilidade>[0-9]+)/editar$', views.Responsabilidade.as_view(), name='responsabilidade-entidade-editar'),
+    url(r'^entidade/(?P<pk>[0-9]+)/responsabilidade/(?P<pkreponsabilidade>[0-9]+)/remover$', views.Responsabilidade.as_view(), name='responsabilidade-entidade-remover'),
+
     url(r'^emprego$', views.Emprego.as_view(), name='emprego'),
     url(r'^emprego/(?P<pk>[0-9]+)/editar$', views.Emprego.as_view(), name='emprego-editar'),
     url(r'^emprego/(?P<pkdelete>[0-9]+)/remover$', views.Emprego.as_view(), name='emprego-remover'),

@@ -6,8 +6,8 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django import forms
 
-from .models import Responsavel as ResponsavelModel, Entidade as EntidadeModel, Usuario as UsuarioModel, Bolsista as BolsistaModel, Documento as DocumentoModel, EmprestimoEquipamento as EmprestimoEquipamentoModel, Projeto as ProjetoModel, Participante as ParticipanteModel, Meta as MetaModel, Atividade as AtividadeModel, Anexo as AnexoModel
-from .forms import EntidadeForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm, ParticipanteProjetoForm, ParticipanteBolsistaForm, MetaForm, AtividadeForm, AnexoForm, AtividadeSelect, AtividadeBolsistaSelect
+from .models import Responsabilidade as ResponsabilidadeModel, Responsavel as ResponsavelModel, Entidade as EntidadeModel, Usuario as UsuarioModel, Bolsista as BolsistaModel, Documento as DocumentoModel, EmprestimoEquipamento as EmprestimoEquipamentoModel, Projeto as ProjetoModel, Participante as ParticipanteModel, Meta as MetaModel, Atividade as AtividadeModel, Anexo as AnexoModel
+from .forms import EntidadeForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm, ParticipanteProjetoForm, ParticipanteBolsistaForm, MetaForm, AtividadeForm, AnexoForm, AtividadeSelect, AtividadeBolsistaSelect, ResponsabilidadeForm
 from django.views.generic import View
 
 from django.http import HttpResponse
@@ -29,6 +29,21 @@ class ResponsavelList(GenericView):
             'data': self.model.objects.all(),
             'form': ResponsavelForm(),
             'createurl': 'responsavel-criar',
+        }
+
+class Entidade(FormView):
+    template_name = 'cadastro/entidade.html'
+
+    def template_keys(self, **kwargs):
+
+        pk = kwargs.get(self.pk_alias, None)
+        entidade = self.model.objects.get(pk=pk) if pk else None
+
+        return {
+            **super().template_keys(**kwargs),
+            'content_title': 'Órgãos / Instituições',
+            'formr': ResponsabilidadeForm(initial={'entidade': entidade}) if pk else ResponsabilidadeForm(),
+            'responsabilidades': ResponsabilidadeModel.objects.filter(entidade=entidade) if entidade else [],
         }
 
 class EntidadeList(GenericView):
@@ -55,9 +70,6 @@ class ProjetoList(GenericView):
     
     model = ProjetoModel
     template_name = 'cadastro/crud-projeto.html'
-
-class Entidade(FormView):
-    template_name = 'cadastro/entidade.html'
 
 class Bolsista(FormView):
 
@@ -400,6 +412,11 @@ class AtividadeMeta(MetaProjeto):
         if item:
             item.delete()
         return redirect(*('meta-proj-editar', kwargs.get('pk', None), meta.pk,))
+
+
+class Responsabilidade(Entidade):
+    template_name = 'cadastro/responsavel.html'
+
 
 def get_atividades(self, pk):
     form = AtividadeSelect(pkmeta=pk)
