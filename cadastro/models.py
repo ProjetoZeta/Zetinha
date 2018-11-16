@@ -230,7 +230,7 @@ class Projeto(models.Model):
 class Participante(models.Model):
     bolsista = models.ForeignKey('Bolsista', on_delete=models.CASCADE, verbose_name="Bolsista")
     projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE, verbose_name="Projeto")
-    funcao = models.ForeignKey('Funcao', on_delete=models.CASCADE, verbose_name="Função")
+    funcao = models.ForeignKey('Emprego', on_delete=models.CASCADE, verbose_name="Função")
     ic_ativo = models.BooleanField('Ativo')
 
     CATEGORIA = (
@@ -309,9 +309,11 @@ class Anexo(models.Model):
         return self.tipo_documento
 
 class Emprego(models.Model):
+    FUNCAO = '1'
+    CARGO = '2'
     TIPOS = (
-        ('1', 'Função'),
-        ('2', 'Cargo')
+        (FUNCAO, 'Função'),
+        (CARGO, 'Cargo')
     )
     nome = models.CharField('Nome', max_length=100)
     tipo = models.CharField('Tipo', choices=TIPOS, max_length=1)
@@ -319,5 +321,9 @@ class Emprego(models.Model):
     class Meta:
         verbose_name_plural = "Funções ou Cargos"
         verbose_name = "Função ou Cargo"
+
+    def __str__(self):
+        return self.nome
+
 
 

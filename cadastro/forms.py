@@ -36,18 +36,6 @@ class UsuarioForm(BaseForm):
         model = Usuario
         fields = ['email', 'no_completo', 'ic_ativo', 'ic_bolsista']
 
-class CargoForm(BaseForm):
-    preview = get_clean_fields(Cargo)
-    class Meta:
-        model = Cargo
-        fields = get_fields(model)
-
-class FuncaoForm(BaseForm):
-    preview = ['no_funcao','ic_ativo']
-    class Meta:
-        model = Funcao
-        fields = get_fields(model)
-
 class EntidadeForm(BaseForm):
     preview = ['no_entidade', 'ic_ativo', 'cnpj', 'nu_municipio']
     class Meta:
@@ -115,7 +103,7 @@ class ParticipanteForm(BaseFormControl):
 
     empty_m = 'Selecione uma opção'
     
-    funcao = forms.ModelChoiceField(queryset=Funcao.objects.filter(ic_ativo=True), empty_label=empty_m)
+    funcao = forms.ModelChoiceField(queryset=Emprego.objects.filter(tipo=Emprego.FUNCAO), empty_label=empty_m)
     class Meta:
         model = Participante
         fields = get_fields(model)
