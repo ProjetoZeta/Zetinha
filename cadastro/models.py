@@ -308,9 +308,9 @@ class Emprego(models.Model):
         return self.nome
 
 class Responsabilidade(models.Model):
-    entidade = models.ForeignKey('Entidade', on_delete=models.CASCADE, verbose_name="Entidade")
-    responsavel = models.ForeignKey('Responsavel', on_delete=models.CASCADE, verbose_name="Responsável")
-    cargo = models.ForeignKey('Emprego', on_delete=models.CASCADE, verbose_name="Cargo")
+    entidade = models.ForeignKey('Entidade', on_delete=models.CASCADE, verbose_name="Entidade", null=True)
+    responsavel = models.ForeignKey('Responsavel', on_delete=models.CASCADE, verbose_name="Responsável", null=True)
+    cargo = models.ForeignKey('Emprego', on_delete=models.CASCADE, verbose_name="Cargo", null=True)
     ic_ativo = models.BooleanField('Ativo')
 
     def __str__(self):
