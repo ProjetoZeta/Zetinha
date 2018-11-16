@@ -5,21 +5,14 @@ from . import views
 
 urlpatterns = [
     
-    url(r'^cargo$', views.Cargo.as_view(), name='cargo'),
-    url(r'^cargo/(?P<pk>[0-9]+)/editar$', views.Cargo.as_view(), name='cargo-editar'),
-    url(r'^cargo/(?P<pkdelete>[0-9]+)/remover$', views.Cargo.as_view(), name='cargo-remover'),
-
-    url(r'^entidade$', views.Entidade.as_view(), name='entidade'),
+    url(r'^entidade$', views.EntidadeList.as_view(), name='entidade'),
+    url(r'^entidade/novo$', views.Entidade.as_view(), name='entidade-criar'),
     url(r'^entidade/(?P<pk>[0-9]+)/editar$', views.Entidade.as_view(), name='entidade-editar'),
     url(r'^entidade/(?P<pkdelete>[0-9]+)/remover$', views.Entidade.as_view(), name='entidade-remover'),
 
     url(r'^emprego$', views.Emprego.as_view(), name='emprego'),
     url(r'^emprego/(?P<pk>[0-9]+)/editar$', views.Emprego.as_view(), name='emprego-editar'),
     url(r'^emprego/(?P<pkdelete>[0-9]+)/remover$', views.Emprego.as_view(), name='emprego-remover'),
-
-    url(r'^funcao$', views.Funcao.as_view(), name='funcao'),
-    url(r'^funcao/(?P<pk>[0-9]+)/editar$', views.Funcao.as_view(), name='funcao-editar'),
-    url(r'^funcao/(?P<pkdelete>[0-9]+)/remover$', views.Funcao.as_view(), name='funcao-remover'),
 
     url(r'^responsavel$', views.ResponsavelList.as_view(), name='responsavel'),
     url(r'^responsavel/novo$', views.Responsavel.as_view(), name='responsavel-criar'),

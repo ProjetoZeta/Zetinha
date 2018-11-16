@@ -14,12 +14,6 @@ from django.http import HttpResponse
 
 from .abstract_views import GenericView, FormView
 
-class Cargo(FormView):
-    template_name = 'cadastro/crud-withmodal.html'
-
-class Funcao(FormView):
-    template_name = 'cadastro/crud-withmodal.html'
-
 class Responsavel(FormView):
     template_name = 'cadastro/responsavel.html'
 
@@ -37,6 +31,20 @@ class ResponsavelList(GenericView):
             'createurl': 'responsavel-criar',
         }
 
+class EntidadeList(GenericView):
+
+    model = EntidadeModel
+    template_name = 'cadastro/crud-nomodal.html'
+
+    def template_keys(self, **kwargs):
+        return {
+            **super().template_keys(**kwargs),
+            'content_title': 'Órgão/Instituição',
+            'data': self.model.objects.all(),
+            'form': EntidadeForm(),
+            'createurl': 'entidade-criar',
+        }
+
 class Usuario(FormView):
     template_name = 'cadastro/crud-withmodal.html'
 
@@ -49,7 +57,7 @@ class ProjetoList(GenericView):
     template_name = 'cadastro/crud-projeto.html'
 
 class Entidade(FormView):
-    template_name = 'cadastro/crud-withmodal.html'
+    template_name = 'cadastro/entidade.html'
 
 class Bolsista(FormView):
 
