@@ -8,6 +8,11 @@ def get_value(form, field, value):
 	except AttributeError: 
 		return value
 
-@register.simple_tag
-def is_required(form, field):
-	return form.fields[field].required
+@register.filter
+def is_required (form, field):
+    return form.fields[field].required
+
+
+
+
+

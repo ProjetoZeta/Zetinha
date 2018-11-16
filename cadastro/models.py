@@ -14,28 +14,12 @@ class Usuario(AbstractUser):
     class Meta:
         verbose_name = "usuário"
 
-
-class Entidade(models.Model):
-    co_entidade = models.CharField('Código', max_length=32, unique=True)
-    no_entidade = models.CharField('Nome', max_length=32, unique=True)
-    sg_entidade = models.CharField('Sigla', max_length=32, unique=True)
-    ic_ativo = models.BooleanField('Ativo')
-    cnpj = models.IntegerField('CNPJ', unique=True)
-    telefone = models.IntegerField('Telefone')
-    cep = models.IntegerField('CEP')
-    nu_municipio = models.IntegerField('Número do municipio')
-    co_esfera = models.CharField('Esfera', max_length=32)
-    de_endereco = models.CharField('Endereço', max_length=128)
-
-    def __str__(self):
-        return "{} - {}".format(self.no_entidade, self.sg_entidade)
-
 class Responsavel(models.Model):
     no_responsavel = models.CharField('Nome', max_length=32, unique=True)
     cpf = models.IntegerField('CPF')
     telefone = models.IntegerField('Telefone')
     co_matricula = models.CharField('Matrícula', max_length=32, unique=True)
-    ic_ativo = models.BooleanField('Ativo')
+    ic_ativo = models.BooleanField('Ativo', default=True)
 
     class Meta:
         verbose_name_plural = "responsáveis"
@@ -116,7 +100,7 @@ class Bolsista(models.Model):
     telefone = models.CharField('Telefone', max_length=32, blank=True)
     celular = models.CharField('Celular', max_length=32, blank=True)
     matricula = models.CharField('Matrícula', max_length=32, unique=True, blank=True)
-    ic_ativo = models.BooleanField('Ativo')
+    ic_ativo = models.BooleanField('Ativo', default=True)
 
     pis_nit = models.CharField('PIS ou NIT', max_length=32, blank=True)
     link_lattes = models.CharField('Lattes', max_length=128, unique=True, validators=[lattes_url])
@@ -140,6 +124,36 @@ class Bolsista(models.Model):
 
     def __str__(self):
         return self.no_bolsista
+
+class Entidade(models.Model):
+
+    ESFERA_ADMINISTRATIVA = (
+        ('1', 'Público Federal'),
+        ('2', 'Público Estadual'),
+        ('3', 'Público Municipal'),
+        ('4', 'Privado com fins lucrativos'),
+        ('5', 'Privado sem fins lucrativos'),
+    )
+
+    nome = models.CharField('Nome Órgão/Entidade', max_length=128)
+    email = models.CharField('Email', max_length=64)
+    cnpj = models.CharField('CNPJ', max_length=64, unique=True)
+    endereco = models.CharField('Endereço', max_length=256, unique=True)
+    cidade = models.CharField('Cidade', max_length=64)
+    cep = models.CharField('CEP', max_length=16)
+    uf = models.CharField('UF', max_length=2, choices=Bolsista.UFS, default='DF')
+    telefone = models.CharField('Telefone', max_length=16)
+    esfera_administrativa = models.CharField('Esfera', choices=ESFERA_ADMINISTRATIVA, default='1', max_length=1)
+    ic_ativo = models.BooleanField('Ativo', default=True)
+
+    banco = models.CharField('Banco', max_length=128, choices=Bolsista.COD_BANCO, default='001')
+    agencia = models.CharField('Agência', max_length=32)
+    tipo_conta = models.CharField('Tipo de Conta', max_length=1, choices=Bolsista.TIPO_CONTA, default='2')
+    conta = models.CharField('Conta', max_length=32)
+    praca_pagamento = models.CharField('Praça de Pagamento', max_length=128)
+
+    def __str__(self):
+        return "{} - {}".format(self.nome)
 
 
 class Documento(models.Model):
@@ -213,7 +227,7 @@ class Participante(models.Model):
     bolsista = models.ForeignKey('Bolsista', on_delete=models.CASCADE, verbose_name="Bolsista")
     projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE, verbose_name="Projeto")
     funcao = models.ForeignKey('Emprego', on_delete=models.CASCADE, verbose_name="Função")
-    ic_ativo = models.BooleanField('Ativo')
+    ic_ativo = models.BooleanField('Ativo', default=True)
 
     CATEGORIA = (
         ('1', 'Bolsa de aux. ao estudante'),
@@ -260,7 +274,7 @@ class Meta(models.Model):
     projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE, verbose_name="Projeto")
     titulo = models.CharField('Título', max_length=100, blank=True)
     descricao = models.CharField('Descrição', max_length=1024, blank=True)
-    ic_ativo = models.BooleanField('Ativo')
+    ic_ativo = models.BooleanField('Ativo', default=True)
 
     def __str__(self):
         return "{}".format(self.titulo)
@@ -271,7 +285,7 @@ class Atividade(models.Model):
     descricao = models.CharField('Descrição', max_length=1024, blank=True)
     data_inicio = models.CharField('Data de Início', max_length=100,blank=True)
     data_fim = models.CharField('Data de Fim', max_length=100, blank=True)
-    ic_ativo = models.BooleanField('Ativo')
+    ic_ativo = models.BooleanField('Ativo', default=True)
     participantes = models.ManyToManyField(Participante)
 
     def __str__(self):
@@ -311,7 +325,7 @@ class Responsabilidade(models.Model):
     entidade = models.ForeignKey('Entidade', on_delete=models.CASCADE, verbose_name="Entidade", null=True)
     responsavel = models.ForeignKey('Responsavel', on_delete=models.CASCADE, verbose_name="Responsável", null=True)
     cargo = models.ForeignKey('Emprego', on_delete=models.CASCADE, verbose_name="Cargo", null=True)
-    ic_ativo = models.BooleanField('Ativo')
+    ic_ativo = models.BooleanField('Ativo', default=True)
 
     def __str__(self):
         return "{} como {}".format(responsavel.nome, cargo.nome)

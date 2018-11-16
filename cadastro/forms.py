@@ -37,8 +37,8 @@ class UsuarioForm(BaseForm):
         model = Usuario
         fields = ['email', 'no_completo', 'ic_ativo', 'ic_bolsista']
 
-class EntidadeForm(BaseForm):
-    preview = ['no_entidade', 'ic_ativo', 'cnpj', 'nu_municipio']
+class EntidadeForm(BaseFormControl):
+    preview = ['nome', 'ic_ativo', 'cnpj']
     class Meta:
         model = Entidade
         fields = get_fields(model)
