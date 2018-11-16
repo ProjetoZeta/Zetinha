@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm, Form
 from .utils.lists import remove
-from .models import Cargo, Entidade, Funcao, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, Projeto, Participante, Meta, Atividade, Anexo, Emprego
+from .models import Entidade, Responsavel, Usuario, Bolsista, Documento, EmprestimoEquipamento, Projeto, Participante, Meta, Atividade, Anexo, Emprego
 from django.conf import settings
 from .utils.models import get_fields, get_clean_fields
 from django.core.exceptions import NON_FIELD_ERRORS

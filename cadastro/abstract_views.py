@@ -73,6 +73,7 @@ class FormView(GenericView):
             'data': self.model.objects.all(),
             'form': form,
             'content_title': self.model._meta.verbose_name_plural.title(),
+            'pk': pk if pk else None,
         }
 
 

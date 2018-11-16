@@ -30,24 +30,6 @@ class Entidade(models.Model):
     def __str__(self):
         return "{} - {}".format(self.no_entidade, self.sg_entidade)
 
-
-class Cargo(models.Model):
-    no_cargo = models.CharField('Nome', max_length=32, unique=True)
-    ic_ativo = models.BooleanField('Ativo')
-
-
-class Funcao(models.Model):
-    no_funcao = models.CharField('Nome', max_length=32, unique=True)
-    ic_ativo = models.BooleanField('Ativo')
-
-    class Meta:
-        verbose_name_plural = "funções"
-        verbose_name = "função"
-
-    def __str__(self):
-        return self.no_funcao
-
-
 class Responsavel(models.Model):
     no_responsavel = models.CharField('Nome', max_length=32, unique=True)
     cpf = models.IntegerField('CPF')

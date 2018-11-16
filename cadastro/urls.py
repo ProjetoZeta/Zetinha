@@ -21,7 +21,8 @@ urlpatterns = [
     url(r'^funcao/(?P<pk>[0-9]+)/editar$', views.Funcao.as_view(), name='funcao-editar'),
     url(r'^funcao/(?P<pkdelete>[0-9]+)/remover$', views.Funcao.as_view(), name='funcao-remover'),
 
-    url(r'^responsavel$', views.Responsavel.as_view(), name='responsavel'),
+    url(r'^responsavel$', views.ResponsavelList.as_view(), name='responsavel'),
+    url(r'^responsavel/novo$', views.Responsavel.as_view(), name='responsavel-criar'),
     url(r'^responsavel/(?P<pk>[0-9]+)/editar$', views.Responsavel.as_view(), name='responsavel-editar'),
     url(r'^responsavel/(?P<pkdelete>[0-9]+)/remover$', views.Responsavel.as_view(), name='responsavel-remover'),
 

@@ -6,7 +6,7 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django import forms
 
-from .models import Cargo as CargoModel, Entidade as EntidadeModel, Funcao as FuncaoModel, Usuario as  UsuarioModel, Bolsista as BolsistaModel, Documento as DocumentoModel, EmprestimoEquipamento as EmprestimoEquipamentoModel, Projeto as ProjetoModel, Participante as ParticipanteModel, Meta as MetaModel, Atividade as AtividadeModel, Anexo as AnexoModel
+from .models import Responsavel as ResponsavelModel, Entidade as EntidadeModel, Usuario as UsuarioModel, Bolsista as BolsistaModel, Documento as DocumentoModel, EmprestimoEquipamento as EmprestimoEquipamentoModel, Projeto as ProjetoModel, Participante as ParticipanteModel, Meta as MetaModel, Atividade as AtividadeModel, Anexo as AnexoModel
 from .forms import EntidadeForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm, ParticipanteProjetoForm, ParticipanteBolsistaForm, MetaForm, AtividadeForm, AnexoForm, AtividadeSelect, AtividadeBolsistaSelect
 from django.views.generic import View
 
@@ -21,7 +21,21 @@ class Funcao(FormView):
     template_name = 'cadastro/crud-withmodal.html'
 
 class Responsavel(FormView):
-    template_name = 'cadastro/crud-withmodal.html'
+    template_name = 'cadastro/responsavel.html'
+
+class ResponsavelList(GenericView):
+
+    model = ResponsavelModel
+    template_name = 'cadastro/crud-nomodal.html'
+
+    def template_keys(self, **kwargs):
+        return {
+            **super().template_keys(**kwargs),
+            'content_title': 'Responsáveis',
+            'data': self.model.objects.all(),
+            'form': ResponsavelForm(),
+            'createurl': 'responsavel-criar',
+        }
 
 class Usuario(FormView):
     template_name = 'cadastro/crud-withmodal.html'
@@ -103,14 +117,15 @@ class Bolsista(FormView):
 class BolsistaList(GenericView):
 
     model = BolsistaModel
-    template_name = 'cadastro/crud-bolsista.html'
+    template_name = 'cadastro/crud-nomodal.html'
 
     def template_keys(self, **kwargs):
         return {
             **super().template_keys(**kwargs),
             'content_title': 'Bolsistas',
             'data': self.model.objects.all(),
-            'form': BolsistaForm()
+            'form': BolsistaForm(),
+            'createurl': 'bolsista-criar',
         }
 
 
