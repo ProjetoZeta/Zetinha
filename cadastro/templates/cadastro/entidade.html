@@ -40,17 +40,24 @@
             <fieldset class="well the-fieldset">
 
                 <legend class="the-legend">Dados</legend>
-
                 
-
-
-                <div class="form-group {% if form.nome.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.nome.name %} required {% endif %}">
-                    <label for="name" class="control-label col-sm-2">{{ form.nome.label }}:</label>
-                    <div class="col-sm-10">
-                        {{ form.nome }}
-                        <div class="help-block">{{ form.nome.errors }}</div>
+                <div class="form-group row">
+                    <div class="{% if form.nome.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.nome.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ form.nome.label }}:</label>
+                        <div class="col-md-8">
+                            {{ form.nome }}
+                            <div class="help-block">{{ form.nome.errors }}</div>
+                        </div>
+                    </div>
+                    <div class="{% if form.ic_ativo.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.ic_ativo.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-1 control-label">{{ form.ic_ativo.label }}:</label>
+                        <div class="col-md-1">
+                            {{ form.ic_ativo }}
+                            <div class="help-block">{{ form.ic_ativo.errors }}</div>
+                        </div>
                     </div>
                 </div>
+
 
                 <div class="form-group row">
                     <div class="{% if form.email.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.email.name %} required {% endif %}">

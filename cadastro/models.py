@@ -153,7 +153,7 @@ class Entidade(models.Model):
     praca_pagamento = models.CharField('Praça de Pagamento', max_length=128, blank=True)
 
     def __str__(self):
-        return "{} - {}".format(self.nome)
+        return "{}".format(self.nome)
 
 
 class Documento(models.Model):
