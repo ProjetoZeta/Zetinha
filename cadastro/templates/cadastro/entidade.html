@@ -15,12 +15,21 @@
 {% endblock %}
 
 {% block js %}
+
+  <script type="text/javascript">
+      
+        $(document).ready(function () {
+            $('#modal-responsabilidade').modal({% if formr.errors %}'show'{% else %}''{% endif %});
+        });
+
+  </script>
+
 {% endblock %}
 
 {% block content %}
     <div class="col-md-12">
 
-        {% if form.errors %}
+        {% if formentidade.errors or formr.errors %}
 
             <div class="alert alert-danger">
               <strong><a data-toggle="collapse" href="#errors-form" role="button" aria-expanded="false" aria-controls="errors-form">Erros</a> no formulário!</strong> Verifique os campos e tente novamente
@@ -28,7 +37,8 @@
 
             <div class="collapse multi-collapse alert alert-warning" id="errors-form">
               <div class="card card-body">
-                {{ form.errors }}
+                {{ formentidade.errors }}
+                {{ formr.errors }}
               </div>
             </div>
 
@@ -42,87 +52,87 @@
                 <legend class="the-legend">Dados</legend>
                 
                 <div class="form-group row">
-                    <div class="{% if form.nome.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.nome.name %} required {% endif %}">
-                        <label for="inputKey" class="col-md-2 control-label">{{ form.nome.label }}:</label>
+                    <div class="{% if formentidade.nome.errors %}{{ 'has-error' }}{% endif %} {% if formentidade|is_required:formentidade.nome.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ formentidade.nome.label }}:</label>
                         <div class="col-md-8">
-                            {{ form.nome }}
-                            <div class="help-block">{{ form.nome.errors }}</div>
+                            {{ formentidade.nome }}
+                            <div class="help-block">{{ formentidade.nome.errors }}</div>
                         </div>
                     </div>
-                    <div class="{% if form.ic_ativo.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.ic_ativo.name %} required {% endif %}">
-                        <label for="inputKey" class="col-md-1 control-label">{{ form.ic_ativo.label }}:</label>
+                    <div class="{% if formentidade.ic_ativo.errors %}{{ 'has-error' }}{% endif %} {% if formentidade|is_required:formentidade.ic_ativo.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-1 control-label">{{ formentidade.ic_ativo.label }}:</label>
                         <div class="col-md-1">
-                            {{ form.ic_ativo }}
-                            <div class="help-block">{{ form.ic_ativo.errors }}</div>
+                            {{ formentidade.ic_ativo }}
+                            <div class="help-block">{{ formentidade.ic_ativo.errors }}</div>
                         </div>
                     </div>
                 </div>
 
 
                 <div class="form-group row">
-                    <div class="{% if form.email.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.email.name %} required {% endif %}">
-                        <label for="inputKey" class="col-md-2 control-label">{{ form.email.label }}:</label>
+                    <div class="{% if formentidade.email.errors %}{{ 'has-error' }}{% endif %} {% if formentidade|is_required:formentidade.email.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ formentidade.email.label }}:</label>
                         <div class="col-md-5">
-                            {{ form.email }}
-                            <div class="help-block">{{ form.email.errors }}</div>
+                            {{ formentidade.email }}
+                            <div class="help-block">{{ formentidade.email.errors }}</div>
                         </div>
                     </div>
-                    <div class="{% if form.cnpj.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.cnpj.name %} required {% endif %}">
-                        <label for="inputKey" class="col-md-2 control-label">{{ form.cnpj.label }}:</label>
+                    <div class="{% if formentidade.cnpj.errors %}{{ 'has-error' }}{% endif %} {% if formentidade|is_required:formentidade.cnpj.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ formentidade.cnpj.label }}:</label>
                         <div class="col-md-3">
-                            {{ form.cnpj }}
-                            <div class="help-block">{{ form.cnpj.errors }}</div>
+                            {{ formentidade.cnpj }}
+                            <div class="help-block">{{ formentidade.cnpj.errors }}</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <div class="{% if form.endereco.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.endereco.name %} required {% endif %}">
-                        <label for="inputKey" class="col-md-2 control-label">{{ form.endereco.label }}:</label>
+                    <div class="{% if formentidade.endereco.errors %}{{ 'has-error' }}{% endif %} {% if formentidade|is_required:formentidade.endereco.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ formentidade.endereco.label }}:</label>
                         <div class="col-md-5">
-                            {{ form.endereco }}
-                            <div class="help-block">{{ form.endereco.errors }}</div>
+                            {{ formentidade.endereco }}
+                            <div class="help-block">{{ formentidade.endereco.errors }}</div>
                         </div>
                     </div>
-                    <div class="{% if form.cidade.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.cidade.name %} required {% endif %}">
-                        <label for="inputKey" class="col-md-2 control-label">{{ form.cidade.label }}:</label>
+                    <div class="{% if formentidade.cidade.errors %}{{ 'has-error' }}{% endif %} {% if formentidade|is_required:formentidade.cidade.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ formentidade.cidade.label }}:</label>
                         <div class="col-md-3">
-                            {{ form.cidade }}
-                            <div class="help-block">{{ form.cidade.errors }}</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <div class="{% if form.cep.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.cep.name %} required {% endif %}">
-                        <label for="inputKey" class="col-md-2 control-label">{{ form.cep.label }}:</label>
-                        <div class="col-md-3">
-                            {{ form.cep }}
-                            <div class="help-block">{{ form.cep.errors }}</div>
-                        </div>
-                    </div>
-                    <div class="{% if form.uf.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.uf.name %} required {% endif %}">
-                        <label for="inputKey" class="col-md-4 control-label">{{ form.uf.label }}:</label>
-                        <div class="col-md-3">
-                            {{ form.uf }}
-                            <div class="help-block">{{ form.uf.errors }}</div>
+                            {{ formentidade.cidade }}
+                            <div class="help-block">{{ formentidade.cidade.errors }}</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <div class="{% if form.telefone.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.telefone.name %} required {% endif %}">
-                        <label for="inputKey" class="col-md-2 control-label">{{ form.telefone.label }}:</label>
+                    <div class="{% if formentidade.cep.errors %}{{ 'has-error' }}{% endif %} {% if formentidade|is_required:formentidade.cep.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ formentidade.cep.label }}:</label>
                         <div class="col-md-3">
-                            {{ form.telefone }}
-                            <div class="help-block">{{ form.telefone.errors }}</div>
+                            {{ formentidade.cep }}
+                            <div class="help-block">{{ formentidade.cep.errors }}</div>
                         </div>
                     </div>
-                    <div class="{% if form.esfera_administrativa.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.esfera_administrativa.name %} required {% endif %}">
-                        <label for="inputKey" class="col-md-4 control-label">{{ form.esfera_administrativa.label }}:</label>
+                    <div class="{% if formentidade.uf.errors %}{{ 'has-error' }}{% endif %} {% if formentidade|is_required:formentidade.uf.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-4 control-label">{{ formentidade.uf.label }}:</label>
                         <div class="col-md-3">
-                            {{ form.esfera_administrativa }}
-                            <div class="help-block">{{ form.esfera_administrativa.errors }}</div>
+                            {{ formentidade.uf }}
+                            <div class="help-block">{{ formentidade.uf.errors }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="{% if formentidade.telefone.errors %}{{ 'has-error' }}{% endif %} {% if formentidade|is_required:formentidade.telefone.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ formentidade.telefone.label }}:</label>
+                        <div class="col-md-3">
+                            {{ formentidade.telefone }}
+                            <div class="help-block">{{ formentidade.telefone.errors }}</div>
+                        </div>
+                    </div>
+                    <div class="{% if formentidade.esfera_administrativa.errors %}{{ 'has-error' }}{% endif %} {% if formentidade|is_required:formentidade.esfera_administrativa.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-4 control-label">{{ formentidade.esfera_administrativa.label }}:</label>
+                        <div class="col-md-3">
+                            {{ formentidade.esfera_administrativa }}
+                            <div class="help-block">{{ formentidade.esfera_administrativa.errors }}</div>
                         </div>
                     </div>
                 </div>
@@ -135,43 +145,43 @@
 
 
                 <div class="form-group row">
-                    <div class="{% if form.banco.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.banco.name %} required {% endif %}">
-                        <label for="inputKey" class="col-md-2 control-label">{{ form.banco.label }}:</label>
+                    <div class="{% if formentidade.banco.errors %}{{ 'has-error' }}{% endif %} {% if formentidade|is_required:formentidade.banco.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ formentidade.banco.label }}:</label>
                         <div class="col-md-2">
-                            {{ form.banco }}
-                            <div class="help-block">{{ form.banco.errors }}</div>
+                            {{ formentidade.banco }}
+                            <div class="help-block">{{ formentidade.banco.errors }}</div>
                         </div>
                     </div>
-                    <div class="{% if form.agencia.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.agencia.name %} required {% endif %}">
-                        <label for="inputKey" class="col-md-2 control-label">{{ form.agencia.label }}:</label>
+                    <div class="{% if formentidade.agencia.errors %}{{ 'has-error' }}{% endif %} {% if formentidade|is_required:formentidade.agencia.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ formentidade.agencia.label }}:</label>
                         <div class="col-md-2">
-                            {{ form.agencia }}
-                            <div class="help-block">{{ form.agencia.errors }}</div>
+                            {{ formentidade.agencia }}
+                            <div class="help-block">{{ formentidade.agencia.errors }}</div>
                         </div>
                     </div>
 
-                    <div class="{% if form.conta.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.conta.name %} required {% endif %}">
-                        <label for="inputKey" class="col-md-2 control-label">{{ form.conta.label }}:</label>
+                    <div class="{% if formentidade.conta.errors %}{{ 'has-error' }}{% endif %} {% if formentidade|is_required:formentidade.conta.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ formentidade.conta.label }}:</label>
                         <div class="col-md-2">
-                            {{ form.conta }}
-                            <div class="help-block">{{ form.conta.errors }}</div>
+                            {{ formentidade.conta }}
+                            <div class="help-block">{{ formentidade.conta.errors }}</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <div class="{% if form.tipo_conta.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.tipo_conta.name %} required {% endif %}">
-                        <label for="inputKey" class="col-md-2 control-label">{{ form.tipo_conta.label }}:</label>
+                    <div class="{% if formentidade.tipo_conta.errors %}{{ 'has-error' }}{% endif %} {% if formentidade|is_required:formentidade.tipo_conta.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ formentidade.tipo_conta.label }}:</label>
                         <div class="col-md-2">
-                            {{ form.tipo_conta }}
-                            <div class="help-block">{{ form.tipo_conta.errors }}</div>
+                            {{ formentidade.tipo_conta }}
+                            <div class="help-block">{{ formentidade.tipo_conta.errors }}</div>
                         </div>
                     </div>
-                    <div class="{% if form.praca_pagamento.errors %}{{ 'has-error' }}{% endif %} {% if form|is_required:form.praca_pagamento.name %} required {% endif %}">
-                        <label for="inputKey" class="col-md-6 control-label">{{ form.praca_pagamento.label }}:</label>
+                    <div class="{% if formentidade.praca_pagamento.errors %}{{ 'has-error' }}{% endif %} {% if formentidade|is_required:formentidade.praca_pagamento.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-6 control-label">{{ formentidade.praca_pagamento.label }}:</label>
                         <div class="col-md-2">
-                            {{ form.praca_pagamento }}
-                            <div class="help-block">{{ form.praca_pagamento.errors }}</div>
+                            {{ formentidade.praca_pagamento }}
+                            <div class="help-block">{{ formentidade.praca_pagamento.errors }}</div>
                         </div>
                     </div>
                 </div>

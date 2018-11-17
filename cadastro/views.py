@@ -12,7 +12,7 @@ from django.views.generic import View
 
 from django.http import HttpResponse
 
-from .abstract_views import GenericView, FormView
+from .abstract_views import GenericView, FormView, MainView
 
 class Responsavel(FormView):
     template_name = 'cadastro/responsavel.html'
@@ -31,19 +31,33 @@ class ResponsavelList(GenericView):
             'createurl': 'responsavel-criar',
         }
 
-class Entidade(FormView):
+class Entidade(MainView):
+
+    model = EntidadeModel
+    template_name = 'cadastro/entidade.html'
+
+    def template_keys(self, *args, **kwargs):
+        return {
+            'content_title': 'Responsáveis',
+            'createurl': 'responsavel-criar',
+        }
+
+class Entidade3(FormView):
     template_name = 'cadastro/entidade.html'
 
     def template_keys(self, **kwargs):
 
-        pk = kwargs.get(self.pk_alias, None)
-        entidade = self.model.objects.get(pk=pk) if pk else None
+        pk = kwargs.get('pk', None)
+        entidade = EntidadeModel.objects.get(pk=pk) if pk else None
+
+        form = EntidadeForm(instance=EntidadeModel.objects.get(pk=pk)) if pk else EntidadeForm()
 
         return {
             **super().template_keys(**kwargs),
             'content_title': 'Órgãos / Instituições',
             'formr': ResponsabilidadeForm(initial={'entidade': entidade}) if pk else ResponsabilidadeForm(),
             'responsabilidades': ResponsabilidadeModel.objects.filter(entidade=entidade) if entidade else [],
+            'form': form,
         }
 
 class EntidadeList(GenericView):
@@ -413,9 +427,49 @@ class AtividadeMeta(MetaProjeto):
             item.delete()
         return redirect(*('meta-proj-editar', kwargs.get('pk', None), meta.pk,))
 
-
 class Responsabilidade(Entidade):
-    template_name = 'cadastro/responsavel.html'
+
+    model = ResponsabilidadeModel
+    template_name = 'cadastro/entidade.html'
+    pk_alias = 'pkresponsabilidade'
+
+    def post(self, request, **kwargs):
+
+        pk = kwargs.get(self.pk_alias, None)
+        pkentidade = kwargs.get('pk', None)
+
+        initial = {'entidade': EntidadeModel.objects.get(pk=pkentidade)} if pkentidade else ResponsabilidadeForm()
+
+        form = ResponsabilidadeForm(request.POST, initial=initial, instance=ResponsabilidadeModel.objects.get(pk=pk)) if pk else ResponsabilidadeForm(request.POST)
+
+        v = form.is_valid()
+        nresponsabilidade = form.save() if v else None
+        if nresponsabilidade:
+            return redirect(*('entidade-editar',pkentidade,))
+        else:
+            return self.get(request=request, formr=form, **kwargs)
+
+    def template_keys(self, **kwargs):
+
+        pkentidade = kwargs.get('pk', None)
+        pk = kwargs.get(self.pk_alias, None)
+        entidade = EntidadeModel.objects.get(pk=pkentidade)
+
+        fp = kwargs.get('forma', None)
+        formr = fp if fp else (ResponsabilidadeForm(initial={'entidade': entidade}, instance=(self.model.objects.get(pk=pk)) if pk else None))
+
+        return {
+            **super().template_keys(**kwargs),
+            'pkresponsabilidade': pk,
+            'formr': formr,
+        }
+
+    def delete(self, request, **kwargs):
+        item = self.model.objects.get(pk=kwargs.get('pkdelete', None))
+        entidade = item.entidade
+        if item:
+            item.delete()
+        return redirect(*('entidade-editar', entidade.pk,))
 
 
 def get_atividades(self, pk):
