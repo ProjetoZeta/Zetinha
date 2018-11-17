@@ -281,7 +281,7 @@ label{
     margin-bottom: 0px;
 }
 
-.form-group.required .control-label:after {
+.required .control-label:after {
     content: "*";
     color: red;
 }

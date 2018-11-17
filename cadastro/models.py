@@ -146,11 +146,11 @@ class Entidade(models.Model):
     esfera_administrativa = models.CharField('Esfera', choices=ESFERA_ADMINISTRATIVA, default='1', max_length=1)
     ic_ativo = models.BooleanField('Ativo', default=True)
 
-    banco = models.CharField('Banco', max_length=128, choices=Bolsista.COD_BANCO, default='001')
-    agencia = models.CharField('Agência', max_length=32)
-    tipo_conta = models.CharField('Tipo de Conta', max_length=1, choices=Bolsista.TIPO_CONTA, default='2')
-    conta = models.CharField('Conta', max_length=32)
-    praca_pagamento = models.CharField('Praça de Pagamento', max_length=128)
+    banco = models.CharField('Banco', max_length=128, choices=Bolsista.COD_BANCO, default='001', blank=True)
+    agencia = models.CharField('Agência', max_length=32, blank=True)
+    tipo_conta = models.CharField('Tipo de Conta', max_length=1, choices=Bolsista.TIPO_CONTA, default='2', blank=True)
+    conta = models.CharField('Conta', max_length=32, blank=True)
+    praca_pagamento = models.CharField('Praça de Pagamento', max_length=128, blank=True)
 
     def __str__(self):
         return "{} - {}".format(self.nome)

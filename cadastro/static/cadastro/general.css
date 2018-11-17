@@ -12,7 +12,7 @@ label{
         .form-group {
             margin-bottom: 0px;
         }
-
+        
         .required .control-label:after {
             content: "*";
             color: red;
