@@ -31,14 +31,22 @@ class ResponsavelList(GenericView):
             'createurl': 'responsavel-criar',
         }
 
+class Responsabilidade(MainView):
+
+    model = ResponsabilidadeModel
+
 class Entidade(MainView):
+
+    def dispatch(self, request, *args, **kwargs):
+        self.add_child_view(Responsabilidade())
+        return super().dispatch(request, *args, **kwargs)
 
     model = EntidadeModel
     template_name = 'cadastro/entidade.html'
 
     def template_keys(self, *args, **kwargs):
         return {
-            'content_title': 'Responsáveis',
+            'content_title': 'Entidade',
             'createurl': 'responsavel-criar',
         }
 

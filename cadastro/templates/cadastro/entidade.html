@@ -19,7 +19,7 @@
   <script type="text/javascript">
       
         $(document).ready(function () {
-            $('#modal-responsabilidade').modal({% if formr.errors %}'show'{% else %}''{% endif %});
+            $('#modal-responsabilidade').modal({% if formresponsabilidade.errors %}'show'{% else %}''{% endif %});
         });
 
   </script>
@@ -29,7 +29,7 @@
 {% block content %}
     <div class="col-md-12">
 
-        {% if formentidade.errors or formr.errors %}
+        {% if formentidade.errors or formresponsabilidade.errors %}
 
             <div class="alert alert-danger">
               <strong><a data-toggle="collapse" href="#errors-form" role="button" aria-expanded="false" aria-controls="errors-form">Erros</a> no formulário!</strong> Verifique os campos e tente novamente
@@ -38,13 +38,13 @@
             <div class="collapse multi-collapse alert alert-warning" id="errors-form">
               <div class="card card-body">
                 {{ formentidade.errors }}
-                {{ formr.errors }}
+                {{ formresponsabilidade.errors }}
               </div>
             </div>
 
         {% endif %}
 
-        <form class="form-horizontal" role="form" method="POST" action="{% if pk %} {% url 'entidade-editar' pk %} {% else %}{% url 'entidade-criar' %}{% endif %}">
+        <form class="form-horizontal" role="form" method="POST" action="{% if pkentidade %} {% url 'entidade-editar' pkentidade %} {% else %}{% url 'entidade-criar' %}{% endif %}">
                 {% csrf_token %}
 
             <fieldset class="well the-fieldset">
@@ -201,7 +201,7 @@
 
             <legend class="the-legend">Responsáveis</legend>
 
-            <button class="btn btn-info" data-toggle="modal" data-target="#modal-responsabilidade" {% if pk and pk %}{% else %} disabled {% endif %}><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#modal-responsabilidade" {% if pkentidade %}{% else %} disabled {% endif %}><i class="fa fa-plus" aria-hidden="true"></i></button>
                                 
             <br/><br/>
 
@@ -209,8 +209,8 @@
 
                 <thead>
                 <tr>
-                    {% for item in formr.preview %}
-                        <th>{% verbose formr.instance item %}</th>
+                    {% for item in formresponsabilidade.preview %}
+                        <th>{% verbose formresponsabilidade.instance item %}</th>
                     {% endfor %}
                     <th>Ações</th>
                 </tr>
@@ -219,7 +219,7 @@
                 <tbody>
                 {% for item in reponsabilidades %}
                     <tr class="odd gradeX">
-                        {% for field in formr.preview %}
+                        {% for field in formresponsabilidade.preview %}
                             {% with item|getattr:field as value %}
                                 <td>
                                     {% if value|is_bool %}
@@ -263,36 +263,36 @@
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">{% if 'responsabilidade-entidade-editar' in url %}Modificar{% else %}
-                                Criar{% endif %} {% class_verbose formr.instance %}</h4>
+                                Criar{% endif %} {% class_verbose formresponsabilidade.instance %}</h4>
                         </div>
                         <div class="modal-body">
                             <form action="{% if pkresponsabilidade %}{% url 'responsabilidade-entidade-editar' pk pkresponsabilidade %} {% else %} {% url 'responsabilidade-entidade-criar' pk %} {% endif %}" method="post" class="form">
 
                                 {% csrf_token %}
 
-                                {{ formr.entidade }}
+                                {{ formresponsabilidade.entidade }}
 
-                                <div class="form-group row required {% if formr.responsavel.errors %}{{ 'has-error' }}{% endif %}">
+                                <div class="form-group row required {% if formresponsabilidade.responsavel.errors %}{{ 'has-error' }}{% endif %}">
                                     <label for="inputValue" class="col-md-2 control-label">Responsável:</label>
                                     <div class="col-md-10">
-                                        {{ formr.responsavel }}
-                                        <div class="help-block">{{ formr.responsavel.errors }}</div>
+                                        {{ formresponsabilidade.responsavel }}
+                                        <div class="help-block">{{ formresponsabilidade.responsavel.errors }}</div>
                                     </div>
                                 </div>
 
-                                <div class="form-group row required {% if formr.cargo.errors %}{{ 'has-error' }}{% endif %}">
+                                <div class="form-group row required {% if formresponsabilidade.cargo.errors %}{{ 'has-error' }}{% endif %}">
                                     <label for="inputValue" class="col-md-2 control-label">Cargo:</label>
                                     <div class="col-md-10">
-                                        {{ formr.cargo }}
-                                        <div class="help-block">{{ formr.cargo.errors }}</div>
+                                        {{ formresponsabilidade.cargo }}
+                                        <div class="help-block">{{ formresponsabilidade.cargo.errors }}</div>
                                     </div>
                                 </div>
 
-                                <div class="form-group row required {% if formr.ic_ativo.errors %}{{ 'has-error' }}{% endif %}">
+                                <div class="form-group row required {% if formresponsabilidade.ic_ativo.errors %}{{ 'has-error' }}{% endif %}">
                                     <label for="inputValue" class="col-md-2 control-label">Ativo:</label>
                                     <div class="col-md-1">
-                                        {{ formr.ic_ativo }}
-                                        <div class="help-block">{{ formr.ic_ativo.errors }}</div>
+                                        {{ formresponsabilidade.ic_ativo }}
+                                        <div class="help-block">{{ formresponsabilidade.ic_ativo.errors }}</div>
                                     </div>
                                 </div>
 

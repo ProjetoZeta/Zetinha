@@ -23,8 +23,8 @@ class MainView(View):
 
         if child_target:
             return child.dispatch(request, *args, **kwargs)
-        elif not self.pkalias in [*kwargs]:
-            return "erro aki"
+        #elif not self.pkalias in [*kwargs]:
+        #    return "erro aki"
 
         if request.method.lower() in self.http_method_names:
             handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
@@ -41,7 +41,10 @@ class MainView(View):
         form_initial = {parent_view_model_name: kwargs.get(self.parent.pkalias, None)} if parent_view_model_name else None
         model_instance = self.model.objects.get(pk=pk) if pk else None          
 
-        form = self.form(initial=form_initial, instance=model_instance) 
+        if kwargs.get('form{}'.format(self.class_name.lower()), None):
+            form = kwargs.get('form{}'.format(self.class_name.lower()), None)
+        else:
+            form = self.form(initial=form_initial, instance=model_instance)
 
         tuple_template_keys = []
 
@@ -62,6 +65,7 @@ class MainView(View):
             **(dict(tuple_template_keys)),
             'form{}'.format(self.class_name.lower()): form,
             'set{}'.format(self.class_name.lower()): self.model.objects.all(),
+            'pk{}'.format(self.class_name.lower()): pk,
             **self.template_keys(request, *args, **kwargs)
         }
 
@@ -89,7 +93,9 @@ class MainView(View):
         if form.is_valid() and form.save():
             return redirect('entidade')
         else:
-            return self.get(request=request, **{'form{}'.format(child.class_name.lower()): form}, **kwargs)
+
+            print("safadon")
+            return self.get(request=request, **{'form{}'.format(self.class_name.lower()): form}, **kwargs)
 
     def delete(self, request, *args, **kwargs):
         item = self.model.objects.get(pk=kwargs.get('pkdelete', None))
@@ -108,7 +114,8 @@ class MainView(View):
     def add_child_view(self, view):
 
         view.parent = self
-        children.append(view)
+        view.template_name = self.template_name
+        self.children.append(view)
 
 
 class GenericView(View):
