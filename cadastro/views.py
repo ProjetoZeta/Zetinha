@@ -12,7 +12,7 @@ from django.views.generic import View
 
 from django.http import HttpResponse
 
-from .abstract_views import GenericView, FormView, MainView
+from .abstract_views import GenericView, FormView, MainView, ModalListView
 
 class Responsavel(FormView):
 
@@ -32,41 +32,27 @@ class ResponsavelList(GenericView):
             'createurl': 'responsavel-criar',
         }
 
-class Responsabilidade(MainView):
+class Responsabilidade(ModalListView):
 
     url_triggers = ['^responsabilidade.*$']
-
     model = ResponsabilidadeModel
+
+    success_redirect = 'entidade-editar'
+    delete_redirect = 'entidade-editar'
 
 class Entidade(MainView):
 
     children = [Responsabilidade]
-
     model = EntidadeModel
+
+    success_redirect = 'entidade-editar'
+    delete_redirect = 'entidade'
     template_name = 'cadastro/entidade.html'
 
     def template_keys(self, *args, **kwargs):
         return {
             'content_title': 'Entidade',
             'createurl': 'responsavel-criar',
-        }
-
-class Entidade3(FormView):
-    template_name = 'cadastro/entidade.html'
-
-    def template_keys(self, **kwargs):
-
-        pk = kwargs.get('pk', None)
-        entidade = EntidadeModel.objects.get(pk=pk) if pk else None
-
-        form = EntidadeForm(instance=EntidadeModel.objects.get(pk=pk)) if pk else EntidadeForm()
-
-        return {
-            **super().template_keys(**kwargs),
-            'content_title': 'Órgãos / Instituições',
-            'formr': ResponsabilidadeForm(initial={'entidade': entidade}) if pk else ResponsabilidadeForm(),
-            'responsabilidades': ResponsabilidadeModel.objects.filter(entidade=entidade) if entidade else [],
-            'form': form,
         }
 
 class EntidadeList(GenericView):
