@@ -253,7 +253,7 @@
         </fieldset>
 
 
-        {% if pk %}
+        {% if pkentidade %}
             <div id="modal-responsabilidade" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     {% with request.resolver_match.url_name as url %}
@@ -266,7 +266,7 @@
                                 Criar{% endif %} {% class_verbose formresponsabilidade.instance %}</h4>
                         </div>
                         <div class="modal-body">
-                            <form action="{% if pkresponsabilidade %}{% url 'responsabilidade-entidade-editar' pk pkresponsabilidade %} {% else %} {% url 'responsabilidade-entidade-criar' pk %} {% endif %}" method="post" class="form">
+                            <form action="{% if pkresponsabilidade %}{% url 'responsabilidade-entidade-editar' pkentidade pkresponsabilidade %} {% else %} {% url 'responsabilidade-entidade-criar' pkentidade %} {% endif %}" method="post" class="form">
 
                                 {% csrf_token %}
 

@@ -184,7 +184,7 @@ class EmpregoForm(BaseForm):
 
 class ResponsabilidadeForm(BaseFormControl):
     preview = ['responsavel', 'cargo']
-    entidade = forms.ModelChoiceField(queryset=Projeto.objects.all(), widget=forms.HiddenInput())
+    entidade = forms.ModelChoiceField(queryset=Entidade.objects.all(), widget=forms.HiddenInput())
 
     responsavel = forms.ModelChoiceField(queryset=Responsavel.objects.filter(ic_ativo=True), empty_label=BaseFormControl.empty_m)
     cargo = forms.ModelChoiceField(queryset=Emprego.objects.filter(tipo=Emprego.CARGO), empty_label=BaseFormControl.empty_m)

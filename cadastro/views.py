@@ -15,6 +15,7 @@ from django.http import HttpResponse
 from .abstract_views import GenericView, FormView, MainView
 
 class Responsavel(FormView):
+
     template_name = 'cadastro/responsavel.html'
 
 class ResponsavelList(GenericView):
@@ -33,13 +34,13 @@ class ResponsavelList(GenericView):
 
 class Responsabilidade(MainView):
 
+    url_triggers = ['^responsabilidade.*$']
+
     model = ResponsabilidadeModel
 
 class Entidade(MainView):
 
-    def dispatch(self, request, *args, **kwargs):
-        self.add_child_view(Responsabilidade())
-        return super().dispatch(request, *args, **kwargs)
+    children = [Responsabilidade]
 
     model = EntidadeModel
     template_name = 'cadastro/entidade.html'
@@ -435,7 +436,7 @@ class AtividadeMeta(MetaProjeto):
             item.delete()
         return redirect(*('meta-proj-editar', kwargs.get('pk', None), meta.pk,))
 
-class Responsabilidade(Entidade):
+class Responsabilidade2(Entidade):
 
     model = ResponsabilidadeModel
     template_name = 'cadastro/entidade.html'
