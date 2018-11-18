@@ -33,6 +33,10 @@ class MainView(View):
         #elif not self.pkalias in [*kwargs]:
         #    return "erro aki"
 
+        pkdelete = kwargs.get('pkdelete', None)
+        if pkdelete:
+            return self.delete(request=request, *args, **kwargs)
+
         if request.method.lower() in self.http_method_names:
             handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
         else:        
@@ -45,7 +49,9 @@ class MainView(View):
         parent_view_model_name = self.parent.class_name.lower() if self.parent else None
         pk = kwargs.get(self.pkalias, None)
 
-        form_initial = {parent_view_model_name: kwargs.get(self.parent.pkalias, None)} if parent_view_model_name else None
+        parent_pk = kwargs.get(self.parent.pkalias, None) if self.parent else None
+
+        parent_reference = {parent_view_model_name: parent_pk} if parent_view_model_name and parent_pk else None
         model_instance = self.model.objects.get(pk=pk) if pk else None          
 
         passed_form_error = kwargs.get('form{}'.format(self.class_name.lower()), None)
@@ -53,7 +59,10 @@ class MainView(View):
         if passed_form_error:
             form = passed_form_error
         else:
-            form = self.form(initial=form_initial, instance=model_instance)
+            form = self.form(initial=parent_reference, instance=model_instance)
+
+
+        model_set = self.model.objects.filter(**parent_reference) if parent_reference else self.model.objects.all()
 
         children_tuple_template_keys = []
 
@@ -75,7 +84,7 @@ class MainView(View):
             **parent_template_keys,
             **(dict(children_tuple_template_keys)),
             'form{}'.format(self.class_name.lower()): form,
-            'set{}'.format(self.class_name.lower()): self.model.objects.all(),
+            'set{}'.format(self.class_name.lower()): model_set,
             'pk{}'.format(self.class_name.lower()): pk,
             **self.template_keys(request, *args, **kwargs)
         }
@@ -85,13 +94,9 @@ class MainView(View):
 
     def get(self, request, *args, **kwargs):
 
-        pkdelete = kwargs.get('pkdelete', None)
-        if pkdelete:
-            return self.delete(request=request, **kwargs)
-        else:
-            return render(request, self.template_name, {
-                **self.fetch_template_keys(request, *args, **kwargs)
-            })
+        return render(request, self.template_name, {
+            **self.fetch_template_keys(request, *args, **kwargs)
+        })
 
     def post(self, request, *args, **kwargs):
 

@@ -11,8 +11,8 @@ urlpatterns = [
     url(r'^entidade/(?P<pkdelete>[0-9]+)/remover$', views.Entidade.as_view(), name='entidade-remover'),
 
     url(r'^entidade/(?P<pkentidade>[0-9]+)/responsabilidade/novo$', views.Entidade.as_view(), name='responsabilidade-entidade-criar'),
-    url(r'^entidade/(?P<pkentidade>[0-9]+)/responsabilidade/(?P<pkreponsabilidade>[0-9]+)/editar$', views.Entidade.as_view(), name='responsabilidade-entidade-editar'),
-    url(r'^entidade/(?P<pkentidade>[0-9]+)/responsabilidade/(?P<pkreponsabilidade>[0-9]+)/remover$', views.Entidade.as_view(), name='responsabilidade-entidade-remover'),
+    url(r'^entidade/(?P<pkentidade>[0-9]+)/responsabilidade/(?P<pkresponsabilidade>[0-9]+)/editar$', views.Entidade.as_view(), name='responsabilidade-entidade-editar'),
+    url(r'^entidade/(?P<pkentidade>[0-9]+)/responsabilidade/(?P<pkdelete>[0-9]+)/remover$', views.Entidade.as_view(), name='responsabilidade-entidade-remover'),
 
     url(r'^emprego$', views.Emprego.as_view(), name='emprego'),
     url(r'^emprego/(?P<pk>[0-9]+)/editar$', views.Emprego.as_view(), name='emprego-editar'),
@@ -51,8 +51,8 @@ urlpatterns = [
     url(r'^projeto/(?P<pk>[0-9]+)/participante/(?P<pkparticipante>[0-9]+)/editar$', views.ParticipanteProjeto.as_view(), name='participante-proj-editar'),
     url(r'^projeto/(?P<pk>[0-9]+)/participante/(?P<pkdelete>[0-9]+)/remover$', views.ParticipanteProjeto.as_view(), name='participante-remover'),
 
-    url(r'projeto/(?P<pk>[0-9]+)/anexo/upload', views.AnexoProjeto.as_view(), name='anexo-proj-upload'),
-    url(r'projeto/anexo/(?P<pkdelete>[0-9]+)/remover', views.AnexoProjeto.as_view(), name='anexo-proj-remover'),
+    url(r'^projeto/(?P<pk>[0-9]+)/anexo/upload', views.AnexoProjeto.as_view(), name='anexo-proj-upload'),
+    url(r'^projeto/anexo/(?P<pkdelete>[0-9]+)/remover', views.AnexoProjeto.as_view(), name='anexo-proj-remover'),
 
     url(r'^projeto/(?P<pk>[0-9]+)/meta/novo$', views.MetaProjeto.as_view(), name='meta-proj-criar'),
     url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/editar$', views.MetaProjeto.as_view(), name='meta-proj-editar'),

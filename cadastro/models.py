@@ -328,7 +328,7 @@ class Responsabilidade(models.Model):
     ic_ativo = models.BooleanField('Ativo', default=True)
 
     def __str__(self):
-        return "{} como {}".format(responsavel.nome, cargo.nome)
+        return "{} como {}".format(self.responsavel, self.cargo)
 
 
 
