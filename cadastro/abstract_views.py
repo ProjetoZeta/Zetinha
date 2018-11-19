@@ -25,6 +25,7 @@ class MainView(View):
     setalias = None
     pkalias = None
     form = None
+    parent_field_name = None
 
     def __init__(self, **kwargs):
 
@@ -65,12 +66,14 @@ class MainView(View):
 
     def fetch_template_keys(self, request, *args, **kwargs):
 
-        parent_view_model_name = self.parent.class_name.lower() if self.parent else None
         pk = kwargs.get(self.pkalias, None)
+
+        if not getattr(self, 'parent_field_name', None):
+            self.parent_field_name = self.parent.class_name.lower() if self.parent else None
 
         parent_pk = kwargs.get(self.parent.pkalias, None) if self.parent else None
 
-        parent_reference = {parent_view_model_name: parent_pk} if parent_view_model_name and parent_pk else None
+        parent_reference = {self.parent_field_name: parent_pk} if self.parent_field_name and parent_pk else None
         model_instance = self.model.objects.get(pk=pk) if pk else None          
 
         passed_form_error = kwargs.get(self.formalias, None)
@@ -207,6 +210,10 @@ class ModalListViewStaticAliases(ModalListView):
     formalias = 'form'
     setalias = 'data'
     pkalias = 'pk'
+
+
+class RelatedForm:
+    pass
 
 
 
