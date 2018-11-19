@@ -32,10 +32,10 @@ class UsuarioChangeForm(UserChangeForm):
         model = Usuario
 
 class UsuarioForm(BaseForm):
-    preview = ['email', 'no_completo', 'ic_ativo', 'ic_bolsista']
+    preview = ['email', 'username', 'no_completo', 'ic_ativo', 'ic_bolsista']
     class Meta:
         model = Usuario
-        fields = ['email', 'no_completo', 'ic_ativo', 'ic_bolsista']
+        fields = ['email', 'username', 'no_completo', 'ic_ativo', 'ic_bolsista']
 
 class EntidadeForm(BaseFormControl):
     preview = ['nome', 'ic_ativo', 'cnpj']
