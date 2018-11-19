@@ -14,6 +14,8 @@ from django.http import HttpResponse
 
 from .abstract_views import GenericView, FormView, MainView, ModalListView, MainViewStaticAliases, ModalListViewStaticAliases
 
+from django.contrib import messages
+
 class Responsavel(MainView):
 
     model = ResponsavelModel
@@ -195,116 +197,108 @@ class BolsistaList(MainViewStaticAliases):
             'createurl': 'bolsista-criar',
         }
 
+class Documento(ModalListView):
 
-class Bolsista(FormView):
+    model = DocumentoModel
+
+    url_triggers = ['^.*arquivo-bolsista$']
+
+    formalias = 'formf'
+    setalias = 'documents'
+
+    success_redirect = 'bolsista-editar'
+    delete_redirect = 'bolsista-editar'
+
+class EmprestimoEquipamento(ModalListView):
+
+    model = EmprestimoEquipamentoModel
+
+    url_triggers = ['^.*equipamento-bolsista$']
+
+    formalias = 'forme'
+    setalias = 'emprestimos'
+
+    success_redirect = 'bolsista-editar'
+    delete_redirect = 'bolsista-editar'
+
+
+class Bolsista(MainViewStaticAliases):
+
+    children = [Documento, EmprestimoEquipamento]
+
+    model = BolsistaModel
 
     template_name = 'cadastro/bolsista.html'
 
-    def post(self, request, **kwargs):
+    success_redirect = 'bolsista-editar'
+    delete_redirect = 'bolsista'
 
-        pk = kwargs.get(self.pk_alias, None)
-
-        bolsista = self.model.objects.get(pk=pk) if pk else None
-
-        participantes = ParticipanteModel.objects.filter(bolsista=bolsista, ic_ativo=True) if pk else None
-
-        last_participante = participantes.latest('id') if participantes else None
-
-        formp = ParticipanteBolsistaForm(request.POST,instance=last_participante)
-        form = self.form(request.POST, instance=(bolsista if bolsista else None))
-
-        if form.is_valid():
-            b = form.save()
-            datap = formp.data.copy()
-            datap['bolsista'] = b.pk
-            formp.data = datap
-            if formp.is_valid():
-                formp.save()
-                return redirect(*('bolsista-editar', b.pk,))
-            else:
-                print(formp.errors)
-                return self.get(request=request, form=form, formp=formp, pk=b.pk)
-        else:
-            return self.get(request=request, form=form, formp=formp, **kwargs)
-
-    def template_keys(self, **kwargs):
+    def template_keys(self, *args, **kwargs):
 
         pk = kwargs.get('pk', None)
-
         bolsista = BolsistaModel.objects.get(pk=pk) if pk else None
-
-        documento_form = DocumentoForm(initial={'bolsista': bolsista}) if pk else DocumentoForm()
-        documento_form.fields['bolsista'].widget = forms.HiddenInput() if pk else documento_form.fields['bolsista'].widget
-
-        emprestimo_form = EmprestimoEquipamentoForm(initial={'bolsista': bolsista}) if pk else EmprestimoEquipamentoForm()
-        emprestimo_form.fields['bolsista'].widget = forms.HiddenInput() if pk else documento_form.fields['bolsista'].widget
-
         participantes = ParticipanteModel.objects.filter(bolsista=bolsista, ic_ativo=True) if pk else None
-
         last_participante = participantes.latest('id') if participantes else None
-
         formp = kwargs.get('formp', None)
-
         if formp is None:
             formp = ParticipanteBolsistaForm(initial=({'bolsista': bolsista} if pk else None), instance=last_participante)
 
         return {
-            **super().template_keys(**kwargs),
             'content_title': 'Cadastrar Bolsistas / Pequisadores',
-            'formf': documento_form,
-            'forme': emprestimo_form,
             'formp': formp,
-            'documents': DocumentoModel.objects.filter(bolsista=bolsista if pk else None),
-            'emprestimos': EmprestimoEquipamentoModel.objects.filter(bolsista=bolsista if pk else None),
-            'pk': pk
         }
 
-class BolsistaMedia(Bolsista):
+    def post(self, request, *args, **kwargs):
 
-    def post(self, request, **kwargs):
-        bolsista = BolsistaModel.objects.get(pk=request.POST.get('bolsista', None))
-        form = self.form(request.POST, request.FILES)
+        pk = kwargs.get(self.pkalias, None)
+        model_instance = self.model.objects.get(pk=pk) if pk else None 
+
+        bolsista = BolsistaModel.objects.get(pk=pk) if pk else None
+
+        participantes = ParticipanteModel.objects.filter(bolsista=bolsista, ic_ativo=True) if pk else None
+        last_participante = participantes.latest('id') if participantes else None
+        formp = ParticipanteBolsistaForm(request.POST,instance=last_participante)
+
+        form = self.form(request.POST, request.FILES, instance=model_instance)
         if form.is_valid():
-            form.save()
-            return redirect(*('bolsista-editar', bolsista.pk,))
+            self.saved_model = form.save()
+            messages.success(request, "Objeto {} {} com sucesso".format(self.saved_model.__class__.__name__, ('atualizado' if pk else 'salvo')))
+            
+            saved_model = form.save()
+            datap = formp.data.copy()
+            datap['bolsista'] = saved_model.pk
+            formp.data = datap
+            if formp.is_valid():
+                a = formp.save()
+                messages.success(request, "Objeto {} salvo com sucesso".format(a.__class__.__name__))
+            else:
+                messages.warning(request, "'Especificação da Bolsa' inválido")
+                return self.get(request=request, formp=formp, **{self.formalias: form}, **kwargs)
+            return self.fetch_success_redirect(request, *args, **kwargs)
         else:
-            #form = BolsistaForm(instance=BolsistaModel.objects.get(pk=bolsista.pk)) if bolsista.pk else BolsistaForm()
-            return self.get(request=request, form=form)
+            messages.warning(request, "Formulário inválido")
+            return self.get(request=request, formp=formp, **{self.formalias: form}, **kwargs)
 
-    def delete(self, request, **kwargs):
-        item = self.model.objects.get(pk=kwargs.get('pkdelete', None))
-        bolsista = item.bolsista
-        if item:
-            item.delete()
-        return redirect(*('bolsista-editar', bolsista.pk,))
-
-
-class BolsistaDocumento(BolsistaMedia):
-
-    model = DocumentoModel
-
-class BolsistaEmprestimoEquipamento(BolsistaMedia):
-
-    model = EmprestimoEquipamentoModel
-
-class Documento(GenericView):
+class Documento(MainViewStaticAliases):
 
     template_name = 'cadastro/file-viewer.html'
 
-    def template_keys(self, **kwargs):
+    model = DocumentoModel
+
+    def template_keys(self, *args, **kwargs):
         return {
-            **super().template_keys(**kwargs),
             'content_title': 'Preview de arquivo',
             'document': DocumentoModel.objects.get(pk=kwargs.get('pk', None))
         }
 
-class EmprestimoEquipamento(GenericView):
+class EmprestimoEquipamento(MainViewStaticAliases):
 
     template_name = 'cadastro/emprestimo-viewer.html'
 
-    def template_keys(self, **kwargs):
+    model = EmprestimoEquipamentoModel
+
+    def template_keys(self, *args, **kwargs):
         return {
-            **super().template_keys(**kwargs),
             'content_title': 'Empréstimo de Equipamento',
             'emprestimo': EmprestimoEquipamentoModel.objects.get(pk=kwargs.get('pk', None))
         }

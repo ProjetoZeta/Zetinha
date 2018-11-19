@@ -427,7 +427,7 @@
 
                     {% for document in documents %}
                         <tr>
-                            <td class="col-sm-2"><a href="{% url 'remover-arquivo-bolsista' document.pk %}" class="delete-file-x" onclick="return confirm('Tem certeza? O arquivo será apagado permanentemente')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                            <td class="col-sm-2"><a href="{% url 'remover-arquivo-bolsista' pk document.pk %}" class="delete-file-x" onclick="return confirm('Tem certeza? O arquivo será apagado permanentemente')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
                             <td class="col-sm-2"><i class="fa fa-file-word-o file-icon" aria-hidden="true"></i></td>
                             <td class="col-sm-8"><a target="_blank" href="{% url 'show-document' document.pk %}" class="open-file">{{ document.filename }}</a></td>
                             <!--<td><img src="{{ document.arquivo.url }}" alt=""></td>-->
@@ -456,7 +456,7 @@
 
                     {% for emprestimo in emprestimos %}
                         <tr>
-                            <td class="col-sm-2"><a href="{% url 'remover-emprestimo-equipamento-bolsista' emprestimo.pk %}" class="delete-file-x" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                            <td class="col-sm-2"><a href="{% url 'remover-emprestimo-equipamento-bolsista' pk emprestimo.pk %}" class="delete-file-x" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
                             <td class="col-sm-2"><i class="fa fa-handshake-o" aria-hidden="true"></i></td>
                             <td class="col-sm-8"><a target="_blank" href="{% url 'show-emprestimoequipamento' emprestimo.pk %}" class="open-file">{{ emprestimo }}</a></td>
                             <!--<td><img src="{{ emprestimo.arquivo.url }}" alt=""></td>-->
@@ -512,68 +512,72 @@
     </div>
 
 
-    <!-- Modal -->
-    <div id="modal-file" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+    {% if pk %}
+        <!-- Modal -->
+        <div id="modal-file" class="modal fade" role="dialog">
+            <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Juntar Documento</h4>
-                </div>
-                <div class="modal-body">
-                    <form action="{% url 'upload-arquivo-bolsista' %}" method="post" class="form" enctype="multipart/form-data">
-                        {% csrf_token %}
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Juntar Documento</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'upload-arquivo-bolsista' pk %}" method="post" class="form" enctype="multipart/form-data">
+                            {% csrf_token %}
 
-                        {% bootstrap_form formf %}
-                        <br>
-                        {% buttons %}
-                            <button type="submit" class="btn btn-primary">
-                                {% bootstrap_icon "star" %} Salvar
-                            </button>
-                        {% endbuttons %}
-                    </form>
+                            {% bootstrap_form formf %}
+                            <br>
+                            {% buttons %}
+                                <button type="submit" class="btn btn-primary">
+                                    {% bootstrap_icon "star" %} Salvar
+                                </button>
+                            {% endbuttons %}
+                        </form>
 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                </div>
+
             </div>
-
         </div>
-    </div>
+    {% endif %}
 
-    <!-- Modal -->
-    <div id="modal-emprestimo" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+    {% if pk %}
+        <!-- Modal -->
+        <div id="modal-emprestimo" class="modal fade" role="dialog">
+            <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Emprestimo de Equipamento</h4>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Emprestimo de Equipamento</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'emprestimo-equipamento-bolsista' pk %}" method="post" class="form" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            {% bootstrap_form forme %}
+                            <br>
+                            {% buttons %}
+                                <button type="submit" class="btn btn-primary">
+                                    {% bootstrap_icon "star" %} Salvar
+                                </button>
+                            {% endbuttons %}
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <form action="{% url 'emprestimo-equipamento-bolsista' %}" method="post" class="form" enctype="multipart/form-data">
-                        {% csrf_token %}
 
-                        {% bootstrap_form forme %}
-                        <br>
-                        {% buttons %}
-                            <button type="submit" class="btn btn-primary">
-                                {% bootstrap_icon "star" %} Salvar
-                            </button>
-                        {% endbuttons %}
-                    </form>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                </div>
             </div>
-
         </div>
-    </div>
+    {% endif %}
 
 {% endblock %}
