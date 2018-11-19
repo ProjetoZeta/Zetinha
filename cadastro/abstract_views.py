@@ -45,8 +45,6 @@ class MainView(View):
 
         if child_target:
             return child_target.dispatch(request, *args, **kwargs)
-        #elif not self.pkalias in [*kwargs]:
-        #    return "erro aki"
 
         pkdelete = kwargs.get('pkdelete', None)
         if pkdelete:
@@ -210,13 +208,22 @@ class ModalListViewStaticAliases(ModalListView):
 class RelatedForm:
 
     form = None
+    parent = None
     parent_field_name = None
     formalias = None
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
 
+        self.model = self.form().instance.__class__
+        self.class_name = self.model.__name__
 
+    def fetch_form(self, parent_pk = None):
+
+        parent_instance = parent.model.objects.get(pk=parent_pk) if parent_pk else None
+        dataset = self.model.objects.filter(bolsista=bolsista, ic_ativo=True) if parent_pk else None
+        last_record = dataset.latest('id') if dataset else None
+
+        return self.form(initial=({self.parent_field_name: parent_instance} if parent_pk else None), instance=last_record)
 
 class GenericView(View):
 
