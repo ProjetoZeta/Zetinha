@@ -12,21 +12,26 @@ class Usuario(AbstractUser):
     email = models.EmailField('Email', unique=True)
 
     class Meta:
-        verbose_name = "usuário"
+        verbose_name = "Usuário"
 
 class Responsavel(models.Model):
-    no_responsavel = models.CharField('Nome', max_length=32, unique=True)
+    nome = models.CharField('Nome', max_length=32)
+    email = models.EmailField('Email', unique=True)
     cpf = models.IntegerField('CPF')
-    telefone = models.IntegerField('Telefone')
-    co_matricula = models.CharField('Matrícula', max_length=32, unique=True)
+    data_nascimento = models.CharField('Data de Nascimento', max_length=32)
+    rg = models.CharField('RG', max_length=16)
+    orgao_expedidor = models.CharField('Órgão Expedidor', max_length=32)
+    telefone = models.CharField('Telefone', max_length=32, blank=True)
+    celular = models.CharField('Celular', max_length=32, blank=True)
+    matricula = models.CharField('Matrícula', max_length=32, unique=True, blank=True)
     ic_ativo = models.BooleanField('Ativo', default=True)
 
     class Meta:
-        verbose_name_plural = "responsáveis"
-        verbose_name = "responsável"
+        verbose_name_plural = "Responsáveis"
+        verbose_name = "Responsável"
 
     def __str__(self):
-        return self.no_responsavel
+        return self.nome
 
 
 

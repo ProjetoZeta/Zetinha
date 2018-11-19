@@ -20,7 +20,7 @@ urlpatterns = [
 
     url(r'^responsavel$', views.ResponsavelList.as_view(), name='responsavel'),
     url(r'^responsavel/novo$', views.Responsavel.as_view(), name='responsavel-criar'),
-    url(r'^responsavel/(?P<pk>[0-9]+)/editar$', views.Responsavel.as_view(), name='responsavel-editar'),
+    url(r'^responsavel/(?P<pkresponsavel>[0-9]+)/editar$', views.Responsavel.as_view(), name='responsavel-editar'),
     url(r'^responsavel/(?P<pkdelete>[0-9]+)/remover$', views.Responsavel.as_view(), name='responsavel-remover'),
 
     url(r'^usuario$', views.Usuario.as_view(), name='usuario'),

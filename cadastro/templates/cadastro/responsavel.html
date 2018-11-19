@@ -3,8 +3,15 @@
 {% load bootstrap3 %}
 
 {% load static %}
+{% load verbose %}
+{% load getattr %}
+{% load meta %}
+{% load form_tools %}
 
 {% block css %}
+
+    <link href="{% static 'cadastro/general.css' %}" rel="stylesheet">
+
 {% endblock %}
 
 {% block js %}
@@ -14,7 +21,7 @@
 
     <div class="col-md-12">
 
-        {% if form.errors %}
+        {% if formresponsavel.errors %}
 
             <div class="alert alert-danger">
               <strong><a data-toggle="collapse" href="#errors-form" role="button" aria-expanded="false" aria-controls="errors-form">Erros</a> no formulário!</strong> Verifique os campos e tente novamente
@@ -22,17 +29,106 @@
 
             <div class="collapse multi-collapse alert alert-warning" id="errors-form">
               <div class="card card-body">
-                {{ form.errors }}
+                {{ formresponsavel.errors }}
               </div>
             </div>
 
         {% endif %}
 
-        <form class="form-horizontal" role="form" method="POST" action="{% if pk %} {% url 'responsavel-editar' pk %} {% else %}{% url 'responsavel-criar' %}{% endif %}">
+        <form class="form-horizontal" role="form" method="POST" action="{% if pkresponsavel %} {% url 'responsavel-editar' pkresponsavel %} {% else %}{% url 'responsavel-criar' %}{% endif %}">
 
             {% csrf_token %}
 
-            {% bootstrap_form form %}
+            <fieldset class="well the-fieldset">
+
+                <legend class="the-legend">Dados</legend>
+
+                <div class="form-group {% if formresponsavel.nome.errors %}{{ 'has-error' }}{% endif %} {% if formresponsavel|is_required:formresponsavel.nome.name %} required {% endif %}">
+                    <label for="name" class="control-label col-sm-2">{{ formresponsavel.nome.label }}:</label>
+                    <div class="col-sm-10">
+                        {{ formresponsavel.nome }}
+                        <div class="help-block">{{ formresponsavel.nome.errors }}</div>
+                    </div>
+                </div>
+
+                <div class="form-group {% if formresponsavel.email.errors %}{{ 'has-error' }}{% endif %} {% if formresponsavel|is_required:formresponsavel.email.name %} required {% endif %}">
+                    <label for="name" class="control-label col-sm-2">{{ formresponsavel.email.label }}:</label>
+                    <div class="col-sm-10">
+                        {{ formresponsavel.email }}
+                        <div class="help-block">{{ formresponsavel.email.errors }}</div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="{% if formresponsavel.cpf.errors %}{{ 'has-error' }}{% endif %} {% if formresponsavel|is_required:formresponsavel.cpf.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ formresponsavel.cpf.label }}:</label>
+                        <div class="col-md-4">
+                            {{ formresponsavel.cpf }}
+                            <div class="help-block">{{ formresponsavel.cpf.errors }}</div>
+                        </div>
+                    </div>
+                    <div class="{% if formresponsavel.data_nascimento.errors %}{{ 'has-error' }}{% endif %} {% if formresponsavel|is_required:formresponsavel.data_nascimento.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ formresponsavel.data_nascimento.label }}:</label>
+                        <div class="col-md-4">
+                            {{ formresponsavel.data_nascimento }}
+                            <div class="help-block">{{ formresponsavel.data_nascimento.errors }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="{% if formresponsavel.rg.errors %}{{ 'has-error' }}{% endif %} {% if formresponsavel|is_required:formresponsavel.rg.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ formresponsavel.rg.label }}:</label>
+                        <div class="col-md-4">
+                            {{ formresponsavel.rg }}
+                            <div class="help-block">{{ formresponsavel.rg.errors }}</div>
+                        </div>
+                    </div>
+                    <div class="{% if formresponsavel.orgao_expedidor.errors %}{{ 'has-error' }}{% endif %} {% if formresponsavel|is_required:formresponsavel.orgao_expedidor.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ formresponsavel.orgao_expedidor.label }}:</label>
+                        <div class="col-md-4">
+                            {{ formresponsavel.orgao_expedidor }}
+                            <div class="help-block">{{ formresponsavel.orgao_expedidor.errors }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="{% if formresponsavel.telefone.errors %}{{ 'has-error' }}{% endif %} {% if formresponsavel|is_required:formresponsavel.telefone.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ formresponsavel.telefone.label }}:</label>
+                        <div class="col-md-4">
+                            {{ formresponsavel.telefone }}
+                            <div class="help-block">{{ formresponsavel.telefone.errors }}</div>
+                        </div>
+                    </div>
+                    <div class="{% if formresponsavel.celular.errors %}{{ 'has-error' }}{% endif %} {% if formresponsavel|is_required:formresponsavel.celular.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ formresponsavel.celular.label }}:</label>
+                        <div class="col-md-4">
+                            {{ formresponsavel.celular }}
+                            <div class="help-block">{{ formresponsavel.celular.errors }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="{% if formresponsavel.matricula.errors %}{{ 'has-error' }}{% endif %} {% if formresponsavel|is_required:formresponsavel.matricula.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">{{ formresponsavel.matricula.label }}:</label>
+                        <div class="col-md-4">
+                            {{ formresponsavel.matricula }}
+                            <div class="help-block">{{ formresponsavel.matricula.errors }}</div>
+                        </div>
+                    </div>
+                    <div class="{% if formresponsavel.ic_ativo.errors %}{{ 'has-error' }}{% endif %} {% if formresponsavel|is_required:formresponsavel.ic_ativo.name %} required {% endif %}">
+                        <label for="inputKey" class="col-md-5 control-label">{{ formresponsavel.ic_ativo.label }}:</label>
+                        <div class="col-md-1">
+                            {{ formresponsavel.ic_ativo }}
+                            <div class="help-block">{{ formresponsavel.ic_ativo.errors }}</div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </fieldset>
         
             <div id="form-buttons">
                 <button class="btn btn-info">Salvar</button>

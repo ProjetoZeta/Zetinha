@@ -43,8 +43,8 @@ class EntidadeForm(BaseFormControl):
         model = Entidade
         fields = get_fields(model)
 
-class ResponsavelForm(BaseForm):
-    preview = ['no_responsavel', 'ic_ativo', 'co_matricula']
+class ResponsavelForm(BaseFormControl):
+    preview = ['nome', 'ic_ativo', 'matricula']
     class Meta:
         model = Responsavel
         fields = get_fields(model)

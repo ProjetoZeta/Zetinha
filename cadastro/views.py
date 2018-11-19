@@ -14,9 +14,20 @@ from django.http import HttpResponse
 
 from .abstract_views import GenericView, FormView, MainView, ModalListView
 
-class Responsavel(FormView):
+class Responsavel(MainView):
 
     template_name = 'cadastro/responsavel.html'
+
+    model = ResponsavelModel
+
+    success_redirect = 'responsavel-editar'
+    delete_redirect = 'responsavel'
+    template_name = 'cadastro/responsavel.html'
+
+    def template_keys(self, *args, **kwargs):
+        return {
+            'content_title': 'Manter Responsáveis',
+        }
 
 class ResponsavelList(GenericView):
 
