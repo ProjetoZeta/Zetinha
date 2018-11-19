@@ -581,7 +581,7 @@
 
 					                    {% for document in attachments %}
 					                        <tr>
-					                            <td class="col-sm-2"><a href="{% url 'anexo-proj-remover' document.pk %}" class="delete-file-x" onclick="return confirm('Tem certeza? O arquivo será apagado permanentemente')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+					                            <td class="col-sm-2"><a href="{% url 'anexo-proj-remover' pk document.pk %}" class="delete-file-x" onclick="return confirm('Tem certeza? O arquivo será apagado permanentemente')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
 					                            <td class="col-sm-2"><i class="fa fa-file-word-o file-icon" aria-hidden="true"></i></td>
 					                            <td class="col-sm-8"><a target="_blank" href="{{ document.arquivo.url }}" class="open-file" download>{{ document.filename }}</a></td>
 					                            <!--<td><img src="{{ document.arquivo.url }}" alt=""></td>-->

@@ -12,6 +12,11 @@ import re
 
 class MainView(View):
 
+    '''
+    Conceito: Abstração para views com padronização de parâmetros e hierarquia de views
+
+    '''
+
     children = []
     url_triggers = []
     parent = None
@@ -19,12 +24,15 @@ class MainView(View):
     formalias = None
     setalias = None
     pkalias = None
+    form = None
 
     def __init__(self, **kwargs):
 
         self.class_name = self.model.__name__
-        self.form = getattr(importlib.import_module('cadastro.forms'), self.class_name+'Form')
         self.bind_children = self.get_children()
+
+        if not getattr(self, 'form', None):
+            self.form = getattr(importlib.import_module('cadastro.forms'), self.class_name+'Form')
         if not getattr(self, 'pkalias', None):
             self.pkalias = 'pk{}'.format(self.class_name.lower())
         if not getattr(self, 'formalias', None):
@@ -34,6 +42,7 @@ class MainView(View):
 
         super().__init__(**kwargs)
 
+    #Parte deste código deste dispatch foi copiado do código original do Django. Adapatado para comportar hierarquia entre views
     def dispatch(self, request, *args, **kwargs):
 
         child_target = self.get_target_child(request, *args, **kwargs)
@@ -70,7 +79,6 @@ class MainView(View):
             form = passed_form_error
         else:
             form = self.form(initial=parent_reference, instance=model_instance)
-
 
         model_set = self.model.objects.filter(**parent_reference) if parent_reference else self.model.objects.all()
 
@@ -112,7 +120,7 @@ class MainView(View):
         pk = kwargs.get(self.pkalias, None)
         model_instance = self.model.objects.get(pk=pk) if pk else None 
 
-        form = self.form(request.POST, instance=model_instance)
+        form = self.form(request.POST, request.FILES, instance=model_instance)
         if form.is_valid():
             self.saved_model = form.save()
             messages.success(request, "Objeto {} {} com sucesso".format(self.saved_model.__class__.__name__, ('atualizado' if pk else 'salvo')))
@@ -121,10 +129,12 @@ class MainView(View):
             messages.warning(request, "Formulário inválido")
             return self.get(request=request, **{self.formalias: form}, **kwargs)
 
-    def delete(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs): 
         item = self.model.objects.get(pk=kwargs.get('pkdelete', None))
+        item_object_name = item.__class__.__name__
         if item:
             item.delete()
+            messages.success(request, "Um registro de {} removido com sucesso".format(item_object_name))
         return self.fetch_delete_redirect(request, *args, **kwargs)
 
     def get_target_child(self, request, *args, **kwargs):
@@ -132,11 +142,18 @@ class MainView(View):
         current_url = resolve(request.path_info).url_name
 
         for child in self.bind_children:
-            url_triggers_regex = [re.compile(url) for url in child.url_triggers]
-            if any(url_regex.match(current_url) for url_regex in url_triggers_regex):
+            if child.match_url(current_url):
                 return child
-
         return None
+
+    def match_url(self, url):
+
+        url_triggers_regex = [re.compile(u) for u in self.url_triggers]
+        if any(url_regex.match(url) for url_regex in url_triggers_regex):
+            return True
+        for child in self.bind_children:
+            return child.match_url(url)
+        return False
 
     def set_template_name(self, template_name):
         self.template_name = template_name
@@ -178,6 +195,18 @@ class ModalListView(MainView):
         pks_branch_list = self.get_pks_parents(request, *args, **kwargs)
         pks_branch_list.pop()
         return redirect(self.success_redirect, *(tuple(pks_branch_list)))
+
+class MainViewStaticAliases(MainView):
+
+    formalias = 'form'
+    setalias = 'data'
+    pkalias = 'pk'
+
+class ModalListViewStaticAliases(ModalListView):
+
+    formalias = 'form'
+    setalias = 'data'
+    pkalias = 'pk'
 
 
 

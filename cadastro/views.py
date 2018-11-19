@@ -12,7 +12,7 @@ from django.views.generic import View
 
 from django.http import HttpResponse
 
-from .abstract_views import GenericView, FormView, MainView, ModalListView
+from .abstract_views import GenericView, FormView, MainView, ModalListView, MainViewStaticAliases, ModalListViewStaticAliases
 
 class Responsavel(MainView):
 
@@ -27,14 +27,10 @@ class Responsavel(MainView):
             'content_title': 'Manter Responsáveis',
         }
 
-class ResponsavelList(MainView):
+class ResponsavelList(MainViewStaticAliases):
 
     model = ResponsavelModel
     template_name = 'cadastro/crud-nomodal.html'
-
-    formalias = 'form'
-    setalias = 'data'
-    pkalias = 'pk'
 
     def template_keys(self, *args, **kwargs):
         return {
@@ -65,21 +61,18 @@ class Entidade(MainView):
             'createurl': 'responsavel-criar',
         }
 
-class EntidadeList(GenericView):
+class EntidadeList(MainViewStaticAliases):
 
     model = EntidadeModel
     template_name = 'cadastro/crud-nomodal.html'
 
-    def template_keys(self, **kwargs):
+    def template_keys(self, *args, **kwargs):
         return {
-            **super().template_keys(**kwargs),
             'content_title': 'Órgão/Instituição',
-            'data': self.model.objects.all(),
-            'form': EntidadeForm(),
             'createurl': 'entidade-criar',
         }
 
-class Usuario(ModalListView):
+class Usuario(ModalListViewStaticAliases):
 
     template_name = 'cadastro/crud-withmodal.html'
 
@@ -87,16 +80,13 @@ class Usuario(ModalListView):
 
     success_redirect = 'usuario'
     delete_redirect = 'usuario'
-    formalias = 'form'
-    setalias = 'data'
-    pkalias = 'pk'
 
     def template_keys(self, *args, **kwargs):
         return {
             'content_title': 'Manter Usuários',
         }
 
-class Emprego(ModalListView):
+class Emprego(ModalListViewStaticAliases):
 
     template_name = 'cadastro/crud-withmodal.html'
 
@@ -104,19 +94,107 @@ class Emprego(ModalListView):
 
     success_redirect = 'emprego'
     delete_redirect = 'emprego'
-    formalias = 'form'
-    setalias = 'data'
-    pkalias = 'pk'
 
     def template_keys(self, *args, **kwargs):
         return {
             'content_title': 'Manter Funções/Cargos',
         }
 
-class ProjetoList(GenericView):
-    
+class ProjetoList(MainViewStaticAliases):
+
     model = ProjetoModel
-    template_name = 'cadastro/crud-projeto.html'
+    template_name = 'cadastro/crud-nomodal.html'
+
+    def template_keys(self, *args, **kwargs):
+        return {
+            'content_title': 'Projetos',
+            'createurl': 'projeto-criar',
+        }
+
+class ParticipanteProjeto(MainView):
+
+    model = ParticipanteModel
+    form = ParticipanteProjetoForm
+
+    url_triggers = ['^participante-proj-.*$', 'participante-remover']
+
+    formalias = 'formp'
+    setalias = 'datap'
+    pkalias = 'pkparticipante'
+
+    success_redirect = 'participante-proj-editar'
+    delete_redirect = 'participante-proj-criar'
+
+class AnexoProjeto(ModalListView):
+
+    model = AnexoModel
+
+    url_triggers = ['^anexo-proj-.*$']
+
+    formalias = 'formfp'
+    setalias = 'attachments'
+
+    success_redirect = 'anexo-proj-upload'
+    delete_redirect = 'anexo-proj-upload'
+
+
+class AtividadeProjeto(ModalListView):
+
+    model = AtividadeModel
+
+    url_triggers = ['^atividade-meta-proj-.*$']
+
+    formalias = 'forma'
+    setalias = 'atividades'
+
+    success_redirect = 'meta-proj-editar'
+    delete_redirect = 'meta-proj-editar'
+
+
+class MetaProjeto(MainView):
+
+    model = MetaModel
+
+    children = [AtividadeProjeto]
+
+    url_triggers = ['^meta-proj-.*$']
+
+    formalias = 'formm'
+    setalias = 'metas'
+
+    success_redirect = 'meta-proj-editar'
+    delete_redirect = 'meta-proj-criar'
+
+    template_name = 'cadastro/projeto.html'
+
+
+class Projeto(MainViewStaticAliases):
+
+    children = [ParticipanteProjeto, AnexoProjeto, MetaProjeto]
+
+    model = ProjetoModel
+
+    success_redirect = 'projeto-editar'
+    delete_redirect = 'projeto'
+
+    template_name = 'cadastro/projeto.html'
+
+    def template_keys(self, *args, **kwargs):
+        return {
+            'content_title': 'Manter Projeto'
+        }
+
+class BolsistaList(MainViewStaticAliases):
+
+    model = BolsistaModel
+    template_name = 'cadastro/crud-nomodal.html'
+
+    def template_keys(self, *args, **kwargs):
+        return {
+            'content_title': 'Bolsistas',
+            'createurl': 'bolsista-criar',
+        }
+
 
 class Bolsista(FormView):
 
@@ -181,21 +259,6 @@ class Bolsista(FormView):
             'pk': pk
         }
 
-class BolsistaList(GenericView):
-
-    model = BolsistaModel
-    template_name = 'cadastro/crud-nomodal.html'
-
-    def template_keys(self, **kwargs):
-        return {
-            **super().template_keys(**kwargs),
-            'content_title': 'Bolsistas',
-            'data': self.model.objects.all(),
-            'form': BolsistaForm(),
-            'createurl': 'bolsista-criar',
-        }
-
-
 class BolsistaMedia(Bolsista):
 
     def post(self, request, **kwargs):
@@ -245,265 +308,6 @@ class EmprestimoEquipamento(GenericView):
             'content_title': 'Empréstimo de Equipamento',
             'emprestimo': EmprestimoEquipamentoModel.objects.get(pk=kwargs.get('pk', None))
         }
-
-class ProjetoList(GenericView):
-
-    model = ProjetoModel
-    template_name = 'cadastro/crud-projeto.html'
-
-    def template_keys(self, **kwargs):
-        return {
-            **super().template_keys(**kwargs),
-            'content_title': 'Projetos',
-            'data': self.model.objects.all(),
-            'form': ProjetoForm()
-        }
-
-
-class Projeto(FormView):
-
-    template_name = 'cadastro/projeto.html'
-
-    def dispatch(self, request, **kwargs):
-
-        self.delete_redirect = ('projeto',)
-        
-        return super().dispatch(request, **kwargs)
-
-    def post(self, request, **kwargs):
-
-        pk = kwargs.get(self.pk_alias, None)
-
-        form = self.form(request.POST, instance=self.model.objects.get(pk=pk)) if pk else self.form(request.POST)
-        v = form.is_valid()
-        nprojeto = form.save() if v else None
-        if nprojeto:
-                return redirect(*('projeto-editar', nprojeto.pk,))
-        else:
-            return self.get(request=request, form=form, **kwargs)
-
-    def template_keys(self, **kwargs):
-        pk = kwargs.get('pk', None)
-
-        form = kwargs.get('form', None)
-        if form is None:
-            form = ProjetoForm(instance=ProjetoModel.objects.get(pk=pk)) if pk else ProjetoForm()
-        if pk:
-            form.is_edit = True
-
-        return {
-            'content_title': 'Manter Projeto',
-            'form': form,
-            'formp': ParticipanteProjetoForm(initial={'projeto': ProjetoModel.objects.get(pk=pk)}) if pk else ParticipanteProjetoForm(),
-            'pk': kwargs.get('pk', None),
-            'formm': MetaForm(initial={'projeto': ProjetoModel.objects.get(pk=pk)}) if pk else MetaForm(),
-            'formfp': AnexoForm(initial={'projeto': ProjetoModel.objects.get(pk=pk)}) if pk else AnexoForm(),
-            'datap': ParticipanteModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else [],
-            'attachments': AnexoModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else [],
-            'metas': MetaModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else [],
-            'forma': AtividadeForm(),
-        }
-
-class ParticipanteProjeto(Projeto):
-
-    def dispatch(self, request, **kwargs):
-
-        self.delete_redirect = ('participante-proj-criar', kwargs.get('pk', None),)
-        
-        return super().dispatch(request, **kwargs)
-
-    model = ParticipanteModel
-    template_name = 'cadastro/projeto.html'
-    pk_alias = 'pkparticipante'
-
-    def post(self, request, **kwargs):
-
-        pk = kwargs.get(self.pk_alias, None)
-        projetopk = kwargs.get('pk', None)
-
-        initial = {'projeto': ProjetoModel.objects.get(pk=projetopk)} if projetopk else ParticipanteProjetoForm()
-
-        form = ParticipanteProjetoForm(request.POST, initial=initial, instance=self.model.objects.get(pk=pk)) if pk else ParticipanteProjetoForm(request.POST)
-
-        v = form.is_valid()
-        nparticipante = form.save() if v else None
-        if nparticipante:
-            return redirect(*('participante-proj-editar', nparticipante.projeto.pk, nparticipante.pk,))
-        else:
-            return self.get(request=request, formp=form, **kwargs)
-
-    def template_keys(self, **kwargs):
-
-        pk = kwargs.get('pk', None)
-        pkparticipante = kwargs.get('pkparticipante', None)
-
-        fp = kwargs.get('formp', None)
-        formp = fp if fp else (ParticipanteProjetoForm(instance=self.model.objects.get(pk=pkparticipante)) if pkparticipante else ParticipanteProjetoForm())
-
-        return {
-            **super().template_keys(**kwargs),
-            'pkparticipante': kwargs.get('pkparticipante', None),
-            'formp': formp,
-            'datap': ParticipanteModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else []
-        }
-
-class AnexoProjeto(Projeto):
-
-    model = AnexoModel
-
-    def post(self, request, **kwargs):
-        projeto = ProjetoModel.objects.get(pk=kwargs.get('pk', None))
-        form = self.form(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect(*('anexo-proj-upload', kwargs.get('pk', None),))
-        else:
-            return self.get(request=request, formfp=form, **kwargs)
-
-    def delete(self, request, **kwargs):
-        item = self.model.objects.get(pk=kwargs.get('pkdelete', None))
-        projeto = item.projeto
-        if item:
-            item.delete()
-        return redirect(*('anexo-proj-upload', projeto.pk))
-
-class MetaProjeto(Projeto):
-
-    model = MetaModel
-    template_name = 'cadastro/projeto.html'
-    pk_alias = 'pkmeta'
-
-    def post(self, request, **kwargs):
-
-        pk = kwargs.get(self.pk_alias, None)
-        projetopk = kwargs.get('pk', None)
-
-        initial = {'projeto': ProjetoModel.objects.get(pk=projetopk)} if projetopk else MetaForm()
-
-        form = MetaForm(request.POST, initial=initial, instance=self.model.objects.get(pk=pk)) if pk else MetaForm(request.POST)
-
-        v = form.is_valid()
-        nmeta = form.save() if v else None
-        if nmeta:
-            return redirect(*('meta-proj-editar', nmeta.projeto.pk, nmeta.pk,))
-        else:
-            return self.get(request=request, formm=form, **kwargs)
-
-    def template_keys(self, **kwargs):
-
-        pk = kwargs.get('pk', None)
-        pkmeta = kwargs.get('pkmeta', None)
-        projeto = ProjetoModel.objects.get(pk=pk)
-
-        fp = kwargs.get('formm', None)
-        formm = fp if fp else (MetaForm(initial={'projeto': projeto}, instance=(MetaModel.objects.get(pk=pkmeta)) if pkmeta else None))
-
-        return {
-            **super().template_keys(**kwargs),
-            'pkmeta': kwargs.get('pkmeta', None),
-            'formm': formm,
-            'datap': MetaModel.objects.filter(projeto=ProjetoModel.objects.get(pk=pk)) if pk else [],
-            'atividades': AtividadeModel.objects.filter(meta=MetaModel.objects.get(pk=pkmeta)) if pkmeta else [],
-            'forma': AtividadeForm(initial={'meta': MetaModel.objects.get(pk=pkmeta)}) if pkmeta else AtividadeForm(),
-        }
-
-    def delete(self, request, **kwargs):
-        item = self.model.objects.get(pk=kwargs.get('pkdelete', None))
-        projeto = item.projeto
-        if item:
-            item.delete()
-        return redirect(*('meta-proj-criar', projeto.pk,))
-
-class AtividadeMeta(MetaProjeto):
-
-    model = AtividadeModel
-    template_name = 'cadastro/projeto.html'
-    pk_alias = 'pkatividade'
-
-    def post(self, request, **kwargs):
-
-        pk = kwargs.get(self.pk_alias, None)
-        pkmeta = kwargs.get('pkmeta', None)
-        projetopk = kwargs.get('pk', None)
-
-        initial = {'meta': MetaModel.objects.get(pk=pkmeta)} if pkmeta else AtividadeForm()
-
-        form = AtividadeForm(request.POST, initial=initial, instance=AtividadeModel.objects.get(pk=pk)) if pk else AtividadeForm(request.POST)
-
-        v = form.is_valid()
-        natividade = form.save() if v else None
-        if natividade:
-            return redirect(*('meta-proj-editar', natividade.meta.projeto.pk, natividade.meta.pk,))
-        else:
-            return self.get(request=request, formm=form, **kwargs)
-
-    def template_keys(self, **kwargs):
-
-        pk = kwargs.get('pk', None)
-        pkmeta = kwargs.get('pkmeta', None)
-        pkatividade = kwargs.get('pkatividade', None)
-        meta = MetaModel.objects.get(pk=pkmeta)
-
-        fp = kwargs.get('forma', None)
-        forma = fp if fp else (AtividadeForm(initial={'meta': meta}, instance=(self.model.objects.get(pk=pkatividade)) if pkatividade else None))
-
-        return {
-            **super().template_keys(**kwargs),
-            'pkatividade': pkatividade,
-            'forma': forma,
-        }
-
-    def delete(self, request, **kwargs):
-        item = self.model.objects.get(pk=kwargs.get('pkdelete', None))
-        meta = item.meta
-        if item:
-            item.delete()
-        return redirect(*('meta-proj-editar', kwargs.get('pk', None), meta.pk,))
-
-class Responsabilidade2(Entidade):
-
-    model = ResponsabilidadeModel
-    template_name = 'cadastro/entidade.html'
-    pk_alias = 'pkresponsabilidade'
-
-    def post(self, request, **kwargs):
-
-        pk = kwargs.get(self.pk_alias, None)
-        pkentidade = kwargs.get('pk', None)
-
-        initial = {'entidade': EntidadeModel.objects.get(pk=pkentidade)} if pkentidade else ResponsabilidadeForm()
-
-        form = ResponsabilidadeForm(request.POST, initial=initial, instance=ResponsabilidadeModel.objects.get(pk=pk)) if pk else ResponsabilidadeForm(request.POST)
-
-        v = form.is_valid()
-        nresponsabilidade = form.save() if v else None
-        if nresponsabilidade:
-            return redirect(*('entidade-editar',pkentidade,))
-        else:
-            return self.get(request=request, formr=form, **kwargs)
-
-    def template_keys(self, **kwargs):
-
-        pkentidade = kwargs.get('pk', None)
-        pk = kwargs.get(self.pk_alias, None)
-        entidade = EntidadeModel.objects.get(pk=pkentidade)
-
-        fp = kwargs.get('forma', None)
-        formr = fp if fp else (ResponsabilidadeForm(initial={'entidade': entidade}, instance=(self.model.objects.get(pk=pk)) if pk else None))
-
-        return {
-            **super().template_keys(**kwargs),
-            'pkresponsabilidade': pk,
-            'formr': formr,
-        }
-
-    def delete(self, request, **kwargs):
-        item = self.model.objects.get(pk=kwargs.get('pkdelete', None))
-        entidade = item.entidade
-        if item:
-            item.delete()
-        return redirect(*('entidade-editar', entidade.pk,))
-
 
 def get_atividades(self, pk):
     form = AtividadeSelect(pkmeta=pk)

@@ -144,7 +144,7 @@ class AtividadeForm(BaseFormControl):
 
     class Meta:
         model = Atividade
-        fields = get_fields(model, ignore=['bolsistas'])
+        fields = get_fields(model, ignore=['bolsistas', 'participantes'])
 
 class AnexoForm(BaseForm):
     preview = get_clean_fields(Anexo)
