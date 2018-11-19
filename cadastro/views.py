@@ -6,7 +6,7 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django import forms
 
-from .models import Responsabilidade as ResponsabilidadeModel, Responsavel as ResponsavelModel, Entidade as EntidadeModel, Usuario as UsuarioModel, Bolsista as BolsistaModel, Documento as DocumentoModel, EmprestimoEquipamento as EmprestimoEquipamentoModel, Projeto as ProjetoModel, Participante as ParticipanteModel, Meta as MetaModel, Atividade as AtividadeModel, Anexo as AnexoModel
+from .models import Emprego as EmpregoModel, Responsabilidade as ResponsabilidadeModel, Responsavel as ResponsavelModel, Entidade as EntidadeModel, Usuario as UsuarioModel, Bolsista as BolsistaModel, Documento as DocumentoModel, EmprestimoEquipamento as EmprestimoEquipamentoModel, Projeto as ProjetoModel, Participante as ParticipanteModel, Meta as MetaModel, Atividade as AtividadeModel, Anexo as AnexoModel
 from .forms import EntidadeForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm, ParticipanteProjetoForm, ParticipanteBolsistaForm, MetaForm, AtividadeForm, AnexoForm, AtividadeSelect, AtividadeBolsistaSelect, ResponsabilidadeForm
 from django.views.generic import View
 
@@ -16,30 +16,29 @@ from .abstract_views import GenericView, FormView, MainView, ModalListView
 
 class Responsavel(MainView):
 
-    template_name = 'cadastro/responsavel.html'
-
     model = ResponsavelModel
+    template_name = 'cadastro/responsavel.html'
 
     success_redirect = 'responsavel-editar'
     delete_redirect = 'responsavel'
-    template_name = 'cadastro/responsavel.html'
 
     def template_keys(self, *args, **kwargs):
         return {
             'content_title': 'Manter Responsáveis',
         }
 
-class ResponsavelList(GenericView):
+class ResponsavelList(MainView):
 
     model = ResponsavelModel
     template_name = 'cadastro/crud-nomodal.html'
 
-    def template_keys(self, **kwargs):
+    formalias = 'form'
+    setalias = 'data'
+    pkalias = 'pk'
+
+    def template_keys(self, *args, **kwargs):
         return {
-            **super().template_keys(**kwargs),
             'content_title': 'Responsáveis',
-            'data': self.model.objects.all(),
-            'form': ResponsavelForm(),
             'createurl': 'responsavel-criar',
         }
 
@@ -80,11 +79,39 @@ class EntidadeList(GenericView):
             'createurl': 'entidade-criar',
         }
 
-class Usuario(FormView):
+class Usuario(ModalListView):
+
     template_name = 'cadastro/crud-withmodal.html'
 
-class Emprego(FormView):
+    model = UsuarioModel
+
+    success_redirect = 'usuario'
+    delete_redirect = 'usuario'
+    formalias = 'form'
+    setalias = 'data'
+    pkalias = 'pk'
+
+    def template_keys(self, *args, **kwargs):
+        return {
+            'content_title': 'Manter Usuários',
+        }
+
+class Emprego(ModalListView):
+
     template_name = 'cadastro/crud-withmodal.html'
+
+    model = EmpregoModel
+
+    success_redirect = 'emprego'
+    delete_redirect = 'emprego'
+    formalias = 'form'
+    setalias = 'data'
+    pkalias = 'pk'
+
+    def template_keys(self, *args, **kwargs):
+        return {
+            'content_title': 'Manter Funções/Cargos',
+        }
 
 class ProjetoList(GenericView):
     

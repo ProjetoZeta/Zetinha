@@ -6,6 +6,8 @@ import importlib
 
 from django.urls import resolve
 
+from django.contrib import messages
+
 import re
 
 class MainView(View):
@@ -14,13 +16,21 @@ class MainView(View):
     url_triggers = []
     parent = None
     saved_model = None
+    formalias = None
+    setalias = None
+    pkalias = None
 
     def __init__(self, **kwargs):
 
         self.class_name = self.model.__name__
         self.form = getattr(importlib.import_module('cadastro.forms'), self.class_name+'Form')
-        self.pkalias = 'pk{}'.format(self.class_name.lower())
         self.bind_children = self.get_children()
+        if not getattr(self, 'pkalias', None):
+            self.pkalias = 'pk{}'.format(self.class_name.lower())
+        if not getattr(self, 'formalias', None):
+            self.formalias = "form{}".format(self.class_name.lower())
+        if not getattr(self, 'setalias', None):
+            self.setalias = "set{}".format(self.class_name.lower())
 
         super().__init__(**kwargs)
 
@@ -54,7 +64,7 @@ class MainView(View):
         parent_reference = {parent_view_model_name: parent_pk} if parent_view_model_name and parent_pk else None
         model_instance = self.model.objects.get(pk=pk) if pk else None          
 
-        passed_form_error = kwargs.get('form{}'.format(self.class_name.lower()), None)
+        passed_form_error = kwargs.get(self.formalias, None)
 
         if passed_form_error:
             form = passed_form_error
@@ -75,17 +85,17 @@ class MainView(View):
 
             form_child_initial = {self.class_name.lower(): model} if model else None
 
-            children_tuple_template_keys.append( ('form{}'.format(child.class_name.lower()), child.form(initial=form_child_initial), ) )
-            children_tuple_template_keys.append( ('set{}'.format(child.class_name.lower()), set_child, ) )
+            children_tuple_template_keys.append( (child.formalias, child.form(initial=form_child_initial), ) )
+            children_tuple_template_keys.append( (child.setalias, set_child, ) )
 
         parent_template_keys = self.parent.fetch_template_keys(request, *args, **kwargs) if self.parent else {}
 
         return {
             **parent_template_keys,
             **(dict(children_tuple_template_keys)),
-            'form{}'.format(self.class_name.lower()): form,
-            'set{}'.format(self.class_name.lower()): model_set,
-            'pk{}'.format(self.class_name.lower()): pk,
+            self.formalias: form,
+            self.setalias: model_set,
+            self.pkalias: pk,
             **self.template_keys(request, *args, **kwargs)
         }
 
@@ -105,10 +115,11 @@ class MainView(View):
         form = self.form(request.POST, instance=model_instance)
         if form.is_valid():
             self.saved_model = form.save()
-
+            messages.success(request, "Objeto {} {} com sucesso".format(self.saved_model.__class__.__name__, ('atualizado' if pk else 'salvo')))
             return self.fetch_success_redirect(request, *args, **kwargs)
         else:
-            return self.get(request=request, **{'form{}'.format(self.class_name.lower()): form}, **kwargs)
+            messages.warning(request, "Formulário inválido")
+            return self.get(request=request, **{self.formalias: form}, **kwargs)
 
     def delete(self, request, *args, **kwargs):
         item = self.model.objects.get(pk=kwargs.get('pkdelete', None))

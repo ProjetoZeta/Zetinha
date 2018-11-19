@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'templates/styles/basis-template.css' %}">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'templates/bootoast/bootoast.min.css' %}">
 
     {% block css %}
 
@@ -57,6 +58,35 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="{% static 'templates/bootoast/bootoast.min.js' %}"></script>
+
+        
+
+
+<script type="text/javascript">
+    
+
+
+
+    {% if messages %}
+        {% for message in messages %}
+
+            bootoast.toast({
+                message: '{{ message }}',
+                type: {% if message.tags %} '{{ message.tags }}' {% else %} 'info' {% endif %} ,
+                position: 'top',
+                icon: null,
+                timeout: 3,
+                animationDuration: 300,
+                dismissible: true
+            });
+
+        {% endfor %}
+    {% endif %}
+
+    
+
+</script>
 
 {% block js %}
 {% endblock %}
