@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django import forms
 
 from .models import Emprego as EmpregoModel, Responsabilidade as ResponsabilidadeModel, Responsavel as ResponsavelModel, Entidade as EntidadeModel, Usuario as UsuarioModel, Bolsista as BolsistaModel, Documento as DocumentoModel, EmprestimoEquipamento as EmprestimoEquipamentoModel, Projeto as ProjetoModel, Participante as ParticipanteModel, Meta as MetaModel, Atividade as AtividadeModel, Anexo as AnexoModel
-from .forms import EntidadeForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm, ParticipanteProjetoForm, ParticipanteBolsistaForm, MetaForm, AtividadeForm, AnexoForm, AtividadeSelect, AtividadeBolsistaSelect, ResponsabilidadeForm
+from .forms import EntidadeForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm, ParticipanteProjetoForm, ParticipanteBolsistaForm, MetaForm, AtividadeForm, AnexoForm, AtividadeSelect, AtividadeBolsistaSelect, ResponsabilidadeForm, EmpregoForm
 from django.views.generic import View
 
 from django.http import HttpResponse
@@ -18,7 +18,7 @@ from django.contrib import messages
 
 class Responsavel(MainView):
 
-    model = ResponsavelModel
+    form = ResponsavelForm
     template_name = 'cadastro/responsavel.html'
 
     success_redirect = 'responsavel-editar'
@@ -31,7 +31,7 @@ class Responsavel(MainView):
 
 class ResponsavelList(MainViewStaticAliases):
 
-    model = ResponsavelModel
+    form = ResponsavelForm
     template_name = 'cadastro/crud-nomodal.html'
 
     def template_keys(self, *args, **kwargs):
@@ -43,7 +43,7 @@ class ResponsavelList(MainViewStaticAliases):
 class Responsabilidade(ModalListView):
 
     url_triggers = ['^responsabilidade.*$']
-    model = ResponsabilidadeModel
+    form = ResponsabilidadeForm
 
     success_redirect = 'entidade-editar'
     delete_redirect = 'entidade-editar'
@@ -51,7 +51,7 @@ class Responsabilidade(ModalListView):
 class Entidade(MainView):
 
     children = [Responsabilidade]
-    model = EntidadeModel
+    form = EntidadeForm
 
     success_redirect = 'entidade-editar'
     delete_redirect = 'entidade'
@@ -65,7 +65,7 @@ class Entidade(MainView):
 
 class EntidadeList(MainViewStaticAliases):
 
-    model = EntidadeModel
+    form = EntidadeForm
     template_name = 'cadastro/crud-nomodal.html'
 
     def template_keys(self, *args, **kwargs):
@@ -78,7 +78,7 @@ class Usuario(ModalListViewStaticAliases):
 
     template_name = 'cadastro/crud-withmodal.html'
 
-    model = UsuarioModel
+    form = UsuarioForm
 
     success_redirect = 'usuario'
     delete_redirect = 'usuario'
@@ -92,7 +92,7 @@ class Emprego(ModalListViewStaticAliases):
 
     template_name = 'cadastro/crud-withmodal.html'
 
-    model = EmpregoModel
+    form = EmpregoForm
 
     success_redirect = 'emprego'
     delete_redirect = 'emprego'
@@ -104,7 +104,7 @@ class Emprego(ModalListViewStaticAliases):
 
 class ProjetoList(MainViewStaticAliases):
 
-    model = ProjetoModel
+    form = ProjetoForm
     template_name = 'cadastro/crud-nomodal.html'
 
     def template_keys(self, *args, **kwargs):
@@ -115,7 +115,6 @@ class ProjetoList(MainViewStaticAliases):
 
 class ParticipanteProjeto(MainView):
 
-    model = ParticipanteModel
     form = ParticipanteProjetoForm
 
     url_triggers = ['^participante-proj-.*$', 'participante-remover']
@@ -129,7 +128,7 @@ class ParticipanteProjeto(MainView):
 
 class AnexoProjeto(ModalListView):
 
-    model = AnexoModel
+    form = AnexoForm
 
     url_triggers = ['^anexo-proj-.*$']
 
@@ -142,7 +141,7 @@ class AnexoProjeto(ModalListView):
 
 class AtividadeProjeto(ModalListView):
 
-    model = AtividadeModel
+    form = AtividadeForm
 
     url_triggers = ['^atividade-meta-proj-.*$']
 
@@ -155,7 +154,7 @@ class AtividadeProjeto(ModalListView):
 
 class MetaProjeto(MainView):
 
-    model = MetaModel
+    form = MetaForm
 
     children = [AtividadeProjeto]
 
@@ -174,7 +173,7 @@ class Projeto(MainViewStaticAliases):
 
     children = [ParticipanteProjeto, AnexoProjeto, MetaProjeto]
 
-    model = ProjetoModel
+    form = ProjetoForm
 
     success_redirect = 'projeto-editar'
     delete_redirect = 'projeto'
@@ -188,7 +187,7 @@ class Projeto(MainViewStaticAliases):
 
 class BolsistaList(MainViewStaticAliases):
 
-    model = BolsistaModel
+    form = BolsistaForm
     template_name = 'cadastro/crud-nomodal.html'
 
     def template_keys(self, *args, **kwargs):
@@ -199,7 +198,7 @@ class BolsistaList(MainViewStaticAliases):
 
 class Documento(ModalListView):
 
-    model = DocumentoModel
+    form = DocumentoForm
 
     url_triggers = ['^.*arquivo-bolsista$']
 
@@ -211,7 +210,7 @@ class Documento(ModalListView):
 
 class EmprestimoEquipamento(ModalListView):
 
-    model = EmprestimoEquipamentoModel
+    form = EmprestimoEquipamentoForm
 
     url_triggers = ['^.*equipamento-bolsista$']
 
@@ -226,7 +225,7 @@ class Bolsista(MainViewStaticAliases):
 
     children = [Documento, EmprestimoEquipamento]
 
-    model = BolsistaModel
+    form = BolsistaForm
 
     template_name = 'cadastro/bolsista.html'
 
@@ -283,24 +282,24 @@ class Documento(MainViewStaticAliases):
 
     template_name = 'cadastro/file-viewer.html'
 
-    model = DocumentoModel
+    form = DocumentoForm
 
     def template_keys(self, *args, **kwargs):
         return {
             'content_title': 'Preview de arquivo',
-            'document': DocumentoModel.objects.get(pk=kwargs.get('pk', None))
+            'document': self.model.objects.get(pk=kwargs.get('pk', None))
         }
 
 class EmprestimoEquipamento(MainViewStaticAliases):
 
     template_name = 'cadastro/emprestimo-viewer.html'
 
-    model = EmprestimoEquipamentoModel
+    form = EmprestimoEquipamentoForm
 
     def template_keys(self, *args, **kwargs):
         return {
             'content_title': 'Empréstimo de Equipamento',
-            'emprestimo': EmprestimoEquipamentoModel.objects.get(pk=kwargs.get('pk', None))
+            'emprestimo': self.model.objects.get(pk=kwargs.get('pk', None))
         }
 
 def get_atividades(self, pk):

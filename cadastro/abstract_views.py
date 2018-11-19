@@ -16,7 +16,6 @@ class MainView(View):
     Conceito: Abstração para views com padronização de parâmetros e hierarquia de views
 
     '''
-
     children = []
     url_triggers = []
     parent = None
@@ -24,16 +23,12 @@ class MainView(View):
     formalias = None
     setalias = None
     pkalias = None
-    form = None
     parent_field_name = None
 
     def __init__(self, **kwargs):
-
+        self.model = self.form().instance.__class__
         self.class_name = self.model.__name__
         self.bind_children = self.get_children()
-
-        if not getattr(self, 'form', None):
-            self.form = getattr(importlib.import_module('cadastro.forms'), self.class_name+'Form')
         if not getattr(self, 'pkalias', None):
             self.pkalias = 'pk{}'.format(self.class_name.lower())
         if not getattr(self, 'formalias', None):
@@ -213,7 +208,13 @@ class ModalListViewStaticAliases(ModalListView):
 
 
 class RelatedForm:
-    pass
+
+    form = None
+    parent_field_name = None
+    formalias = None
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
 
 
