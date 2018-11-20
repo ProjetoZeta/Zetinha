@@ -17,6 +17,7 @@ class MainView(View):
 
     '''
     children = []
+    related = []
     url_triggers = []
     parent = None
     saved_model = None
@@ -29,6 +30,7 @@ class MainView(View):
         self.model = self.form().instance.__class__
         self.class_name = self.model.__name__
         self.bind_children = self.get_children()
+        self.bind_related = self.get_related()
         if not getattr(self, 'pkalias', None):
             self.pkalias = 'pk{}'.format(self.class_name.lower())
         if not getattr(self, 'formalias', None):
@@ -166,6 +168,13 @@ class MainView(View):
             b.append(child)
         return b
 
+    def get_related(self):
+        b = []
+        for class_related in self.related:
+            related.set_parent(self)
+            b.append(related)
+        return b
+
     def get_pks_parents(self, request, *args, **kwargs):
 
         pk = self.saved_model.pk if self.saved_model else kwargs.get(self.pkalias, None)
@@ -217,13 +226,16 @@ class RelatedForm:
         self.model = self.form().instance.__class__
         self.class_name = self.model.__name__
 
-    def fetch_form(self, parent_pk = None):
+    def fetch_form(self, parent_pk=None, data=None, files=None):
 
-        parent_instance = parent.model.objects.get(pk=parent_pk) if parent_pk else None
+        parent_instance = self.parent.model.objects.get(pk=parent_pk) if parent_pk else None
         dataset = self.model.objects.filter(bolsista=bolsista, ic_ativo=True) if parent_pk else None
         last_record = dataset.latest('id') if dataset else None
+        form_instance = self.form(data=data, files=files, initial=({self.parent_field_name: parent_instance} if parent_pk else None), instance=last_record)
+        return self.form_instance
 
-        return self.form(initial=({self.parent_field_name: parent_instance} if parent_pk else None), instance=last_record)
+    def set_parent(self, parent):
+        self.parent = parent
 
 class GenericView(View):
 
