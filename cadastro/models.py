@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from datetime import datetime
 from django.conf import settings
-from .validators import cpf, lattes_url
+from .validators import cpf, cnpj, lattes_url
 
 
 class Usuario(AbstractUser):
@@ -18,7 +18,7 @@ class Usuario(AbstractUser):
 class Responsavel(models.Model):
     nome = models.CharField('Nome', max_length=32)
     email = models.EmailField('Email', unique=True)
-    cpf = models.IntegerField('CPF')
+    cpf = models.CharField('CPF', max_length=14, unique=True, validators=[cpf])
     data_nascimento = models.CharField('Data de Nascimento', max_length=32)
     rg = models.CharField('RG', max_length=16)
     orgao_expedidor = models.CharField('Órgão Expedidor', max_length=32)
@@ -143,7 +143,7 @@ class Entidade(models.Model):
 
     nome = models.CharField('Nome Órgão/Entidade', max_length=128)
     email = models.CharField('Email', max_length=64)
-    cnpj = models.CharField('CNPJ', max_length=64, unique=True)
+    cnpj = models.CharField('CNPJ', max_length=64,validators=[cnpj], unique=True)
     endereco = models.CharField('Endereço', max_length=256, unique=True)
     cidade = models.CharField('Cidade', max_length=64)
     cep = models.CharField('CEP', max_length=16)
