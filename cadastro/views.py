@@ -246,63 +246,6 @@ class Bolsista(MainViewStaticAliases):
             'content_title': 'Cadastrar Bolsistas / Pequisadores',
         }
 
-class Bolsista2(MainViewStaticAliases):
-
-    children = [Documento, EmprestimoEquipamento]
-
-    form = BolsistaForm
-
-    template_name = 'cadastro/bolsista.html'
-
-    success_redirect = 'bolsista-editar'
-    delete_redirect = 'bolsista'
-
-    def template_keys(self, *args, **kwargs):
-
-        pk = kwargs.get('pk', None)
-        bolsista = BolsistaModel.objects.get(pk=pk) if pk else None
-        participantes = ParticipanteModel.objects.filter(bolsista=bolsista, ic_ativo=True) if pk else None
-        last_participante = participantes.latest('id') if participantes else None
-        formp = kwargs.get('formp', None)
-        if formp is None:
-            formp = ParticipanteBolsistaForm(initial=({'bolsista': bolsista} if pk else None), instance=last_participante)
-
-        return {
-            'content_title': 'Cadastrar Bolsistas / Pequisadores',
-            'formp': formp,
-        }
-
-    def post(self, request, *args, **kwargs):
-
-        pk = kwargs.get(self.pkalias, None)
-        model_instance = self.model.objects.get(pk=pk) if pk else None 
-
-        bolsista = BolsistaModel.objects.get(pk=pk) if pk else None
-
-        participantes = ParticipanteModel.objects.filter(bolsista=bolsista, ic_ativo=True) if pk else None
-        last_participante = participantes.latest('id') if participantes else None
-        formp = ParticipanteBolsistaForm(request.POST,instance=last_participante)
-
-        form = self.form(request.POST, request.FILES, instance=model_instance)
-        if form.is_valid():
-            self.saved_model = form.save()
-            messages.success(request, "Objeto {} {} com sucesso".format(self.saved_model.__class__.__name__, ('atualizado' if pk else 'salvo')))
-            
-            saved_model = form.save()
-            datap = formp.data.copy()
-            datap['bolsista'] = saved_model.pk
-            formp.data = datap
-            if formp.is_valid():
-                a = formp.save()
-                messages.success(request, "Objeto {} salvo com sucesso".format(a.__class__.__name__))
-            else:
-                messages.warning(request, "'Especificação da Bolsa' inválido")
-                return self.get(request=request, formp=formp, **{self.formalias: form}, **kwargs)
-            return self.fetch_success_redirect(request, *args, **kwargs)
-        else:
-            messages.warning(request, "Formulário inválido")
-            return self.get(request=request, formp=formp, **{self.formalias: form}, **kwargs)
-
 class Documento(MainViewStaticAliases):
 
     template_name = 'cadastro/file-viewer.html'

@@ -127,7 +127,6 @@ class MainView(View):
             related.form_instance.fields[related.parent_field_name].required = False
             if not related.form_instance.is_valid():
                 related_error = True
-            related.form_instance.fields[related.parent_field_name].required = True
             tuple_forms_list.append( (related.formalias, related.form_instance, ) )
 
         if not related_error and form.is_valid():
@@ -135,12 +134,11 @@ class MainView(View):
             messages.success(request, "Objeto {} {} com sucesso".format(self.saved_model.__class__.__name__, ('atualizado' if pk else 'salvo')))
                 
             for related in self.bind_related:
-                setattr(related.form_instance, related.parent_field_name, self.saved_model.pk)
-                f = related.form_instance.data.copy()
-                f[related.parent_field_name] = str(self.saved_model.pk)
-                related.form_instance.data = f
-                related.form_instance.is_valid()
-                related.form_instance.save()
+                post = request.POST.copy()
+                post[related.parent_field_name] = str(self.saved_model.pk)
+                related_form = related.fetch(parent_instance=self.saved_model, data=post, files=request.FILES)
+                related_form.is_valid()
+                r = related_form.save()
                 messages.success(request, "Objeto {} {} com sucesso".format(r.__class__.__name__,  'gravado'))
 
             return self.fetch_success_redirect(request, *args, **kwargs)
