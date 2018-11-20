@@ -12,7 +12,7 @@ from django.views.generic import View
 
 from django.http import HttpResponse
 
-from .abstract_views import GenericView, FormView, MainView, ModalListView, MainViewStaticAliases, ModalListViewStaticAliases, RelatedFormView
+from .abstract_views import MainView, ModalListView, MainViewStaticAliases, ModalListViewStaticAliases, RelatedFormView
 
 from django.contrib import messages
 

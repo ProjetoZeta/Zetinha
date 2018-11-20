@@ -10,6 +10,32 @@ from django.contrib import messages
 
 import re
 
+
+class RelatedFormView:
+
+    form = None
+    parent = None
+    parent_field_name = None
+    formalias = None
+    form_instance = None
+    parent_pk = None
+
+    def __init__(self, **kwargs):
+
+        self.model = self.form().instance.__class__
+
+    def fetch(self, parent_instance=None, data=None, files=None):
+        if not getattr(self, 'parent_field_name', None):
+            self.parent_field_name = self.parent.class_name.lower() 
+        dataset = self.model.objects.filter(**{self.parent_field_name: parent_instance}) if parent_instance else None
+        last_record = dataset.latest('id') if dataset else None
+        self.form_instance = self.form(data=data, files=files, instance=last_record, initial={self.parent_field_name: parent_instance})
+        return self.form_instance
+
+    def set_parent(self, parent):
+        self.parent = parent
+
+
 class MainView(View):
 
     '''
@@ -230,102 +256,3 @@ class ModalListViewStaticAliases(ModalListView):
     formalias = 'form'
     setalias = 'data'
     pkalias = 'pk'
-
-
-class RelatedFormView:
-
-    form = None
-    parent = None
-    parent_field_name = None
-    formalias = None
-    form_instance = None
-    parent_pk = None
-
-    def __init__(self, **kwargs):
-
-        self.model = self.form().instance.__class__
-
-    def fetch(self, parent_instance=None, data=None, files=None):
-        if not getattr(self, 'parent_field_name', None):
-            self.parent_field_name = self.parent.class_name.lower() 
-        dataset = self.model.objects.filter(**{self.parent_field_name: parent_instance}) if parent_instance else None
-        last_record = dataset.latest('id') if dataset else None
-        self.form_instance = self.form(data=data, files=files, instance=last_record, initial={self.parent_field_name: parent_instance})
-        return self.form_instance
-
-    def set_parent(self, parent):
-        self.parent = parent
-
-class GenericView(View):
-
-    pk_alias = 'pk'
-
-    def __init__(self, **kwargs):
-
-        super().__init__(**kwargs)
-
-        if not hasattr(self, 'model'):
-            self.model = getattr(importlib.import_module('cadastro.models'), self.__class__.__name__)
-        
-        self.class_name = self.model.__name__
-
-        self.save_redirect = (self.class_name.lower(),)
-
-        self.delete_redirect = (self.class_name.lower(),)
-
-
-    def delete(self, request, **kwargs):
-        item = self.model.objects.get(pk=kwargs.get('pkdelete', None))
-        if item:
-            item.delete()
-        return redirect(*self.delete_redirect)
-
-    def get(self, request, **kwargs):
-
-        pkdelete = kwargs.get('pkdelete', None)
-        if pkdelete:
-            return self.delete(request=request, **kwargs)
-        else:
-            return render(request, self.template_name, {
-                **self.template_keys(**kwargs)
-            })
-
-    def template_keys(self, **kwargs):
-        return {}
-
-class FormView(GenericView):
-
-    def __init__(self, **kwargs):
-
-        super().__init__(**kwargs)
-
-        self.form = getattr(importlib.import_module('cadastro.forms'), self.class_name+'Form')
-
-    def post(self, request, **kwargs):
-
-        pk = kwargs.get(self.pk_alias, None)
-
-        form = self.form(request.POST, instance=self.model.objects.get(pk=pk)) if pk else self.form(request.POST)
-        if form.is_valid() and form.save():
-            return redirect(*self.save_redirect)
-        else:
-            return self.get(request=request, form=form, **kwargs)
-
-    def template_keys(self, **kwargs):
-
-        pk = kwargs.get(self.pk_alias, None)
-        form = kwargs.get('form', None)
-        if form is None:
-            form = self.form(instance=self.model.objects.get(pk=pk)) if pk else self.form()
-        if pk:
-            form.is_edit = True
-
-        return {
-            **super().template_keys(**kwargs),
-            'data': self.model.objects.all(),
-            'form': form,
-            'content_title': self.model._meta.verbose_name_plural.title(),
-            'pk': pk if pk else None,
-        }
-
-
