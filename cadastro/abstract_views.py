@@ -63,9 +63,6 @@ class MainView(View):
 
         pk = kwargs.get(self.pkalias, None)
 
-        if not getattr(self, 'parent_field_name', None):
-            self.parent_field_name = self.parent.class_name.lower() if self.parent else None
-
         parent_pk = kwargs.get(self.parent.pkalias, None) if self.parent else None
 
         parent_reference = {self.parent_field_name: parent_pk} if self.parent_field_name and parent_pk else None
@@ -73,32 +70,33 @@ class MainView(View):
 
         passed_form_error = kwargs.get(self.formalias, None)
 
-        if passed_form_error:
-            form = passed_form_error
-        else:
-            form = self.form(initial=parent_reference, instance=model_instance)
+        form = passed_form_error if passed_form_error else self.form(initial=parent_reference, instance=model_instance)
 
         model_set = self.model.objects.filter(**parent_reference) if parent_reference else self.model.objects.all()
 
         children_tuple_template_keys = []
 
         for child in self.bind_children:
-
-            model = self.model(pk=pk) if pk else None
-            field = self.class_name.lower()
-
-            set_child = child.model.objects.filter(**{field: model}) if model else []
-
-            form_child_initial = {self.class_name.lower(): model} if model else None
-
+            set_child = child.model.objects.filter(**{child.parent_field_name: model_instance}) if model_instance else []
+            form_child_initial = {child.parent_field_name: model_instance} if model_instance else None
             children_tuple_template_keys.append( (child.formalias, child.form(initial=form_child_initial), ) )
             children_tuple_template_keys.append( (child.setalias, set_child, ) )
+
+        related_tuple_template_keys = []
+
+        for related in self.bind_related:
+            related_passed_form_error = kwargs.get(related.formalias, None)
+
+            form_related = related_passed_form_error if related_passed_form_error else related.fetch(parent_instance=model_instance)
+
+            related_tuple_template_keys.append( (related.formalias, form_related, ) )
 
         parent_template_keys = self.parent.fetch_template_keys(request, *args, **kwargs) if self.parent else {}
 
         return {
             **parent_template_keys,
             **(dict(children_tuple_template_keys)),
+            **(dict(related_tuple_template_keys)),
             self.formalias: form,
             self.setalias: model_set,
             self.pkalias: pk,
@@ -109,6 +107,7 @@ class MainView(View):
         return {}
 
     def get(self, request, *args, **kwargs):
+
         return render(request, self.template_name, {
             **self.fetch_template_keys(request, *args, **kwargs)
         })
@@ -119,13 +118,35 @@ class MainView(View):
         model_instance = self.model.objects.get(pk=pk) if pk else None 
 
         form = self.form(request.POST, request.FILES, instance=model_instance)
-        if form.is_valid():
+
+        tuple_forms_list = []
+
+        related_error = False
+        for related in self.bind_related:
+            related.fetch(parent_instance=model_instance, data=request.POST, files=request.FILES)
+            related.form_instance.fields[related.parent_field_name].required = False
+            if not related.form_instance.is_valid():
+                related_error = True
+            related.form_instance.fields[related.parent_field_name].required = True
+            tuple_forms_list.append( (related.formalias, related.form_instance, ) )
+
+        if not related_error and form.is_valid():
             self.saved_model = form.save()
             messages.success(request, "Objeto {} {} com sucesso".format(self.saved_model.__class__.__name__, ('atualizado' if pk else 'salvo')))
+                
+            for related in self.bind_related:
+                setattr(related.form_instance, related.parent_field_name, self.saved_model.pk)
+                f = related.form_instance.data.copy()
+                f[related.parent_field_name] = str(self.saved_model.pk)
+                related.form_instance.data = f
+                related.form_instance.is_valid()
+                related.form_instance.save()
+                messages.success(request, "Objeto {} {} com sucesso".format(r.__class__.__name__,  'gravado'))
+
             return self.fetch_success_redirect(request, *args, **kwargs)
         else:
             messages.warning(request, "Formulário inválido")
-            return self.get(request=request, **{self.formalias: form}, **kwargs)
+            return self.get(request=request, **{self.formalias: form}, **(dict(tuple_forms_list)), **kwargs)
 
     def delete(self, request, *args, **kwargs): 
         item = self.model.objects.get(pk=kwargs.get('pkdelete', None))
@@ -153,25 +174,24 @@ class MainView(View):
             return child.match_url(url)
         return False
 
-    def set_template_name(self, template_name):
-        self.template_name = template_name
-
-    def set_parent(self, parent):
-        self.parent = parent
-
     def get_children(self):
         b = []
         for class_child in self.children:
             child = class_child()
-            child.set_parent(self)
-            child.set_template_name(self.template_name)
+            child.parent = self
+            child.template_name = self.template_name
+            if not getattr(child, 'parent_field_name', None):
+                child.parent_field_name = self.class_name.lower()
             b.append(child)
         return b
 
     def get_related(self):
         b = []
         for class_related in self.related:
-            related.set_parent(self)
+            related = class_related()
+            related.parent = self
+            if not getattr(related, 'parent_field_name', None):
+                related.parent_field_name = self.class_name.lower()
             b.append(related)
         return b
 
@@ -214,24 +234,25 @@ class ModalListViewStaticAliases(ModalListView):
     pkalias = 'pk'
 
 
-class RelatedForm:
+class RelatedFormView:
 
     form = None
     parent = None
     parent_field_name = None
     formalias = None
+    form_instance = None
+    parent_pk = None
 
     def __init__(self, **kwargs):
 
         self.model = self.form().instance.__class__
-        self.class_name = self.model.__name__
 
-    def fetch_form(self, parent_pk=None, data=None, files=None):
-
-        parent_instance = self.parent.model.objects.get(pk=parent_pk) if parent_pk else None
-        dataset = self.model.objects.filter(bolsista=bolsista, ic_ativo=True) if parent_pk else None
+    def fetch(self, parent_instance=None, data=None, files=None):
+        if not getattr(self, 'parent_field_name', None):
+            self.parent_field_name = self.parent.class_name.lower() 
+        dataset = self.model.objects.filter(**{self.parent_field_name: parent_instance}) if parent_instance else None
         last_record = dataset.latest('id') if dataset else None
-        form_instance = self.form(data=data, files=files, initial=({self.parent_field_name: parent_instance} if parent_pk else None), instance=last_record)
+        self.form_instance = self.form(data=data, files=files, instance=last_record, initial={self.parent_field_name: parent_instance})
         return self.form_instance
 
     def set_parent(self, parent):

@@ -12,7 +12,7 @@ from django.views.generic import View
 
 from django.http import HttpResponse
 
-from .abstract_views import GenericView, FormView, MainView, ModalListView, MainViewStaticAliases, ModalListViewStaticAliases
+from .abstract_views import GenericView, FormView, MainView, ModalListView, MainViewStaticAliases, ModalListViewStaticAliases, RelatedFormView
 
 from django.contrib import messages
 
@@ -221,7 +221,32 @@ class EmprestimoEquipamento(ModalListView):
     delete_redirect = 'bolsista-editar'
 
 
+class ParticipanteBolsista(RelatedFormView):
+
+    form = ParticipanteBolsistaForm
+
+    formalias = 'formp'
+
 class Bolsista(MainViewStaticAliases):
+
+    children = [Documento, EmprestimoEquipamento]
+
+    related = [ParticipanteBolsista]
+
+    form = BolsistaForm
+
+    template_name = 'cadastro/bolsista.html'
+
+    success_redirect = 'bolsista-editar'
+    delete_redirect = 'bolsista'
+
+    def template_keys(self, *args, **kwargs):
+        
+        return {
+            'content_title': 'Cadastrar Bolsistas / Pequisadores',
+        }
+
+class Bolsista2(MainViewStaticAliases):
 
     children = [Documento, EmprestimoEquipamento]
 
