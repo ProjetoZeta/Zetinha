@@ -160,9 +160,12 @@ class AtividadeSelect(Form):
         super().__init__(**kwargs)
         meta = Meta.objects.get(pk=pkmeta)
         self.fields['atividades'].queryset = Atividade.objects.filter(meta=meta, ic_ativo=True)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            field.widget.attrs['id'] = 'id_atividade_select'
+
 
     atividades = forms.ModelChoiceField(queryset=Atividade.objects.all(), empty_label='Selecione uma atividade')
-
 
 class AtividadeBolsistaSelect(ModelForm):
     def __init__(self, pkprojeto, **kwargs):

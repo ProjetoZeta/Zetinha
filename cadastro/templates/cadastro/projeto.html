@@ -1,3 +1,4 @@
+
 {% extends 'cadastro/default.html' %}
 
 {% load bootstrap3 %}
@@ -7,6 +8,7 @@
 {% load verbose %}
 {% load getattr %}
 {% load meta %}
+{% load form_tools %}
 
 {% block css %}
 
@@ -96,46 +98,46 @@
 
 			                    <legend class="the-legend">Identificação</legend>
 
-	                        	<div class="form-group row required">
-			                        <label for="inputKey" class="col-md-2 control-label">Nome do Projeto:</label>
+	                        	<div class="form-group row {% if form|is_required:form.nome.name %} required {% endif %}">
+			                        <label for="inputKey" class="col-md-2 control-label">{{ form.nome.label }}:</label>
 			                        <div class="col-md-10">
 			                            {{ form.nome }}
 			                            <div class="help-block">{{ form.nome.errors }}</div>
 			                        </div>
 			                    </div>
 
-			                    <div class="form-group row required">
-			                        <label for="inputKey" class="col-md-2 control-label">Sigla:</label>
+			                    <div class="form-group row {% if form|is_required:form.sigla.name %} required {% endif %}">
+			                        <label for="inputKey" class="col-md-2 control-label">{{ form.sigla.label }}:</label>
 			                        <div class="col-md-10">
 			                            {{ form.sigla }}
 			                            <div class="help-block">{{ form.sigla.errors }}</div>
 			                        </div>
 			                    </div>
+
 			                </fieldset>
 
 		                    <fieldset class="well the-fieldset">
 
 			                    <legend class="the-legend">Proponente</legend>
 
-			                    <div class="form-group row required  {% if form.entidade_proponente.errors %}{{ 'has-error' }}{% endif %}">
-			                        <label for="inputValue" class="col-md-2 control-label">Instituição:</label>
-			                        <div class="col-sm-10">
+			                    <div class="form-group row {% if form|is_required:form.entidade_proponente.name %} required {% endif %}">
+			                        <label for="inputKey" class="col-md-2 control-label">Entidade:</label>
+			                        <div class="col-md-10">
 			                            {{ form.entidade_proponente }}
 			                            <div class="help-block">{{ form.entidade_proponente.errors }}</div>
 			                        </div>
 			                    </div>
-			                    
 
-			                    <div class="form-group row required {% if form.responsavel_proponente.errors %}{{ 'has-error' }}{% endif %}">
-			                        <label for="inputValue" class="col-md-2 control-label">Responsável:</label>
+			                    <div class="form-group row {% if form|is_required:form.responsavel_proponente.name %} required {% endif %}">
+			                        <label for="inputKey" class="col-md-2 control-label">Responsável:</label>
 			                        <div class="col-md-10">
 			                            {{ form.responsavel_proponente }}
 			                            <div class="help-block">{{ form.responsavel_proponente.errors }}</div>
 			                        </div>
 			                    </div>
 
-			                    <div class="form-group row required {% if form.responsavel_tecnico_proponente.errors %}{{ 'has-error' }}{% endif %}">
-			                        <label for="inputValue" class="col-md-2 control-label">Responsável Técnico:</label>
+			                    <div class="form-group row {% if form|is_required:form.responsavel_tecnico_proponente.name %} required {% endif %}">
+			                        <label for="inputKey" class="col-md-2 control-label">Responsável Técnico:</label>
 			                        <div class="col-md-10">
 			                            {{ form.responsavel_tecnico_proponente }}
 			                            <div class="help-block">{{ form.responsavel_tecnico_proponente.errors }}</div>
@@ -148,25 +150,24 @@
 
 			                    <legend class="the-legend">Concedente</legend>
 
-			                    <div class="form-group row required  {% if form.entidade_concedente.errors %}{{ 'has-error' }}{% endif %}">
-			                        <label for="inputValue" class="col-md-2 control-label">Instituição:</label>
-			                        <div class="col-sm-10">
-			                            {{ form.entidade_concedente}}
+			                    <div class="form-group row {% if form|is_required:form.entidade_concedente.name %} required {% endif %}">
+			                        <label for="inputKey" class="col-md-2 control-label">Entidade:</label>
+			                        <div class="col-md-10">
+			                            {{ form.entidade_concedente }}
 			                            <div class="help-block">{{ form.entidade_concedente.errors }}</div>
 			                        </div>
 			                    </div>
-			                    
 
-			                    <div class="form-group row required {% if form.responsavel_concedente.errors %}{{ 'has-error' }}{% endif %}">
-			                        <label for="inputValue" class="col-md-2 control-label">Responsável:</label>
+			                    <div class="form-group row {% if form|is_required:form.responsavel_concedente.name %} required {% endif %}">
+			                        <label for="inputKey" class="col-md-2 control-label">Responsável:</label>
 			                        <div class="col-md-10">
 			                            {{ form.responsavel_concedente }}
 			                            <div class="help-block">{{ form.responsavel_concedente.errors }}</div>
 			                        </div>
 			                    </div>
 
-			                    <div class="form-group row required {% if form.responsavel_tecnico_concedente.errors %}{{ 'has-error' }}{% endif %}">
-			                        <label for="inputValue" class="col-md-2 control-label">Responsável Técnico:</label>
+			                    <div class="form-group row {% if form|is_required:form.responsavel_tecnico_concedente.name %} required {% endif %}">
+			                        <label for="inputKey" class="col-md-2 control-label">Responsável Técnico:</label>
 			                        <div class="col-md-10">
 			                            {{ form.responsavel_tecnico_concedente }}
 			                            <div class="help-block">{{ form.responsavel_tecnico_concedente.errors }}</div>
@@ -179,21 +180,22 @@
 
 			                    <legend class="the-legend">Outros</legend>
 
-				                <div class="form-group row required {% if form.metodologia.errors %}{{ 'has-error' }}{% endif %}">
-			                        <label for="inputValue" class="col-md-2 control-label">Metodologia:</label>
+			                    <div class="form-group row {% if form|is_required:form.metodologia.name %} required {% endif %}">
+			                        <label for="inputKey" class="col-md-2 control-label">{{ form.metodologia.label }}:</label>
 			                        <div class="col-md-10">
 			                            {{ form.metodologia }}
 			                            <div class="help-block">{{ form.metodologia.errors }}</div>
 			                        </div>
 			                    </div>
 
-			                    <div class="form-group row required {% if form.gestao_transferencia_tecnologia.errors %}{{ 'has-error' }}{% endif %}">
-			                        <label for="inputValue" class="col-md-2 control-label">Gestão de Projeto e Transferência de Tecnologia:</label>
+			                    <div class="form-group row {% if form|is_required:form.gestao_transferencia_tecnologia.name %} required {% endif %}">
+			                        <label for="inputKey" class="col-md-2 control-label">Gestão de Projeto e Transferência de Tecnologia:</label>
 			                        <div class="col-md-10">
 			                            {{ form.gestao_transferencia_tecnologia }}
 			                            <div class="help-block">{{ form.gestao_transferencia_tecnologia.errors }}</div>
 			                        </div>
 			                    </div>
+
 			                </fieldset>
 
                         </div>
@@ -542,6 +544,44 @@
 
                         </div>
                         <div class="tab-pane fade" id="vatividade">
+
+                        	<fieldset class="well the-fieldset">
+
+					            <legend class="the-legend">Vincular Meta/Atividade/Bolsista</legend>
+
+								<div class="form-group row">
+			                        <label for="inputValue" class="col-md-2 control-label">Meta:</label>
+			                        <div class="col-md-10">
+			                            <div class="col-sm-10">
+						                    <select name="meta" class="form-control" id="id_vinculo_atividade_meta" required="">
+							  					<option value="" disabled="" selected="">Selecione uma opção</option>
+
+							  					{% for meta in metas %}
+
+							  						<option value="{{ meta.pk }}" >{{ meta.titulo }}</option>
+
+							  					{% endfor %}
+											</select>
+						                    <div class="help-block"></div>
+						               	</div>
+			                        </div>
+			                    </div>
+
+			                    <div class="form-group row">
+			                        <label for="inputValue" class="col-md-2 control-label">Atividade:</label>
+			                        <div class="col-md-10">
+			                            <div class="col-sm-10" id="container-atividades">
+						                    <select id="id_atividade_select" class="form-control" required="" disabled="">
+						  					<option value="">Selecione uma opção</option>
+											</select>
+						                    <div class="help-block"></div>
+						               	</div>
+			                        </div>
+			                    </div>
+
+			                   
+
+		                    </fieldset>
 	                       
 	                       
 

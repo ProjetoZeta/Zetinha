@@ -62,6 +62,8 @@ urlpatterns = [
     url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/atividade/(?P<pkatividade>[0-9]+)/editar$', views.Projeto.as_view(), name='atividade-meta-proj-editar'),
     url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/atividade/(?P<pkdelete>[0-9]+)/remover$', views.Projeto.as_view(), name='atividade-meta-proj-remover'),
 
+    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/vinculoatividade/(?P<pkatividade>[0-9]+)$', views.Projeto.as_view(), name='vinculo-atividade-meta-proj'),
+
     url(r'^meta/(?P<pk>[0-9]+)/atividades_select$', views.get_atividades, name='get-atividades-select-ajax'),
     url(r'^atividade/(?P<pk>[0-9]+)/bolsistas_select$', views.get_atividade_bolsistas, name='get-bolsistas-select-ajax'),
 

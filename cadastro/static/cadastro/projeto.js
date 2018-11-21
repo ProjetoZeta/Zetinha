@@ -1,6 +1,34 @@
 
 $(document).ready(function () {
 
+	function bind_atividade_on_change_select_event(){
+		$( "#id_atividade_select" ).change(function() {
+			  	
+			
+
+		});
+	}
+
+	$( "#id_vinculo_atividade_meta" ).change(function() {
+	  	
+	  	var meta_pk = this.value
+
+		$.ajax({
+		  url: '/cadastro/meta/' + meta_pk + '/atividades_select',
+		  type: "get", //send it through get method
+		  success: function(response) {
+		    $( "#container-atividades" ).html(response)
+
+		    bind_atividade_on_change_select_event()
+		   
+		  },
+		  error: function(xhr) {
+		  	alert('AJAX falhou')
+		  }
+		});
+
+	});
+
 	$(".countries a").click(function(e) {
 	  e.preventDefault();
 	  $("[href='#first']").tab('show');

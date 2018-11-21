@@ -151,7 +151,6 @@ class AtividadeProjeto(ModalListView):
     success_redirect = 'meta-proj-editar'
     delete_redirect = 'meta-proj-editar'
 
-
 class MetaProjeto(MainView):
 
     form = MetaForm
@@ -167,7 +166,6 @@ class MetaProjeto(MainView):
     delete_redirect = 'meta-proj-criar'
 
     template_name = 'cadastro/projeto.html'
-
 
 class Projeto(MainViewStaticAliases):
 
