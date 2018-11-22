@@ -155,6 +155,24 @@ class AnexoForm(BaseForm):
         model = Anexo
         fields = get_fields(model)
 
+class AtividadeParticipantesForm(ModelForm):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        data = kwargs.get('data', None)
+        if data:
+            pkmeta = data['meta']
+            meta = Meta.objects.get(pk=pkmeta)
+            self.fields['meta'].queryset = Meta.objects.get(projeto=meta.projeto)
+            self.fields['atividade'].queryset = Atividade.objects.get(meta=meta)
+            self.fields['participantes'].queryset = Participante.objects.filter(projeto=meta.projeto, ic_ativo=True)
+    
+    meta = forms.ModelChoiceField(queryset=Meta.objects.all())
+    atividade = forms.ModelChoiceField(queryset=Atividade.objects.all())
+    participantes = forms.ModelMultipleChoiceField(queryset=Participante.objects.filter(), widget=forms.CheckboxSelectMultiple())
+    class Meta:
+        model = Atividade
+        fields = ['atividade', 'participantes']
+
 class AtividadeSelect(Form):
     def __init__(self, pkmeta, **kwargs):
         super().__init__(**kwargs)
@@ -163,7 +181,6 @@ class AtividadeSelect(Form):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
             field.widget.attrs['id'] = 'id_atividade_select'
-
 
     atividades = forms.ModelChoiceField(queryset=Atividade.objects.all(), empty_label='Selecione uma atividade')
 

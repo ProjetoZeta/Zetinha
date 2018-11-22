@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django import forms
 
 from .models import Emprego as EmpregoModel, Responsabilidade as ResponsabilidadeModel, Responsavel as ResponsavelModel, Entidade as EntidadeModel, Usuario as UsuarioModel, Bolsista as BolsistaModel, Documento as DocumentoModel, EmprestimoEquipamento as EmprestimoEquipamentoModel, Projeto as ProjetoModel, Participante as ParticipanteModel, Meta as MetaModel, Atividade as AtividadeModel, Anexo as AnexoModel
-from .forms import EntidadeForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm, ParticipanteProjetoForm, ParticipanteBolsistaForm, MetaForm, AtividadeForm, AnexoForm, AtividadeSelect, AtividadeBolsistaSelect, ResponsabilidadeForm, EmpregoForm
+from .forms import EntidadeForm, ResponsavelForm, UsuarioForm, BolsistaForm, DocumentoForm, ProjetoForm, EmprestimoEquipamentoForm, ParticipanteProjetoForm, ParticipanteBolsistaForm, MetaForm, AtividadeForm, AnexoForm, AtividadeSelect, AtividadeBolsistaSelect, ResponsabilidadeForm, EmpregoForm, AtividadeParticipantesForm
 from django.views.generic import View
 
 from django.http import HttpResponse
@@ -151,11 +151,21 @@ class AtividadeProjeto(ModalListView):
     success_redirect = 'meta-proj-editar'
     delete_redirect = 'meta-proj-editar'
 
+class AtividadeParticipantes(MainView):
+
+    form = AtividadeParticipantesForm
+
+    url_triggers = ['^vinculo.*$']
+
+    formalias = 'formv'
+
+    success_redirect = 'vinculo-atividade-meta-proj'
+
 class MetaProjeto(MainView):
 
     form = MetaForm
 
-    children = [AtividadeProjeto]
+    children = [AtividadeProjeto, AtividadeParticipantes]
 
     url_triggers = ['^meta-proj-.*$']
 

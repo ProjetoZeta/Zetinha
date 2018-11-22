@@ -134,6 +134,8 @@ class MainView(View):
 
     def get(self, request, *args, **kwargs):
 
+        #print(*self.fetch_template_keys(request, *args, **kwargs))
+
         return render(request, self.template_name, {
             **self.fetch_template_keys(request, *args, **kwargs)
         })
