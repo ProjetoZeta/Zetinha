@@ -155,7 +155,7 @@ class AtividadeParticipantes(MainView):
 
     form = AtividadeParticipantesForm
 
-    url_triggers = ['^vinculo.*$']
+    url_triggers = ['^vinculo-atividade-meta-proj$']
 
     formalias = 'formv'
 

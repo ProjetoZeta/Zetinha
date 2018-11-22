@@ -70,7 +70,7 @@ class MainView(View):
     def dispatch(self, request, *args, **kwargs):
 
         child_target = self.get_target_child(request, *args, **kwargs)
-
+        
         if child_target:
             return child_target.dispatch(request, *args, **kwargs)
 
@@ -196,8 +196,11 @@ class MainView(View):
         url_triggers_regex = [re.compile(u) for u in self.url_triggers]
         if any(url_regex.match(url) for url_regex in url_triggers_regex):
             return True
+
         for child in self.bind_children:
-            return child.match_url(url)
+            if child.match_url(url):
+                return True
+
         return False
 
     def get_children(self):

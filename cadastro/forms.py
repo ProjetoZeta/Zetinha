@@ -159,6 +159,8 @@ class AtividadeParticipantesForm(ModelForm):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         data = kwargs.get('data', None)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
         if data:
             pkmeta = data['meta']
             meta = Meta.objects.get(pk=pkmeta)
