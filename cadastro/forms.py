@@ -159,8 +159,6 @@ class AtividadeParticipantesForm(ModelForm):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         data = kwargs.get('data', None)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
         if data:
             pkmeta = data['meta']
             meta = Meta.objects.get(pk=pkmeta)
@@ -168,8 +166,8 @@ class AtividadeParticipantesForm(ModelForm):
             self.fields['atividade'].queryset = Atividade.objects.get(meta=meta)
             self.fields['participantes'].queryset = Participante.objects.filter(projeto=meta.projeto, ic_ativo=True)
     
-    meta = forms.ModelChoiceField(queryset=Meta.objects.all())
-    atividade = forms.ModelChoiceField(queryset=Atividade.objects.all())
+    meta = forms.ModelChoiceField(queryset=Meta.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}), empty_label='Selecione uma opção')
+    atividade = forms.ModelChoiceField(queryset=Atividade.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}), empty_label='Selecione uma opção')
     participantes = forms.ModelMultipleChoiceField(queryset=Participante.objects.filter(), widget=forms.CheckboxSelectMultiple())
     class Meta:
         model = Atividade

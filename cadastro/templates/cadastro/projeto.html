@@ -555,11 +555,29 @@
 
 					            	{% if 'vinculo-atividade-meta-proj' in url %}
 
-					            		{{ formv.meta }}
+					            		<div class="form-group row">
+					                        <label for="inputKey" class="col-md-2 control-label">Meta:</label>
+					                        <div class="col-md-10">
+					                            {{ formv.meta }}
+					                            <div class="help-block">{{ formv.meta.errors }}</div>
+					                        </div>
+					                    </div>
 
-			                    		{{ formv.atividade }}
+					                    <div class="form-group row">
+					                        <label for="inputKey" class="col-md-2 control-label">Atividade:</label>
+					                        <div class="col-md-10">
+					                            {{ formv.atividade }}
+					                            <div class="help-block">{{ formv.atividade.errors }}</div>
+					                        </div>
+					                    </div>
 
-			                    		{{ formv.participantes }}
+					                    <div class="form-group row">
+					                        <label for="inputKey" class="col-md-2 control-label">Participantes:</label>
+					                        <div class="col-md-10">
+					                            {{ formv.participantes }}
+					                            <div class="help-block">{{ formv.participantes.errors }}</div>
+					                        </div>
+					                    </div>
 
 			                    	{% else %}
 
