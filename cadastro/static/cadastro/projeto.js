@@ -3,8 +3,19 @@ $(document).ready(function () {
 
 	function bind_atividade_on_change_select_event(){
 		$( "#id_atividade_select" ).change(function() {
+
+			var atividade_pk = this.value
 			  	
-			
+			$.ajax({
+			  url: '/cadastro/atividade/' + atividade_pk + '/participantes_select',
+			  type: "get", //send it through get method
+			  success: function(response) {
+			    $( "#container-participantes" ).html(response)
+			  },
+			  error: function(xhr) {
+			  	alert('AJAX falhou')
+			  }
+			});			
 
 		});
 	}
@@ -18,9 +29,7 @@ $(document).ready(function () {
 		  type: "get", //send it through get method
 		  success: function(response) {
 		    $( "#container-atividades" ).html(response)
-
 		    bind_atividade_on_change_select_event()
-		   
 		  },
 		  error: function(xhr) {
 		  	alert('AJAX falhou')
