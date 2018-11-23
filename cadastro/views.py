@@ -158,8 +158,15 @@ class AtividadeParticipantes(MainView):
     url_triggers = ['^vinculo-atividade-m-proj$']
 
     formalias = 'formv'
+    setalias = 'atividadespormeta'
 
     success_redirect = 'vinculo-atividade-m-proj'
+
+    def template_keys(self, *args, **kwargs):
+        return {
+            'content_title': 'Manter Projeto',
+        }
+
 
 class MetaProjeto(MainView):
 

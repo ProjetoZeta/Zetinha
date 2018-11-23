@@ -558,7 +558,7 @@
 										<div class="col-md-10">
 											
 											<select name="meta" class="form-control" id="id_vinculo_atividade_meta" required="">
-												<option value="" disabled="" {% if not pkmeta %} selected=""`{% endif %}>Selecione uma opção</option>
+												<option value="" {% if not pkmeta %} selected=""`{% endif %}>Selecione uma opção</option>
 												{% for meta in metas %}
 													<option value="{{ meta.pk }}" {% if meta.pk == pkmeta %} selected="" {% endif %}>{{ meta.titulo }}</option>
 												{% endfor %}
@@ -573,8 +573,11 @@
 										<label for="inputValue" class="col-md-2 control-label">Atividade:</label>
 										<div class="col-md-10" id="container-atividades">
 
-											<select id="id_atividade_select" class="form-control" required="" disabled="">
-											<option value="">Selecione uma opção</option>
+											<select name="atividade" class="form-control" required="">
+												<option value="" {% if not pkatividade %} selected=""`{% endif %}>Selecione uma opção</option>
+												{% for atividade in atividadespormeta %}
+													<option value="{{ atividade.pk }}" {% if atividade.pk == pkatividade %} selected="" {% endif %}>{{ atividade.titulo }}</option>
+												{% endfor %}
 											</select>
 
 											<div class="help-block"></div>
