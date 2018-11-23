@@ -24,24 +24,24 @@
 
 	<script type="text/javascript">
 
-	    $(document).ready(function() {
+		$(document).ready(function() {
 
-	        $('.file-upload').file_upload();
+			$('.file-upload').file_upload();
 
-	        $('.file-upload-text').on('DOMSubtreeModified',function(){
-	        	$( "#submit-anexo" ).prop( "disabled", false );
+			$('.file-upload-text').on('DOMSubtreeModified',function(){
+				$( "#submit-anexo" ).prop( "disabled", false );
 			})
 
-	    });
+		});
 	</script>
 	<script type="text/javascript">
-      	
-      	{% with request.resolver_match.url_name as url %}
+		
+		{% with request.resolver_match.url_name as url %}
 
-	        $(document).ready(function () {
-	            $('#modal-atividade').modal({% if formf.errors or 'atividade-meta-proj-editar' in url %}'show'{% else %}''{% endif %});
-	        });
-	    {% endwith %}
+			$(document).ready(function () {
+				$('#modal-atividade').modal({% if formf.errors or 'atividade-meta-proj-editar' in url %}'show'{% else %}''{% endif %});
+			});
+		{% endwith %}
 
 	</script>
 
@@ -52,634 +52,629 @@
 	{% with request.resolver_match.url_name as url %}
 
 			<div class="panel with-nav-tabs panel-success">
-                <div class="panel-heading">
-                    <ul class="nav nav-tabs nav-projeto">
-                        <li class="{% if 'projeto-' in url %} active {% endif %}"><a href="#descricao" data-toggle="tab" class="detalhes">Detalhes</a></li>
-                        <li class="{% if 'participante-' in url %} active {% endif %} {% if not pk %} disabled {% endif %}"><a href="#adbolsistas" data-toggle="tab">Participantes</a></li>
-                        <li class="{% if 'meta-' in url %} active {% endif %} {% if not pk %} disabled {% endif %}"><a href="#cronograma" data-toggle="tab">Cronograma</a></li>
-                        <li class="{% if not pk %} disabled {% endif %}"><a href="#vatividade" data-toggle="tab">Vincular atividade</a></li>
-                        <li class="{% if 'anexo-' in url %} active {% endif %} {% if not pk %} disabled {% endif %}"><a href="#anexos" data-toggle="tab">Anexos</a></li>
-                        <li class="{% if not pk %} disabled {% endif %}"><a href="#resumo" data-toggle="tab">Resumo</a></li>
-                        
-                    </ul>
-                </div>
+				<div class="panel-heading">
+					<ul class="nav nav-tabs nav-projeto">
+						<li class="{% if 'projeto-' in url %} active {% endif %}"><a href="#descricao" data-toggle="tab" class="detalhes">Detalhes</a></li>
+						<li class="{% if 'participante-' in url %} active {% endif %} {% if not pk %} disabled {% endif %}"><a href="#adbolsistas" data-toggle="tab">Participantes</a></li>
+						<li class="{% if 'meta-' in url %} active {% endif %} {% if not pk %} disabled {% endif %}"><a href="#cronograma" data-toggle="tab">Cronograma</a></li>
+						<li class="{% if 'vinculo-atividade-m-proj' in url %} active {% endif %}{% if not pk %} disabled {% endif %}"><a href="#vatividade" data-toggle="tab">Vincular atividade</a></li>
+						<li class="{% if 'anexo-' in url %} active {% endif %} {% if not pk %} disabled {% endif %}"><a href="#anexos" data-toggle="tab">Anexos</a></li>
+						<li class="{% if not pk %} disabled {% endif %}"><a href="#resumo" data-toggle="tab">Resumo</a></li>
+						
+					</ul>
+				</div>
 
-                <div class="panel-body">
-                	
-                	{% if form.errors or formp.errors or formm.errors or formfp.errors or forma.errors %}
+				<div class="panel-body">
+					
+					{% if form.errors or formp.errors or formm.errors or formfp.errors or forma.errors %}
 
-			            <div class="alert alert-danger">
-			              <strong><a data-toggle="collapse" href="#errors-form" role="button" aria-expanded="false" aria-controls="errors-form">Erros</a> encontrados!</strong> Verifique os campos e tente novamente
+						<div class="alert alert-danger">
+						  <strong><a data-toggle="collapse" href="#errors-form" role="button" aria-expanded="false" aria-controls="errors-form">Erros</a> encontrados!</strong> Verifique os campos e tente novamente
 
-			            
-			            </div>
+						
+						</div>
 
-			            <div class="collapse multi-collapse alert alert-warning" id="errors-form">
-			              <div class="card card-body">
-			                {{ form.errors }}
-			                {{ formp.errors }}
-			                {{ formm.errors }}
-			                {{ formfp.errors }}
-			                {{ forma.errors }}
-			              </div>
-			            </div>
+						<div class="collapse multi-collapse alert alert-warning" id="errors-form">
+						  <div class="card card-body">
+							{{ form.errors }}
+							{{ formp.errors }}
+							{{ formm.errors }}
+							{{ formfp.errors }}
+							{{ forma.errors }}
+						  </div>
+						</div>
 
-			        {% endif %}
+					{% endif %}
 
 
-                    <div class="tab-content">
-                        <div class="tab-pane fade {% if 'projeto-' in url %} in active {% endif %}" id="descricao">
+					<div class="tab-content">
+						<div class="tab-pane fade {% if 'projeto-' in url %} in active {% endif %}" id="descricao">
 
-                        	<form class="form" id="form-detalhes" role="form" method="POST" action="{% if pk %} {% url 'projeto-editar' pk %} {% else %}{% url 'projeto-criar' %}{% endif %}">
+							<form class="form" id="form-detalhes" role="form" method="POST" action="{% if pk %} {% url 'projeto-editar' pk %} {% else %}{% url 'projeto-criar' %}{% endif %}">
 
 							{% csrf_token %}
 
 							<fieldset class="well the-fieldset">
 
-			                    <legend class="the-legend">Identificação</legend>
+								<legend class="the-legend">Identificação</legend>
 
-	                        	<div class="form-group row {% if form|is_required:form.nome.name %} required {% endif %}">
-			                        <label for="inputKey" class="col-md-2 control-label">{{ form.nome.label }}:</label>
-			                        <div class="col-md-10">
-			                            {{ form.nome }}
-			                            <div class="help-block">{{ form.nome.errors }}</div>
-			                        </div>
-			                    </div>
+								<div class="form-group row {% if form|is_required:form.nome.name %} required {% endif %}">
+									<label for="inputKey" class="col-md-2 control-label">{{ form.nome.label }}:</label>
+									<div class="col-md-10">
+										{{ form.nome }}
+										<div class="help-block">{{ form.nome.errors }}</div>
+									</div>
+								</div>
 
-			                    <div class="form-group row {% if form|is_required:form.sigla.name %} required {% endif %}">
-			                        <label for="inputKey" class="col-md-2 control-label">{{ form.sigla.label }}:</label>
-			                        <div class="col-md-10">
-			                            {{ form.sigla }}
-			                            <div class="help-block">{{ form.sigla.errors }}</div>
-			                        </div>
-			                    </div>
+								<div class="form-group row {% if form|is_required:form.sigla.name %} required {% endif %}">
+									<label for="inputKey" class="col-md-2 control-label">{{ form.sigla.label }}:</label>
+									<div class="col-md-10">
+										{{ form.sigla }}
+										<div class="help-block">{{ form.sigla.errors }}</div>
+									</div>
+								</div>
 
-			                </fieldset>
+							</fieldset>
 
-		                    <fieldset class="well the-fieldset">
+							<fieldset class="well the-fieldset">
 
-			                    <legend class="the-legend">Proponente</legend>
+								<legend class="the-legend">Proponente</legend>
 
-			                    <div class="form-group row {% if form|is_required:form.entidade_proponente.name %} required {% endif %}">
-			                        <label for="inputKey" class="col-md-2 control-label">Entidade:</label>
-			                        <div class="col-md-10">
-			                            {{ form.entidade_proponente }}
-			                            <div class="help-block">{{ form.entidade_proponente.errors }}</div>
-			                        </div>
-			                    </div>
+								<div class="form-group row {% if form|is_required:form.entidade_proponente.name %} required {% endif %}">
+									<label for="inputKey" class="col-md-2 control-label">Entidade:</label>
+									<div class="col-md-10">
+										{{ form.entidade_proponente }}
+										<div class="help-block">{{ form.entidade_proponente.errors }}</div>
+									</div>
+								</div>
 
-			                    <div class="form-group row {% if form|is_required:form.responsavel_proponente.name %} required {% endif %}">
-			                        <label for="inputKey" class="col-md-2 control-label">Responsável:</label>
-			                        <div class="col-md-10">
-			                            {{ form.responsavel_proponente }}
-			                            <div class="help-block">{{ form.responsavel_proponente.errors }}</div>
-			                        </div>
-			                    </div>
+								<div class="form-group row {% if form|is_required:form.responsavel_proponente.name %} required {% endif %}">
+									<label for="inputKey" class="col-md-2 control-label">Responsável:</label>
+									<div class="col-md-10">
+										{{ form.responsavel_proponente }}
+										<div class="help-block">{{ form.responsavel_proponente.errors }}</div>
+									</div>
+								</div>
 
-			                    <div class="form-group row {% if form|is_required:form.responsavel_tecnico_proponente.name %} required {% endif %}">
-			                        <label for="inputKey" class="col-md-2 control-label">Responsável Técnico:</label>
-			                        <div class="col-md-10">
-			                            {{ form.responsavel_tecnico_proponente }}
-			                            <div class="help-block">{{ form.responsavel_tecnico_proponente.errors }}</div>
-			                        </div>
-			                    </div>
+								<div class="form-group row {% if form|is_required:form.responsavel_tecnico_proponente.name %} required {% endif %}">
+									<label for="inputKey" class="col-md-2 control-label">Responsável Técnico:</label>
+									<div class="col-md-10">
+										{{ form.responsavel_tecnico_proponente }}
+										<div class="help-block">{{ form.responsavel_tecnico_proponente.errors }}</div>
+									</div>
+								</div>
 
-			                </fieldset>
+							</fieldset>
 
-			                <fieldset class="well the-fieldset">
+							<fieldset class="well the-fieldset">
 
-			                    <legend class="the-legend">Concedente</legend>
+								<legend class="the-legend">Concedente</legend>
 
-			                    <div class="form-group row {% if form|is_required:form.entidade_concedente.name %} required {% endif %}">
-			                        <label for="inputKey" class="col-md-2 control-label">Entidade:</label>
-			                        <div class="col-md-10">
-			                            {{ form.entidade_concedente }}
-			                            <div class="help-block">{{ form.entidade_concedente.errors }}</div>
-			                        </div>
-			                    </div>
+								<div class="form-group row {% if form|is_required:form.entidade_concedente.name %} required {% endif %}">
+									<label for="inputKey" class="col-md-2 control-label">Entidade:</label>
+									<div class="col-md-10">
+										{{ form.entidade_concedente }}
+										<div class="help-block">{{ form.entidade_concedente.errors }}</div>
+									</div>
+								</div>
 
-			                    <div class="form-group row {% if form|is_required:form.responsavel_concedente.name %} required {% endif %}">
-			                        <label for="inputKey" class="col-md-2 control-label">Responsável:</label>
-			                        <div class="col-md-10">
-			                            {{ form.responsavel_concedente }}
-			                            <div class="help-block">{{ form.responsavel_concedente.errors }}</div>
-			                        </div>
-			                    </div>
+								<div class="form-group row {% if form|is_required:form.responsavel_concedente.name %} required {% endif %}">
+									<label for="inputKey" class="col-md-2 control-label">Responsável:</label>
+									<div class="col-md-10">
+										{{ form.responsavel_concedente }}
+										<div class="help-block">{{ form.responsavel_concedente.errors }}</div>
+									</div>
+								</div>
 
-			                    <div class="form-group row {% if form|is_required:form.responsavel_tecnico_concedente.name %} required {% endif %}">
-			                        <label for="inputKey" class="col-md-2 control-label">Responsável Técnico:</label>
-			                        <div class="col-md-10">
-			                            {{ form.responsavel_tecnico_concedente }}
-			                            <div class="help-block">{{ form.responsavel_tecnico_concedente.errors }}</div>
-			                        </div>
-			                    </div>
+								<div class="form-group row {% if form|is_required:form.responsavel_tecnico_concedente.name %} required {% endif %}">
+									<label for="inputKey" class="col-md-2 control-label">Responsável Técnico:</label>
+									<div class="col-md-10">
+										{{ form.responsavel_tecnico_concedente }}
+										<div class="help-block">{{ form.responsavel_tecnico_concedente.errors }}</div>
+									</div>
+								</div>
 
-			                </fieldset>
+							</fieldset>
 
-			                <fieldset class="well the-fieldset">
+							<fieldset class="well the-fieldset">
 
-			                    <legend class="the-legend">Outros</legend>
+								<legend class="the-legend">Outros</legend>
 
-			                    <div class="form-group row {% if form|is_required:form.metodologia.name %} required {% endif %}">
-			                        <label for="inputKey" class="col-md-2 control-label">{{ form.metodologia.label }}:</label>
-			                        <div class="col-md-10">
-			                            {{ form.metodologia }}
-			                            <div class="help-block">{{ form.metodologia.errors }}</div>
-			                        </div>
-			                    </div>
+								<div class="form-group row {% if form|is_required:form.metodologia.name %} required {% endif %}">
+									<label for="inputKey" class="col-md-2 control-label">{{ form.metodologia.label }}:</label>
+									<div class="col-md-10">
+										{{ form.metodologia }}
+										<div class="help-block">{{ form.metodologia.errors }}</div>
+									</div>
+								</div>
 
-			                    <div class="form-group row {% if form|is_required:form.gestao_transferencia_tecnologia.name %} required {% endif %}">
-			                        <label for="inputKey" class="col-md-2 control-label">Gestão de Projeto e Transferência de Tecnologia:</label>
-			                        <div class="col-md-10">
-			                            {{ form.gestao_transferencia_tecnologia }}
-			                            <div class="help-block">{{ form.gestao_transferencia_tecnologia.errors }}</div>
-			                        </div>
-			                    </div>
+								<div class="form-group row {% if form|is_required:form.gestao_transferencia_tecnologia.name %} required {% endif %}">
+									<label for="inputKey" class="col-md-2 control-label">Gestão de Projeto e Transferência de Tecnologia:</label>
+									<div class="col-md-10">
+										{{ form.gestao_transferencia_tecnologia }}
+										<div class="help-block">{{ form.gestao_transferencia_tecnologia.errors }}</div>
+									</div>
+								</div>
 
-			                </fieldset>
+							</fieldset>
 
-                        </div>
+						</div>
 
-                        </form>
-	              			
-                        <div class="tab-pane fade {% if 'participante-' in url %} in active {% endif %}" id="adbolsistas">
+						</form>
+							
+						<div class="tab-pane fade {% if 'participante-' in url %} in active {% endif %}" id="adbolsistas">
 
-                        	<form class="form" method="POST" action="{% if pk and pkparticipante %}{% url 'participante-proj-editar' pk pkparticipante %} {% endif %}{% if pk and not pkparticipante %} {% url 'participante-proj-criar' pk %}{% endif %}">
+							<form class="form" method="POST" action="{% if pk and pkparticipante %}{% url 'participante-proj-editar' pk pkparticipante %} {% endif %}{% if pk and not pkparticipante %} {% url 'participante-proj-criar' pk %}{% endif %}">
 
 							{% csrf_token %}
 
-	                    	<fieldset class="well the-fieldset">
+							<fieldset class="well the-fieldset">
 
-	                    		<legend class="the-legend">Bolsista</legend>
+								<legend class="the-legend">Bolsista</legend>
 
-	                    		{{ formp.projeto }}
+								{{ formp.projeto }}
 
-				                <div class="form-group row required {% if formp.bolsista.errors %}{{ 'has-error' }}{% endif %}">
-			                        <label for="inputValue" class="col-md-2 control-label">Bolsista:</label>
-			                        <div class="col-md-10">
-			                            {{ formp.bolsista }}
-			                            <div class="help-block">{{ formp.bolsista.errors }}</div>
-			                        </div>
-			                    </div>
-
-
-			                    <div class="form-group row ">
-				                    <div class="{% if formp.funcao.errors %}{{ "has-error" }}{% endif %}">
-				                        <label for="inputKey" class="col-md-2 control-label">Função:</label>
-				                        <div class="col-md-7">
-				                            {{ formp.funcao }}
-				                            <div class="help-block">{{ formp.funcao.errors }}</div>
-				                        </div>
-				                    </div>
-
-				                    <div class="{% if formp.ic_ativo.errors %}{{ "has-error" }}{% endif %}">
-				                        <label for="inputValue" class="col-md-1 control-label">Ativo:</label>
-				                        <div class="col-md-1">
-				                            {{ formp.ic_ativo }}
-				                            <div class="help-block">{{ formp.ic_ativo.errors }}</div>
-				                        </div>
-				                    </div>
-				                </div>
-
-				            </fieldset>
-
-			                <fieldset class="well the-fieldset">
-			                    <legend class="the-legend">Especificação da Bolsa</legend>
-
-			                    <div class="form-group row ">
-					                <div class="{% if formp.categoria.errors %}{{ 'has-error' }}{% endif %}">
-					                    <label for="inputKey" class="col-md-2 control-label">Categoria:</label>
-					                    <div class="col-md-4">
-					                        {{ formp.categoria }}
-					                        <div class="help-block">{{ formp.categoria.errors }}</div>
-					                    </div>
-					                </div>
-					                <div class="{% if formp.periodo_total.errors %}{{ 'has-error' }}{% endif %}">
-					                    <label for="inputValue" class="col-md-3 control-label">Período Total Previsto:</label>
-					                    <div class="col-md-3">
-					                        {{ formp.periodo_total }}
-					                        <div class="help-block">{{ formp.periodo_total.errors }}</div>
-					                    </div>
-					                </div>
-					            </div>
-
-					            <div class="form-group row ">
-					                <div class="{% if formp.modalidade.errors %}{{ 'has-error' }}{% endif %}">
-					                    <label for="inputKey" class="col-md-2 control-label">Modalidade:</label>
-					                    <div class="col-md-4">
-					                        {{ formp.modalidade }}
-					                        <div class="help-block">{{ formp.modalidade.errors }}</div>
-					                    </div>
-					                </div>
-					                <div class="{% if formp.horas_semanais.errors %}{{ 'has-error' }}{% endif %}">
-					                    <label for="inputValue" class="col-md-3 control-label">Número de Horas Semanais:</label>
-					                    <div class="col-md-3">
-					                        {{ formp.horas_semanais }}
-					                        <div class="help-block">{{ formp.horas_semanais.errors }}</div>
-					                    </div>
-					                </div>
-					            </div>
-
-					            <div class="form-group row ">
-					                <div class="{% if formp.nivel.errors %}{{ 'has-error' }}{% endif %}">
-					                    <label for="inputKey" class="col-md-2 control-label">Nível:</label>
-					                    <div class="col-md-4">
-					                        {{ formp.nivel }}
-					                        <div class="help-block">{{ formp.nivel.errors }}</div>
-					                    </div>
-					                </div>
-					                <div class="{% if formp.valor_mensal.errors %}{{ 'has-error' }}{% endif %}">
-					                    <label for="inputValue" class="col-md-3 control-label">Valor Mensal:</label>
-					                    <div class="col-md-3">
-					                        {{ formp.valor_mensal }}
-					                        <div class="help-block">{{ formp.valor_mensal.errors }}</div>
-					                    </div>
-					                </div>
-					            </div>
+								<div class="form-group row required {% if formp.bolsista.errors %}{{ 'has-error' }}{% endif %}">
+									<label for="inputValue" class="col-md-2 control-label">Bolsista:</label>
+									<div class="col-md-10">
+										{{ formp.bolsista }}
+										<div class="help-block">{{ formp.bolsista.errors }}</div>
+									</div>
+								</div>
 
 
-					            <div class="form-group row ">
-					                <div class="{% if formp.nivel.errors %}{{ 'has-error' }}{% endif %}">
-					                    <label for="inputValue" class="col-md-2 control-label">Vigência Prevista:</label>
-				                        <div class="col-md-4">
-				                            <fieldset class="well the-fieldset">
+								<div class="form-group row ">
+									<div class="{% if formp.funcao.errors %}{{ "has-error" }}{% endif %}">
+										<label for="inputKey" class="col-md-2 control-label">Função:</label>
+										<div class="col-md-7">
+											{{ formp.funcao }}
+											<div class="help-block">{{ formp.funcao.errors }}</div>
+										</div>
+									</div>
 
-				                            	<div class="{% if formp.inicio_vigencia.errors %}{{ 'has-error' }}{% endif %}">
-					                                <label for="inputKey" class="col-md-3 control-label">Início:</label>
-					                                <div class="col-md-9">
-					                                    {{ formp.inicio_vigencia }}
-					                                </div>
-				                                </div>
+									<div class="{% if formp.ic_ativo.errors %}{{ "has-error" }}{% endif %}">
+										<label for="inputValue" class="col-md-1 control-label">Ativo:</label>
+										<div class="col-md-1">
+											{{ formp.ic_ativo }}
+											<div class="help-block">{{ formp.ic_ativo.errors }}</div>
+										</div>
+									</div>
+								</div>
 
-				                                <br><br>
+							</fieldset>
 
-				                                <div class="{% if formp.termino_vigencia.errors %}{{ 'has-error' }}{% endif %}">
-					                                <label for="inputKey" class="col-md-3 control-label">Término:</label>
-					                                <div class="col-md-9">
-					                                    {{ formp.termino_vigencia }}
-					                                </div>
-				                                </div>
-				                            </fieldset>
-				                        </div>
-					                </div>
-					                <div class="{% if formp.valor_total.errors %}{{ 'has-error' }}{% endif %}">
-					                    <label for="inputValue" class="col-md-3 control-label">Valor Total:</label>
-					                    <div class="col-md-3">
-					                        {{ formp.valor_total }}
-					                        <div class="help-block">{{ formp.valor_total.errors }}</div>
-					                    </div>
-					                </div>
-					            </div>
+							<fieldset class="well the-fieldset">
+								<legend class="the-legend">Especificação da Bolsa</legend>
 
-			                </fieldset>
+								<div class="form-group row ">
+									<div class="{% if formp.categoria.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputKey" class="col-md-2 control-label">Categoria:</label>
+										<div class="col-md-4">
+											{{ formp.categoria }}
+											<div class="help-block">{{ formp.categoria.errors }}</div>
+										</div>
+									</div>
+									<div class="{% if formp.periodo_total.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputValue" class="col-md-3 control-label">Período Total Previsto:</label>
+										<div class="col-md-3">
+											{{ formp.periodo_total }}
+											<div class="help-block">{{ formp.periodo_total.errors }}</div>
+										</div>
+									</div>
+								</div>
 
-			                <button type="submit" class="btn btn-info">Vincular Bolsista</button>
-			                <a href="{% url 'projeto' %}" class="btn btn-default">Voltar</a>
+								<div class="form-group row ">
+									<div class="{% if formp.modalidade.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputKey" class="col-md-2 control-label">Modalidade:</label>
+										<div class="col-md-4">
+											{{ formp.modalidade }}
+											<div class="help-block">{{ formp.modalidade.errors }}</div>
+										</div>
+									</div>
+									<div class="{% if formp.horas_semanais.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputValue" class="col-md-3 control-label">Número de Horas Semanais:</label>
+										<div class="col-md-3">
+											{{ formp.horas_semanais }}
+											<div class="help-block">{{ formp.horas_semanais.errors }}</div>
+										</div>
+									</div>
+								</div>
 
-			             
-
-			                <br><br>
-			                </form>
-
-			                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-
-						            <thead>
-						            <tr>
-						                {% for item in formp.preview %}
-						                    <th>{% verbose formp.instance item %}</th>
-						                {% endfor %}
-						                <th>Ações</th>
-						            </tr>
-						            </thead>
-
-						            <tbody>
-						            {% for item in datap %}
-						                <tr class="odd gradeX">
-						                    {% for field in formp.preview %}
-						                        {% with item|getattr:field as value %}
-						                            <td>
-						                                {% if value|is_bool %}
-						                                    <input type="checkbox" {% if value %} checked {% endif %} disabled>
-						                                {% else %}
-						                                    {{ value }}
-						                                {% endif %}
-						                            </td>
-						                        {% endwith %}
-						                    {% endfor %}
-						                    <td>
-						                        <div class="btn-group">
-						                            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-						                                Editar
-						                                <span class="caret"></span>
-						                            </button>
-					                                <ul class="dropdown-menu" role="menu">
-					                                    <li><a href="{% url 'participante-proj-editar' pk item.pk %}">Modificar</a></li>
-					                                    <li><a href="{% url 'participante-remover' pk item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
-
-					                                </ul>
-						                        </div>
-						                    </td>
-						                </tr>
-						            {% endfor %}
-						            </tbody>
+								<div class="form-group row ">
+									<div class="{% if formp.nivel.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputKey" class="col-md-2 control-label">Nível:</label>
+										<div class="col-md-4">
+											{{ formp.nivel }}
+											<div class="help-block">{{ formp.nivel.errors }}</div>
+										</div>
+									</div>
+									<div class="{% if formp.valor_mensal.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputValue" class="col-md-3 control-label">Valor Mensal:</label>
+										<div class="col-md-3">
+											{{ formp.valor_mensal }}
+											<div class="help-block">{{ formp.valor_mensal.errors }}</div>
+										</div>
+									</div>
+								</div>
 
 
-							    </table>
+								<div class="form-group row ">
+									<div class="{% if formp.nivel.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputValue" class="col-md-2 control-label">Vigência Prevista:</label>
+										<div class="col-md-4">
+											<fieldset class="well the-fieldset">
 
-                        </div>
-                        <div class="tab-pane fade {% if 'meta-' in url %} in active {% endif %}" id="cronograma">
+												<div class="{% if formp.inicio_vigencia.errors %}{{ 'has-error' }}{% endif %}">
+													<label for="inputKey" class="col-md-3 control-label">Início:</label>
+													<div class="col-md-9">
+														{{ formp.inicio_vigencia }}
+													</div>
+												</div>
 
-                        	<fieldset class="well the-fieldset">
+												<br><br>
 
-			                    <legend class="the-legend">Cadastro de Meta</legend>
+												<div class="{% if formp.termino_vigencia.errors %}{{ 'has-error' }}{% endif %}">
+													<label for="inputKey" class="col-md-3 control-label">Término:</label>
+													<div class="col-md-9">
+														{{ formp.termino_vigencia }}
+													</div>
+												</div>
+											</fieldset>
+										</div>
+									</div>
+									<div class="{% if formp.valor_total.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputValue" class="col-md-3 control-label">Valor Total:</label>
+										<div class="col-md-3">
+											{{ formp.valor_total }}
+											<div class="help-block">{{ formp.valor_total.errors }}</div>
+										</div>
+									</div>
+								</div>
 
-			                    <form class="form" method="POST" action="{% if pk and pkmeta %}{% url 'meta-proj-editar' pk pkmeta %} {% endif %}{% if pk and not pkmeta %} {% url 'meta-proj-criar' pk %}{% endif %}">
-			                    		
-			                    	{% csrf_token %}
+							</fieldset>
 
-			                    	{{ formm.projeto }}
+							<button type="submit" class="btn btn-info">Vincular Bolsista</button>
+							<a href="{% url 'projeto' %}" class="btn btn-default">Voltar</a>
 
-				                    <div class="form-group row required {% if formm.titulo.errors %}{{ 'has-error' }}{% endif %}">
-				                        <label for="inputValue" class="col-md-2 control-label">Título da Meta:</label>
-				                        <div class="col-md-10">
-				                            {{ formm.titulo }}
-				                            <div class="help-block">{{ formm.titulo.errors }}</div>
-				                        </div>
-				                    </div>
+						 
 
-				                    <div class="form-group row required {% if formm.descricao.errors %}{{ 'has-error' }}{% endif %}">
-				                        <label for="inputValue" class="col-md-2 control-label">Descrição:</label>
-				                        <div class="col-md-10">
-				                            {{ formm.descricao }}
-				                            <div class="help-block">{{ formm.descricao.errors }}</div>
-				                        </div>
-				                    </div>
+							<br><br>
+							</form>
 
-				                    <div class="form-group row required {% if formm.ic_ativo.errors %}{{ 'has-error' }}{% endif %}">
-				                        <label for="inputValue" class="col-md-2 control-label">Ativo:</label>
-				                        <div class="col-md-1">
-				                            {{ formm.ic_ativo }}
-				                            <div class="help-block">{{ formm.ic_ativo.errors }}</div>
-				                        </div>
-				                    </div>
+								<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
 
-			                    	<div class="btn-group">
+									<thead>
+									<tr>
+										{% for item in formp.preview %}
+											<th>{% verbose formp.instance item %}</th>
+										{% endfor %}
+										<th>Ações</th>
+									</tr>
+									</thead>
+
+									<tbody>
+									{% for item in datap %}
+										<tr class="odd gradeX">
+											{% for field in formp.preview %}
+												{% with item|getattr:field as value %}
+													<td>
+														{% if value|is_bool %}
+															<input type="checkbox" {% if value %} checked {% endif %} disabled>
+														{% else %}
+															{{ value }}
+														{% endif %}
+													</td>
+												{% endwith %}
+											{% endfor %}
+											<td>
+												<div class="btn-group">
+													<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+														Editar
+														<span class="caret"></span>
+													</button>
+													<ul class="dropdown-menu" role="menu">
+														<li><a href="{% url 'participante-proj-editar' pk item.pk %}">Modificar</a></li>
+														<li><a href="{% url 'participante-remover' pk item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
+
+													</ul>
+												</div>
+											</td>
+										</tr>
+									{% endfor %}
+									</tbody>
+
+
+								</table>
+
+						</div>
+						<div class="tab-pane fade {% if 'meta-' in url %} in active {% endif %}" id="cronograma">
+
+							<fieldset class="well the-fieldset">
+
+								<legend class="the-legend">Cadastro de Meta</legend>
+
+								<form class="form" method="POST" action="{% if pk and pkmeta %}{% url 'meta-proj-editar' pk pkmeta %} {% endif %}{% if pk and not pkmeta %} {% url 'meta-proj-criar' pk %}{% endif %}">
+										
+									{% csrf_token %}
+
+									{{ formm.projeto }}
+
+									<div class="form-group row required {% if formm.titulo.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputValue" class="col-md-2 control-label">Título da Meta:</label>
+										<div class="col-md-10">
+											{{ formm.titulo }}
+											<div class="help-block">{{ formm.titulo.errors }}</div>
+										</div>
+									</div>
+
+									<div class="form-group row required {% if formm.descricao.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputValue" class="col-md-2 control-label">Descrição:</label>
+										<div class="col-md-10">
+											{{ formm.descricao }}
+											<div class="help-block">{{ formm.descricao.errors }}</div>
+										</div>
+									</div>
+
+									<div class="form-group row required {% if formm.ic_ativo.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputValue" class="col-md-2 control-label">Ativo:</label>
+										<div class="col-md-1">
+											{{ formm.ic_ativo }}
+											<div class="help-block">{{ formm.ic_ativo.errors }}</div>
+										</div>
+									</div>
+
+									<div class="btn-group">
 										<button class="btn btn-info">Salvar</button>
 										<a href="{% url 'projeto' %}" class="btn btn-default">Voltar</a>
 									</div>
 
-			                    </form>
-			                    
+								</form>
+								
 
-			                </fieldset>
+							</fieldset>
 
-			                <fieldset class="well the-fieldset">
+							<fieldset class="well the-fieldset">
 
-			                    <legend class="the-legend">Atividade Vinculada</legend>
+								<legend class="the-legend">Atividade Vinculada</legend>
 
-			                    <button class="btn btn-info" data-toggle="modal" data-target="#modal-atividade" {% if pk and pkmeta %}{% else %} disabled {% endif %}><i class="fa fa-plus" aria-hidden="true"></i></button>
-			                    <br/><br/>
+								<button class="btn btn-info" data-toggle="modal" data-target="#modal-atividade" {% if pk and pkmeta %}{% else %} disabled {% endif %}><i class="fa fa-plus" aria-hidden="true"></i></button>
+								<br/><br/>
 
-			                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+								<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
 
-						            <thead>
-						            <tr>
-						                {% for item in forma.preview %}
-						                    <th>{% verbose forma.instance item %}</th>
-						                {% endfor %}
-						                <th>Ações</th>
-						            </tr>
-						            </thead>
+									<thead>
+									<tr>
+										{% for item in forma.preview %}
+											<th>{% verbose forma.instance item %}</th>
+										{% endfor %}
+										<th>Ações</th>
+									</tr>
+									</thead>
 
-						            <tbody>
-						            {% for item in atividades %}
-						                <tr class="odd gradeX">
-						                    {% for field in forma.preview %}
-						                        {% with item|getattr:field as value %}
-						                            <td>
-						                                {% if value|is_bool %}
-						                                    <input type="checkbox" {% if value %} checked {% endif %} disabled>
-						                                {% else %}
-						                                    {{ value }}
-						                                {% endif %}
-						                            </td>
-						                        {% endwith %}
-						                    {% endfor %}
-						                    <td>
-						                        <div class="btn-group">
-						                            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-						                                Editar
-						                                <span class="caret"></span>
-						                            </button>
-					                                <ul class="dropdown-menu" role="menu">
-					                                    <li><a href="{% url 'atividade-meta-proj-editar' pk item.meta.pk item.pk %}">Modificar</a></li>
-					                                    <li><a href="{% url 'atividade-meta-proj-remover' pk item.meta.pk item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
+									<tbody>
+									{% for item in atividades %}
+										<tr class="odd gradeX">
+											{% for field in forma.preview %}
+												{% with item|getattr:field as value %}
+													<td>
+														{% if value|is_bool %}
+															<input type="checkbox" {% if value %} checked {% endif %} disabled>
+														{% else %}
+															{{ value }}
+														{% endif %}
+													</td>
+												{% endwith %}
+											{% endfor %}
+											<td>
+												<div class="btn-group">
+													<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+														Editar
+														<span class="caret"></span>
+													</button>
+													<ul class="dropdown-menu" role="menu">
+														<li><a href="{% url 'atividade-meta-proj-editar' pk item.meta.pk item.pk %}">Modificar</a></li>
+														<li><a href="{% url 'atividade-meta-proj-remover' pk item.meta.pk item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
 
-					                                </ul>
-						                        </div>
-						                    </td>
-						                </tr>
-						            {% endfor %}
-						            </tbody>
-
-
-							    </table>
-
-			                </fieldset>
-
-			                <fieldset class="well the-fieldset">
-
-			                    <legend class="the-legend">Tabela de Cronograma</legend>
-
-			                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-
-						            <thead>
-						            <tr>
-						                {% for item in formm.preview %}
-						                    <th>{% verbose formm.instance item %}</th>
-						                {% endfor %}
-						                <th>Ações</th>
-						            </tr>
-						            </thead>
-
-						            <tbody>
-						            {% for item in metas %}
-						                <tr class="odd gradeX">
-						                    {% for field in formm.preview %}
-						                        {% with item|getattr:field as value %}
-						                            <td>
-						                                {% if value|is_bool %}
-						                                    <input type="checkbox" {% if value %} checked {% endif %} disabled>
-						                                {% else %}
-						                                    {{ value }}
-						                                {% endif %}
-						                            </td>
-						                        {% endwith %}
-						                    {% endfor %}
-						                    <td>
-						                        <div class="btn-group">
-						                            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-						                                Editar
-						                                <span class="caret"></span>
-						                            </button>
-					                                <ul class="dropdown-menu" role="menu">
-					                                    <li><a href="{% url 'meta-proj-editar' pk item.pk %}">Modificar</a></li>
-					                                    <li><a href="{% url 'meta-proj-remover' pk item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
-
-					                                </ul>
-						                        </div>
-						                    </td>
-						                </tr>
-						            {% endfor %}
-						            </tbody>
+													</ul>
+												</div>
+											</td>
+										</tr>
+									{% endfor %}
+									</tbody>
 
 
-							    </table>
+								</table>
+
+							</fieldset>
+
+							<fieldset class="well the-fieldset">
+
+								<legend class="the-legend">Tabela de Cronograma</legend>
+
+								<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+
+									<thead>
+									<tr>
+										{% for item in formm.preview %}
+											<th>{% verbose formm.instance item %}</th>
+										{% endfor %}
+										<th>Ações</th>
+									</tr>
+									</thead>
+
+									<tbody>
+									{% for item in metas %}
+										<tr class="odd gradeX">
+											{% for field in formm.preview %}
+												{% with item|getattr:field as value %}
+													<td>
+														{% if value|is_bool %}
+															<input type="checkbox" {% if value %} checked {% endif %} disabled>
+														{% else %}
+															{{ value }}
+														{% endif %}
+													</td>
+												{% endwith %}
+											{% endfor %}
+											<td>
+												<div class="btn-group">
+													<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+														Editar
+														<span class="caret"></span>
+													</button>
+													<ul class="dropdown-menu" role="menu">
+														<li><a href="{% url 'meta-proj-editar' pk item.pk %}">Modificar</a></li>
+														<li><a href="{% url 'meta-proj-remover' pk item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
+
+													</ul>
+												</div>
+											</td>
+										</tr>
+									{% endfor %}
+									</tbody>
 
 
-
-			                </fieldset>
-
-                        	
-
-                        </div>
-                        <div class="tab-pane fade" id="vatividade">
-
-                        	<fieldset class="well the-fieldset">
-
-					            <legend class="the-legend">Vincular Meta/Atividade/Bolsista</legend>
-
-					            <form class="form" method="POST" action="">
-
-					            	{% csrf_token %}
-
-					            	{% if 'vinculo-atividade-meta-proj' in url %}
-
-					            		<div class="form-group row">
-					                        <label for="inputKey" class="col-md-2 control-label">Meta:</label>
-					                        <div class="col-md-10">
-					                            {{ formv.meta }}
-					                            <div class="help-block">{{ formv.meta.errors }}</div>
-					                        </div>
-					                    </div>
-
-					                    <div class="form-group row">
-					                        <label for="inputKey" class="col-md-2 control-label">Atividade:</label>
-					                        <div class="col-md-10">
-					                            {{ formv.atividade }}
-					                            <div class="help-block">{{ formv.atividade.errors }}</div>
-					                        </div>
-					                    </div>
-
-					                    <div class="form-group row">
-					                        <label for="inputKey" class="col-md-2 control-label">Participantes:</label>
-					                        <div class="col-md-10">
-					                            {{ formv.participantes }}
-					                            <div class="help-block">{{ formv.participantes.errors }}</div>
-					                        </div>
-					                    </div>
-
-			                    	{% else %}
-
-			                    		<div class="form-group row">
-					                        <label for="inputValue" class="col-md-2 control-label">Meta:</label>
-					                        <div class="col-md-10">
-					                            <div class="col-sm-10">
-								                    <select name="meta" class="form-control" id="id_vinculo_atividade_meta" required="">
-									  					<option value="" disabled="" selected="">Selecione uma opção</option>
-
-									  					{% for meta in metas %}
-
-									  						<option value="{{ meta.pk }}" >{{ meta.titulo }}</option>
-
-									  					{% endfor %}
-													</select>
-								                    <div class="help-block"></div>
-								               	</div>
-					                        </div>
-					                    </div>
-
-					                    <div class="form-group row">
-					                        <label for="inputValue" class="col-md-2 control-label">Atividade:</label>
-					                        <div class="col-md-10">
-					                            <div class="col-sm-10" id="container-atividades">
-								                    <select id="id_atividade_select" class="form-control" required="" disabled="">
-								  					<option value="">Selecione uma opção</option>
-													</select>
-								                    <div class="help-block"></div>
-								               	</div>
-					                        </div>
-					                    </div>
+								</table>
 
 
 
-			                    	{% endif %}
+							</fieldset>
 
-			                    </form>
+							
 
-		                    </fieldset>
-	                       
-	                       
+						</div>
+						<div class="tab-pane fade {% if 'vinculo-atividade-m-proj' in url %} in active {% endif %}" id="vatividade">
 
-                        </div>
+							<fieldset class="well the-fieldset">
 
-                        <div class="tab-pane fade {% if 'anexo-' in url %} in active {% endif %}" id="anexos">
-                        
-			                <fieldset class="well the-fieldset">
+								<legend class="the-legend">Vincular Meta/Atividade/Bolsista</legend>
 
-					            <legend class="the-legend">Anexos do Projeto</legend>
+								<form class="form" method="POST" action="{% if 'vinculo-atividade-m-proj' in url %} {% url 'vinculo-atividade-m-proj' pk pkmeta pkatividade%} {% endif %}">
 
-				            	{% if pk %}
+									{% csrf_token %}
 
-					            <form action="{% url 'anexo-proj-upload' pk %}" method="post" class="form" enctype="multipart/form-data">
+									<div class="form-group row">
+										<label for="inputValue" class="col-md-2 control-label">Meta:</label>
+										<div class="col-md-10">
+											
+											<select name="meta" class="form-control" id="id_vinculo_atividade_meta" required="">
+												<option value="" disabled="" {% if not pkmeta %} selected=""`{% endif %}>Selecione uma opção</option>
+												{% for meta in metas %}
+													<option value="{{ meta.pk }}" {% if meta.pk == pkmeta %} selected="" {% endif %}>{{ meta.titulo }}</option>
+												{% endfor %}
+											</select>
+												
+											<div class="help-block"></div>
+											
+										</div>
+									</div>
 
-			                        {% csrf_token %}
+									<div class="form-group row">
+										<label for="inputValue" class="col-md-2 control-label">Atividade:</label>
+										<div class="col-md-10" id="container-atividades">
 
-			                        {{ formfp.projeto }}
+											<select id="id_atividade_select" class="form-control" required="" disabled="">
+											<option value="">Selecione uma opção</option>
+											</select>
 
-					                <div class="btn-group">
+											<div class="help-block"></div>
+										</div>
+									</div>
+
+									<div class="form-group checkbox row">
+										<div class="col-md-10">
+
+											{% if 'vinculo-atividade-m-proj' in url %}
+
+												{{ formv.participantes }}
+
+											{% else %}
+
+												<ul id="id_participantes">
+												{% for participante in datap %}
+
+													<li><label for="id_participantes_{{ participante.pk }}"><input name="participantes" value="{{ participante.pk }}" id="id_participantes_{{ participante.pk }}" type="checkbox" disabled="">{{ participante.bolsista.no_bolsista }}</label></li>
+
+												{% endfor %}
+												</ul>
+											{% endif %}
+
+											<div class="help-block"></div>
+											
+										</div>
+									</div>
+
+
+									<div class="btn-group">
+										<button class="btn btn-info">Salvar</button>
+										<a href="{% url 'projeto' %}" class="btn btn-default">Voltar</a>
+									</div>
+
+								</form>
+
+							</fieldset>
+						   
+						   
+
+						</div>
+
+						<div class="tab-pane fade {% if 'anexo-' in url %} in active {% endif %}" id="anexos">
+						
+							<fieldset class="well the-fieldset">
+
+								<legend class="the-legend">Anexos do Projeto</legend>
+
+								{% if pk %}
+
+								<form action="{% url 'anexo-proj-upload' pk %}" method="post" class="form" enctype="multipart/form-data">
+
+									{% csrf_token %}
+
+									{{ formfp.projeto }}
+
+									<div class="btn-group">
 										<label class="file-upload btn btn-warning">
-						                	Procurar ... {{ formfp.arquivo }}
-						            	</label>
-									  	<button type="submit" class="btn btn-primary" id="submit-anexo" disabled="">
+											Procurar ... {{ formfp.arquivo }}
+										</label>
+										<button type="submit" class="btn btn-primary" id="submit-anexo" disabled="">
 											Salvar anexo
 										</button>
 									</div>
-			                        
-			                    </form>
+									
+								</form>
 
-			                    {% endif %}
+								{% endif %}
 
-					            <br><br>
+								<br><br>
 
-					            <div>
-					                <table class="table table-striped file-table">
+								<div>
+									<table class="table table-striped file-table">
 
-					                    {% for document in attachments %}
-					                        <tr>
-					                            <td class="col-sm-2"><a href="{% url 'anexo-proj-remover' pk document.pk %}" class="delete-file-x" onclick="return confirm('Tem certeza? O arquivo será apagado permanentemente')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
-					                            <td class="col-sm-2"><i class="fa fa-file-word-o file-icon" aria-hidden="true"></i></td>
-					                            <td class="col-sm-8"><a target="_blank" href="{{ document.arquivo.url }}" class="open-file" download>{{ document.filename }}</a></td>
-					                            <!--<td><img src="{{ document.arquivo.url }}" alt=""></td>-->
-					                        </tr>
-					                    {% endfor %}
+										{% for document in attachments %}
+											<tr>
+												<td class="col-sm-2"><a href="{% url 'anexo-proj-remover' pk document.pk %}" class="delete-file-x" onclick="return confirm('Tem certeza? O arquivo será apagado permanentemente')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+												<td class="col-sm-2"><i class="fa fa-file-word-o file-icon" aria-hidden="true"></i></td>
+												<td class="col-sm-8"><a target="_blank" href="{{ document.arquivo.url }}" class="open-file" download>{{ document.filename }}</a></td>
+												<!--<td><img src="{{ document.arquivo.url }}" alt=""></td>-->
+											</tr>
+										{% endfor %}
 
-					                </table>
-					            </div>
+									</table>
+								</div>
 
-                        </div>
+						</div>
 
-                        <div class="tab-pane fade" id="resumo">
+						<div class="tab-pane fade" id="resumo">
 
-                        	<fieldset class="well the-fieldset">
+							<fieldset class="well the-fieldset">
 
-			                    <legend class="the-legend">Resumo do Projeto</legend>
+								<legend class="the-legend">Resumo do Projeto</legend>
 
 
-			                </fieldset>
+							</fieldset>
 
-                        </div>
-                    </div>
+						</div>
+					</div>
 
 		<div id="form-buttons">
 			<button class="btn btn-info" id="confirm-button">Salvar</button>
@@ -690,78 +685,78 @@
 		 <!-- Modal -->
 
 		{% if pk and pkmeta %}
-		    <div id="modal-atividade" class="modal fade" role="dialog">
-		        <div class="modal-dialog">
+			<div id="modal-atividade" class="modal fade" role="dialog">
+				<div class="modal-dialog">
 
-		            <!-- Modal content-->
-		            <div class="modal-content">
-		                <div class="modal-header">
-		                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-		                    <h4 class="modal-title">{% if 'atividade-meta-proj-editar' in url %}Modificar{% else %}
-		                        Criar{% endif %} {% class_verbose forma.instance %}</h4>
-		                </div>
-		                <div class="modal-body">
-		                    <form action="{% if pkatividade %}{% url 'atividade-meta-proj-editar' pk pkmeta pkatividade %} {% else %} {% url 'atividade-meta-proj-criar' pk pkmeta %} {% endif %}" method="post" class="form">
-		                        {% csrf_token %}
-		                       
-		                       	{{ forma.meta }}
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">{% if 'atividade-meta-proj-editar' in url %}Modificar{% else %}
+								Criar{% endif %} {% class_verbose forma.instance %}</h4>
+						</div>
+						<div class="modal-body">
+							<form action="{% if pkatividade %}{% url 'atividade-meta-proj-editar' pk pkmeta pkatividade %} {% else %} {% url 'atividade-meta-proj-criar' pk pkmeta %} {% endif %}" method="post" class="form">
+								{% csrf_token %}
+							   
+								{{ forma.meta }}
 
-		                       	<div class="form-group row required {% if forma.ic_ativo.errors %}{{ 'has-error' }}{% endif %}">
-			                        <label for="inputValue" class="col-md-2 control-label">Ativo:</label>
-			                        <div class="col-md-1">
-			                            {{ forma.ic_ativo }}
-			                            <div class="help-block">{{ forma.ic_ativo.errors }}</div>
-			                        </div>
-			                    </div>
+								<div class="form-group row required {% if forma.ic_ativo.errors %}{{ 'has-error' }}{% endif %}">
+									<label for="inputValue" class="col-md-2 control-label">Ativo:</label>
+									<div class="col-md-1">
+										{{ forma.ic_ativo }}
+										<div class="help-block">{{ forma.ic_ativo.errors }}</div>
+									</div>
+								</div>
 
-			                    <div class="form-group row required {% if forma.titulo.errors %}{{ 'has-error' }}{% endif %}">
-			                        <label for="inputValue" class="col-md-2 control-label">Título da Meta:</label>
-			                        <div class="col-md-10">
-			                            {{ forma.titulo }}
-			                            <div class="help-block">{{ forma.titulo.errors }}</div>
-			                        </div>
-			                    </div>
+								<div class="form-group row required {% if forma.titulo.errors %}{{ 'has-error' }}{% endif %}">
+									<label for="inputValue" class="col-md-2 control-label">Título da Meta:</label>
+									<div class="col-md-10">
+										{{ forma.titulo }}
+										<div class="help-block">{{ forma.titulo.errors }}</div>
+									</div>
+								</div>
 
-			                    <div class="form-group row required {% if forma.descricao.errors %}{{ 'has-error' }}{% endif %}">
-			                        <label for="inputValue" class="col-md-2 control-label">Descrição:</label>
-			                        <div class="col-md-10">
-			                            {{ forma.descricao }}
-			                            <div class="help-block">{{ forma.descricao.errors }}</div>
-			                        </div>
-			                    </div>
+								<div class="form-group row required {% if forma.descricao.errors %}{{ 'has-error' }}{% endif %}">
+									<label for="inputValue" class="col-md-2 control-label">Descrição:</label>
+									<div class="col-md-10">
+										{{ forma.descricao }}
+										<div class="help-block">{{ forma.descricao.errors }}</div>
+									</div>
+								</div>
 
-		                        <div class="form-group row ">
-				                    <div class="{% if forma.data_inicio.errors %}{{ 'has-error' }}{% endif %}">
-				                        <label for="inputKey" class="col-md-2 control-label">Data de Início:</label>
-				                        <div class="col-md-3">
-				                            {{ forma.data_inicio }}
-				                            <div class="help-block">{{ forma.data_inicio.errors }}</div>
-				                        </div>
-				                    </div>
+								<div class="form-group row ">
+									<div class="{% if forma.data_inicio.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputKey" class="col-md-2 control-label">Data de Início:</label>
+										<div class="col-md-3">
+											{{ forma.data_inicio }}
+											<div class="help-block">{{ forma.data_inicio.errors }}</div>
+										</div>
+									</div>
 
-				                    <div class="{% if forma.data_fim.errors %}{{ 'has-error' }}{% endif %}">
-				                        <label for="inputValue" class="col-md-4 control-label">Data de Término:</label>
-				                        <div class="col-md-3">
-				                            {{ forma.data_fim }}
-				                            <div class="help-block">{{ forma.data_fim.errors }}</div>
-				                        </div>
-				                    </div>
-				                </div>
+									<div class="{% if forma.data_fim.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputValue" class="col-md-4 control-label">Data de Término:</label>
+										<div class="col-md-3">
+											{{ forma.data_fim }}
+											<div class="help-block">{{ forma.data_fim.errors }}</div>
+										</div>
+									</div>
+								</div>
 
-		                        <button type="submit" class="btn btn-primary">
-		                            {% bootstrap_icon "star" %} Salvar
-		                        </button>
-		                    </form>
+								<button type="submit" class="btn btn-primary">
+									{% bootstrap_icon "star" %} Salvar
+								</button>
+							</form>
 
-		                </div>
-		                <div class="modal-footer">
-		                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-		                </div>
-		            </div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						</div>
+					</div>
 
-		        </div>
-		    </div>
-	    {% endif %}
+				</div>
+			</div>
+		{% endif %}
 
 	{% endwith %}
 			

@@ -330,3 +330,7 @@ td {
 .file-icon{
 
 }
+
+.checkbox ul li {
+    list-style: none;
+}

@@ -7,6 +7,8 @@ from .utils.models import get_fields, get_clean_fields
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.contrib.auth.forms import UserChangeForm
 
+from django.forms.utils import ErrorList
+
 class BaseForm(ModelForm):
     def __init__(self, *args, **kwargs):
         self.preview = remove('id', self.preview)
@@ -155,23 +157,13 @@ class AnexoForm(BaseForm):
         model = Anexo
         fields = get_fields(model)
 
+#from https://docs.djangoproject.com/en/2.1/_modules/django/forms/forms/
+
 class AtividadeParticipantesForm(ModelForm):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        data = kwargs.get('data', None)
-        if data:
-            pkmeta = data['meta']
-            meta = Meta.objects.get(pk=pkmeta)
-            self.fields['meta'].queryset = Meta.objects.get(projeto=meta.projeto)
-            self.fields['atividade'].queryset = Atividade.objects.get(meta=meta)
-            self.fields['participantes'].queryset = Participante.objects.filter(projeto=meta.projeto, ic_ativo=True)
-    
-    meta = forms.ModelChoiceField(queryset=Meta.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}), empty_label='Selecione uma opção')
-    atividade = forms.ModelChoiceField(queryset=Atividade.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}), empty_label='Selecione uma opção')
     participantes = forms.ModelMultipleChoiceField(queryset=Participante.objects.filter(), widget=forms.CheckboxSelectMultiple())
     class Meta:
         model = Atividade
-        fields = ['atividade', 'participantes']
+        fields = ['participantes']
 
 class AtividadeSelect(Form):
     def __init__(self, pkmeta, **kwargs):

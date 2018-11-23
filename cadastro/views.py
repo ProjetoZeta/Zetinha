@@ -155,11 +155,11 @@ class AtividadeParticipantes(MainView):
 
     form = AtividadeParticipantesForm
 
-    url_triggers = ['^vinculo-atividade-meta-proj$']
+    url_triggers = ['^vinculo-atividade-m-proj$']
 
     formalias = 'formv'
 
-    success_redirect = 'vinculo-atividade-meta-proj'
+    success_redirect = 'vinculo-atividade-m-proj'
 
 class MetaProjeto(MainView):
 
