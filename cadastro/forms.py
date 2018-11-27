@@ -7,7 +7,11 @@ from .utils.models import get_fields, get_clean_fields
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.contrib.auth.forms import UserChangeForm
 
-from django.forms.utils import ErrorList
+from django.forms.widgets import CheckboxSelectMultiple
+
+class CustomCheckboxSelectMultiple(CheckboxSelectMultiple):
+    template_name = 'widgets/checkboxselectmultiple/checkbox_select.html'
+    option_template_name = 'widgets/checkboxselectmultiple/checkbox_option.html'
 
 class BaseForm(ModelForm):
     def __init__(self, *args, **kwargs):
