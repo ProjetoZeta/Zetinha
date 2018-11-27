@@ -10,7 +10,7 @@ $(document).ready(function () {
 			  url: '/cadastro/atividade/' + atividade_pk + '/participantes_select',
 			  type: "get", //send it through get method
 			  success: function(response) {
-			    $( "#container-participantes" ).html(response)
+			    $( "#container-participantes" ).html(response.form)
 			  },
 			  error: function(xhr) {
 			  	alert('AJAX falhou')

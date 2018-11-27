@@ -1,9 +1,9 @@
+{{ widget.label }}
+
 <div class="material-switch pull-right">
-
-	{{ widget.label }}
 	
-	<input type="checkbox" id="someSwitchOptionDefault" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %/>
+	<input type="checkbox" id="option_participante_{{ widget.value }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}/>
 
-	<label for="someSwitchOptionDefault" class="label-default"></label>
+	<label for="option_participante_{{ widget.value }}" class="label-info"></label>
 
 </div>

@@ -585,79 +585,17 @@
 										</div>
 									</div>
 
-									<div class="form-group checkbox row">
-										<div class="col-md-10" id="container-participantes">
-
-											{% if 'vinculo-atividade-m-proj' in url %}
-
-												{{ formv.participantes }}
-
-											{% else %}
-
-												<ul id="id_participantes">
-												{% for participante in datap %}
-
-													<li><label for="id_participantes_{{ participante.pk }}"><input name="participantes" value="{{ participante.pk }}" id="id_participantes_{{ participante.pk }}" type="checkbox" disabled="">{{ participante.bolsista.no_bolsista }}</label></li>
-
-												{% endfor %}
-												</ul>
-											{% endif %}
-
-											<div class="help-block"></div>
-											
-										</div>
-									</div>
-									
-
 									<div class="panel panel-info">
 										<!-- Default panel contents -->
-										<div class="panel-heading">Bolsistas</div>
+										<div class="panel-heading">Bolsistas Participantes</div>
 									
-										<!-- List group -->
-										<ul class="list-group custom-checkboxes">
-											<li class="list-group-item">
-												Bootstrap Switch Default
-												<div class="material-switch pull-right">
-													<input id="someSwitchOptionDefault" name="someSwitchOption001" type="checkbox"/>
-													<label for="someSwitchOptionDefault" class="label-default"></label>
-												</div>
-											</li>
-											<li class="list-group-item">
-												Bootstrap Switch Primary
-												<div class="material-switch pull-right">
-													<input id="someSwitchOptionPrimary" name="someSwitchOption001" type="checkbox"/>
-													<label for="someSwitchOptionPrimary" class="label-primary"></label>
-												</div>
-											</li>
-											<li class="list-group-item">
-												Bootstrap Switch Success
-												<div class="material-switch pull-right">
-													<input id="someSwitchOptionSuccess" name="someSwitchOption001" type="checkbox"/>
-													<label for="someSwitchOptionSuccess" class="label-success"></label>
-												</div>
-											</li>
-											<li class="list-group-item">
-												Bootstrap Switch Info
-												<div class="material-switch pull-right">
-													<input id="someSwitchOptionInfo" name="someSwitchOption001" type="checkbox"/>
-													<label for="someSwitchOptionInfo" class="label-info"></label>
-												</div>
-											</li>
-											<li class="list-group-item">
-												Bootstrap Switch Warning
-												<div class="material-switch pull-right">
-													<input id="someSwitchOptionWarning" name="someSwitchOption001" type="checkbox"/>
-													<label for="someSwitchOptionWarning" class="label-warning"></label>
-												</div>
-											</li>
-											<li class="list-group-item">
-												Bootstrap Switch Danger
-												<div class="material-switch pull-right">
-													<input id="someSwitchOptionDanger" name="someSwitchOption001" type="checkbox"/>
-													<label for="someSwitchOptionDanger" class="label-danger"></label>
-												</div>
-											</li>
+										<ul id="container-participantes" class="list-group custom-checkboxes">
+
+											{{ formv.participantes }}
+											<!-- List group -->
+
 										</ul>
+										
 									</div> 
 
 									<div class="btn-group">

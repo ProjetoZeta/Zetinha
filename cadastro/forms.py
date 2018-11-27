@@ -13,6 +13,17 @@ class CustomCheckboxSelectMultiple(CheckboxSelectMultiple):
     template_name = 'widgets/checkboxselectmultiple/checkbox_select.html'
     option_template_name = 'widgets/checkboxselectmultiple/checkbox_option.html'
 
+class NewModelForm(ModelForm):
+
+    def as_raw_html(self):
+        "Returns this form rendered as HTML <p>s."
+        return self._html_output(
+            normal_row='%(html_class_attr)s%(label)s %(field)s%(help_text)s',
+            error_row='%s',
+            row_ender='',
+            help_text_html='<span class="helptext">%s</span>',
+            errors_on_separate_row=True)
+
 class BaseForm(ModelForm):
     def __init__(self, *args, **kwargs):
         self.preview = remove('id', self.preview)
@@ -164,7 +175,7 @@ class AnexoForm(BaseForm):
 #from https://docs.djangoproject.com/en/2.1/_modules/django/forms/forms/
 
 class AtividadeParticipantesForm(ModelForm):
-    participantes = forms.ModelMultipleChoiceField(queryset=Participante.objects.filter(), widget=forms.CheckboxSelectMultiple())
+    participantes = forms.ModelMultipleChoiceField(queryset=Participante.objects.filter(), widget=CustomCheckboxSelectMultiple())
     class Meta:
         model = Atividade
         fields = ['participantes']
@@ -180,13 +191,13 @@ class AtividadeSelect(Form):
 
     atividades = forms.ModelChoiceField(queryset=Atividade.objects.all(), empty_label='Selecione uma atividade')
 
-class AtividadeBolsistaSelect(ModelForm):
+class AtividadeBolsistaSelect(NewModelForm):
     def __init__(self, pkprojeto, **kwargs):
         super().__init__(**kwargs)
         projeto = Projeto.objects.get(pk=pkprojeto)
         self.fields['participantes'].queryset = Participante.objects.filter(projeto=projeto, ic_ativo=True)
 
-    participantes = forms.ModelMultipleChoiceField(queryset=Participante.objects.filter(), widget=forms.CheckboxSelectMultiple())
+    participantes = forms.ModelMultipleChoiceField(queryset=Participante.objects.filter(), widget=CustomCheckboxSelectMultiple(), label='')
     class Meta:
         model = Atividade
         fields = ['participantes']

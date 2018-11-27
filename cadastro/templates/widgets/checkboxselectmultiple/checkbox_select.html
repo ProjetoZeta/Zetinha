@@ -1,22 +1,11 @@
-{% with id=widget.attrs.id %}
-<ul{% if id %} id="{{ id }}"{% endif %} class="list-group">
-	{% for group, options, index in widget.optgroups %}
-		{% if group %}
-	  	<li>{{ group }}
-	  		<ul{% if id %} id="{{ id }}_{{ index }}"{% endif %}>
-	  	{% endif %}
+{% for group, options, index in widget.optgroups %}
 
-	  		{% for option in options %}
-	    		<li class="list-group-item">
+	{% for option in options %}
+		<li class="list-group-item">
 
-	    			{% include option.template_name with widget=option %}
+			{% include option.template_name with widget=option %}
 
-	    		</li>
-	    	{% endfor %}
+		</li>
+	{% endfor %}
 
-	    {% if group %}
-	  		</ul>
-	  	</li>
-	  	{% endif %}
-  	{% endfor %}
-</ul>{% endwith %}
+{% endfor %}

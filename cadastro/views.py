@@ -292,6 +292,6 @@ def get_atividades(self, pk):
 def get_atividade_bolsistas(self, pk):
     atividade = AtividadeModel.objects.get(pk=pk)
     form = AtividadeBolsistaSelect(pkprojeto=atividade.meta.projeto.pk, instance=AtividadeModel.objects.get(pk=pk))
-    return JsonResponse({'form': str(form), 'action': {'projeto': atividade.meta.projeto.pk, 'meta': atividade.meta.pk, 'atividade': atividade.pk}})
+    return JsonResponse({'form': str(form.as_raw_html()), 'action': {'projeto': atividade.meta.projeto.pk, 'meta': atividade.meta.pk, 'atividade': atividade.pk}})
         
         
