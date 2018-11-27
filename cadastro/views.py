@@ -1,5 +1,5 @@
 from django.template.loader import get_template
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 
 from django.views.generic.edit import DeleteView
@@ -292,7 +292,6 @@ def get_atividades(self, pk):
 def get_atividade_bolsistas(self, pk):
     atividade = AtividadeModel.objects.get(pk=pk)
     form = AtividadeBolsistaSelect(pkprojeto=atividade.meta.projeto.pk, instance=AtividadeModel.objects.get(pk=pk))
-    return HttpResponse(form)
-
+    return JsonResponse({'form': str(form), 'action': {'projeto': atividade.meta.projeto.pk, 'meta': atividade.meta.pk, 'atividade': atividade.pk}})
         
         
