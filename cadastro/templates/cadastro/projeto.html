@@ -550,7 +550,7 @@
 
 								<legend class="the-legend">Vincular Meta/Atividade/Bolsista</legend>
 
-								<form class="form" method="POST" action="{% if 'vinculo-atividade-m-proj' in url %} {% url 'vinculo-atividade-m-proj' pk pkmeta pkatividade%} {% endif %}">
+								<form class="form" method="POST" id="form-vinculo-atividade-participante" action="{% if 'vinculo-atividade-m-proj' in url %} {% url 'vinculo-atividade-m-proj' pk pkmeta pkatividade%} {% endif %}">
 
 									{% csrf_token %}
 

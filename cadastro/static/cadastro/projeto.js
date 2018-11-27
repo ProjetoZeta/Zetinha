@@ -10,7 +10,10 @@ $(document).ready(function () {
 			  url: '/cadastro/atividade/' + atividade_pk + '/participantes_select',
 			  type: "get", //send it through get method
 			  success: function(response) {
+			  	var action = response.action
+			  	var action_url = '/cadastro/projeto/' + action.projeto + '/meta/' + action.meta + '/atividade/' + action.atividade + '/vincularparticipantes'
 			    $( "#container-participantes" ).html(response.form)
+			    $( "#form-vinculo-atividade-participante" ).attr('action', action_url)
 			  },
 			  error: function(xhr) {
 			  	alert('AJAX falhou')
@@ -28,7 +31,7 @@ $(document).ready(function () {
 		  url: '/cadastro/meta/' + meta_pk + '/atividades_select',
 		  type: "get", //send it through get method
 		  success: function(response) {
-		    $( "#container-atividades" ).html(response)
+		    $( "#container-atividades" ).html(response + '<div class="help-block"></div>')
 		    bind_atividade_on_change_select_event()
 		  },
 		  error: function(xhr) {
