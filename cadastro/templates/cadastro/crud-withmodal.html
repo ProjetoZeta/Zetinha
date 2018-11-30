@@ -67,7 +67,7 @@
 
             {% with request.resolver_match.url_name as url %}
 
-                $('#modal-create').modal({% if form.errors or '-editar' in url %}'show'{% else %}''{% endif %});
+                $('#modal-create').modal({% if form.errors or '-editar' in url %}'show'{% else %}'hide'{% endif %});
 
             {% endwith %}
 

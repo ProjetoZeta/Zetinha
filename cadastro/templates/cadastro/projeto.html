@@ -25,6 +25,25 @@
 
 	<script type="text/javascript">
 
+		{% with request.resolver_match.url_name as url %}
+
+			$(document).ready(function () {
+
+				$('#modal-atividade').modal({% if formf.errors or 'atividade-meta-proj-editar' in url %}'show'{% else %}'hide'{% endif %});
+
+				{% if url != 'vinculo-atividade-m-proj' %}
+					handle_bolsistas_panel()
+				{% endif %}
+
+			});
+
+		{% endwith %}
+
+	</script>
+
+
+	<script type="text/javascript">
+
 		$(document).ready(function() {
 
 			$('.file-upload').file_upload();
@@ -34,22 +53,6 @@
 			})
 
 		});
-
-	</script>
-	<script type="text/javascript">
-		
-		{% with request.resolver_match.url_name as url %}
-
-			$(document).ready(function () {
-				$('#modal-atividade').modal({% if formf.errors or 'atividade-meta-proj-editar' in url %}'show'{% else %}''{% endif %});
-
-				{% if url != 'vinculo-atividade-m-proj' %}
-					handle_bolsistas_panel()
-				{% endif %}
-
-			});
-
-		{% endwith %}
 
 	</script>
 

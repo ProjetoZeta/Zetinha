@@ -21,7 +21,7 @@
         {% with request.resolver_match.url_name as url %}
 
             $(document).ready(function () {
-                $('#modal-responsabilidade').modal({% if formresponsabilidade.errors or 'responsabilidade-entidade-editar' in url %}'show'{% else %}''{% endif %});
+                $('#modal-responsabilidade').modal({% if formresponsabilidade.errors or 'responsabilidade-entidade-editar' in url %}'show'{% else %}'hide'{% endif %});
             });
         {% endwith %}
 

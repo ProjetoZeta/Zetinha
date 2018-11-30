@@ -20,11 +20,11 @@
   <script type="text/javascript">
       
         $(document).ready(function () {
-            $('#modal-file').modal({% if formf.errors %}'show'{% else %}''{% endif %});
+            $('#modal-file').modal({% if formf.errors %}'show'{% else %}'hide'{% endif %});
         });
 
         $(document).ready(function () {
-            $('#modal-emprestimo').modal({% if forme.errors %}'show'{% else %}''{% endif %});
+            $('#modal-emprestimo').modal({% if forme.errors %}'show'{% else %}'hide'{% endif %});
         });
 
   </script>
