@@ -195,7 +195,7 @@ class AtividadeBolsistaSelect(NewModelForm):
     def __init__(self, pkprojeto, **kwargs):
         super().__init__(**kwargs)
         projeto = Projeto.objects.get(pk=pkprojeto)
-        self.fields['participantes'].queryset = Participante.objects.filter(projeto=projeto, ic_ativo=True)
+        self.fields['participantes'].queryset = Participante.objects.filter(projeto=projeto, ic_ativo=True).order_by('id')
 
     participantes = forms.ModelMultipleChoiceField(queryset=Participante.objects.filter(), widget=CustomCheckboxSelectMultiple(), label='')
     class Meta:
