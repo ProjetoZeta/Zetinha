@@ -2,9 +2,7 @@
         $(document).ready(function () {
 
             $("#id_cpf").mask('000.000.000-00', {reverse: true});
-            $("#id_dt_nascimento").mask('00/00/0000', {reverse: true});
             $("#id_inicio_vigencia").mask('00/00/0000', {reverse: true});
-        https://www.google.com/search?client=firefox-b-ab&ei=emLeW-PoC8WuwATlzqaoAw&q=ouvido+tampado+sexo&oq=ouvido+tampado+sexo&gs_l=psy-ab.3...1127.4010.0.4423.12.10.2.0.0.0.157.1358.0j10.10.0....0...1c.1.64.psy-ab..0.9.967...0j0i22i30k1j35i39k1j0i10k1j0i67k1j0i22i10i30k1.0.IVDH9MwCiWA    $("#id_termino_vigencia").mask('00/00/0000', {reverse: true});
             $('#id_telefone').mask('(00) 0000-0000');
             $('#id_celular').mask('(00) 0 0000-0000');
             $('#id_cep').mask('00.000-000');

@@ -36,13 +36,13 @@ class BaseForm(ModelForm):
             m.save()
         return m
 
-class BaseFormControl(ModelForm):
+class GenericForm(ModelForm):
     empty_m = 'Selecione uma opção'
     def __init__(self, *args, **kwargs):
         self.preview = remove('id', self.preview)
         super(ModelForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
+            field.widget.attrs['class'] = 'form-control' if field.__class__.__name__ != 'DateField' else 'form-control date-input'
 
 class UsuarioChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
@@ -54,19 +54,19 @@ class UsuarioForm(BaseForm):
         model = Usuario
         fields = ['email', 'username', 'no_completo', 'ic_ativo', 'ic_bolsista']
 
-class EntidadeForm(BaseFormControl):
+class EntidadeForm(GenericForm):
     preview = ['nome', 'ic_ativo', 'cnpj']
     class Meta:
         model = Entidade
         fields = get_fields(model)
 
-class ResponsavelForm(BaseFormControl):
+class ResponsavelForm(GenericForm):
     preview = ['nome', 'ic_ativo', 'matricula']
     class Meta:
         model = Responsavel
         fields = get_fields(model)
 
-class BolsistaForm(BaseFormControl):
+class BolsistaForm(GenericForm):
 
     preview = ['no_bolsista', 'email', 'cpf', 'celular', 'ic_ativo']
 
@@ -97,7 +97,7 @@ class EmprestimoEquipamentoForm(BaseForm):
         model = EmprestimoEquipamento
         fields = get_fields(model, ignore=['dt_emprestimo'])
 
-class ProjetoForm(BaseFormControl):
+class ProjetoForm(GenericForm):
     preview = ['nome', 'sigla']
     #file = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
     empty_m = 'Selecione uma opção'
@@ -116,7 +116,7 @@ class ProjetoForm(BaseFormControl):
         model = Projeto
         fields = get_fields(model)
 
-class ParticipanteForm(BaseFormControl):
+class ParticipanteForm(GenericForm):
     preview = ['bolsista', 'funcao', 'valor_mensal']
 
     empty_m = 'Selecione uma opção'
@@ -143,7 +143,7 @@ class ParticipanteBolsistaForm(ParticipanteForm):
     projeto = forms.ModelChoiceField(queryset=Projeto.objects.all(), empty_label=ParticipanteForm.empty_m)
 
 
-class MetaForm(BaseFormControl):
+class MetaForm(GenericForm):
     preview = ['titulo', 'ic_ativo']
     descricao = forms.CharField(widget=forms.Textarea)
 
@@ -153,7 +153,7 @@ class MetaForm(BaseFormControl):
         model = Meta
         fields = get_fields(model)
 
-class AtividadeForm(BaseFormControl):
+class AtividadeForm(GenericForm):
 
     preview = ['titulo', 'descricao', 'data_inicio', 'data_fim', 'ic_ativo']
     descricao = forms.CharField(widget=forms.Textarea(attrs={'rows': 1}))
@@ -209,12 +209,12 @@ class EmpregoForm(BaseForm):
         model = Emprego
         fields = get_fields(model)
 
-class ResponsabilidadeForm(BaseFormControl):
+class ResponsabilidadeForm(GenericForm):
     preview = ['responsavel', 'cargo']
     entidade = forms.ModelChoiceField(queryset=Entidade.objects.all(), widget=forms.HiddenInput())
 
-    responsavel = forms.ModelChoiceField(queryset=Responsavel.objects.filter(ic_ativo=True), empty_label=BaseFormControl.empty_m)
-    cargo = forms.ModelChoiceField(queryset=Emprego.objects.filter(tipo=Emprego.CARGO), empty_label=BaseFormControl.empty_m)
+    responsavel = forms.ModelChoiceField(queryset=Responsavel.objects.filter(ic_ativo=True), empty_label=GenericForm.empty_m)
+    cargo = forms.ModelChoiceField(queryset=Emprego.objects.filter(tipo=Emprego.CARGO), empty_label=GenericForm.empty_m)
 
     class Meta:
         model = Responsabilidade

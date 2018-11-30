@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'relatorio',
     'templates',
     'bootstrap3',
-    'django_cleanup'
 ]
 
 MIDDLEWARE = [
@@ -117,13 +116,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC'
+LOCATE_CODE = 'pt_BR'
+
+TIME_ZONE = 'Brazil/West'
 
 USE_I18N = True
-
-USE_L10N = True
 
 USE_TZ = True
 
@@ -134,10 +133,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 DATE_INPUT_FORMATS = (
-    '%d.%m.%Y', '%d.%m.%Y', '%d.%m.%y',  # '25.10.2006', '25.10.2006', '25.10.06'
-    '%d-%m-%Y', '%d/%m/%Y', '%d/%m/%y',  # '25-10-2006', '25/10/2006', '25/10/06'
-    '%d %b %Y',  # '25 Oct 2006',
-    '%d %B %Y',  # '25 October 2006',
+    '%d/%m/%Y', '%d/%m/%y',
 )
 
 DATE_FORMAT = 'j F Y'
