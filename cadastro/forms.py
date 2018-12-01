@@ -43,6 +43,8 @@ class GenericForm(ModelForm):
         super(ModelForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control' if field.__class__.__name__ != 'DateField' else 'form-control date-input'
+            if field_name in ['cpf', 'cnpj', 'cep', 'celular', 'telefone']:
+                field.widget.attrs['class'] += ' {}-input'.format(field_name)
 
 class UsuarioChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
@@ -61,7 +63,7 @@ class EntidadeForm(GenericForm):
         fields = get_fields(model)
 
 class ResponsavelForm(GenericForm):
-    preview = ['nome', 'ic_ativo', 'matricula', 'data_nascimento']
+    preview = ['nome', 'ic_ativo', 'matricula']
     class Meta:
         model = Responsavel
         fields = get_fields(model)
