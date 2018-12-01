@@ -61,7 +61,7 @@ class EntidadeForm(GenericForm):
         fields = get_fields(model)
 
 class ResponsavelForm(GenericForm):
-    preview = ['nome', 'ic_ativo', 'matricula']
+    preview = ['nome', 'ic_ativo', 'matricula', 'data_nascimento']
     class Meta:
         model = Responsavel
         fields = get_fields(model)
