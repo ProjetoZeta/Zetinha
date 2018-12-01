@@ -262,8 +262,8 @@ class Participante(models.Model):
     modalidade = models.CharField('Modalidade', max_length=1, choices=MODALIDADE, default='1')
     nivel = models.CharField('Nível', max_length=1, choices=NIVEL, default='1')
 
-    inicio_vigencia = models.DateField('Início da Vigência', blank=True)
-    termino_vigencia = models.DateField('Término da Vigência', blank=True)
+    inicio_vigencia = models.DateField('Início da Vigência')
+    termino_vigencia = models.DateField('Término da Vigência')
     periodo_total = models.IntegerField('Período Total', blank=True)
     horas_semanais = models.IntegerField('Horas semanais', blank=True)
     valor_mensal = models.DecimalField('Valor mensal', max_digits=10, decimal_places=2, blank=True)
