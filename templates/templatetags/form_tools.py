@@ -11,7 +11,7 @@ def get_value(form, field, value):
 			return value
 		else:
 			date = datetime.datetime.strptime(str(value), '%Y-%m-%d').date()
-			return date.strftime('%d/%m/%Y')
+			return date.strftime('%d/%m/%y')
 
 @register.filter
 def is_required (form, field):
