@@ -578,7 +578,7 @@
 											<div class="col-md-10">
 												
 												<select name="meta" class="form-control" id="id_vinculo_atividade_meta" required="">
-													<option {% if not vinculo_pagina %} selected="" {% endif %}>Selecione uma opção</option>
+													<option value="" {% if not vinculo_pagina %} selected="" {% endif %}>Selecione uma opção</option>
 													{% for meta in metas %}
 														{% with pkmeta|is_equal:meta.pk as match %}
 															<option value="{{ meta.pk }}" {% if vinculo_pagina and match %} selected="" {% endif %}>{{ meta.titulo }}</option>
@@ -597,7 +597,7 @@
 											<div class="col-md-10" id="container-atividades">
 
 												<select name="atividade" class="form-control" required="">
-													<option {% if not vinculo_pagina %} selected=""`{% endif %}>Selecione uma opção</option>
+													<option value="" {% if not vinculo_pagina %} selected=""`{% endif %}>Selecione uma opção</option>
 													{% for atividade in atividadespormeta %}
 														{% with pkatividade|is_equal:atividade.pk as match %}
 															<option value="{{ atividade.pk }}" {% if vinculo_pagina and match %} selected="" {% endif %}>{{ atividade.titulo }}</option>
