@@ -2,7 +2,9 @@ from django.shortcuts import render
 from cadastro.models import Bolsista
 from django.utils import timezone
 
-# Create your views here.
+
+def schedule(request):
+    return render(request,'relatorio/schedule.html')
 
 
 def declaracao_residencia(request, pk):
