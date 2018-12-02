@@ -1,9 +1,16 @@
 table.schedule {
 	border-collapse: collapse;
+	width: 100%;
 }
 
 table.schedule th, td {
     padding: 0;
+    width: 1px;
+}
+
+table.schedule td.schedule-label {
+	border: 1px solid black;
+	width: 35%;
 }
 
 table.schedule tr {

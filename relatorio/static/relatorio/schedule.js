@@ -91,19 +91,27 @@ Schedule.HTMLTable = class {
 			if ((level > initial_date) &&
 				(level <= end_date))
 				attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-intime']})
-			td_tags.push((new Tag({'name': 'td', 'inner': '&nbsp;', 'attrs':[attr]})).content)
+			td_tags.push((new Tag({'name': 'td', 'inner': '', 'attrs':[attr]})).content)
 		}
 		return td_tags
 	}
+
+	//see https://www.w3schools.com/js/js_date_methods.asp
 
 	get html(){
 		var a = this
 		var trs = []
 		this.schedule.tasks.forEach(function(task){
-			var tag = new Tag({'name': 'td', 'inner': task.title})
+			var c = new Tag.Attribute({'name': 'class', 'values': ['schedule-label']})
+			var tag = new Tag({'name': 'td', 'inner': task.title, 'attrs': [c]})
 			var tags = a.htmlTimeCells(task)
 			tags.unshift(tag.content)
-			trs.push((new Tag({'name': 'tr', 'inner': tags.join('')})).content)
+
+			var tt1 = new Tag.Attribute({'name': 'data-toggle', 'values': ['tooltip']})
+			var tt2 = new Tag.Attribute({'name': 'data-html', 'values': ['true']})
+			var tt3 = new Tag.Attribute({'name': 'title', 'values': ['8 dias, de 12/12/2018 a 20/12/2018']})
+
+			trs.push((new Tag({'name': 'tr', 'inner': tags.join(''), attrs:[tt1, tt2, tt3]})).content)
 		})
 
 		var c = new Tag.Attribute({'name': 'class', 'values': ['schedule']})
@@ -165,7 +173,7 @@ data.forEach(function(elem){
 	tasks.push(new Schedule.Task({'title': elem.title, 'initial_date': elem.initial_date, 'end_date': elem.end_date}))
 })
 
-schedule = new Schedule({'tasks': tasks, 'config': {'resolution': 200}})
+schedule = new Schedule({'tasks': tasks, 'config': {'resolution': 450}})
 
 c = new Tag.Attribute({'name': 'class', 'values': ['hello', 'motherfucker']})
 d = new Tag.Attribute({'name': 'for', 'values': ['mean', 'ok']})
