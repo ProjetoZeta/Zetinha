@@ -18,12 +18,12 @@ table.schedule tr {
     font-size: 10px;
 }
 
-table.schedule tr:hover {
-    background-color: #d9edf7;
-}
-
 table.schedule td.schedule-intime {
 	background: gray
+}
+
+table.schedule td.schedule-intime:hover {
+	background: red
 }
 
 table.schedule td.schedule-outtime {

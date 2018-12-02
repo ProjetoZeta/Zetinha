@@ -85,15 +85,68 @@ Schedule.HTMLTable = class {
 		var resolution = this.schedule.config.resolution
 		var initial_date = task.initial_date.getTime()
 		var end_date = task.end_date.getTime()
+
+		var cspan_left = 0
+		var cspan_time = 0
+
 		for (var i = 1; i <= this.schedule.config.resolution; i++) {
-			var attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-outtime']})
-			var level = this.schedule.timeBorderMin + i * this.section_time			
+			//var attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-outtime']})
+			var level = this.schedule.timeBorderMin + i * this.section_time
 			if ((level > initial_date) &&
-				(level <= end_date))
-				attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-intime']})
-			td_tags.push((new Tag({'name': 'td', 'inner': '', 'attrs':[attr]})).content)
+				(level <= end_date)){
+				cspan_left = (cspan_left == 0) ? i : cspan_left 
+				cspan_time++
+				//attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-intime']})
+			}
+			//td_tags.push((new Tag({'name': 'td', 'inner': '', 'attrs':[attr]})).content)
 		}
-		return td_tags
+
+		if(Number(cspan_time)){
+
+			var i_d = task.initial_date.getUTCDate()
+			var i_m = task.initial_date.getUTCMonth()
+			var i_y = task.initial_date.getUTCFullYear().toString().substr(-2)
+			var e_d = task.end_date.getUTCDate()
+			var e_m = task.end_date.getUTCMonth()
+			var e_y = task.end_date.getUTCFullYear().toString().substr(-2)
+
+			var duration_days = (task.end_date - task.initial_date)/86400000
+
+			var dt = new Tag.Attribute({'name': 'data-toggle', 'values': ['tooltip']})
+			var dh = new Tag.Attribute({'name': 'data-html', 'values': ['true']})
+			var tt = new Tag.Attribute({'name': 'title', 'values': [`${duration_days} dias, de <b>${i_d}/${i_m}/${i_y}</b> a <b>${e_d}/${e_m}/${e_y}</b>`]})
+
+			var colspan = new Tag.Attribute({'name': 'colspan', 'values': [String(cspan_time)]})
+			var class_attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-intime']})
+			var td_time = ((new Tag({'name': 'td', 'inner': ' ', 'attrs':[colspan, class_attr]})).content)
+		} else {
+			td_time = ''
+		}
+
+		cspan_left -= 1
+		if(Number(cspan_left)){
+			
+			var colspan = new Tag.Attribute({'name': 'colspan', 'values': [String(cspan_left)]})
+			var class_attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-outtime']})
+			var td_left = ((new Tag({'name': 'td', 'inner': ' ', 'attrs':[colspan, class_attr]})).content)
+		} else {
+			td_left = ''
+		}
+
+		var cspan_right = this.schedule.config.resolution - (cspan_left + cspan_time)
+
+		if(Number(cspan_right)){
+			var colspan = new Tag.Attribute({'name': 'colspan', 'values': [String(cspan_right)]})
+			var class_attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-outtime']})
+			var td_right = ((new Tag({'name': 'td', 'inner': ' ', 'attrs':[colspan, class_attr]})).content)
+		} else {
+			td_right = ''
+		}
+
+
+		console.log('hello bitch', cspan_left, cspan_time, cspan_right)
+		//return td_tags
+		return [td_left, td_time, td_right]
 	}
 
 	//see https://www.w3schools.com/js/js_date_methods.asp
@@ -101,17 +154,23 @@ Schedule.HTMLTable = class {
 	get html(){
 		var a = this
 		var trs = []
+
+		var first_td = (new Tag({'name': 'td', 'inner': 'TasKs'})).content
+		var scale_tds = []
+
+		for (var i = 0; i < this.schedule.config.resolution; i++) {
+			scale_tds.push((new Tag({'name': 'td', 'inner': ' '})).content)
+		}
+
+		var first_tr = (new Tag({'name': 'tr', 'inner': first_td + scale_tds.join('')})).content
+		var trs = [first_tr]
+
 		this.schedule.tasks.forEach(function(task){
 			var c = new Tag.Attribute({'name': 'class', 'values': ['schedule-label']})
 			var tag = new Tag({'name': 'td', 'inner': task.title, 'attrs': [c]})
 			var tags = a.htmlTimeCells(task)
 			tags.unshift(tag.content)
-
-			var tt1 = new Tag.Attribute({'name': 'data-toggle', 'values': ['tooltip']})
-			var tt2 = new Tag.Attribute({'name': 'data-html', 'values': ['true']})
-			var tt3 = new Tag.Attribute({'name': 'title', 'values': ['8 dias, de 12/12/2018 a 20/12/2018']})
-
-			trs.push((new Tag({'name': 'tr', 'inner': tags.join(''), attrs:[tt1, tt2, tt3]})).content)
+			trs.push((new Tag({'name': 'tr', 'inner': tags.join('')})).content)
 		})
 
 		var c = new Tag.Attribute({'name': 'class', 'values': ['schedule']})
@@ -125,44 +184,44 @@ data = [
 
 	{
 		'title': 'task1', 
-		'initial_date': '2011-10-12', 
-		'end_date': '2011-10-15'
+		'initial_date': '2018-10-12', 
+		'end_date': '2018-10-15'
 	},
 
 	{
 		'title': 'task2', 
-		'initial_date': '2011-10-10', 
-		'end_date': '2011-10-11'
+		'initial_date': '2018-10-10', 
+		'end_date': '2018-10-11'
 	},
 
 	{
 		'title': 'task3', 
-		'initial_date': '2011-10-10', 
-		'end_date': '2011-10-12'
+		'initial_date': '2018-10-10', 
+		'end_date': '2018-10-12'
 	},
 
 	{
 		'title': 'task4', 
-		'initial_date': '2011-10-10', 
-		'end_date': '2011-10-12'
+		'initial_date': '2018-10-10', 
+		'end_date': '2018-10-12'
 	},
 
 	{
 		'title': 'task5', 
-		'initial_date': '2011-10-10', 
-		'end_date': '2011-11-12'
+		'initial_date': '2018-10-10', 
+		'end_date': '2018-11-12'
 	},
 
 	{
 		'title': 'task6', 
-		'initial_date': '2011-10-23', 
-		'end_date': '2011-11-1'
+		'initial_date': '2018-10-23', 
+		'end_date': '2018-11-11'
 	},
 
 	{
 		'title': 'task7', 
-		'initial_date': '2011-10-10', 
-		'end_date': '2011-10-11'
+		'initial_date': '2018-10-10', 
+		'end_date': '2018-10-11'
 	},
 
 ]
@@ -173,7 +232,7 @@ data.forEach(function(elem){
 	tasks.push(new Schedule.Task({'title': elem.title, 'initial_date': elem.initial_date, 'end_date': elem.end_date}))
 })
 
-schedule = new Schedule({'tasks': tasks, 'config': {'resolution': 90}})
+schedule = new Schedule({'tasks': tasks, 'config': {'resolution': 500}})
 
 c = new Tag.Attribute({'name': 'class', 'values': ['hello', 'motherfucker']})
 d = new Tag.Attribute({'name': 'for', 'values': ['mean', 'ok']})
