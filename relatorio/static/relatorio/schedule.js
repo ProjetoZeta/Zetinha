@@ -86,11 +86,11 @@ Schedule.HTMLTable = class {
 		var initial_date = task.initial_date.getTime()
 		var end_date = task.end_date.getTime()
 		for (var i = 1; i <= this.schedule.config.resolution; i++) {
-			var attr = new Tag.Attribute({'name': 'bgcolor', 'values': ['#FF0000']})
+			var attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-outtime']})
 			var level = this.schedule.timeBorderMin + i * this.section_time			
 			if ((level > initial_date) &&
 				(level <= end_date))
-				var attr = new Tag.Attribute({'name': 'bgcolor', 'values': ['#00FF00']})
+				attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-intime']})
 			td_tags.push((new Tag({'name': 'td', 'inner': '&nbsp;', 'attrs':[attr]})).content)
 		}
 		return td_tags
@@ -106,10 +106,8 @@ Schedule.HTMLTable = class {
 			trs.push((new Tag({'name': 'tr', 'inner': tags.join('')})).content)
 		})
 
-		var c = new Tag.Attribute({'name': 'cellspacing', 'values': ['0']})
-		var d = new Tag.Attribute({'name': 'cellpadding', 'values': ['0']})
-
-		return (new Tag({'name': 'table', 'inner': trs.join('\n'), 'attrs':[c,d]})).content
+		var c = new Tag.Attribute({'name': 'class', 'values': ['schedule']})
+		return (new Tag({'name': 'table', 'inner': trs.join('\n'), 'attrs':[c]})).content
 	}	
 
 }
@@ -118,37 +116,43 @@ Schedule.HTMLTable = class {
 data = [
 
 	{
-		'title': 'task0', 
-		'initial_date': '2011-10-10', 
-		'end_date': '2011-10-11'
-	},
-
-	{
 		'title': 'task1', 
+		'initial_date': '2011-10-12', 
+		'end_date': '2011-10-15'
+	},
+
+	{
+		'title': 'task2', 
 		'initial_date': '2011-10-10', 
 		'end_date': '2011-10-11'
-	},
-
-	{
-		'title': 'task2', 
-		'initial_date': '2011-10-10', 
-		'end_date': '2011-10-12'
-	},
-
-	{
-		'title': 'task2', 
-		'initial_date': '2011-10-10', 
-		'end_date': '2011-11-12'
 	},
 
 	{
 		'title': 'task3', 
 		'initial_date': '2011-10-10', 
-		'end_date': '2011-10-11'
+		'end_date': '2011-10-12'
 	},
 
 	{
 		'title': 'task4', 
+		'initial_date': '2011-10-10', 
+		'end_date': '2011-10-12'
+	},
+
+	{
+		'title': 'task5', 
+		'initial_date': '2011-10-10', 
+		'end_date': '2011-11-12'
+	},
+
+	{
+		'title': 'task6', 
+		'initial_date': '2011-10-23', 
+		'end_date': '2011-11-1'
+	},
+
+	{
+		'title': 'task7', 
 		'initial_date': '2011-10-10', 
 		'end_date': '2011-10-11'
 	},
@@ -168,7 +172,7 @@ d = new Tag.Attribute({'name': 'for', 'values': ['mean', 'ok']})
 
 tag = new Tag({'name': 'div', 'inner': 'hello', 'attrs': [c, d]})
 
-document.getElementById('table-container').innerHTML = schedule.HTMLTable.html
+document.getElementById('schedule-table-container').innerHTML = schedule.HTMLTable.html
 
 
 

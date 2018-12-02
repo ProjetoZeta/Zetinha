@@ -16,6 +16,8 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'cadastro/checkbox-custom.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'templates/bootstrap-file-upload/file-upload.css' %}">
 
+	<link href="{% static 'relatorio/schedule.css' %}" rel="stylesheet">
+
 {% endblock %}
 
 {% block js %}
@@ -55,6 +57,8 @@
 		});
 
 	</script>
+
+	<script src="{% static 'relatorio/schedule.js' %}" type="text/javascript"></script>
 
 {% endblock %}
 
@@ -552,6 +556,11 @@
 
 
 								</table>
+
+
+								<div id="schedule-table-container">
+	
+								</div>
 
 
 

@@ -1,0 +1,19 @@
+table.schedule {
+	border-collapse: collapse;
+}
+
+table.schedule th, td {
+    padding: 0;
+}
+
+table.schedule tr {
+    border: 1px solid black;
+}
+
+table.schedule td.schedule-intime {
+	background: gray
+}
+
+table.schedule td.schedule-outtime {
+	background: white
+}
