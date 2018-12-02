@@ -15,6 +15,7 @@ table.schedule td.schedule-label {
 
 table.schedule tr {
     border: 1px solid black;
+    font-size: 10px;
 }
 
 table.schedule tr:hover {
