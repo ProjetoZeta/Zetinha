@@ -17,6 +17,10 @@ table.schedule tr {
     border: 1px solid black;
 }
 
+table.schedule tr:hover {
+    background-color: #d9edf7;
+}
+
 table.schedule td.schedule-intime {
 	background: gray
 }

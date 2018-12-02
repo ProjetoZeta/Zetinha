@@ -173,7 +173,7 @@ data.forEach(function(elem){
 	tasks.push(new Schedule.Task({'title': elem.title, 'initial_date': elem.initial_date, 'end_date': elem.end_date}))
 })
 
-schedule = new Schedule({'tasks': tasks, 'config': {'resolution': 450}})
+schedule = new Schedule({'tasks': tasks, 'config': {'resolution': 90}})
 
 c = new Tag.Attribute({'name': 'class', 'values': ['hello', 'motherfucker']})
 d = new Tag.Attribute({'name': 'for', 'values': ['mean', 'ok']})
