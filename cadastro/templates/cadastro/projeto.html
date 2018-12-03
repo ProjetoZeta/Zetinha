@@ -68,12 +68,8 @@
 		url: '/relatorio/cronograma/{{ pk }}',
 		type: "get", //send it through get method
 		success: function(response) {
-			
 			schedule = new Schedule({'data': response.data, 'config': {'resolution': 365, 'title': 'Cronograma'}})
-
 			$( "#schedule-table-container" ).html(schedule.html_table)
-
-
 		},
 		error: function(xhr) {
 			alert('AJAX falhou')
