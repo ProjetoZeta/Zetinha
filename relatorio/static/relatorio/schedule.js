@@ -78,6 +78,16 @@ Schedule.HTMLTable = class {
 		this.schedule = schedule
 		this.config
 		this.section_time = (schedule.timeBorderMax - schedule.timeBorderMin) / schedule.config.resolution
+		console.log('section_time', this.section_time)
+	}
+
+	tdSection({colspan, attrs=[]}={}){
+		if(colspan){
+			var colspan_attr = new Tag.Attribute({'name': 'colspan', 'values': [String(colspan)]})
+			return (new Tag({'name': 'td', 'inner': ' ', 'attrs':[colspan_attr].concat(attrs)})).content
+		} else {
+			return ''
+		}
 	}
 
 	htmlTimeCells(task){
@@ -90,62 +100,36 @@ Schedule.HTMLTable = class {
 		var cspan_time = 0
 
 		for (var i = 1; i <= this.schedule.config.resolution; i++) {
-			//var attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-outtime']})
 			var level = this.schedule.timeBorderMin + i * this.section_time
 			if ((level > initial_date) &&
 				(level <= end_date)){
 				cspan_left = (cspan_left == 0) ? i : cspan_left 
 				cspan_time++
-				//attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-intime']})
 			}
-			//td_tags.push((new Tag({'name': 'td', 'inner': '', 'attrs':[attr]})).content)
 		}
 
-		if(Number(cspan_time)){
-
-			var i_d = task.initial_date.getUTCDate()
-			var i_m = task.initial_date.getUTCMonth()
-			var i_y = task.initial_date.getUTCFullYear().toString().substr(-2)
-			var e_d = task.end_date.getUTCDate()
-			var e_m = task.end_date.getUTCMonth()
-			var e_y = task.end_date.getUTCFullYear().toString().substr(-2)
-
-			var duration_days = (task.end_date - task.initial_date)/86400000
-
-			var dt = new Tag.Attribute({'name': 'data-toggle', 'values': ['tooltip']})
-			var dh = new Tag.Attribute({'name': 'data-html', 'values': ['true']})
-			var tt = new Tag.Attribute({'name': 'title', 'values': [`${duration_days} dias, de <b>${i_d}/${i_m}/${i_y}</b> a <b>${e_d}/${e_m}/${e_y}</b>`]})
-
-			var colspan = new Tag.Attribute({'name': 'colspan', 'values': [String(cspan_time)]})
-			var class_attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-intime']})
-			var td_time = ((new Tag({'name': 'td', 'inner': ' ', 'attrs':[colspan, class_attr]})).content)
-		} else {
-			td_time = ''
-		}
+		var i_d = task.initial_date.getUTCDate()
+		var i_m = task.initial_date.getUTCMonth() + 1
+		var i_y = task.initial_date.getUTCFullYear().toString().substr(-2)
+		var e_d = task.end_date.getUTCDate()
+		var e_m = task.end_date.getUTCMonth() + 1
+		var e_y = task.end_date.getUTCFullYear().toString().substr(-2)
+		var duration_days = (task.end_date - task.initial_date)/86400000
+		var dt = new Tag.Attribute({'name': 'data-toggle', 'values': ['tooltip']})
+		var dh = new Tag.Attribute({'name': 'data-html', 'values': ['true']})
+		var tt = new Tag.Attribute({'name': 'title', 'values': [`${duration_days} dia${duration_days > 1 ? 's' : ''}, de <b>${i_d}/${i_m}/${i_y}</b> a <b>${e_d}/${e_m}/${e_y}</b>`]})
+		var tb = new Tag.Attribute({'name': 'data-container', 'values': ['body']})
+		var class_attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-intime', 'test']})
+		var td_time = this.tdSection({'colspan': cspan_time, 'attrs': [class_attr, dt, dh, tt, tb]})
 
 		cspan_left -= 1
-		if(Number(cspan_left)){
-			
-			var colspan = new Tag.Attribute({'name': 'colspan', 'values': [String(cspan_left)]})
-			var class_attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-outtime']})
-			var td_left = ((new Tag({'name': 'td', 'inner': ' ', 'attrs':[colspan, class_attr]})).content)
-		} else {
-			td_left = ''
-		}
+		var class_attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-outtime']})
+		var td_left = this.tdSection({'colspan': cspan_left, 'attrs': [class_attr]})
 
 		var cspan_right = this.schedule.config.resolution - (cspan_left + cspan_time)
+		var td_right = this.tdSection({'colspan': cspan_right, 'attrs': [class_attr]})
 
-		if(Number(cspan_right)){
-			var colspan = new Tag.Attribute({'name': 'colspan', 'values': [String(cspan_right)]})
-			var class_attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-outtime']})
-			var td_right = ((new Tag({'name': 'td', 'inner': ' ', 'attrs':[colspan, class_attr]})).content)
-		} else {
-			td_right = ''
-		}
-
-
-		console.log('hello bitch', cspan_left, cspan_time, cspan_right)
-		//return td_tags
+		//console.log('hello bitch', cspan_left, cspan_time, cspan_right)
 		return [td_left, td_time, td_right]
 	}
 
@@ -202,8 +186,8 @@ data = [
 
 	{
 		'title': 'task4', 
-		'initial_date': '2018-10-10', 
-		'end_date': '2018-10-12'
+		'initial_date': '2018-10-15', 
+		'end_date': '2018-10-17'
 	},
 
 	{
@@ -224,6 +208,12 @@ data = [
 		'end_date': '2018-10-11'
 	},
 
+	{
+		'title': 'task8', 
+		'initial_date': '2018-10-16', 
+		'end_date': '2018-12-10'
+	},
+
 ]
 
 var tasks = []
@@ -232,7 +222,7 @@ data.forEach(function(elem){
 	tasks.push(new Schedule.Task({'title': elem.title, 'initial_date': elem.initial_date, 'end_date': elem.end_date}))
 })
 
-schedule = new Schedule({'tasks': tasks, 'config': {'resolution': 500}})
+schedule = new Schedule({'tasks': tasks, 'config': {'resolution': 365}})
 
 c = new Tag.Attribute({'name': 'class', 'values': ['hello', 'motherfucker']})
 d = new Tag.Attribute({'name': 'for', 'values': ['mean', 'ok']})
