@@ -84,8 +84,8 @@ class Schedule {
 		}
 	}
 
- 	get HTMLTable() {
-		return new Schedule.HTMLTable({schedule: this})
+ 	get html_table() {
+		return (new Schedule.HTMLTable({schedule: this})).html
 	}
 
 }
@@ -216,83 +216,5 @@ Schedule.HTMLTable = class {
 	}	
 
 }
-
-
-data = [
-
-	{
-		'title': 'Teste',
-		'tasks': [
-			{
-				'title': 'task1', 
-				'initial_date': '2018-10-12', 
-				'end_date': '2018-10-15'
-			},
-
-			{
-				'title': 'task2', 
-				'initial_date': '2018-10-10', 
-				'end_date': '2018-10-11',
-			},
-
-			{
-				'title': 'task3', 
-				'initial_date': '2018-10-10', 
-				'end_date': '2018-10-12'
-			},
-
-		]
-	},
-
-
-	{
-		'title': 'Teste 2',
-		'tasks': [
-			{
-				'title': 'task4', 
-				'initial_date': '2018-10-15', 
-				'end_date': '2018-10-17'
-			},
-
-			{
-				'title': 'task5', 
-				'initial_date': '2018-10-10', 
-				'end_date': '2018-11-12'
-			},
-
-			{
-				'title': 'task6', 
-				'initial_date': '2018-10-23', 
-				'end_date': '2018-11-11'
-			},
-
-			{
-				'title': 'task7', 
-				'initial_date': '2018-10-10', 
-				'end_date': '2018-10-11'
-			},
-
-			{
-				'title': 'task8', 
-				'initial_date': '2018-10-16', 
-				'end_date': '2018-12-10'
-			},
-
-		]
-	},
-
-
-]
-
-schedule = new Schedule({'data': data, 'config': {'resolution': 365, 'title': 'Cronograma'}})
-
-document.getElementById('schedule-table-container').innerHTML = schedule.HTMLTable.html
-
-
-
-
-
-
-
 
 
