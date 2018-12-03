@@ -1,10 +1,21 @@
 from django.shortcuts import render
-from cadastro.models import Bolsista
+from cadastro.models import Bolsista, Meta, Projeto 
 from django.utils import timezone
+from django.http import JsonResponse
 
 
-def schedule(request):
-    return render(request,'relatorio/schedule.html')
+def schedule_data(request, pkprojeto):
+    projeto = Projeto.objects.get(pk=pkprojeto)
+    metas = Meta.objects.filter(projeto=projeto)
+    data = []
+    for meta in metas:
+        atividades = meta.atividade_set.all()
+        tasks = []
+        for atividade in atividades:
+            tasks.append({'title': atividade.titulo, 'initial_date': atividade.data_inicio, 'end_date': atividade.data_fim})
+        data.append({'title': meta.titulo, 'tasks': tasks})
+
+    return JsonResponse(dict({'data': data}))
 
 
 def declaracao_residencia(request, pk):

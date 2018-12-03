@@ -38,8 +38,9 @@ class Schedule {
 	constructor({data, config}={}){
 		this.config = config
 		this.groups = this.parseData(data)
-		this.timeBorderMax = this.getTimeBorders().max
-		this.timeBorderMin = this.getTimeBorders().min
+		var timeBorders = this.getTimeBorders()
+		this.timeBorderMax = timeBorders.max
+		this.timeBorderMin = timeBorders.min
 	}
 
 	parseData(data) {
@@ -117,7 +118,7 @@ Schedule.HTMLTable = class {
 	tdSection({colspan, attrs=[]}={}){
 		if(colspan){
 			var colspan_attr = new Tag.Attribute({'name': 'colspan', 'values': [String(colspan)]})
-			return (new Tag({'name': 'td', 'inner': ' ', 'attrs':[colspan_attr].concat(attrs)})).content
+			return (new Tag({'name': 'td', 'inner': '', 'attrs':[colspan_attr].concat(attrs)})).content
 		} else {
 			return ''
 		}
@@ -156,7 +157,7 @@ Schedule.HTMLTable = class {
 		var duration_days = (task.end_date - task.initial_date)/86400000
 		var dt = new Tag.Attribute({'name': 'data-toggle', 'values': ['tooltip']})
 		var dh = new Tag.Attribute({'name': 'data-html', 'values': ['true']})
-		var tt = new Tag.Attribute({'name': 'title', 'values': [`${duration_days} dia${duration_days > 1 ? 's' : ''}, de <b>${i.d}/${i.m}/${i.y.toString().substr(-2)}</b> a <b>${e.d}/${e.m}/${e.y.toString().substr(-2)}</b>`]})
+		var tt = new Tag.Attribute({'name': 'title', 'values': [`${duration_days} dia${duration_days > 1 ? 's' : ''}, de ${i.d}/${i.m}/${i.y.toString().substr(-2)} a ${e.d}/${e.m}/${e.y.toString().substr(-2)}`]})
 		var tb = new Tag.Attribute({'name': 'data-container', 'values': ['body']})
 		var class_attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-intime', 'test']})
 		var td_time = this.tdSection({'colspan': cspan_time, 'attrs': [class_attr, dt, dh, tt, tb]})
@@ -194,7 +195,7 @@ Schedule.HTMLTable = class {
 		this.schedule.groups.forEach(function(group){
 
 			var c = new Tag.Attribute({'name': 'class', 'values': ['schedule-group-label']})
-			var group_label_td = (new Tag({'name': 'td', 'inner': group.title, 'attrs': [c]})).content
+			var group_label_td = (new Tag({'name': 'td', 'inner': `<b>${group.title}</b>`, 'attrs': [c]})).content
 			var group_right_line = a.tdSection({'colspan': a.schedule.config.resolution, 'attrs': [c]})
 
 			var group_label_tr = (new Tag({'name': 'tr', 'inner': group_label_td + group_right_line})).content
@@ -216,5 +217,73 @@ Schedule.HTMLTable = class {
 	}	
 
 }
+
+
+
+data_example = [
+
+			{
+				'title': 'Teste',
+				'tasks': [
+					{
+						'title': 'task1', 
+						'initial_date': '2018-10-12', 
+						'end_date': '2018-10-15'
+					},
+
+					{
+						'title': 'task2', 
+						'initial_date': '2018-10-10', 
+						'end_date': '2018-10-11',
+					},
+
+					{
+						'title': 'task3', 
+						'initial_date': '2018-10-10', 
+						'end_date': '2018-10-12'
+					},
+
+				]
+			},
+
+
+			{
+				'title': 'Teste 2',
+				'tasks': [
+					{
+						'title': 'task4', 
+						'initial_date': '2018-10-15', 
+						'end_date': '2018-10-17'
+					},
+
+					{
+						'title': 'task5', 
+						'initial_date': '2018-10-10', 
+						'end_date': '2018-11-12'
+					},
+
+					{
+						'title': 'task6', 
+						'initial_date': '2018-10-23', 
+						'end_date': '2018-11-11'
+					},
+
+					{
+						'title': 'task7', 
+						'initial_date': '2018-10-10', 
+						'end_date': '2018-10-11'
+					},
+
+					{
+						'title': 'task8', 
+						'initial_date': '2018-10-16', 
+						'end_date': '2018-12-10'
+					},
+
+				]
+			},
+
+
+		]
 
 
