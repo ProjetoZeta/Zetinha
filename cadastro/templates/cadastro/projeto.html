@@ -62,18 +62,21 @@
 
 	<script type="text/javascript">
 
-	$.ajax({
-		url: '/relatorio/cronograma/{{ pk }}',
-		type: "get", //send it through get method
-		success: function(response) {
-			schedule = new Schedule({'data': response.data, 'config': {'resolution': 365, 'title': 'Cronograma'}})
-			$( "#schedule-table-container" ).html(schedule.html_table)
-			$('[data-toggle="tooltip"]').tooltip()
-		},
-		error: function(xhr) {
-			alert('AJAX falhou')
-		}
-	});
+	{% if pk %}
+
+			$.ajax({
+				url: '/relatorio/cronograma/{{ pk }}',
+				type: "get", //send it through get method
+				success: function(response) {
+					schedule = new Schedule({'data': response.data, 'config': {'resolution': 365, 'title': 'Cronograma'}})
+					$( "#schedule-table-container" ).html(schedule.html_table)
+					$('[data-toggle="tooltip"]').tooltip()
+				},
+				error: function(xhr) {
+					alert('AJAX falhou')
+				}
+			});
+		{% endif %}
 
 	</script>
 
@@ -526,7 +529,7 @@
 
 								<legend class="the-legend">Tabela de Cronograma</legend>
 
-								<a class="btn btn-info" href="{% url 'meta-proj-criar' pk %}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+								<a class="btn btn-info" href="{% if pk %} {% url 'meta-proj-criar' pk %} {% endif %}"><i class="fa fa-plus" aria-hidden="true"></i></a>
 								<br/><br/>
 
 								<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
