@@ -19,8 +19,6 @@ table.schedule td.schedule-label {
 }
 
 table.schedule td.schedule-group-label {
-	border: 1px solid black;
-	width: 35%;
 	background: #d9edf7;
 	text-indent: 1em;
 }

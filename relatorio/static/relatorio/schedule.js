@@ -112,7 +112,6 @@ Schedule.HTMLTable = class {
 		this.schedule = schedule
 		this.config
 		this.section_time = (schedule.timeBorderMax - schedule.timeBorderMin) / schedule.config.resolution
-		console.log('section_time', this.section_time)
 	}
 
 	tdSection({colspan, attrs=[]}={}){
@@ -121,6 +120,15 @@ Schedule.HTMLTable = class {
 			return (new Tag({'name': 'td', 'inner': ' ', 'attrs':[colspan_attr].concat(attrs)})).content
 		} else {
 			return ''
+		}
+	}
+
+	simplify_date(date){
+
+		return {
+			'd': date.getUTCDate(),
+			'm': date.getUTCMonth() + 1,
+			'y': date.getUTCFullYear()
 		}
 	}
 
@@ -142,16 +150,13 @@ Schedule.HTMLTable = class {
 			}
 		}
 
-		var i_d = task.initial_date.getUTCDate()
-		var i_m = task.initial_date.getUTCMonth() + 1
-		var i_y = task.initial_date.getUTCFullYear().toString().substr(-2)
-		var e_d = task.end_date.getUTCDate()
-		var e_m = task.end_date.getUTCMonth() + 1
-		var e_y = task.end_date.getUTCFullYear().toString().substr(-2)
+		var i = this.simplify_date(task.initial_date)
+		var e = this.simplify_date(task.end_date)
+
 		var duration_days = (task.end_date - task.initial_date)/86400000
 		var dt = new Tag.Attribute({'name': 'data-toggle', 'values': ['tooltip']})
 		var dh = new Tag.Attribute({'name': 'data-html', 'values': ['true']})
-		var tt = new Tag.Attribute({'name': 'title', 'values': [`${duration_days} dia${duration_days > 1 ? 's' : ''}, de <b>${i_d}/${i_m}/${i_y}</b> a <b>${e_d}/${e_m}/${e_y}</b>`]})
+		var tt = new Tag.Attribute({'name': 'title', 'values': [`${duration_days} dia${duration_days > 1 ? 's' : ''}, de <b>${i.d}/${i.m}/${i.y.toString().substr(-2)}</b> a <b>${e.d}/${e.m}/${e.y.toString().substr(-2)}</b>`]})
 		var tb = new Tag.Attribute({'name': 'data-container', 'values': ['body']})
 		var class_attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-intime', 'test']})
 		var td_time = this.tdSection({'colspan': cspan_time, 'attrs': [class_attr, dt, dh, tt, tb]})
@@ -170,7 +175,12 @@ Schedule.HTMLTable = class {
 		var a = this
 		var trs = []
 
-		var first_td = (new Tag({'name': 'td', 'inner': this.schedule.config.title})).content
+		var i = this.simplify_date(new Date(this.schedule.timeBorderMin))
+		var e = this.simplify_date(new Date(this.schedule.timeBorderMax))
+
+		var duration_days = (this.schedule.timeBorderMax - this.schedule.timeBorderMin)/86400000
+
+		var first_td = (new Tag({'name': 'td', 'inner': `${this.schedule.config.title} - Perído de ${i.d}/${i.m}/${i.y.toString().substr(-2)} a ${e.d}/${e.m}/${e.y.toString().substr(-2)} (${duration_days} dias)`})).content
 		var scale_tds = []
 
 		for (var i = 0; i < this.schedule.config.resolution; i++) {
@@ -274,12 +284,7 @@ data = [
 
 ]
 
-schedule = new Schedule({'data': data, 'config': {'resolution': 365, 'title': 'Tabela de Cronograma'}})
-
-c = new Tag.Attribute({'name': 'class', 'values': ['hello', 'motherfucker']})
-d = new Tag.Attribute({'name': 'for', 'values': ['mean', 'ok']})
-
-tag = new Tag({'name': 'div', 'inner': 'hello', 'attrs': [c, d]})
+schedule = new Schedule({'data': data, 'config': {'resolution': 365, 'title': 'Cronograma'}})
 
 document.getElementById('schedule-table-container').innerHTML = schedule.HTMLTable.html
 
