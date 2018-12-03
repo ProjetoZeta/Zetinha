@@ -35,22 +35,49 @@ Tag.Attribute = class {
 
 class Schedule {
 
-	constructor({tasks, config={'resolution': 5}}={}){
+	constructor({data, config}={}){
 		this.config = config
-		this.tasks = tasks
+		this.groups = this.parseData(data)
 		this.timeBorderMax = this.getTimeBorders().max
 		this.timeBorderMin = this.getTimeBorders().min
+	}
+
+	parseData(data) {
+
+		var groups = []
+
+		data.forEach(function(group){
+
+			var tasks = []
+
+			group.tasks.forEach(function(task){
+
+				tasks.push(new Schedule.Task({'title': task.title, 'initial_date': task.initial_date, 'end_date': task.end_date}))
+
+			})
+
+			groups.push(new Schedule.Group({'title': group.title, 'tasks': tasks}))
+			
+		})
+
+		return groups
+
 	}
 
 	getTimeBorders() {
 		var min = Number.MAX_SAFE_INTEGER
 		var max = 0
-		this.tasks.forEach(function(task){
-			if(task.initial_date.getTime() < min)
-				min = task.initial_date.getTime()
-			if(task.end_date.getTime() > max)
-				max = task.end_date.getTime()
+		var a = this
+
+		this.groups.forEach(function(group){
+			group.tasks.forEach(function(task){
+				if(task.initial_date.getTime() < min)
+					min = task.initial_date.getTime()
+				if(task.end_date.getTime() > max)
+					max = task.end_date.getTime()
+			})
 		})
+
 		return {
 			'min': min,
 			'max': max,
@@ -69,6 +96,13 @@ Schedule.Task = class {
 		this.title = title
 		this.initial_date = new Date(initial_date); 
 		this.end_date = new Date(end_date);
+	}
+}
+
+Schedule.Group = class {
+	constructor({title, tasks}={}) {
+		this.title = title
+		this.tasks = tasks
 	}
 }
 
@@ -129,32 +163,42 @@ Schedule.HTMLTable = class {
 		var cspan_right = this.schedule.config.resolution - (cspan_left + cspan_time)
 		var td_right = this.tdSection({'colspan': cspan_right, 'attrs': [class_attr]})
 
-		//console.log('hello bitch', cspan_left, cspan_time, cspan_right)
 		return [td_left, td_time, td_right]
 	}
-
-	//see https://www.w3schools.com/js/js_date_methods.asp
 
 	get html(){
 		var a = this
 		var trs = []
 
-		var first_td = (new Tag({'name': 'td', 'inner': 'TasKs'})).content
+		var first_td = (new Tag({'name': 'td', 'inner': this.schedule.config.title})).content
 		var scale_tds = []
 
 		for (var i = 0; i < this.schedule.config.resolution; i++) {
 			scale_tds.push((new Tag({'name': 'td', 'inner': ' '})).content)
 		}
 
-		var first_tr = (new Tag({'name': 'tr', 'inner': first_td + scale_tds.join('')})).content
+		var c = new Tag.Attribute({'name': 'class', 'values': ['colspanreference']})
+		var first_tr = (new Tag({'name': 'tr', 'inner': first_td + scale_tds.join(''), 'attrs': [c]})).content
 		var trs = [first_tr]
 
-		this.schedule.tasks.forEach(function(task){
-			var c = new Tag.Attribute({'name': 'class', 'values': ['schedule-label']})
-			var tag = new Tag({'name': 'td', 'inner': task.title, 'attrs': [c]})
-			var tags = a.htmlTimeCells(task)
-			tags.unshift(tag.content)
-			trs.push((new Tag({'name': 'tr', 'inner': tags.join('')})).content)
+		this.schedule.groups.forEach(function(group){
+
+			var c = new Tag.Attribute({'name': 'class', 'values': ['schedule-group-label']})
+			var group_label_td = (new Tag({'name': 'td', 'inner': group.title, 'attrs': [c]})).content
+			var group_right_line = a.tdSection({'colspan': a.schedule.config.resolution, 'attrs': [c]})
+
+			var group_label_tr = (new Tag({'name': 'tr', 'inner': group_label_td + group_right_line})).content
+
+			trs.push(group_label_tr)
+			group.tasks.forEach(function(task){
+
+				var c = new Tag.Attribute({'name': 'class', 'values': ['schedule-label']})
+				var tag = new Tag({'name': 'td', 'inner': task.title, 'attrs': [c]})
+				var tags = a.htmlTimeCells(task)
+				tags.unshift(tag.content)
+				trs.push((new Tag({'name': 'tr', 'inner': tags.join('')})).content)
+
+			})
 		})
 
 		var c = new Tag.Attribute({'name': 'class', 'values': ['schedule']})
@@ -167,62 +211,70 @@ Schedule.HTMLTable = class {
 data = [
 
 	{
-		'title': 'task1', 
-		'initial_date': '2018-10-12', 
-		'end_date': '2018-10-15'
+		'title': 'Teste',
+		'tasks': [
+			{
+				'title': 'task1', 
+				'initial_date': '2018-10-12', 
+				'end_date': '2018-10-15'
+			},
+
+			{
+				'title': 'task2', 
+				'initial_date': '2018-10-10', 
+				'end_date': '2018-10-11',
+			},
+
+			{
+				'title': 'task3', 
+				'initial_date': '2018-10-10', 
+				'end_date': '2018-10-12'
+			},
+
+		]
 	},
 
-	{
-		'title': 'task2', 
-		'initial_date': '2018-10-10', 
-		'end_date': '2018-10-11'
-	},
 
 	{
-		'title': 'task3', 
-		'initial_date': '2018-10-10', 
-		'end_date': '2018-10-12'
+		'title': 'Teste 2',
+		'tasks': [
+			{
+				'title': 'task4', 
+				'initial_date': '2018-10-15', 
+				'end_date': '2018-10-17'
+			},
+
+			{
+				'title': 'task5', 
+				'initial_date': '2018-10-10', 
+				'end_date': '2018-11-12'
+			},
+
+			{
+				'title': 'task6', 
+				'initial_date': '2018-10-23', 
+				'end_date': '2018-11-11'
+			},
+
+			{
+				'title': 'task7', 
+				'initial_date': '2018-10-10', 
+				'end_date': '2018-10-11'
+			},
+
+			{
+				'title': 'task8', 
+				'initial_date': '2018-10-16', 
+				'end_date': '2018-12-10'
+			},
+
+		]
 	},
 
-	{
-		'title': 'task4', 
-		'initial_date': '2018-10-15', 
-		'end_date': '2018-10-17'
-	},
-
-	{
-		'title': 'task5', 
-		'initial_date': '2018-10-10', 
-		'end_date': '2018-11-12'
-	},
-
-	{
-		'title': 'task6', 
-		'initial_date': '2018-10-23', 
-		'end_date': '2018-11-11'
-	},
-
-	{
-		'title': 'task7', 
-		'initial_date': '2018-10-10', 
-		'end_date': '2018-10-11'
-	},
-
-	{
-		'title': 'task8', 
-		'initial_date': '2018-10-16', 
-		'end_date': '2018-12-10'
-	},
 
 ]
 
-var tasks = []
-
-data.forEach(function(elem){
-	tasks.push(new Schedule.Task({'title': elem.title, 'initial_date': elem.initial_date, 'end_date': elem.end_date}))
-})
-
-schedule = new Schedule({'tasks': tasks, 'config': {'resolution': 365}})
+schedule = new Schedule({'data': data, 'config': {'resolution': 365, 'title': 'Tabela de Cronograma'}})
 
 c = new Tag.Attribute({'name': 'class', 'values': ['hello', 'motherfucker']})
 d = new Tag.Attribute({'name': 'for', 'values': ['mean', 'ok']})

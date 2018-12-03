@@ -1,13 +1,3 @@
-table { display : table}
-tr { display : table-row}
-thead { display : table-header-group }
-tbody { display : table-row-group}
-tfoot { display : table-footer-group }
-col { display : table-column}
-colgroup { display : table-column-group }
-td, th { display :  table-cell }
-caption { display : table-caption }
-
 table.schedule {
 	border-collapse: collapse;
 	width: 100%;
@@ -18,9 +8,21 @@ table.schedule th, td {
 	width: 1px;
 }
 
+table.schedule tr.colspanreference {
+	border: 0;
+}
+
 table.schedule td.schedule-label {
 	border: 1px solid black;
 	width: 35%;
+	text-indent: 2em;
+}
+
+table.schedule td.schedule-group-label {
+	border: 1px solid black;
+	width: 35%;
+	background: #d9edf7;
+	text-indent: 1em;
 }
 
 table.schedule tr {
