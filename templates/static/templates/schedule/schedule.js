@@ -43,6 +43,10 @@ class Schedule {
 		this.timeBorderMin = timeBorders.min
 	}
 
+	static get DAY_MS() {
+		return 86400000;
+	}
+
 	parseData(data) {
 
 		var groups = []
@@ -96,7 +100,8 @@ Schedule.Task = class {
 	constructor({title, initial_date, end_date}={}) {
 		this.title = title
 		this.initial_date = new Date(initial_date); 
-		this.end_date = new Date(end_date);
+		var temp_end_date = (new Date(end_date)).getTime()
+		this.end_date = new Date(temp_end_date + Schedule.DAY_MS - 1);
 	}
 }
 
@@ -154,7 +159,7 @@ Schedule.HTMLTable = class {
 		var i = this.simplify_date(task.initial_date)
 		var e = this.simplify_date(task.end_date)
 
-		var duration_days = (task.end_date - task.initial_date)/86400000
+		var duration_days = Math.ceil((task.end_date - task.initial_date)/Schedule.DAY_MS)
 		var dt = new Tag.Attribute({'name': 'data-toggle', 'values': ['tooltip']})
 		var dh = new Tag.Attribute({'name': 'data-html', 'values': ['true']})
 		var tt = new Tag.Attribute({'name': 'title', 'values': [`${duration_days} dia${duration_days > 1 ? 's' : ''}, de <b>${i.d}/${i.m}/${i.y.toString().substr(-2)}</b> a <b>${e.d}/${e.m}/${e.y.toString().substr(-2)}</b>`]})
@@ -179,7 +184,7 @@ Schedule.HTMLTable = class {
 		var i = this.simplify_date(new Date(this.schedule.timeBorderMin))
 		var e = this.simplify_date(new Date(this.schedule.timeBorderMax))
 
-		var duration_days = (this.schedule.timeBorderMax - this.schedule.timeBorderMin)/86400000
+		var duration_days = Math.ceil((this.schedule.timeBorderMax - this.schedule.timeBorderMin)/Schedule.DAY_MS)
 
 		var first_td = (new Tag({'name': 'td', 'inner': `${this.schedule.config.title} - Perído de ${i.d}/${i.m}/${i.y.toString().substr(-2)} a ${e.d}/${e.m}/${e.y.toString().substr(-2)} (${duration_days} dias)`})).content
 		var scale_tds = []
