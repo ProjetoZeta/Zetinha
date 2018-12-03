@@ -37,8 +37,6 @@
 					handle_bolsistas_panel()
 				{% endif %}
 
-				$('[data-toggle="tooltip"]').tooltip()
-
 			});
 
 		{% endwith %}
@@ -70,6 +68,7 @@
 		success: function(response) {
 			schedule = new Schedule({'data': response.data, 'config': {'resolution': 365, 'title': 'Cronograma'}})
 			$( "#schedule-table-container" ).html(schedule.html_table)
+			$('[data-toggle="tooltip"]').tooltip()
 		},
 		error: function(xhr) {
 			alert('AJAX falhou')
