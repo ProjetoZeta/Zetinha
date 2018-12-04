@@ -93,7 +93,7 @@ class Schedule {
 		return (new Schedule.HTMLTable({schedule: this})).html
 	}
 
-	onClickLabel({group_callback, task_callback}={}) {
+	onClickLabel({group_callback, task_callback, time_callback}={}) {
 		this.groups.forEach(function(group){
 			var e = document.getElementById(`id-schedule-group-${group.id}`)
 			if (e){
@@ -103,9 +103,15 @@ class Schedule {
 			}
 			group.tasks.forEach(function(task){
 				var e = document.getElementById(`id-schedule-task-${task.id}`)
+				var d = document.getElementById(`id-schedule-time-${task.id}`)
 				if (e){
 					e.addEventListener('click', function(){
 						task_callback(task)
+					})
+				}
+				if (d){
+					d.addEventListener('click', function(){
+						time_callback(task)
 					})
 				}
 			})
@@ -186,8 +192,9 @@ Schedule.HTMLTable = class {
 		var dh = new Tag.Attribute({'name': 'data-html', 'values': ['true']})
 		var tt = new Tag.Attribute({'name': 'title', 'values': [`${duration_days} dia${duration_days > 1 ? 's' : ''}, de <b>${i.d}/${i.m}/${i.y.toString().substr(-2)}</b> a <b>${e.d}/${e.m}/${e.y.toString().substr(-2)}</b>`]})
 		var tb = new Tag.Attribute({'name': 'data-container', 'values': ['body']})
-		var class_attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-intime', 'test']})
-		var td_time = this.tdSection({'colspan': cspan_time, 'attrs': [class_attr, dt, dh, tt, tb]})
+		var class_attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-intime', 'test', 'schedule-clickable']})
+		var d = new Tag.Attribute({'name': 'id', 'values': [`id-schedule-time-${task.id}`]})
+		var td_time = this.tdSection({'colspan': cspan_time, 'attrs': [class_attr, d, dt, dh, tt, tb]})
 
 		cspan_left -= 1
 		var class_attr = new Tag.Attribute({'name': 'class', 'values': ['schedule-outtime']})

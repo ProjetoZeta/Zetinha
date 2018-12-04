@@ -73,6 +73,10 @@
 					if (response.data.length)
 						$( "#schedule-table-container" ).html(schedule.html_table)
 
+					time_click = function(task){
+						window.location = `/cadastro/projeto/{{ pk }}/meta/${task.group.id}/atividade/${task.id}/vincularparticipantes`
+					}
+
 					task_click = function(task){
 						window.location = `/cadastro/projeto/{{ pk }}/meta/${task.group.id}/atividade/${task.id}/editar`
 					}
@@ -81,7 +85,7 @@
 						window.location = `/cadastro/projeto/{{ pk }}/meta/${group.id}/editar`
 					}
 
-					schedule.onClickLabel({'group_callback': group_click, 'task_callback': task_click})
+					schedule.onClickLabel({'group_callback': group_click, 'task_callback': task_click, 'time_callback': time_click})
 
 					$('[data-toggle="tooltip"]').tooltip()
 				},
