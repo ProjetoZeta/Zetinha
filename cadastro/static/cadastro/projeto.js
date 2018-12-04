@@ -73,21 +73,6 @@ $(document).ready(function () {
 		$('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
 	} 
 
-	// Change hash for page-reload
-	/*$('.nav-tabs a').on('shown.bs.tab', function (e) {
-		window.location.hash = e.target.hash;
-	})*/
-
-	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-
-	  var target = $(e.target).attr("class") // activated tab
-	  
-	  monitor_tabs(e.target)
-
-	});
-
-	monitor_tabs($('a[data-toggle="tab"]').parent('li.active').children('a')[0])
-
 })
 
 	

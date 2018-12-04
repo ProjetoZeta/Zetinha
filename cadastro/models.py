@@ -206,9 +206,18 @@ class EmprestimoEquipamento(models.Model):
         return dict(EmprestimoEquipamento.TIPOS).get(self.tipo_equipamento)
 
 class Projeto(models.Model):
-    nome = models.CharField('Nome do Projeto', max_length=32)
-    sigla = models.CharField('Sigla', max_length=32, unique=True)
+    nome = models.CharField('Nome do Projeto', max_length=256)
+    sigla = models.CharField('Sigla', max_length=256, unique=True)
+
+    periodo_execucao = models.CharField('Período de Execução', max_length=256, null=True, blank=True)
+    duracao = models.CharField('Duração', max_length=256, null=True, blank=True)
+    identificacao_objeto = models.CharField('Identificação do Objeto', max_length=12288, null=True, blank=True)
+    justificativa_proposta = models.CharField('Justificativa da Proposta', max_length=12288, null=True, blank=True)
+    referencias_bibliograficas = models.CharField('Referências Bibliográficas', max_length=12288, null=True, blank=True)
     
+    metodologia = models.CharField('Metodologia', max_length=12288, null=True, blank=True)
+    gestao_transferencia_tecnologia = models.CharField('Gestão de Projeto e Transferência de Tecnologia', max_length=12288, null=True, blank=True)
+
     entidade_concedente = models.ForeignKey('Entidade', on_delete=models.CASCADE, related_name='entidadeconcedente', null=True, blank=True)
     entidade_proponente = models.ForeignKey('Entidade', on_delete=models.CASCADE ,related_name='entidadeproponente', null=True, blank=True)
 
@@ -217,10 +226,6 @@ class Projeto(models.Model):
 
     responsavel_tecnico_concedente = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='rtconcedente', null=True, blank=True)
     responsavel_tecnico_proponente = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='rtproponente', null=True, blank=True)
-
-    metodologia = models.CharField('Metodologia', max_length=1024, blank=True)
-
-    gestao_transferencia_tecnologia = models.CharField('Gestão de Projeto e Transferência de Tecnologia', max_length=1024, blank=True)
 
     class Meta:
         verbose_name_plural = "Projetos"
@@ -281,6 +286,7 @@ class Meta(models.Model):
     titulo = models.CharField('Título', max_length=100)
     descricao = models.CharField('Descrição', max_length=1024)
     ic_ativo = models.BooleanField('Ativo', default=True)
+    posicao = models.IntegerField('Posição', null=True, blank=True)
 
     def __str__(self):
         return "{}".format(self.titulo)
@@ -293,6 +299,7 @@ class Atividade(models.Model):
     data_fim = models.DateField('Data de Fim')
     ic_ativo = models.BooleanField('Ativo', default=True)
     participantes = models.ManyToManyField(Participante)
+    posicao = models.IntegerField('Posição', null=True, blank=True)
 
     def __str__(self):
         return "{}".format(self.titulo)

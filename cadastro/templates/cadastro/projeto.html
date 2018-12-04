@@ -68,6 +68,14 @@
 				type: "get", //send it through get method
 				success: function(response) {
 
+					Schedule.prototype.groupLabelCallback = function(group){
+						return `${group.data.posicao}. ${group.title}`
+					}
+
+					Schedule.prototype.taskLabelCallback = function(task){
+						return `${task.group.posicao}.${task.data.posicao}. ${task.title}`
+					}
+
 					schedule = new Schedule({'data': response.data, 'config': {'resolution': 365, 'title': 'Cronograma'}})
 
 					if (response.data.length)
@@ -122,8 +130,6 @@
 
 						<div class="alert alert-danger">
 						  <strong><a data-toggle="collapse" href="#errors-form" role="button" aria-expanded="false" aria-controls="errors-form">Erros</a> encontrados!</strong> Verifique os campos e tente novamente
-
-						
 						</div>
 
 						<div class="collapse multi-collapse alert alert-warning" id="errors-form">
@@ -150,23 +156,21 @@
 
 								<legend class="the-legend">Identificação</legend>
 
-								<div class="form-group row ">
-									<div class="{% if form|is_required:form.nome.name %} required {% endif %} {% if form.nome.errors %}{{ 'has-error' }}{% endif %}">
-										<label for="inputKey" class="col-md-2 control-label">{{ form.nome.label }}:</label>
-										<div class="col-md-7">
-											{{ form.nome }}
-											<div class="help-block">{{ form.nome.errors }}</div>
-										</div>
-									</div>
-									<div class="{% if form|is_required:form.sigla.name %} required {% endif %} {% if form.sigla.errors %}{{ 'has-error' }}{% endif %}">
-										<label for="inputValue" class="col-md-1 control-label">{{ form.sigla.label }}:</label>
-										<div class="col-md-2">
-											{{ form.sigla }}
-											<div class="help-block">{{ form.sigla.errors }}</div>
-										</div>
+								<div class="form-group row {% if form|is_required:form.nome.name %} required {% endif %}">
+									<label for="inputKey" class="col-md-2 control-label">{{ form.nome.label }}:</label>
+									<div class="col-md-10">
+										{{ form.nome }}
+										<div class="help-block">{{ form.nome.errors }}</div>
 									</div>
 								</div>
 
+								<div class="form-group row {% if form|is_required:form.sigla.name %} required {% endif %}">
+									<label for="inputKey" class="col-md-2 control-label">{{ form.sigla.label }}:</label>
+									<div class="col-md-10">
+										{{ form.sigla }}
+										<div class="help-block">{{ form.sigla.errors }}</div>
+									</div>
+								</div>
 
 							</fieldset>
 
@@ -231,6 +235,52 @@
 								</div>
 
 							</fieldset>
+
+							<fieldset class="well the-fieldset">
+
+								<legend class="the-legend">Descrição</legend>
+
+								<div class="form-group row {% if form|is_required:form.periodo_execucao.name %} required {% endif %}">
+									<label for="inputKey" class="col-md-2 control-label">{{ form.periodo_execucao.label }}:</label>
+									<div class="col-md-10">
+										{{ form.periodo_execucao }}
+										<div class="help-block">{{ form.periodo_execucao.errors }}</div>
+									</div>
+								</div>
+
+								<div class="form-group row {% if form|is_required:form.duracao.name %} required {% endif %}">
+									<label for="inputKey" class="col-md-2 control-label">{{ form.duracao.label }}:</label>
+									<div class="col-md-10">
+										{{ form.duracao }}
+										<div class="help-block">{{ form.duracao.errors }}</div>
+									</div>
+								</div>
+
+								<div class="form-group row {% if form|is_required:form.identificacao_objeto.name %} required {% endif %}">
+									<label for="inputKey" class="col-md-2 control-label">{{ form.identificacao_objeto.label }}:</label>
+									<div class="col-md-10">
+										{{ form.identificacao_objeto }}
+										<div class="help-block">{{ form.identificacao_objeto.errors }}</div>
+									</div>
+								</div>
+
+								<div class="form-group row {% if form|is_required:form.justificativa_proposta.name %} required {% endif %}">
+									<label for="inputKey" class="col-md-2 control-label">{{ form.justificativa_proposta.label }}:</label>
+									<div class="col-md-10">
+										{{ form.justificativa_proposta }}
+										<div class="help-block">{{ form.justificativa_proposta.errors }}</div>
+									</div>
+								</div>
+
+								<div class="form-group row {% if form|is_required:form.referencias_bibliograficas.name %} required {% endif %}">
+									<label for="inputKey" class="col-md-2 control-label">{{ form.referencias_bibliograficas.label }}:</label>
+									<div class="col-md-10">
+										{{ form.referencias_bibliograficas }}
+										<div class="help-block">{{ form.referencias_bibliograficas.errors }}</div>
+									</div>
+								</div>
+
+							</fieldset>	
 
 							<fieldset class="well the-fieldset">
 
@@ -464,13 +514,23 @@
 
 									{{ formm.projeto }}
 
-									<div class="form-group row {% if formm|is_required:formm.titulo.name %} required {% endif %} {% if formm.titulo.errors %}{{ 'has-error' }}{% endif %}">
-										<label for="inputValue" class="col-md-2 control-label">Título da Meta:</label>
-										<div class="col-md-10">
-											{{ formm.titulo }}
-											<div class="help-block">{{ formm.titulo.errors }}</div>
+									<div class="form-group row ">
+										<div class="{% if formm|is_required:formm.titulo.name %} required {% endif %} {% if formm.titulo.errors %}{{ 'has-error' }}{% endif %}">
+											<label for="inputKey" class="col-md-2 control-label">{{ formm.titulo.label }}:</label>
+											<div class="col-md-7">
+												{{ formm.titulo }}
+												<div class="help-block">{{ formm.titulo.errors }}</div>
+											</div>
+										</div>
+										<div class="{% if formm|is_required:formm.posicao.name %} required {% endif %} {% if formm.posicao.errors %}{{ 'has-error' }}{% endif %}">
+											<label for="inputValue" class="col-md-1 control-label">{{ formm.posicao.label }}:</label>
+											<div class="col-md-2">
+												{{ formm.posicao }}
+												<div class="help-block">{{ formm.posicao.errors }}</div>
+											</div>
 										</div>
 									</div>
+
 
 									<div class="form-group row {% if formm|is_required:formm.descricao.name %} required {% endif %} {% if formm.descricao.errors %}{{ 'has-error' }}{% endif %}">
 										<label for="inputValue" class="col-md-2 control-label">Descrição:</label>
@@ -734,16 +794,16 @@
 								<div class="form-group row">
 				                    <div class="{% if forma.titulo.errors %}{{ 'has-error' }}{% endif %} {% if forma|is_required:forma.titulo.name %} required {% endif %}">
 				                        <label for="inputKey" class="col-md-2 control-label">{{ forma.titulo.label }}:</label>
-				                        <div class="col-md-8">
+				                        <div class="col-md-6">
 				                            {{ forma.titulo }}
 				                            <div class="help-block">{{ forma.titulo.errors }}</div>
 				                        </div>
 				                    </div>
-				                    <div class="{% if forma.ic_ativo.errors %}{{ 'has-error' }}{% endif %} {% if forma|is_required:forma.ic_ativo.name %} required {% endif %}">
-				                        <label for="inputKey" class="col-md-1 control-label">{{ forma.ic_ativo.label }}:</label>
-				                        <div class="col-md-1">
-				                            {{ forma.ic_ativo }}
-				                            <div class="help-block">{{ forma.ic_ativo.errors }}</div>
+				                    <div class="{% if forma.posicao.errors %}{{ 'has-error' }}{% endif %} {% if forma|is_required:forma.posicao.name %} required {% endif %}">
+				                        <label for="inputKey" class="col-md-2 control-label">{{ forma.posicao.label }}:</label>
+				                        <div class="col-md-2">
+				                            {{ forma.posicao }}
+				                            <div class="help-block">{{ forma.posicao.errors }}</div>
 				                        </div>
 				                    </div>
 				                </div>
@@ -759,18 +819,26 @@
 								<div class="form-group row ">
 									<div class="{% if forma|is_required:forma.data_inicio.name %} required {% endif %} {% if forma.data_inicio.errors %}{{ 'has-error' }}{% endif %}">
 										<label for="inputKey" class="col-md-2 control-label">Data de Início:</label>
-										<div class="col-md-3">
+										<div class="col-md-4">
 											{{ forma.data_inicio }}
 											<div class="help-block">{{ forma.data_inicio.errors }}</div>
 										</div>
 									</div>
 
 									<div class="{% if forma|is_required:forma.data_fim.name %} required {% endif %} {% if forma.data_fim.errors %}{{ 'has-error' }}{% endif %}">
-										<label for="inputValue" class="col-md-4 control-label">Data de Término:</label>
-										<div class="col-md-3">
+										<label for="inputValue" class="col-md-2 control-label">Data de Término:</label>
+										<div class="col-md-4">
 											{{ forma.data_fim }}
 											<div class="help-block">{{ forma.data_fim.errors }}</div>
 										</div>
+									</div>
+								</div>
+
+								<div class="form-group row {% if forma|is_required:forma.ic_ativo.name %} required {% endif %} {% if forma.ic_ativo.errors %}{{ 'has-error' }}{% endif %}">
+									<label for="inputValue" class="col-md-2 control-label">Ativo:</label>
+									<div class="col-md-1">
+										{{ forma.ic_ativo }}
+										<div class="help-block">{{ forma.ic_ativo.errors }}</div>
 									</div>
 								</div>
 

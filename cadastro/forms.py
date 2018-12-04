@@ -112,11 +112,17 @@ class ProjetoForm(GenericForm):
     responsavel_tecnico_proponente = forms.ModelChoiceField(queryset=Responsavel.objects.filter(ic_ativo=True), empty_label=empty_m)
     responsavel_tecnico_concedente = forms.ModelChoiceField(queryset=Responsavel.objects.filter(ic_ativo=True), empty_label=empty_m)
 
-    metodologia = forms.CharField(widget=forms.Textarea)
-    gestao_transferencia_tecnologia = forms.CharField(widget=forms.Textarea)
     class Meta:
         model = Projeto
         fields = get_fields(model)
+
+        widgets = {
+            'identificacao_objeto': forms.Textarea,
+            'justificativa_proposta': forms.Textarea,
+            'referencias_bibliograficas': forms.Textarea,
+            'metodologia': forms.Textarea,
+            'gestao_transferencia_tecnologia': forms.Textarea,
+        }
 
 class ParticipanteForm(GenericForm):
     preview = ['bolsista', 'funcao', 'valor_mensal']
@@ -146,6 +152,14 @@ class ParticipanteBolsistaForm(ParticipanteForm):
 
 
 class MetaForm(GenericForm):
+
+    def __init__(self, *args, **kwargs):
+        super(MetaForm, self).__init__(*args, **kwargs)
+        m = Meta.objects.all()
+        if len(m):
+            m = Meta.objects.latest('id')
+            self.fields['posicao'].initial = (m.pk + 1) if m else 1
+
     preview = ['titulo', 'ic_ativo']
     descricao = forms.CharField(widget=forms.Textarea)
 
@@ -157,7 +171,15 @@ class MetaForm(GenericForm):
 
 class AtividadeForm(GenericForm):
 
-    preview = ['titulo', 'descricao', 'data_inicio', 'data_fim', 'ic_ativo']
+    def __init__(self, *args, **kwargs):
+        super(AtividadeForm, self).__init__(*args, **kwargs)
+        a = Atividade.objects.all()
+        if len(a):
+            a = Atividade.objects.latest('id')
+            self.fields['posicao'].initial = (a.pk + 1) if a else 1
+    
+
+    preview = ['titulo', 'posicao', 'data_inicio', 'data_fim', 'ic_ativo']
     descricao = forms.CharField(widget=forms.Textarea(attrs={'rows': 1}))
     meta = forms.ModelChoiceField(queryset=Meta.objects.all(), widget=forms.HiddenInput())
 

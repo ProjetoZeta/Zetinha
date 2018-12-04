@@ -47,6 +47,14 @@ class Schedule {
 		return 86400000;
 	}
 
+	groupLabelCallback(group){
+		return group.title
+	}
+
+	taskLabelCallback(task){
+		return task.title
+	}
+
 	parseData(data) {
 
 		var groups = []
@@ -57,11 +65,11 @@ class Schedule {
 
 			group.tasks.forEach(function(task){
 
-				tasks.push(new Schedule.Task({'title': task.title, 'id': task.id, 'group': group, 'initial_date': task.initial_date, 'end_date': task.end_date}))
+				tasks.push(new Schedule.Task({'title': task.title, 'id': task.id, 'group': group, 'initial_date': task.initial_date, 'end_date': task.end_date, 'data': task}))
 
 			})
 
-			groups.push(new Schedule.Group({'title': group.title, 'id': group.id, 'tasks': tasks}))
+			groups.push(new Schedule.Group({'title': group.title, 'id': group.id, 'tasks': tasks, 'data': group}))
 			
 		})
 
@@ -122,10 +130,11 @@ class Schedule {
 
 Schedule.Task = class {
 
-	constructor({title, id, group, initial_date, end_date}={}) {
+	constructor({title, id, group, initial_date, end_date, data}={}) {
 		this.title = title
 		this.id = id
 		this.group = group
+		this.data = data
 		this.initial_date = new Date(initial_date)
 		var temp_end_date = (new Date(end_date)).getTime()
 		this.end_date = new Date(temp_end_date + Schedule.DAY_MS - 1);
@@ -133,9 +142,10 @@ Schedule.Task = class {
 }
 
 Schedule.Group = class {
-	constructor({title, id, tasks}={}) {
+	constructor({title, id, tasks, data}={}) {
 		this.title = title
 		this.id = id
+		this.data = data
 		this.tasks = tasks
 	}
 }
@@ -232,7 +242,7 @@ Schedule.HTMLTable = class {
 
 			var c = new Tag.Attribute({'name': 'class', 'values': ['schedule-group-label']})
 			var d = new Tag.Attribute({'name': 'id', 'values': [`id-schedule-group-${group.id}`]})
-			var span_group_label = (new Tag({'name': 'span', 'inner': group.title, 'attrs': [d, ck]})).content
+			var span_group_label = (new Tag({'name': 'span', 'inner': a.schedule.groupLabelCallback(group), 'attrs': [d, ck]})).content
 			var b_group_label = (new Tag({'name': 'b', 'inner': span_group_label})).content
 
 			var group_label_td = (new Tag({'name': 'td', 'inner': b_group_label, 'attrs': [c]})).content
@@ -245,7 +255,7 @@ Schedule.HTMLTable = class {
 
 				var c = new Tag.Attribute({'name': 'class', 'values': ['schedule-label']})
 				var d = new Tag.Attribute({'name': 'id', 'values': [`id-schedule-task-${task.id}`]})
-				var span_task_label = (new Tag({'name': 'span', 'inner': task.title, 'attrs': [d, ck]})).content
+				var span_task_label = (new Tag({'name': 'span', 'inner': a.schedule.taskLabelCallback(task), 'attrs': [d, ck]})).content
 
 				var tag = new Tag({'name': 'td', 'inner': span_task_label, 'attrs': [c]})
 				var tags = a.htmlTimeCells(task)
