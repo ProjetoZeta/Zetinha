@@ -150,21 +150,23 @@
 
 								<legend class="the-legend">Identificação</legend>
 
-								<div class="form-group row {% if form|is_required:form.nome.name %} required {% endif %}">
-									<label for="inputKey" class="col-md-2 control-label">{{ form.nome.label }}:</label>
-									<div class="col-md-10">
-										{{ form.nome }}
-										<div class="help-block">{{ form.nome.errors }}</div>
+								<div class="form-group row ">
+									<div class="{% if form|is_required:form.nome.name %} required {% endif %} {% if form.nome.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputKey" class="col-md-2 control-label">{{ form.nome.label }}:</label>
+										<div class="col-md-7">
+											{{ form.nome }}
+											<div class="help-block">{{ form.nome.errors }}</div>
+										</div>
+									</div>
+									<div class="{% if form|is_required:form.sigla.name %} required {% endif %} {% if form.sigla.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputValue" class="col-md-1 control-label">{{ form.sigla.label }}:</label>
+										<div class="col-md-2">
+											{{ form.sigla }}
+											<div class="help-block">{{ form.sigla.errors }}</div>
+										</div>
 									</div>
 								</div>
 
-								<div class="form-group row {% if form|is_required:form.sigla.name %} required {% endif %}">
-									<label for="inputKey" class="col-md-2 control-label">{{ form.sigla.label }}:</label>
-									<div class="col-md-10">
-										{{ form.sigla }}
-										<div class="help-block">{{ form.sigla.errors }}</div>
-									</div>
-								</div>
 
 							</fieldset>
 
@@ -180,19 +182,20 @@
 									</div>
 								</div>
 
-								<div class="form-group row {% if form|is_required:form.responsavel_proponente.name %} required {% endif %}">
-									<label for="inputKey" class="col-md-2 control-label">Responsável:</label>
-									<div class="col-md-10">
-										{{ form.responsavel_proponente }}
-										<div class="help-block">{{ form.responsavel_proponente.errors }}</div>
+								<div class="form-group row ">
+									<div class="{% if form|is_required:form.responsavel_proponente.name %} required {% endif %} {% if form.responsavel_proponente.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputKey" class="col-md-2 control-label">Responsável:</label>
+										<div class="col-md-4">
+											{{ form.responsavel_proponente }}
+											<div class="help-block">{{ form.responsavel_proponente.errors }}</div>
+										</div>
 									</div>
-								</div>
-
-								<div class="form-group row {% if form|is_required:form.responsavel_tecnico_proponente.name %} required {% endif %}">
-									<label for="inputKey" class="col-md-2 control-label">Responsável Técnico:</label>
-									<div class="col-md-10">
-										{{ form.responsavel_tecnico_proponente }}
-										<div class="help-block">{{ form.responsavel_tecnico_proponente.errors }}</div>
+									<div class="{% if form|is_required:form.responsavel_tecnico_proponente.name %} required {% endif %} {% if form.responsavel_tecnico_proponente.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputValue" class="col-md-2 control-label">Responsável Técnico:</label>
+										<div class="col-md-4">
+											{{ form.responsavel_tecnico_proponente }}
+											<div class="help-block">{{ form.responsavel_tecnico_proponente.errors }}</div>
+										</div>
 									</div>
 								</div>
 
@@ -210,19 +213,20 @@
 									</div>
 								</div>
 
-								<div class="form-group row {% if form|is_required:form.responsavel_concedente.name %} required {% endif %}">
-									<label for="inputKey" class="col-md-2 control-label">Responsável:</label>
-									<div class="col-md-10">
-										{{ form.responsavel_concedente }}
-										<div class="help-block">{{ form.responsavel_concedente.errors }}</div>
+								<div class="form-group row ">
+									<div class="{% if form|is_required:form.responsavel_concedente.name %} required {% endif %} {% if form.responsavel_concedente.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputKey" class="col-md-2 control-label">Responsável:</label>
+										<div class="col-md-4">
+											{{ form.responsavel_concedente }}
+											<div class="help-block">{{ form.responsavel_concedente.errors }}</div>
+										</div>
 									</div>
-								</div>
-
-								<div class="form-group row {% if form|is_required:form.responsavel_tecnico_concedente.name %} required {% endif %}">
-									<label for="inputKey" class="col-md-2 control-label">Responsável Técnico:</label>
-									<div class="col-md-10">
-										{{ form.responsavel_tecnico_concedente }}
-										<div class="help-block">{{ form.responsavel_tecnico_concedente.errors }}</div>
+									<div class="{% if form|is_required:form.responsavel_tecnico_concedente.name %} required {% endif %} {% if form.responsavel_tecnico_concedente.errors %}{{ 'has-error' }}{% endif %}">
+										<label for="inputValue" class="col-md-2 control-label">Responsável Técnico:</label>
+										<div class="col-md-4">
+											{{ form.responsavel_tecnico_concedente }}
+											<div class="help-block">{{ form.responsavel_tecnico_concedente.errors }}</div>
+										</div>
 									</div>
 								</div>
 
