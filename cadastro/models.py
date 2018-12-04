@@ -264,10 +264,10 @@ class Participante(models.Model):
 
     inicio_vigencia = models.DateField('Início da Vigência')
     termino_vigencia = models.DateField('Término da Vigência')
-    periodo_total = models.IntegerField('Período Total', blank=True)
-    horas_semanais = models.IntegerField('Horas semanais', blank=True)
-    valor_mensal = models.DecimalField('Valor mensal', max_digits=10, decimal_places=2, blank=True)
-    valor_total = models.DecimalField('Valor total', max_digits=10, decimal_places=2, blank=True)
+    periodo_total = models.IntegerField('Período Total')
+    horas_semanais = models.IntegerField('Horas semanais')
+    valor_mensal = models.DecimalField('Valor mensal', max_digits=10, decimal_places=2)
+    valor_total = models.DecimalField('Valor total', max_digits=10, decimal_places=2)
 
 
     class Meta:
@@ -289,8 +289,8 @@ class Atividade(models.Model):
     meta = models.ForeignKey('Meta', on_delete=models.CASCADE, verbose_name="Meta")
     titulo = models.CharField('Título', max_length=100)
     descricao = models.CharField('Descrição', max_length=1024)
-    data_inicio = models.DateField('Data de Início', blank=True)
-    data_fim = models.DateField('Data de Fim', blank=True)
+    data_inicio = models.DateField('Data de Início')
+    data_fim = models.DateField('Data de Fim')
     ic_ativo = models.BooleanField('Ativo', default=True)
     participantes = models.ManyToManyField(Participante)
 

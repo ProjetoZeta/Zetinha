@@ -254,6 +254,11 @@
 
 							</fieldset>
 
+							<div class="btn-group">
+								<button class="btn btn-info" id="confirm-button">Salvar Detalhes</button>
+								<a href="{% url 'projeto' %}" class="btn btn-default">Voltar</a>
+							</div>
+
 						</div>
 
 						</form>
@@ -389,8 +394,12 @@
 
 							</fieldset>
 
-							<button type="submit" class="btn btn-info">Vincular Bolsista</button>
-							<a href="{% url 'projeto' %}" class="btn btn-default">Voltar</a>
+							
+
+							<div class="btn-group">
+								<button type="submit" class="btn btn-info">Vincular Bolsista</button>
+								<a href="{% url 'projeto' %}" class="btn btn-default">Voltar</a>
+							</div>
 
 						 
 
@@ -486,7 +495,7 @@
 										<a href="{% url 'meta-proj-remover' pk pkmeta %}" class="btn btn-danger" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a>
 										{% endif %}
 
-										<a href="{% url 'meta-proj-criar' pk %}" class="btn btn-default">Limpar</a>
+										{% if pk %}<a href="{% url 'meta-proj-criar' pk %}" class="btn btn-default">Limpar</a>{% endif %}
 										<a href="{% url 'projeto' %}" class="btn btn-default">Voltar</a>
 									</div>
 
@@ -558,7 +567,7 @@
 
 								<div id="schedule-table-container">
 									<div class="alert alert-info">
-									  <strong>Aviso:</strong> A tabela só estará disponível quando houver meta cadastrada.
+									  <strong>Aviso:</strong> A tabela só estará disponível quando houver meta cadastrada e ativa.
 									</div>
 								</div>
 
@@ -703,12 +712,6 @@
 						</div>
 					</div>
 
-		<div id="form-buttons">
-			<button class="btn btn-info" id="confirm-button">Salvar</button>
-			<a href="{% url 'projeto' %}" class="btn btn-default">Voltar</a>
-		</div>
-
-
 		 <!-- Modal -->
 
 		{% if pk and pkmeta %}
@@ -728,23 +731,24 @@
 							   
 								{{ forma.meta }}
 
-								<div class="form-group row required {% if forma.ic_ativo.errors %}{{ 'has-error' }}{% endif %}">
-									<label for="inputValue" class="col-md-2 control-label">Ativo:</label>
-									<div class="col-md-1">
-										{{ forma.ic_ativo }}
-										<div class="help-block">{{ forma.ic_ativo.errors }}</div>
-									</div>
-								</div>
+								<div class="form-group row">
+				                    <div class="{% if forma.titulo.errors %}{{ 'has-error' }}{% endif %} {% if forma|is_required:forma.titulo.name %} required {% endif %}">
+				                        <label for="inputKey" class="col-md-2 control-label">{{ forma.titulo.label }}:</label>
+				                        <div class="col-md-8">
+				                            {{ forma.titulo }}
+				                            <div class="help-block">{{ forma.titulo.errors }}</div>
+				                        </div>
+				                    </div>
+				                    <div class="{% if forma.ic_ativo.errors %}{{ 'has-error' }}{% endif %} {% if forma|is_required:forma.ic_ativo.name %} required {% endif %}">
+				                        <label for="inputKey" class="col-md-1 control-label">{{ forma.ic_ativo.label }}:</label>
+				                        <div class="col-md-1">
+				                            {{ forma.ic_ativo }}
+				                            <div class="help-block">{{ forma.ic_ativo.errors }}</div>
+				                        </div>
+				                    </div>
+				                </div>
 
-								<div class="form-group row required {% if forma.titulo.errors %}{{ 'has-error' }}{% endif %}">
-									<label for="inputValue" class="col-md-2 control-label">Título da Atividade:</label>
-									<div class="col-md-10">
-										{{ forma.titulo }}
-										<div class="help-block">{{ forma.titulo.errors }}</div>
-									</div>
-								</div>
-
-								<div class="form-group row required {% if forma.descricao.errors %}{{ 'has-error' }}{% endif %}">
+								<div class="form-group row {% if forma|is_required:forma.descricao.name %} required {% endif %} {% if forma.descricao.errors %}{{ 'has-error' }}{% endif %}">
 									<label for="inputValue" class="col-md-2 control-label">Descrição:</label>
 									<div class="col-md-10">
 										{{ forma.descricao }}
@@ -753,7 +757,7 @@
 								</div>
 
 								<div class="form-group row ">
-									<div class="{% if forma.data_inicio.errors %}{{ 'has-error' }}{% endif %}">
+									<div class="{% if forma|is_required:forma.data_inicio.name %} required {% endif %} {% if forma.data_inicio.errors %}{{ 'has-error' }}{% endif %}">
 										<label for="inputKey" class="col-md-2 control-label">Data de Início:</label>
 										<div class="col-md-3">
 											{{ forma.data_inicio }}
@@ -761,7 +765,7 @@
 										</div>
 									</div>
 
-									<div class="{% if forma.data_fim.errors %}{{ 'has-error' }}{% endif %}">
+									<div class="{% if forma|is_required:forma.data_fim.name %} required {% endif %} {% if forma.data_fim.errors %}{{ 'has-error' }}{% endif %}">
 										<label for="inputValue" class="col-md-4 control-label">Data de Término:</label>
 										<div class="col-md-3">
 											{{ forma.data_fim }}

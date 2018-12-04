@@ -6,10 +6,10 @@ from django.http import JsonResponse
 
 def schedule_data(request, pkprojeto):
     projeto = Projeto.objects.get(pk=pkprojeto)
-    metas = Meta.objects.filter(projeto=projeto)
+    metas = Meta.objects.filter(projeto=projeto, ic_ativo=True)
     data = []
     for meta in metas:
-        atividades = meta.atividade_set.all()
+        atividades = meta.atividade_set.filter(ic_ativo=True)
         tasks = []
         for atividade in atividades:
             tasks.append({'title': atividade.titulo, 'id': atividade.pk, 'initial_date': atividade.data_inicio, 'end_date': atividade.data_fim})
