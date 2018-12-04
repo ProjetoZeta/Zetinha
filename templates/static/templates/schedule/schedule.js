@@ -57,11 +57,11 @@ class Schedule {
 
 			group.tasks.forEach(function(task){
 
-				tasks.push(new Schedule.Task({'title': task.title, 'initial_date': task.initial_date, 'end_date': task.end_date}))
+				tasks.push(new Schedule.Task({'title': task.title, 'id': task.id, 'group': group, 'initial_date': task.initial_date, 'end_date': task.end_date}))
 
 			})
 
-			groups.push(new Schedule.Group({'title': group.title, 'tasks': tasks}))
+			groups.push(new Schedule.Group({'title': group.title, 'id': group.id, 'tasks': tasks}))
 			
 		})
 
@@ -93,21 +93,43 @@ class Schedule {
 		return (new Schedule.HTMLTable({schedule: this})).html
 	}
 
+	onClickLabel({group_callback, task_callback}={}) {
+		this.groups.forEach(function(group){
+			var e = document.getElementById(`id-schedule-group-${group.id}`)
+			if (e){
+				e.addEventListener('click', function(){
+					group_callback(group)
+				})
+			}
+			group.tasks.forEach(function(task){
+				var e = document.getElementById(`id-schedule-task-${task.id}`)
+				if (e){
+					e.addEventListener('click', function(){
+						task_callback(task)
+					})
+				}
+			})
+		})
+	}
+
 }
 
 Schedule.Task = class {
 
-	constructor({title, initial_date, end_date}={}) {
+	constructor({title, id, group, initial_date, end_date}={}) {
 		this.title = title
-		this.initial_date = new Date(initial_date); 
+		this.id = id
+		this.group = group
+		this.initial_date = new Date(initial_date)
 		var temp_end_date = (new Date(end_date)).getTime()
 		this.end_date = new Date(temp_end_date + Schedule.DAY_MS - 1);
 	}
 }
 
 Schedule.Group = class {
-	constructor({title, tasks}={}) {
+	constructor({title, id, tasks}={}) {
 		this.title = title
+		this.id = id
 		this.tasks = tasks
 	}
 }
@@ -185,8 +207,8 @@ Schedule.HTMLTable = class {
 		var e = this.simplify_date(new Date(this.schedule.timeBorderMax))
 
 		var duration_days = Math.ceil((this.schedule.timeBorderMax - this.schedule.timeBorderMin)/Schedule.DAY_MS)
-
-		var first_td = (new Tag({'name': 'td', 'inner': `${this.schedule.config.title} - Perído de ${i.d}/${i.m}/${i.y.toString().substr(-2)} a ${e.d}/${e.m}/${e.y.toString().substr(-2)} (${duration_days} dias)`})).content
+		var content = `Período de ${i.d}/${i.m}/${i.y.toString().substr(-2)} a ${e.d}/${e.m}/${e.y.toString().substr(-2)} (${duration_days} dia${(duration_days > 1) ? 's' : ''})`
+		var first_td = (new Tag({'name': 'td', 'inner': (this.schedule.timeBorderMax) ? content : ''})).content
 		var scale_tds = []
 
 		for (var i = 0; i < this.schedule.config.resolution; i++) {
@@ -197,10 +219,16 @@ Schedule.HTMLTable = class {
 		var first_tr = (new Tag({'name': 'tr', 'inner': first_td + scale_tds.join(''), 'attrs': [c]})).content
 		var trs = [first_tr]
 
+		var ck = new Tag.Attribute({'name': 'class', 'values': ['schedule-clickable']})
+
 		this.schedule.groups.forEach(function(group){
 
 			var c = new Tag.Attribute({'name': 'class', 'values': ['schedule-group-label']})
-			var group_label_td = (new Tag({'name': 'td', 'inner': `<b>${group.title}</b>`, 'attrs': [c]})).content
+			var d = new Tag.Attribute({'name': 'id', 'values': [`id-schedule-group-${group.id}`]})
+			var span_group_label = (new Tag({'name': 'span', 'inner': group.title, 'attrs': [d, ck]})).content
+			var b_group_label = (new Tag({'name': 'b', 'inner': span_group_label})).content
+
+			var group_label_td = (new Tag({'name': 'td', 'inner': b_group_label, 'attrs': [c]})).content
 			var group_right_line = a.tdSection({'colspan': a.schedule.config.resolution, 'attrs': [c]})
 
 			var group_label_tr = (new Tag({'name': 'tr', 'inner': group_label_td + group_right_line})).content
@@ -209,7 +237,10 @@ Schedule.HTMLTable = class {
 			group.tasks.forEach(function(task){
 
 				var c = new Tag.Attribute({'name': 'class', 'values': ['schedule-label']})
-				var tag = new Tag({'name': 'td', 'inner': task.title, 'attrs': [c]})
+				var d = new Tag.Attribute({'name': 'id', 'values': [`id-schedule-task-${task.id}`]})
+				var span_task_label = (new Tag({'name': 'span', 'inner': task.title, 'attrs': [d, ck]})).content
+
+				var tag = new Tag({'name': 'td', 'inner': span_task_label, 'attrs': [c]})
 				var tags = a.htmlTimeCells(task)
 				tags.unshift(tag.content)
 				trs.push((new Tag({'name': 'tr', 'inner': tags.join('')})).content)
@@ -229,6 +260,7 @@ data_example = [
 
 			{
 				'title': 'Teste',
+				'id': '2',
 				'tasks': [
 					{
 						'title': 'task1', 
@@ -254,6 +286,7 @@ data_example = [
 
 			{
 				'title': 'Teste 2',
+				'id': '3',
 				'tasks': [
 					{
 						'title': 'task4', 

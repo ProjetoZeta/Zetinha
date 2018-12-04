@@ -18,6 +18,10 @@ table.schedule td.schedule-label {
 	text-indent: 2em;
 }
 
+.schedule-clickable {
+	cursor: pointer;
+}
+
 table.schedule td.schedule-group-label {
 	background: #d9edf7;
 	text-indent: 1em;

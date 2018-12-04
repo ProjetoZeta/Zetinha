@@ -12,8 +12,8 @@ def schedule_data(request, pkprojeto):
         atividades = meta.atividade_set.all()
         tasks = []
         for atividade in atividades:
-            tasks.append({'title': atividade.titulo, 'initial_date': atividade.data_inicio, 'end_date': atividade.data_fim})
-        data.append({'title': meta.titulo, 'tasks': tasks})
+            tasks.append({'title': atividade.titulo, 'id': atividade.pk, 'initial_date': atividade.data_inicio, 'end_date': atividade.data_fim})
+        data.append({'title': meta.titulo, 'id': meta.pk, 'tasks': tasks})
 
     return JsonResponse(dict({'data': data}))
 
