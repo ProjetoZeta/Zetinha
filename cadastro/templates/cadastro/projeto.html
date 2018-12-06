@@ -68,32 +68,36 @@
 				type: "get", //send it through get method
 				success: function(response) {
 
-					Schedule.prototype.groupLabelCallback = function(group){
-						return `${group.data.posicao}. ${group.title}`
+					var config = {
+
+						'container_id': 'schedule-table-container',
+						'resolution': 365,
+						'title': 'Cronograma',
+						'onclick':{
+							'task_label': function(task){
+								window.location = `/cadastro/projeto/{{ pk }}/meta/${task.group.id}/atividade/${task.id}/editar`
+							},
+							'group_label': function(task){
+								window.location = `/cadastro/projeto/{{ pk }}/meta/${group.id}/editar`
+							},
+							'time_section': function(task){
+								window.location = `/cadastro/projeto/{{ pk }}/meta/${task.group.id}/atividade/${task.id}/vincularparticipantes`
+							},
+						},
+						'render': {
+							'group_label': function(group){
+								return `${group.data.posicao}. ${group.title}`
+							},
+							'task_label': function(task){
+								return `${task.group.posicao}.${task.data.posicao}. ${task.title}`
+							},
+						}
+
 					}
 
-					Schedule.prototype.taskLabelCallback = function(task){
-						return `${task.group.posicao}.${task.data.posicao}. ${task.title}`
-					}
+					schedule = new Schedule({'data': response.data, 'config': config})
 
-					schedule = new Schedule({'data': response.data, 'config': {'resolution': 365, 'title': 'Cronograma'}})
-
-					if (response.data.length)
-						$( "#schedule-table-container" ).html(schedule.html_table)
-
-					time_click = function(task){
-						window.location = `/cadastro/projeto/{{ pk }}/meta/${task.group.id}/atividade/${task.id}/vincularparticipantes`
-					}
-
-					task_click = function(task){
-						window.location = `/cadastro/projeto/{{ pk }}/meta/${task.group.id}/atividade/${task.id}/editar`
-					}
-
-					group_click = function(group){
-						window.location = `/cadastro/projeto/{{ pk }}/meta/${group.id}/editar`
-					}
-
-					schedule.onClickLabel({'group_callback': group_click, 'task_callback': task_click, 'time_callback': time_click})
+					schedule.start()
 
 					$('[data-toggle="tooltip"]').tooltip()
 				},

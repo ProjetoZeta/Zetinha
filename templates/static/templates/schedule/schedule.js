@@ -36,7 +36,7 @@ Tag.Attribute = class {
 class Schedule {
 
 	constructor({data, config}={}){
-		this.config = config
+		this.config = new Schedule.Config(config)
 		this.groups = this.parseData(data)
 		var timeBorders = this.getTimeBorders()
 		this.timeBorderMax = timeBorders.max
@@ -45,14 +45,6 @@ class Schedule {
 
 	static get DAY_MS() {
 		return 86400000;
-	}
-
-	groupLabelCallback(group){
-		return group.title
-	}
-
-	taskLabelCallback(task){
-		return task.title
 	}
 
 	parseData(data) {
@@ -101,12 +93,17 @@ class Schedule {
 		return (new Schedule.HTMLTable({schedule: this})).html
 	}
 
-	onClickLabel({group_callback, task_callback, time_callback}={}) {
+	start(){
+
+		var schedule = this
+
+		document.getElementById(schedule.config.container_id).innerHTML = schedule.html_table
+
 		this.groups.forEach(function(group){
 			var e = document.getElementById(`id-schedule-group-${group.id}`)
 			if (e){
 				e.addEventListener('click', function(){
-					group_callback(group)
+					schedule.config.onclick.group_label(group)
 				})
 			}
 			group.tasks.forEach(function(task){
@@ -114,18 +111,55 @@ class Schedule {
 				var d = document.getElementById(`id-schedule-time-${task.id}`)
 				if (e){
 					e.addEventListener('click', function(){
-						task_callback(task)
+						schedule.config.onclick.task_label(task)
 					})
 				}
 				if (d){
 					d.addEventListener('click', function(){
-						time_callback(task)
+						schedule.config.onclick.time_section(task)
 					})
 				}
 			})
 		})
 	}
 
+}
+
+Schedule.Config = class {
+	constructor({container_id, resolution, title, onclick, render}={}) {
+		this.container_id = container_id
+		this.resolution = resolution
+		this.title = title
+		this.onclick = new Schedule.Config.OnClick(onclick)
+		this.render = new Schedule.Config.Render(render)
+		console.log(render)
+	}
+}
+
+Schedule.Config.OnClick = class {
+	constructor({group_label=this.logonconsole, task_label=this.logonconsole, time_section=this.logonconsole}={}) {
+		this.group_label = group_label
+		this.task_label = task_label
+		this.time_section = time_section
+	}
+	logonconsole(elem){
+		console.log(elem)
+	}
+}
+
+Schedule.Config.Render = class {
+	constructor({group_label=this.group_label, task_label=this.task_label}={}) {
+		this.group_label = group_label
+		this.task_label = task_label
+	}
+
+	group_label(group){
+		return group.title
+	}
+
+	task_label(task){
+		return task.title
+	}
 }
 
 Schedule.Task = class {
@@ -242,7 +276,7 @@ Schedule.HTMLTable = class {
 
 			var c = new Tag.Attribute({'name': 'class', 'values': ['schedule-group-label']})
 			var d = new Tag.Attribute({'name': 'id', 'values': [`id-schedule-group-${group.id}`]})
-			var span_group_label = (new Tag({'name': 'span', 'inner': a.schedule.groupLabelCallback(group), 'attrs': [d, ck]})).content
+			var span_group_label = (new Tag({'name': 'span', 'inner': a.schedule.config.render.group_label(group), 'attrs': [d, ck]})).content
 			var b_group_label = (new Tag({'name': 'b', 'inner': span_group_label})).content
 
 			var group_label_td = (new Tag({'name': 'td', 'inner': b_group_label, 'attrs': [c]})).content
@@ -255,7 +289,7 @@ Schedule.HTMLTable = class {
 
 				var c = new Tag.Attribute({'name': 'class', 'values': ['schedule-label']})
 				var d = new Tag.Attribute({'name': 'id', 'values': [`id-schedule-task-${task.id}`]})
-				var span_task_label = (new Tag({'name': 'span', 'inner': a.schedule.taskLabelCallback(task), 'attrs': [d, ck]})).content
+				var span_task_label = (new Tag({'name': 'span', 'inner': a.schedule.config.render.task_label(task), 'attrs': [d, ck]})).content
 
 				var tag = new Tag({'name': 'td', 'inner': span_task_label, 'attrs': [c]})
 				var tags = a.htmlTimeCells(task)
