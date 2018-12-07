@@ -319,7 +319,7 @@
 							
 						<div class="tab-pane fade {% if 'participante-' in url %} in active {% endif %}" id="adbolsistas">
 
-							<form class="form" method="POST" action="{% if pk and pkparticipante %}{% url 'participante-proj-editar' pk pkparticipante %} {% endif %}{% if pk and not pkparticipante %} {% url 'participante-proj-criar' pk %}{% endif %}">
+							<form class="form" method="POST" action="{% if pk and pkparticipante %}{% url 'participante-proj-editar' pkparticipante %} {% endif %}{% if pk and not pkparticipante %} {% url 'participante-proj-criar' pk %}{% endif %}">
 
 							{% csrf_token %}
 
@@ -492,8 +492,8 @@
 														<span class="caret"></span>
 													</button>
 													<ul class="dropdown-menu" role="menu">
-														<li><a href="{% url 'participante-proj-editar' pk item.pk %}">Modificar</a></li>
-														<li><a href="{% url 'participante-remover' pk item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
+														<li><a href="{% url 'participante-proj-editar' item.pk %}">Modificar</a></li>
+														<li><a href="{% url 'participante-remover' item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
 
 													</ul>
 												</div>
@@ -644,7 +644,7 @@
 
 								<legend class="the-legend">Vincular Meta/Atividade/Bolsista</legend>
 
-								<form class="form" method="POST" id="form-vinculo-atividade-participante" action="{% if 'vinculo-atividade-m-proj' in url %} {% url 'vinculo-atividade-m-proj' pk pkmeta pkatividade%} {% endif %}">
+								<form class="form" method="POST" id="form-vinculo-atividade-participante" action="{% if 'vinculo-atividade-m-proj' in url %} {% url 'vinculo-atividade-m-proj' pkatividade%} {% endif %}">
 
 									{% csrf_token %}
 
@@ -752,7 +752,7 @@
 
 										{% for document in attachments %}
 											<tr>
-												<td class="col-sm-2"><a href="{% url 'anexo-proj-remover' pk document.pk %}" class="delete-file-x" onclick="return confirm('Tem certeza? O arquivo será apagado permanentemente')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+												<td class="col-sm-2"><a href="{% url 'anexo-proj-remover' document.pk %}" class="delete-file-x" onclick="return confirm('Tem certeza? O arquivo será apagado permanentemente')"><i class="fa fa-times" aria-hidden="true"></i></a></td>
 												<td class="col-sm-2"><i class="fa fa-file-word-o file-icon" aria-hidden="true"></i></td>
 												<td class="col-sm-8"><a target="_blank" href="{{ document.arquivo.url }}" class="open-file" download>{{ document.filename }}</a></td>
 												<!--<td><img src="{{ document.arquivo.url }}" alt=""></td>-->

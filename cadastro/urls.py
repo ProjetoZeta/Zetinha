@@ -48,11 +48,11 @@ urlpatterns = [
     url(r'^projeto/(?P<pkdelete>[0-9]+)/remover$', views.Projeto.as_view(), name='projeto-remover'),
 
     url(r'^projeto/(?P<pk>[0-9]+)/participante/novo$', views.Projeto.as_view(), name='participante-proj-criar'),
-    url(r'^projeto/(?P<pk>[0-9]+)/participante/(?P<pkparticipante>[0-9]+)/editar$', views.Projeto.as_view(), name='participante-proj-editar'),
-    url(r'^projeto/(?P<pk>[0-9]+)/participante/(?P<pkdelete>[0-9]+)/remover$', views.Projeto.as_view(), name='participante-remover'),
+    url(r'^participante/(?P<pkparticipante>[0-9]+)/editar$', views.Projeto.as_view(), name='participante-proj-editar'),
+    url(r'^participante/(?P<pkdelete>[0-9]+)/remover$', views.Projeto.as_view(), name='participante-remover'),
 
     url(r'^projeto/(?P<pk>[0-9]+)/anexo/upload', views.Projeto.as_view(), name='anexo-proj-upload'),
-    url(r'^projeto/(?P<pk>[0-9]+)/anexo/(?P<pkdelete>[0-9]+)/remover', views.Projeto.as_view(), name='anexo-proj-remover'),
+    url(r'^anexo/(?P<pkdelete>[0-9]+)/remover', views.Projeto.as_view(), name='anexo-proj-remover'),
 
     url(r'^projeto/(?P<pk>[0-9]+)/meta/novo$', views.Projeto.as_view(), name='meta-proj-criar'),
     url(r'^meta/(?P<pkmeta>[0-9]+)/editar$', views.Projeto.as_view(), name='meta-proj-editar'),

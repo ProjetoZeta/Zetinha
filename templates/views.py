@@ -137,7 +137,7 @@ class MainView(View):
 
     def get(self, request, *args, **kwargs):
 
-        print(self.fetch_template_keys(request, *args, **kwargs))
+        #print(self.fetch_template_keys(request, *args, **kwargs))
 
         return render(request, self.template_name, {
             **self.fetch_template_keys(request, *args, **kwargs)
@@ -248,9 +248,9 @@ class MainView(View):
 class ModalListView(MainView):
 
     def fetch_success_redirect(self, request, *args, **kwargs):
-        pks_branch_list = self.get_pks_parents(request, *args, **kwargs)
-        pks_branch_list.pop()
-        return redirect(self.success_redirect, *(tuple(pks_branch_list)))
+        pk = kwargs.get('pk_model', None)
+        parent_pk = ((getattr(self.model.objects.get(pk=pk), self.parent_field_name)).pk) if self.parent_field_name else None
+        return redirect(self.success_redirect, parent_pk)
 
 class MainViewStaticAliases(MainView):
 

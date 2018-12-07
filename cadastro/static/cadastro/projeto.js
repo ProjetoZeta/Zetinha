@@ -23,7 +23,7 @@ function bind_atividade_on_change_select_event(){
 			  type: "get", //send it through get method
 			  success: function(response) {
 				var action = response.action
-				var action_url = '/cadastro/projeto/' + action.projeto + '/meta/' + action.meta + '/atividade/' + action.atividade + '/vincularparticipantes'
+				var action_url = '/cadastro/atividade/' + action.atividade + '/vincularparticipantes'
 				
 				handle_bolsistas_panel(response.form)
 				$( "#form-vinculo-atividade-participante" ).attr('action', action_url)
