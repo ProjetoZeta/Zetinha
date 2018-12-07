@@ -240,8 +240,8 @@
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{% url 'responsabilidade-entidade-editar' pkentidade item.pk %}">Modificar</a></li>
-                                    <li><a href="{% url 'responsabilidade-entidade-remover' pkentidade item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
+                                    <li><a href="{% url 'responsabilidade-entidade-editar' item.pk %}">Modificar</a></li>
+                                    <li><a href="{% url 'responsabilidade-entidade-remover' item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
 
                                 </ul>
                             </div>
@@ -269,7 +269,7 @@
                                 Criar{% endif %} {% class_verbose formresponsabilidade.instance %}</h4>
                         </div>
                         <div class="modal-body">
-                            <form action="{% if pkresponsabilidade %}{% url 'responsabilidade-entidade-editar' pkentidade pkresponsabilidade %} {% else %} {% url 'responsabilidade-entidade-criar' pkentidade %} {% endif %}" method="post" class="form">
+                            <form action="{% if pkresponsabilidade %}{% url 'responsabilidade-entidade-editar' pkresponsabilidade %} {% else %} {% url 'responsabilidade-entidade-criar' pkentidade %} {% endif %}" method="post" class="form">
 
                                 {% csrf_token %}
 

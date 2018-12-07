@@ -11,8 +11,8 @@ urlpatterns = [
     url(r'^entidade/(?P<pkdelete>[0-9]+)/remover$', views.Entidade.as_view(), name='entidade-remover'),
 
     url(r'^entidade/(?P<pkentidade>[0-9]+)/responsabilidade/novo$', views.Entidade.as_view(), name='responsabilidade-entidade-criar'),
-    url(r'^entidade/(?P<pkentidade>[0-9]+)/responsabilidade/(?P<pkresponsabilidade>[0-9]+)/editar$', views.Entidade.as_view(), name='responsabilidade-entidade-editar'),
-    url(r'^entidade/(?P<pkentidade>[0-9]+)/responsabilidade/(?P<pkdelete>[0-9]+)/remover$', views.Entidade.as_view(), name='responsabilidade-entidade-remover'),
+    url(r'^responsabilidade/(?P<pkresponsabilidade>[0-9]+)/editar$', views.Entidade.as_view(), name='responsabilidade-entidade-editar'),
+    url(r'^responsabilidade/(?P<pkdelete>[0-9]+)/remover$', views.Entidade.as_view(), name='responsabilidade-entidade-remover'),
 
     url(r'^emprego$', views.Emprego.as_view(), name='emprego'),
     url(r'^emprego/(?P<pk>[0-9]+)/editar$', views.Emprego.as_view(), name='emprego-editar'),
@@ -33,10 +33,10 @@ urlpatterns = [
     url(r'^bolsista/(?P<pkdelete>[0-9]+)/remover$', views.Bolsista.as_view(), name='bolsista-remover'),
 
     url(r'^bolsista/(?P<pk>[0-9]+)/arquivo_upload$', views.Bolsista.as_view(), name='upload-arquivo-bolsista'),
-    url(r'^bolsista/(?P<pk>[0-9]+)/arquivo/(?P<pkdelete>[0-9]+)/remover$', views.Bolsista.as_view(), name='remover-arquivo-bolsista'),
+    url(r'^arquivo/(?P<pkdelete>[0-9]+)/remover$', views.Bolsista.as_view(), name='remover-arquivo-bolsista'),
 
     url(r'^bolsista/(?P<pk>[0-9]+)/emprestimoequipamento$', views.Bolsista.as_view(), name='emprestimo-equipamento-bolsista'),
-    url(r'^bolsista/(?P<pk>[0-9]+)/emprestimoequipamento/(?P<pkdelete>[0-9]+)/remover$', views.Bolsista.as_view(), name='remover-emprestimo-equipamento-bolsista'),
+    url(r'^emprestimoequipamento/(?P<pkdelete>[0-9]+)/remover$', views.Bolsista.as_view(), name='remover-emprestimo-equipamento-bolsista'),
 
     url(r'documento/(?P<pk>[0-9]+)', views.Documento.as_view(), name='show-document'),
 

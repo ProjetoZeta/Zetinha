@@ -239,10 +239,12 @@ class MainView(View):
             return [str(pk)]
 
     def fetch_success_redirect(self, request, *args, **kwargs):
-        return redirect(self.success_redirect, kwargs.get('pk_model', None))
+        pk = kwargs.get('pk_model', None)
+        return redirect(self.success_redirect, pk) if pk else redirect(self.success_redirect)
 
     def fetch_delete_redirect(self, request, *args, **kwargs):
-        return redirect(self.delete_redirect, kwargs.get('pk_parent', None))
+        pk = kwargs.get('pk_parent', None)
+        return redirect(self.delete_redirect, pk) if pk else redirect(self.delete_redirect)
 
 
 class ModalListView(MainView):
@@ -250,7 +252,7 @@ class ModalListView(MainView):
     def fetch_success_redirect(self, request, *args, **kwargs):
         pk = kwargs.get('pk_model', None)
         parent_pk = ((getattr(self.model.objects.get(pk=pk), self.parent_field_name)).pk) if self.parent_field_name else None
-        return redirect(self.success_redirect, parent_pk)
+        return redirect(self.success_redirect, parent_pk) if parent_pk else redirect(self.success_redirect)
 
 class MainViewStaticAliases(MainView):
 
