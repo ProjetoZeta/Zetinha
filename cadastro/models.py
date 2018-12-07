@@ -315,7 +315,7 @@ class Anexo(models.Model):
         return self.arquivo.name.replace(settings.MEDIA_URL, '')
 
     def __str__(self):
-        return self.tipo_documento
+        return self.arquivo.name.replace(settings.MEDIA_URL, '')
 
 class Emprego(models.Model):
     FUNCAO = '1'

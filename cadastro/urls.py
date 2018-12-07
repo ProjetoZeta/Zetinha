@@ -55,14 +55,14 @@ urlpatterns = [
     url(r'^projeto/(?P<pk>[0-9]+)/anexo/(?P<pkdelete>[0-9]+)/remover', views.Projeto.as_view(), name='anexo-proj-remover'),
 
     url(r'^projeto/(?P<pk>[0-9]+)/meta/novo$', views.Projeto.as_view(), name='meta-proj-criar'),
-    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/editar$', views.Projeto.as_view(), name='meta-proj-editar'),
-    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkdelete>[0-9]+)/remover$', views.Projeto.as_view(), name='meta-proj-remover'),
+    url(r'^meta/(?P<pkmeta>[0-9]+)/editar$', views.Projeto.as_view(), name='meta-proj-editar'),
+    url(r'^meta/(?P<pkdelete>[0-9]+)/remover$', views.Projeto.as_view(), name='meta-proj-remover'),
 
-    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/atividade/novo$', views.Projeto.as_view(), name='atividade-meta-proj-criar'),
-    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/atividade/(?P<pkatividade>[0-9]+)/editar$', views.Projeto.as_view(), name='atividade-meta-proj-editar'),
-    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/atividade/(?P<pkdelete>[0-9]+)/remover$', views.Projeto.as_view(), name='atividade-meta-proj-remover'),
+    url(r'^meta/(?P<pkmeta>[0-9]+)/atividade/novo$', views.Projeto.as_view(), name='atividade-meta-proj-criar'),
+    url(r'^atividade/(?P<pkatividade>[0-9]+)/editar$', views.Projeto.as_view(), name='atividade-meta-proj-editar'),
+    url(r'^atividade/(?P<pkdelete>[0-9]+)/remover$', views.Projeto.as_view(), name='atividade-meta-proj-remover'),
 
-    url(r'^projeto/(?P<pk>[0-9]+)/meta/(?P<pkmeta>[0-9]+)/atividade/(?P<pkatividade>[0-9]+)/vincularparticipantes$', views.Projeto.as_view(), name='vinculo-atividade-m-proj'),
+    url(r'^atividade/(?P<pkatividade>[0-9]+)/vincularparticipantes$', views.Projeto.as_view(), name='vinculo-atividade-m-proj'),
 
     url(r'^meta/(?P<pk>[0-9]+)/atividades_select$', views.get_atividades, name='get-atividades-select-ajax'),
     url(r'^atividade/(?P<pk>[0-9]+)/participantes_select$', views.get_atividade_bolsistas, name='get-participantes-select-ajax'),

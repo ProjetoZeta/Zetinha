@@ -75,13 +75,13 @@
 						'title': 'Cronograma',
 						'onclick':{
 							'task_label': function(task){
-								window.location = `/cadastro/projeto/{{ pk }}/meta/${task.group.id}/atividade/${task.id}/editar`
+								window.location = `/cadastro/atividade/${task.id}/editar`
 							},
 							'group_label': function(group){
-								window.location = `/cadastro/projeto/{{ pk }}/meta/${group.id}/editar`
+								window.location = `/cadastro/meta/${group.id}/editar`
 							},
 							'time_section': function(task){
-								window.location = `/cadastro/projeto/{{ pk }}/meta/${task.group.id}/atividade/${task.id}/vincularparticipantes`
+								window.location = `/cadastro/atividade/${task.id}/vincularparticipantes`
 							},
 						},
 						'render': {
@@ -512,7 +512,7 @@
 
 								<legend class="the-legend">Cadastro de Meta</legend>
 
-								<form class="form" method="POST" action="{% if pk and pkmeta %}{% url 'meta-proj-editar' pk pkmeta %} {% endif %}{% if pk and not pkmeta %} {% url 'meta-proj-criar' pk %}{% endif %}">
+								<form class="form" method="POST" action="{% if pk and pkmeta %}{% url 'meta-proj-editar' pkmeta %} {% endif %}{% if pk and not pkmeta %} {% url 'meta-proj-criar' pk %}{% endif %}">
 										
 									{% csrf_token %}
 
@@ -556,7 +556,7 @@
 										<button class="btn btn-info">Salvar</button>
 
 										{% if url == 'meta-proj-editar' %}
-										<a href="{% url 'meta-proj-remover' pk pkmeta %}" class="btn btn-danger" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a>
+										<a href="{% url 'meta-proj-remover' pkmeta %}" class="btn btn-danger" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a>
 										{% endif %}
 
 										{% if pk %}<a href="{% url 'meta-proj-criar' pk %}" class="btn btn-default">Limpar</a>{% endif %}
@@ -609,8 +609,8 @@
 															<span class="caret"></span>
 														</button>
 														<ul class="dropdown-menu" role="menu">
-															<li><a href="{% url 'atividade-meta-proj-editar' pk item.meta.pk item.pk %}">Modificar</a></li>
-															<li><a href="{% url 'atividade-meta-proj-remover' pk item.meta.pk item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
+															<li><a href="{% url 'atividade-meta-proj-editar' item.pk %}">Modificar</a></li>
+															<li><a href="{% url 'atividade-meta-proj-remover' item.pk %}" onclick="return confirm('Tem certeza? O registro será apagado permanentemente')">Excluir</a></li>
 
 														</ul>
 													</div>
@@ -618,7 +618,7 @@
 											</tr>
 										{% endfor %}
 										</tbody>
-
+ 
 
 									</table>
 
@@ -790,7 +790,7 @@
 								Criar{% endif %} {% class_verbose forma.instance %}</h4>
 						</div>
 						<div class="modal-body">
-							<form action="{% if pkatividade %}{% url 'atividade-meta-proj-editar' pk pkmeta pkatividade %} {% else %} {% url 'atividade-meta-proj-criar' pk pkmeta %} {% endif %}" method="post" class="form">
+							<form action="{% if pkatividade %}{% url 'atividade-meta-proj-editar' pkatividade %} {% else %} {% url 'atividade-meta-proj-criar' pkmeta %} {% endif %}" method="post" class="form">
 								{% csrf_token %}
 							   
 								{{ forma.meta }}

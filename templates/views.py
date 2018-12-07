@@ -90,7 +90,7 @@ class MainView(View):
         pk = kwargs.get(self.pkalias, None)
 
         if pk and self.parent_field_name:
-            parent_pk = (getattr(self.model.objects.get(pk=pk), str(self.parent_field_name))).pk
+            parent_pk = (getattr(self.model.objects.get(pk=pk), self.parent_field_name)).pk
         else:
             parent_pk = kwargs.get(self.parent.pkalias, None) if self.parent else None
 
@@ -137,7 +137,7 @@ class MainView(View):
 
     def get(self, request, *args, **kwargs):
 
-        #print(*self.fetch_template_keys(request, *args, **kwargs))
+        print(self.fetch_template_keys(request, *args, **kwargs))
 
         return render(request, self.template_name, {
             **self.fetch_template_keys(request, *args, **kwargs)
@@ -172,18 +172,20 @@ class MainView(View):
                 r = related_form.save()
                 messages.success(request, "Objeto {} {} com sucesso".format(r.__class__.__name__,  'gravado'))
 
-            return self.fetch_success_redirect(request, *args, **kwargs)
+            return self.fetch_success_redirect(request, *args, **kwargs, pk_model=self.saved_model.pk)
         else:
             messages.warning(request, "Formulário inválido")
             return self.get(request=request, **{self.formalias: form}, **(dict(tuple_forms_list)), **kwargs)
 
     def delete(self, request, *args, **kwargs): 
         item = self.model.objects.get(pk=kwargs.get('pkdelete', None))
+        pk_parent = (getattr(item, self.parent_field_name)).pk if self.parent_field_name else None
+
         item_object_name = item.__class__.__name__
         if item:
             item.delete()
             messages.success(request, "Um registro de {} removido com sucesso".format(item_object_name))
-        return self.fetch_delete_redirect(request, *args, **kwargs)
+        return self.fetch_delete_redirect(request, *args, **kwargs, pk_parent=pk_parent)
 
     def get_target_child(self, request, *args, **kwargs):
 
@@ -237,13 +239,10 @@ class MainView(View):
             return [str(pk)]
 
     def fetch_success_redirect(self, request, *args, **kwargs):
-        pks_branch_list = self.get_pks_parents(request, *args, **kwargs)
-        return redirect(self.success_redirect, *(tuple(pks_branch_list)))
+        return redirect(self.success_redirect, kwargs.get('pk_model', None))
 
     def fetch_delete_redirect(self, request, *args, **kwargs):
-        pks_branch_list = self.get_pks_parents(request, *args, **kwargs)
-        pks_branch_list.pop()
-        return redirect(self.delete_redirect, *(tuple(pks_branch_list)))
+        return redirect(self.delete_redirect, kwargs.get('pk_parent', None))
 
 
 class ModalListView(MainView):
