@@ -89,7 +89,10 @@ class MainView(View):
 
         pk = kwargs.get(self.pkalias, None)
 
-        parent_pk = kwargs.get(self.parent.pkalias, None) if self.parent else None
+        if pk and self.parent_field_name:
+            parent_pk = (getattr(self.model.objects.get(pk=pk), str(self.parent_field_name))).pk
+        else:
+            parent_pk = kwargs.get(self.parent.pkalias, None) if self.parent else None
 
         parent_reference = {self.parent_field_name: parent_pk} if self.parent_field_name and parent_pk else None
         model_instance = self.model.objects.get(pk=pk) if pk else None          
@@ -117,7 +120,7 @@ class MainView(View):
 
             related_tuple_template_keys.append( (related.formalias, form_related, ) )
 
-        parent_template_keys = self.parent.fetch_template_keys(request, *args, **kwargs) if self.parent else {}
+        parent_template_keys = self.parent.fetch_template_keys(request, *args, **{**kwargs, **{self.parent.pkalias: parent_pk}}) if self.parent else {}
 
         return {
             **parent_template_keys,
