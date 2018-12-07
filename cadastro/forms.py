@@ -93,11 +93,20 @@ class DocumentoForm(BaseForm):
         model = Documento
         fields = ['bolsista', 'tipo_documento', 'no_documento', 'arquivo']
 
+        widgets = {
+            'bolsista': forms.HiddenInput()
+        }
+
+
 class EmprestimoEquipamentoForm(BaseForm):
     preview = get_clean_fields(EmprestimoEquipamento)
     class Meta:
         model = EmprestimoEquipamento
         fields = get_fields(model, ignore=['dt_emprestimo'])
+
+        widgets = {
+            'bolsista': forms.HiddenInput()
+        }
 
 class ProjetoForm(GenericForm):
     preview = ['nome', 'sigla']
