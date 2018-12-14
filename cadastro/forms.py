@@ -145,7 +145,7 @@ class ParticipanteForm(GenericForm):
             p = Participante.objects.filter(bolsista=self.cleaned_data['bolsista'], ic_ativo=True).exclude(pk=self.instance.pk if self.instance else None)
             current_participante = p.first()
 
-            if current_participante:
+            if self.cleaned_data['ic_ativo'] and current_participante:
                 self.add_error(field=None, error="Este bolsista já é participante do projeto {}".format(current_participante.projeto.sigla))
                 return False
 
