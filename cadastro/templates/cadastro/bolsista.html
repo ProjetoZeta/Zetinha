@@ -53,15 +53,6 @@
 
         {% endif %}
 
-        <div class="form-group row {% if form|is_required:form.sigla.name %} required {% endif %}">
-                    <label for="inputKey" class="col-md-2 control-label">{{ form.sigla.label }}:</label>
-                    <div class="col-md-10">
-                        {{ form.sigla }}
-                        <div class="help-block">{{ form.sigla.errors }}</div>
-                    </div>
-                </div>
-
-
         <form class="form-horizontal" role="form" method="POST" action="{% if pk %} {% url 'bolsista-editar' pk %} {% else %}{% url 'bolsista-criar' %}{% endif %}">
             {% csrf_token %}
             <fieldset class="well the-fieldset">
