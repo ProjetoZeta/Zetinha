@@ -286,7 +286,7 @@ class Meta(models.Model):
     titulo = models.CharField('Título', max_length=100)
     descricao = models.CharField('Descrição', max_length=1024)
     ic_ativo = models.BooleanField('Ativo', default=True)
-    posicao = models.IntegerField('Posição', null=True, blank=True)
+    posicao = models.IntegerField('Índice', null=True, blank=True)
 
     def __str__(self):
         return "{}".format(self.titulo)
@@ -299,7 +299,7 @@ class Atividade(models.Model):
     data_fim = models.DateField('Data de Fim')
     ic_ativo = models.BooleanField('Ativo', default=True)
     participantes = models.ManyToManyField(Participante)
-    posicao = models.IntegerField('Posição', null=True, blank=True)
+    posicao = models.IntegerField('Índice', null=True, blank=True)
 
     def __str__(self):
         return "{}".format(self.titulo)
