@@ -274,10 +274,6 @@ class Participante(models.Model):
     valor_mensal = models.DecimalField('Valor mensal', max_digits=10, decimal_places=2)
     valor_total = models.DecimalField('Valor total', max_digits=10, decimal_places=2)
 
-
-    class Meta:
-        unique_together = ('projeto', 'bolsista',)
-
     def __str__(self):
         return "{}".format(self.bolsista.no_bolsista)
 

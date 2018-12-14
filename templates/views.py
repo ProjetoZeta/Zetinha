@@ -27,8 +27,8 @@ class RelatedFormView:
     def fetch(self, parent_instance=None, data=None, files=None):
         if not getattr(self, 'parent_field_name', None):
             self.parent_field_name = self.parent.class_name.lower() 
-        dataset = self.model.objects.filter(**{self.parent_field_name: parent_instance}) if parent_instance else None
-        last_record = dataset.latest('id') if dataset else None
+        dataset = self.model.objects.filter(**{self.parent_field_name: parent_instance, 'ic_ativo': True}) if parent_instance else None
+        last_record = dataset.first() if dataset else None
         self.form_instance = self.form(data=data, files=files, instance=last_record, initial={self.parent_field_name: parent_instance})
         return self.form_instance
 

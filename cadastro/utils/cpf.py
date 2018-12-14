@@ -7,7 +7,6 @@ def fetch_check_digit(snippet, list_weights):
     total = 0
     for algarism in snippet:
         weight = list_weights.pop(0)
-        print(int(algarism), weight)
         total += int(algarism) * weight
     rest = total % 11
     if rest < 2:
