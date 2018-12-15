@@ -165,7 +165,7 @@ class AtividadeParticipantes(MainView):
     def template_keys(self, *args, **kwargs):
 
         atividade = AtividadeModel.objects.get(pk=kwargs.get(self.pkalias)) if kwargs.get(self.pkalias) else None
-        participantes = ParticipanteModel.objects.filter(projeto=atividade.meta.projeto if atividade else None)
+        participantes = ParticipanteModel.objects.filter(projeto=atividade.meta.projeto if atividade else None).exclude(ic_ativo=False)
 
         return {
             'content_title': 'Manter Projeto',
