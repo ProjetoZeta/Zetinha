@@ -121,7 +121,7 @@ class Bolsista(models.Model):
     tipo_conta = models.CharField('Tipo de Conta', max_length=1, choices=TIPO_CONTA, default='2')
     conta = models.CharField('Conta', max_length=32)
 
-    email_unb = models.EmailField('Email UnB', unique=True, blank=True)
+    email_unb = models.EmailField('Email UnB', blank=True)
     telefone_local = models.CharField('Telefone Local', max_length=32, blank=True)
 
     class Meta:

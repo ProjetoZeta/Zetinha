@@ -655,7 +655,7 @@
 											<label for="inputValue" class="col-md-2 control-label">Meta:</label>
 											<div class="col-md-10">
 												
-												<select name="meta" class="form-control" id="id_vinculo_atividade_meta" required="">
+												<select name="meta" class="form-control" id="id_metas_select" required="">
 													<option value="" {% if not vinculo_pagina %} selected="" {% endif %}>Selecione uma opção</option>
 													{% for meta in metas %}
 														{% with pkmeta|is_equal:meta.pk as match %}
@@ -674,7 +674,7 @@
 											<label for="inputValue" class="col-md-2 control-label">Atividade:</label>
 											<div class="col-md-10" id="container-atividades">
 
-												<select name="atividade" class="form-control" required="">
+												<select name="atividade" class="form-control" id="id_atividade_select" required="">
 													<option value="" {% if not vinculo_pagina %} selected=""`{% endif %}>Selecione uma opção</option>
 													{% for atividade in atividadespormeta %}
 														{% with pkatividade|is_equal:atividade.pk as match %}

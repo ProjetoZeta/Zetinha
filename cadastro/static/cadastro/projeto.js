@@ -40,7 +40,9 @@ function bind_atividade_on_change_select_event(){
 
 $(document).ready(function () {
 
-	$( "#id_vinculo_atividade_meta" ).change(function() {
+	bind_atividade_on_change_select_event()
+
+	$( "#id_metas_select" ).change(function() {
 		
 		var meta_pk = this.value
 
