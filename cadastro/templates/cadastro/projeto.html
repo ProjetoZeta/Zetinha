@@ -699,7 +699,22 @@
 										
 											<ul id="container-participantes" class="list-group custom-checkboxes">
 
-												{{ formv.participantes }}
+												{% for participante in participantes %}
+
+													<li class="list-group-item">
+
+														{{ participante.bolsista.no_bolsista }}
+
+														<div class="material-switch pull-right">
+		
+															<input type="checkbox" id="option_participante_{{ participante.pk }}" name="participantes" value="{{ participante.pk }}" {% if participante in instanceatividade.participantes.all %} checked="" {% endif %} />
+
+															<label for="option_participante_{{ participante.pk }}" class="label-info"></label>
+
+														</div>
+													</li>
+
+												{% endfor %}
 
 											</ul>
 											

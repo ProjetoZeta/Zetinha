@@ -100,7 +100,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <div class="{% if form|is_required:form.sigla.name %} required {% endif %} {% if form.rg.errors %} {{ 'has-error' }}{% endif %}">
+                    <div class="{% if form|is_required:form.rg.name %} required {% endif %} {% if form.rg.errors %} {{ 'has-error' }}{% endif %}">
                         <label for="inputKey" class="col-md-2 control-label">RG:</label>
                         <div class="col-md-4">
                             {{ form.rg }}

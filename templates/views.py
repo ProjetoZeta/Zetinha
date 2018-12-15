@@ -50,6 +50,7 @@ class MainView(View):
     formalias = None
     setalias = None
     pkalias = None
+    instancealias = None
     parent_field_name = None
 
     def __init__(self, **kwargs):
@@ -59,6 +60,8 @@ class MainView(View):
         self.bind_related = self.get_related()
         if not getattr(self, 'pkalias', None):
             self.pkalias = 'pk{}'.format(self.class_name.lower())
+        if not getattr(self, 'instancealias', None):
+            self.instancealias = 'instance{}'.format(self.class_name.lower())
         if not getattr(self, 'formalias', None):
             self.formalias = "form{}".format(self.class_name.lower())
         if not getattr(self, 'setalias', None):
@@ -129,6 +132,7 @@ class MainView(View):
             self.formalias: form,
             self.setalias: model_set,
             self.pkalias: pk,
+            self.instancealias: model_instance,
             **self.template_keys(request, *args, **kwargs)
         }
 
