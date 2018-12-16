@@ -27,10 +27,10 @@ sudo -u postgres psql -c "grant all privileges on database sbpl to postgres;";
 * python manage.py makemigrations
 * python manage.py migrate
 
-## Adtionally creating mock data
+## Aditionally creating mock data
 
 * python manage.py flush
-* python manage populateserver
+* python manage populatedb
 
 ## Serve application
 
