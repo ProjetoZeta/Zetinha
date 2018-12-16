@@ -12,3 +12,6 @@ def get_fields(model, ignore=[]):
             fields.append(f.name)
 
     return [x for x in fields if x not in ignore]
+
+def choice_keys_list(choices):
+    return [i[0] for i in choices]
