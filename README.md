@@ -1,13 +1,16 @@
+# Virtualenv
 
-
+* virtualenv venv -p python3
+* source venv/bin/activate
 
 # Requirements
 
-pip3 install -r requirements.txt
+Python >= 3.5
+pip install -r requirements.txt
 
 # Install postgres
 
-sudo apt-get install postgresql-server postgresql
+sudo apt-get install postgresql
 
 # Configure postgres
 
@@ -17,18 +20,18 @@ sudo -u postgres createdb sbpl;
 sudo -u postgres psql -c "alter user postgres with encrypted password '121294';";
 sudo -u postgres psql -c "grant all privileges on database sbpl to postgres;";
 ```
-4. On the postgres console, change the postgres password
-```sql
-ALTER USER postgres WITH PASSWORD '121294';\q
-```
-
 #Get started
 
 ## Before first time running the server
 
-* python3 manage.py makemigrations
-* python3 manage.py migrate
+* python manage.py makemigrations
+* python manage.py migrate
+
+## Adtionally creating mock data
+
+* python manage.py flush
+* python manage populateserver
 
 ## Serve application
 
-* python3 manage.py runserver
+* python manage.py runserver
