@@ -1,5 +1,5 @@
 import factory
-from cadastro.models import Emprego, Responsavel
+from cadastro.models import Emprego, Responsavel, Usuario
 
 faker = factory.faker.Faker._get_faker(locale='pt_BR')
 
@@ -8,6 +8,16 @@ class EmpregoFactory(factory.django.DjangoModelFactory):
 		model = Emprego
 	nome = factory.lazy_attribute(lambda x: faker.job()) 
 	tipo = factory.Iterator([Emprego.FUNCAO, Emprego.CARGO])
+
+class UsuarioFactory(factory.django.DjangoModelFactory):
+	class Meta:
+		model = Usuario
+
+	no_completo = factory.lazy_attribute(lambda x: faker.name_female())
+	ic_ativo = True
+	ic_bolsista = factory.Iterator([True, False])
+	email = factory.lazy_attribute(lambda x: faker.safe_email())
+	username = factory.lazy_attribute(lambda x: faker.user_name())
 
 class ResponsavelFactory(factory.django.DjangoModelFactory):
 	class Meta:
