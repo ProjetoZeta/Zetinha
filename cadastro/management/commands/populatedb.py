@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 import factory
-from cadastro.factories import EmpregoFactory, ResponsavelFactory, UsuarioFactory, EntidadeFactory
+from cadastro.factories import EmpregoFactory, ResponsavelFactory, UsuarioFactory, EntidadeFactory, BolsistaFactory, ProjetoFactory, ResponsabilidadeFactory
 
 # see https://docs.djangoproject.com/en/2.1/howto/custom-management-commands/#writing-custom-django-admin-commands
 
@@ -12,5 +12,8 @@ class Command(BaseCommand):
 		ResponsavelFactory.create_batch(size=15)
 		UsuarioFactory.create_batch(size=15)
 		EntidadeFactory.create_batch(size=15)
+		BolsistaFactory.create_batch(size=15)
+		ProjetoFactory.create_batch(size=15)
+		ResponsabilidadeFactory.create_batch(size=45)
 		
 		
