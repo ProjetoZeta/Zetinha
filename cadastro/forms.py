@@ -54,7 +54,7 @@ class UsuarioForm(BaseForm):
     preview = ['email', 'username', 'no_completo', 'ic_ativo', 'ic_bolsista']
     class Meta:
         model = Usuario
-        fields = ['email', 'username', 'no_completo', 'ic_ativo', 'ic_bolsista']
+        fields = ['email', 'username', 'no_completo', 'ic_ativo', 'ic_bolsista', 'is_superuser']
 
 class EntidadeForm(GenericForm):
     preview = ['nome', 'ic_ativo', 'cnpj']
