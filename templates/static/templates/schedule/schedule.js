@@ -51,17 +51,21 @@ class Schedule {
 
 		var groups = []
 
-		data.forEach(function(group){
+		data.forEach(function(group_data){
 
 			var tasks = []
 
-			group.tasks.forEach(function(task){
+			var group = new Schedule.Group({'title': group_data.title, 'id': group_data.id, 'tasks': null, 'data': group_data})
+
+			group_data.tasks.forEach(function(task){
 
 				tasks.push(new Schedule.Task({'title': task.title, 'id': task.id, 'group': group, 'initial_date': task.initial_date, 'end_date': task.end_date, 'data': task}))
 
 			})
 
-			groups.push(new Schedule.Group({'title': group.title, 'id': group.id, 'tasks': tasks, 'data': group}))
+			group.tasks = tasks
+
+			groups.push(group)
 			
 		})
 
@@ -259,6 +263,7 @@ Schedule.HTMLTable = class {
 
 		var duration_days = Math.ceil((this.schedule.timeBorderMax - this.schedule.timeBorderMin)/Schedule.DAY_MS)
 		var content = `Período de ${i.d}/${i.m}/${i.y.toString().substr(-2)} a ${e.d}/${e.m}/${e.y.toString().substr(-2)} (${duration_days} dia${(duration_days > 1) ? 's' : ''})`
+
 		var first_td = (new Tag({'name': 'td', 'inner': (this.schedule.timeBorderMax) ? content : ''})).content
 		var scale_tds = []
 
@@ -304,75 +309,3 @@ Schedule.HTMLTable = class {
 	}	
 
 }
-
-
-
-data_example = [
-
-			{
-				'title': 'Teste',
-				'id': '2',
-				'tasks': [
-					{
-						'title': 'task1', 
-						'initial_date': '2018-10-12', 
-						'end_date': '2018-10-15'
-					},
-
-					{
-						'title': 'task2', 
-						'initial_date': '2018-10-10', 
-						'end_date': '2018-10-11',
-					},
-
-					{
-						'title': 'task3', 
-						'initial_date': '2018-10-10', 
-						'end_date': '2018-10-12'
-					},
-
-				]
-			},
-
-
-			{
-				'title': 'Teste 2',
-				'id': '3',
-				'tasks': [
-					{
-						'title': 'task4', 
-						'initial_date': '2018-10-15', 
-						'end_date': '2018-10-17'
-					},
-
-					{
-						'title': 'task5', 
-						'initial_date': '2018-10-10', 
-						'end_date': '2018-11-12'
-					},
-
-					{
-						'title': 'task6', 
-						'initial_date': '2018-10-23', 
-						'end_date': '2018-11-11'
-					},
-
-					{
-						'title': 'task7', 
-						'initial_date': '2018-10-10', 
-						'end_date': '2018-10-11'
-					},
-
-					{
-						'title': 'task8', 
-						'initial_date': '2018-10-16', 
-						'end_date': '2018-12-10'
-					},
-
-				]
-			},
-
-
-		]
-
-
