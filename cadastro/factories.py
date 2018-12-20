@@ -16,7 +16,6 @@ class UsuarioFactory(factory.django.DjangoModelFactory):
 		model = Usuario
 
 	no_completo = factory.LazyAttribute(lambda x: faker.name_female())
-	ic_ativo = True
 	ic_bolsista = factory.Iterator([True, False])
 	email = factory.LazyAttribute(lambda x: faker.safe_email())
 	username = factory.LazyAttribute(lambda x: faker.user_name())
