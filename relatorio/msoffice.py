@@ -3,6 +3,19 @@ import zipfile
 import tempfile
 from django.http import HttpResponse
 
+'''
+
+	Estas classes manipulam arquivos docx e xlsx como arquivos zip. Ao fazerem alterações específicas em arquivos que
+	fazem parte do pacote comprimido, as alterações correspondentes são observadas nos documentos docx e xlsx.
+		
+
+	O conteúdo dos arquivos docx são alterados através do arquivo 'word/document.xml'
+	O conteúdo dos arquivos xlsx são alterados através dos arquivos:
+		* xl/sharedStrings.xml => que mantem os textos simples
+		* xl/drawings/*.vml => que mantém os estados dos checkboxes contidos nas planilhas (marcações especiais são feitas diretamente neste arquivo)
+
+'''
+
 class Document:
 
 	def __init__(self, msfilename, content_path):
