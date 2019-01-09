@@ -115,10 +115,10 @@ class BolsistaFactory(factory.django.DjangoModelFactory):
 	vinculo_outros = factory.Iterator(choice_keys_list(Bolsista.OUTROS_VINCULOS))
 	vinculo_ies = factory.Iterator(choice_keys_list(Bolsista.VINCULO_OUTRA_IES))
 
-	no_bolsista = factory.LazyAttribute(lambda x: faker.name_male())
+	nome = factory.LazyAttribute(lambda x: faker.name_male())
 	email = factory.LazyAttribute(lambda x: faker.safe_email())
 	cpf = factory.LazyAttribute(lambda x: faker.cpf())	
-	dt_nascimento = factory.LazyAttribute(lambda x: faker.date_of_birth())
+	data_nascimento = factory.LazyAttribute(lambda x: faker.date_of_birth())
 	rg = factory.LazyAttribute(lambda x: faker.ssn())
 	orgao_expedidor = factory.LazyAttribute(lambda x: faker.currency_code())
 	telefone = '(00) 0000-0000'

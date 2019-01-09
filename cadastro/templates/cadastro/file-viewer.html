@@ -19,7 +19,7 @@
                             <div class="panel panel-primary">
                                 <div class="panel-heading">{{ document.get_tipo_documento_display }}</div>
                                 <div class="panel-body">
-                                    <b>Proprietário:</b> {{ document.bolsista.no_bolsista }}<br>
+                                    <b>Proprietário:</b> {{ document.bolsista.nome }}<br>
                                     <b>Descrição:</b> {{ document.no_documento }}<br>
                                     <b>Data:</b> {{ document.dt_cadastro|date:"d/m/Y à\s H:i" }}<br>
                                     <br>

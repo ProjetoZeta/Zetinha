@@ -126,6 +126,8 @@ USE_I18N = True
 
 USE_TZ = True
 
+DECIMAL_SEPARATOR = ','
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -136,7 +138,7 @@ DATE_INPUT_FORMATS = (
     '%d/%m/%Y', '%d/%m/%y',
 )
 
-DATE_FORMAT = 'j F Y'
+DATE_FORMAT = 'd/m/Y'
 TIME_FORMAT = 'H:i'
 DATETIME_FORMAT = 'j F Y H:i'
 YEAR_MONTH_FORMAT = 'F Y'

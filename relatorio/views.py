@@ -75,11 +75,13 @@ def xlsx_termo_compromisso(request, pk):
 
 	bolsista = Bolsista.objects.get(pk=pk)
 	participacoes = bolsista.participante_set.filter(ic_ativo=True)
-	projeto = participacoes.first().projeto if participacoes.count() else None
+	participante = participacoes.first() if participacoes.count() else None
+	projeto = participante.projeto if participante else None
 
 	processed_text = Render.text(xlsx.get_text_content(), {
 		'bolsista': bolsista,
-		'projeto': projeto
+		'projeto': projeto,
+		'participante': participante,
 		})
 
 	print(processed_text)

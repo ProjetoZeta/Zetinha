@@ -114,10 +114,10 @@ class Bolsista(models.Model):
     vinculo_outros = models.CharField('Outros Vínculos', max_length=1, choices=OUTROS_VINCULOS, default='4')
     vinculo_ies = models.CharField('Vínculo outras IES', max_length=1, choices=VINCULO_OUTRA_IES, default='3')
 
-    no_bolsista = models.CharField('Nome', max_length=32)
+    nome = models.CharField('Nome', max_length=32)
     email = models.EmailField('Email', unique=True)
     cpf = models.CharField('CPF', max_length=14, unique=True, validators=[cpf])
-    dt_nascimento = models.DateField('Data de Nascimento')
+    data_nascimento = models.DateField('Data de Nascimento')
     rg = models.CharField('RG', max_length=32)
     orgao_expedidor = models.CharField('Órgão Expedidor', max_length=32)
     telefone = models.CharField('Telefone', max_length=32, blank=True)
@@ -146,7 +146,7 @@ class Bolsista(models.Model):
         verbose_name = "Bolsista"
 
     def __str__(self):
-        return self.no_bolsista
+        return self.nome
 
 class Entidade(models.Model):
 
@@ -260,8 +260,8 @@ class Participante(models.Model):
     ic_ativo = models.BooleanField('Ativo', default=True)
 
     CATEGORIA = (
-        ('1', 'Bolsa de aux. ao estudante'),
-        ('2', 'Bolsa de aux. ao pesquisador '),
+        ('1', 'Bolsa de Pesquisa e de Estimulo à Inovação'),
+        ('2', 'Bolsa de Estudo'),
     )
 
     MODALIDADE = (
@@ -297,7 +297,7 @@ class Participante(models.Model):
     valor_total = models.DecimalField('Valor total', max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return "{}".format(self.bolsista.no_bolsista)
+        return "{}".format(self.bolsista.nome)
 
 class Meta(models.Model):
     projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE, verbose_name="Projeto")

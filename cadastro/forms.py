@@ -70,7 +70,7 @@ class ResponsavelForm(GenericForm):
 
 class BolsistaForm(GenericForm):
 
-    preview = ['no_bolsista', 'email', 'cpf', 'celular', 'ic_ativo']
+    preview = ['nome', 'email', 'cpf', 'celular', 'ic_ativo']
 
     def is_valid(self):
 
