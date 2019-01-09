@@ -49,6 +49,6 @@ class Word(Document):
 
 class Excel(Document):
 
-	def __init__(self, msfilename, sheet_name):
+	def __init__(self, msfilename, content_path='xl/sharedStrings.xml'):
 		self.content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-		super(Excel, self).__init__(msfilename, 'xl/worksheets/{}.xml'.format(sheet_name))
+		super(Excel, self).__init__(msfilename, content_path)

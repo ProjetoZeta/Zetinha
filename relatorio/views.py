@@ -53,37 +53,35 @@ def declaracao_sigilo(request, pk):
 
 	return render(request,'relatorio/declaracao-sigilo.html', params)
 
-def doc_sigilo2(request, pk):
+def docx_sigilo(request, pk):
 
-	template_name = 'file.docx'
-	doc = Word(template_name)
-
-	bolsista = Bolsista.objects.get(pk=pk)
-	participacoes = bolsista.participante_set.filter(ic_ativo=True)
-	projeto = participacoes.first().projeto if participacoes.count() else None
-
-	processed_text = Render.text(doc.get_text_content(), {
-		'bolsista': bolsista,
-		'projeto': projeto
-		})
-	return doc.update_and_download(data=processed_text)
-
-def doc_sigilo3(request, pk):
-
-	template_name = 'file.docx'
-	doc = Word(template_name)
+	template_name = 'Formulario_declaracao_de_sigilo.docx'
+	docx = Word(template_name)
 
 	bolsista = Bolsista.objects.get(pk=pk)
 	participacoes = bolsista.participante_set.filter(ic_ativo=True)
 	projeto = participacoes.first().projeto if participacoes.count() else None
 
-	processed_text = Render.text(doc.get_text_content(), {
+	processed_text = Render.text(docx.get_text_content(), {
 		'bolsista': bolsista,
 		'projeto': projeto
 		})
-	return doc.update_and_download(data=processed_text)
+	return docx.update_and_download(data=processed_text)
 
-def doc_sigilo(request, pk):
+def xlsx_termo_compromisso(request, pk):
+
+	template_name = 'Termo_de_Compromisso_de_Bolsista_PRJ.xlsx'
+	xlsx = Excel(template_name)
 
 	bolsista = Bolsista.objects.get(pk=pk)
-	return DocRenderer('relatorio/templates/relatorio/file.docx').render({'bolsista': bolsista})
+	participacoes = bolsista.participante_set.filter(ic_ativo=True)
+	projeto = participacoes.first().projeto if participacoes.count() else None
+
+	processed_text = Render.text(xlsx.get_text_content(), {
+		'bolsista': bolsista,
+		'projeto': projeto
+		})
+
+	print(processed_text)
+
+	return xlsx.update_and_download(data=processed_text)
