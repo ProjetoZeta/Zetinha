@@ -65,7 +65,9 @@ class ProjetoFactory(factory.django.DjangoModelFactory):
 	nome = factory.LazyAttribute(lambda x: faker.sentence(nb_words=6))
 	sigla = factory.Sequence(lambda n: '{}{}'.format(faker.word(), n))
 
-	periodo_execucao = 'De tal data até outra data'
+	inicio_vigencia = datetime.datetime(2018, 5, 17)
+	termino_vigencia = datetime.datetime(2020, 5, 17)
+
 	duracao = 'Alguns meses'
 	identificacao_objeto = factory.LazyAttribute(lambda x: faker.text(max_nb_chars=1000))
 	justificativa_proposta = factory.LazyAttribute(lambda x: faker.text(max_nb_chars=1000))
@@ -109,7 +111,9 @@ class BolsistaFactory(factory.django.DjangoModelFactory):
 	class Meta:
 		model = Bolsista
 
-	tipo_vinculo = factory.Iterator(choice_keys_list(Bolsista.TIPOS_VINCULOS))
+	vinculo_unb = factory.Iterator(choice_keys_list(Bolsista.VINCULO_UNB))
+	vinculo_outros = factory.Iterator(choice_keys_list(Bolsista.OUTROS_VINCULOS))
+	vinculo_ies = factory.Iterator(choice_keys_list(Bolsista.VINCULO_OUTRA_IES))
 
 	no_bolsista = factory.LazyAttribute(lambda x: faker.name_male())
 	email = factory.LazyAttribute(lambda x: faker.safe_email())

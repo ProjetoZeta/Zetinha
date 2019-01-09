@@ -57,14 +57,6 @@
 
                 <legend class="the-legend">Identificação do Bolsista</legend>
 
-                <div class="form-group {% if form|is_required:form.tipo_vinculo.name %} required {% endif %} {% if form.tipo_vinculo.errors %} {{ 'has-error' }}{% endif %}">
-                    <label for="name" class="control-label col-sm-2">Vínculo:</label>
-                    <div class="col-sm-10">
-                        {{ form.tipo_vinculo }}
-                        <div class="help-block">{{ form.tipo_vinculo.errors }}</div>
-                    </div>
-                </div>
-
                 <div class="form-group {% if form|is_required:form.no_bolsista.name %} required {% endif %} {% if form.no_bolsista.errors %} {{ 'has-error' }}{% endif %}">
                     <label for="name" class="control-label col-sm-2">Nome:</label>
                     <div class="col-sm-10">
@@ -149,6 +141,31 @@
                         <div class="col-md-1">
                             {{ form.ic_ativo }}
                             <div class="help-block">{{ form.ic_ativo.errors }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group {% if form|is_required:form.vinculo_unb.name %} required {% endif %} {% if form.vinculo_unb.errors %} {{ 'has-error' }}{% endif %}">
+                    <label for="name" class="control-label col-sm-2">Vínculo UnB:</label>
+                    <div class="col-sm-10">
+                        {{ form.vinculo_unb }}
+                        <div class="help-block">{{ form.vinculo_unb.errors }}</div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="{% if form|is_required:form.vinculo_outros.name %} required {% endif %} {% if form.vinculo_outros.errors %}{{ 'has-error' }}{% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">Outros Vínculos:</label>
+                        <div class="col-md-4">
+                            {{ form.vinculo_outros }}
+                            <div class="help-block">{{ form.vinculo_outros.errors }}</div>
+                        </div>
+                    </div>
+                    <div class="{% if form|is_required:form.vinculo_ies.name %} required {% endif %} {% if form.vinculo_ies.errors %}{{ 'has-error' }}{% endif %}">
+                        <label for="inputKey" class="col-md-2 control-label">Vínculo outras IES:</label>
+                        <div class="col-md-4">
+                            {{ form.vinculo_ies }}
+                            <div class="help-block">{{ form.vinculo_ies.errors }}</div>
                         </div>
                     </div>
                 </div>

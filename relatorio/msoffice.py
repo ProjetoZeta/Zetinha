@@ -13,7 +13,7 @@ from django.http import HttpResponse
 	O conteúdo dos arquivos xlsx são alterados através dos arquivos:
 		* xl/sharedStrings.xml => que mantem os textos simples
 		* xl/drawings/*.vml => que mantém os estados dos checkboxes contidos nas planilhas (marcações especiais são feitas diretamente neste arquivo)
-
+		
 '''
 
 class Document:

@@ -36,11 +36,27 @@ class Responsavel(models.Model):
 
 
 class Bolsista(models.Model):
-    TIPOS_VINCULOS = (
-        ('1', 'Servidor Público - Professor'),
-        ('2', 'Servidor Público ou Empregado Público'),
-        ('3', 'Colaborador sem vínculo com o serviço')
+
+    VINCULO_UNB = (
+        ('1', 'Professor'),
+        ('2', 'Pesquisador'),
+        ('3', 'Técnico'),
+        ('4', 'Estudante'),
+        ('5', 'Nenhum')
     )
+
+    OUTROS_VINCULOS = (
+        ('1', 'Pesquisador ICT'),
+        ('2', 'Profissionais extensão TEC/PI/TT'),
+        ('3', 'Prof. ensino fundamental e médio da rede pública'),
+        ('4', 'Nenhum')
+    )
+
+    VINCULO_OUTRA_IES = (
+        ('1', 'Professor'),
+        ('2', 'Estudante'),
+        ('3', 'Nenhum')
+    )   
 
     TIPO_CONTA = (
         ('1', 'Conta-poupança'),
@@ -94,7 +110,9 @@ class Bolsista(models.Model):
         ('TO', 'TO - Tocantins')
     )
 
-    tipo_vinculo = models.CharField('Tipo de Vínculo', max_length=1, choices=TIPOS_VINCULOS, default='3')
+    vinculo_unb = models.CharField('Vínculo UnB', max_length=1, choices=VINCULO_UNB, default='4')
+    vinculo_outros = models.CharField('Outros Vínculos', max_length=1, choices=OUTROS_VINCULOS, default='4')
+    vinculo_ies = models.CharField('Vínculo outras IES', max_length=1, choices=VINCULO_OUTRA_IES, default='3')
 
     no_bolsista = models.CharField('Nome', max_length=32)
     email = models.EmailField('Email', unique=True)
@@ -208,7 +226,9 @@ class Projeto(models.Model):
     nome = models.CharField('Nome do Projeto', max_length=256)
     sigla = models.CharField('Sigla', max_length=256, unique=True)
 
-    periodo_execucao = models.CharField('Período de Execução', max_length=256, null=True, blank=True)
+    inicio_vigencia = models.DateField('Início da Vigência', null=True, blank=True)
+    termino_vigencia = models.DateField('Término da Vigência', null=True, blank=True)
+
     duracao = models.CharField('Duração', max_length=256, null=True, blank=True)
     identificacao_objeto = models.CharField('Identificação do Objeto', max_length=12288, null=True, blank=True)
     justificativa_proposta = models.CharField('Justificativa da Proposta', max_length=12288, null=True, blank=True)
@@ -245,14 +265,17 @@ class Participante(models.Model):
     )
 
     MODALIDADE = (
-        ('1', 'Mestrado'),
-        ('2', 'Iniciação Científica'),
-        ('3', 'Nível Médio'),
-        ('4', 'Pesquisador Sênior'),
-        ('5', 'Pesquisa Acadêmica'),
-        ('6', 'Pesquisa, Desenvolvimento e Inovação PDI'),
-        ('7', 'Apoio Operacional à Pesquisa'),
-
+        ('01', 'Pesquisador Senior'),
+        ('02', 'Pesquisador'),
+        ('03', 'Pesquisa, Desenvol. E Inovação(PDI)'),
+        ('04', 'Apoio Técnico à Pesquisa, Desenv. E Inovação'),
+        ('05', 'Apoio Operacional à Pesquisa, Desenv. E Inovação(PDI)'),
+        ('06', 'Pós-Doutorado'),
+        ('07', 'Doutorado'),
+        ('08', 'Mestrado'),
+        ('09', 'Graduação'),
+        ('10', 'Nível Médio'),
+        ('11', 'Extensão')
     )
 
     NIVEL = (
@@ -263,7 +286,7 @@ class Participante(models.Model):
     )
 
     categoria = models.CharField('Categoria', max_length=1, choices=CATEGORIA, default='1')
-    modalidade = models.CharField('Modalidade', max_length=1, choices=MODALIDADE, default='1')
+    modalidade = models.CharField('Modalidade', max_length=2, choices=MODALIDADE, default='09')
     nivel = models.CharField('Nível', max_length=1, choices=NIVEL, default='1')
 
     inicio_vigencia = models.DateField('Início da Vigência')
