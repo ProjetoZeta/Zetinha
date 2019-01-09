@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.http import JsonResponse, HttpResponse
 
 from relatorio.render import Render
-from relatorio.docx import Document
+from relatorio.msoffice import Word, Excel
 
 def schedule_data(request, pkprojeto):
 	projeto = Projeto.objects.get(pk=pkprojeto)
@@ -56,7 +56,22 @@ def declaracao_sigilo(request, pk):
 def doc_sigilo2(request, pk):
 
 	template_name = 'file.docx'
-	doc = Document(template_name)
+	doc = Word(template_name)
+
+	bolsista = Bolsista.objects.get(pk=pk)
+	participacoes = bolsista.participante_set.filter(ic_ativo=True)
+	projeto = participacoes.first().projeto if participacoes.count() else None
+
+	processed_text = Render.text(doc.get_text_content(), {
+		'bolsista': bolsista,
+		'projeto': projeto
+		})
+	return doc.update_and_download(data=processed_text)
+
+def doc_sigilo3(request, pk):
+
+	template_name = 'file.docx'
+	doc = Word(template_name)
 
 	bolsista = Bolsista.objects.get(pk=pk)
 	participacoes = bolsista.participante_set.filter(ic_ativo=True)
