@@ -2,6 +2,7 @@ import os
 import zipfile
 import tempfile
 from django.http import HttpResponse
+from relatorio.render import Render
 
 '''
 
@@ -18,15 +19,21 @@ from django.http import HttpResponse
 
 class Document:
 
-	def __init__(self, msfilename, content_path):
+	'''
+		1 - Criar cópia de zip sem a lista de alvos
+		2 - Inserir lista de alvos atualizados
+		3 - Download de arquivo temporário atulizado
+	'''
+	def __init__(self, msfilename, dict_context, target_list):
 		self.msfilename = msfilename
 		self.file_path = 'relatorio/templates/relatorio/msoffice/{}'.format(msfilename)
-		self.content_path = content_path
+		self.target_list = target_list
+		self.dict_context = dict_context
+		self.tmpfile_path = self.get_temp_copy_msfile_path()
 
 	#from https://stackoverflow.com/questions/25738523/how-to-update-one-file-inside-zip-file-using-python
-	def update_and_download(self, data):
+	def get_temp_copy_msfile_path(self):
 
-		# generate a temp file
 		tmpfd, tmpname = tempfile.mkstemp()
 		os.close(tmpfd)
 
@@ -35,33 +42,42 @@ class Document:
 			with zipfile.ZipFile(tmpname, 'w') as zout:
 				zout.comment = zin.comment # preserve the comment
 				for item in zin.infolist():
-					if item.filename != self.content_path:
+					if item.filename not in self.target_list:
 						zout.writestr(item, zin.read(item.filename))
 
+		return tmpname
+
+	def get_inner_template_zip_content(self, inner_file_path):
+		with zipfile.ZipFile(self.file_path) as zin:
+			return zin.read(inner_file_path).decode('utf-8')
+
+	def render_targets(self):
+
 		# now add filename with its new data
-		with zipfile.ZipFile(tmpname, mode='a', compression=zipfile.ZIP_DEFLATED) as zf:
-			zf.writestr(self.content_path, data)
+		with zipfile.ZipFile(self.tmpfile_path, mode='a', compression=zipfile.ZIP_DEFLATED) as zf:
+			for target in self.target_list:
+				processed_text = Render.text(self.get_inner_template_zip_content(target), self.dict_context)
+				zf.writestr(target, processed_text)
+
+	def update_and_download(self):
+
+		self.render_targets()
 
 		#Return HttpResponse for downloading
-		with open(tmpname, 'rb') as fh:
+		with open(self.tmpfile_path, 'rb') as fh:
 			response = HttpResponse(fh.read(), content_type=self.content_type)
 			response['Content-Disposition'] = 'inline; filename=' + self.msfilename
 			return response
 
-	def get_text_content(self):
-		with zipfile.ZipFile(self.file_path) as zin:
-			return zin.read(self.content_path).decode('utf-8')
-
-
 class Word(Document):
 
-	def __init__(self, msfilename, content_path='word/document.xml'):
+	def __init__(self, msfilename, dict_context, target_list=['word/document.xml']):
 		self.content_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-		super(Word, self).__init__(msfilename, content_path)
+		super(Word, self).__init__(msfilename, dict_context, target_list)
 
 
 class Excel(Document):
 
-	def __init__(self, msfilename, content_path='xl/sharedStrings.xml'):
+	def __init__(self, msfilename, dict_context, target_list=['xl/sharedStrings.xml', 'xl/drawings/vmlDrawing1.vml']):
 		self.content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-		super(Excel, self).__init__(msfilename, content_path)
+		super(Excel, self).__init__(msfilename, dict_context, target_list)

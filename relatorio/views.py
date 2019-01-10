@@ -68,22 +68,31 @@ def docx_sigilo(request, pk):
 		})
 	return docx.update_and_download(data=processed_text)
 
+def docx_declaracao_residencia(request, pk):
+
+	template_name = 'DECLARAÇÃO_DE_COMPROVAÇÃO_DE_RESIDÊNCIA.docx'
+
+	bolsista = Bolsista.objects.get(pk=pk)
+
+	docx = Word(template_name, {
+		'bolsista': bolsista
+		})
+
+	return docx.update_and_download()
+
 def xlsx_termo_compromisso(request, pk):
 
-	template_name = 'Termo_de_Compromisso_de_Bolsista_PRJ.xlsx'
-	xlsx = Excel(template_name)
-
+	template_name = 'Termo_de_Compromisso_de_Bolsista.xlsx'
+	
 	bolsista = Bolsista.objects.get(pk=pk)
 	participacoes = bolsista.participante_set.filter(ic_ativo=True)
 	participante = participacoes.first() if participacoes.count() else None
 	projeto = participante.projeto if participante else None
 
-	processed_text = Render.text(xlsx.get_text_content(), {
+	xlsx = Excel(template_name, {
 		'bolsista': bolsista,
 		'projeto': projeto,
 		'participante': participante,
 		})
 
-	print(processed_text)
-
-	return xlsx.update_and_download(data=processed_text)
+	return xlsx.update_and_download()

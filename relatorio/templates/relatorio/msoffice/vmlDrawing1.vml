@@ -1,0 +1,222 @@
+<xml xmlns:v="urn:schemas-microsoft-com:vml"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel">
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout><v:shapetype id="_x0000_t201" coordsize="21600,21600" o:spt="201"
+  path="m,l,21600r21600,l21600,xe">
+  <v:stroke joinstyle="miter"/>
+  <v:path shadowok="f" o:extrusionok="f" strokeok="f" fillok="f" o:connecttype="rect"/>
+  <o:lock v:ext="edit" shapetype="t"/>
+ </v:shapetype><v:shape id="_x0000_s1031" type="#_x0000_t201" style='position:absolute;
+  margin-left:624pt;margin-top:104.25pt;width:30pt;height:18pt;z-index:1;
+  mso-wrap-style:tight' filled="f" fillcolor="window [65]" stroked="f"
+  strokecolor="windowText [64]" o:insetmode="auto">
+  <v:path shadowok="t" strokeok="t" fillok="t"/>
+  <o:lock v:ext="edit" rotation="t"/>
+  <v:textbox style='mso-direction-alt:auto' o:singleclick="f">
+   <div style='text-align:left'><font face="Tahoma" size="160" color="#000000">PRJ</font></div>
+  </v:textbox>
+  <x:ClientData ObjectType="Checkbox">
+   <x:SizeWithCells/>
+   <x:Anchor>
+    12, 52, 6, 0, 12, 92, 7, 5</x:Anchor>
+   <x:AutoFill>False</x:AutoFill>
+   <x:AutoLine>False</x:AutoLine>
+   <x:TextVAlign>Center</x:TextVAlign>
+   <x:Checked>1</x:Checked>
+   <x:NoThreeD/>
+  </x:ClientData>
+ </v:shape><v:shape id="_x0000_s1032" type="#_x0000_t201" style='position:absolute;
+  margin-left:587.25pt;margin-top:104.25pt;width:43.5pt;height:17.25pt;
+  z-index:2;mso-wrap-style:tight' filled="f" fillcolor="window [65]" stroked="f"
+  strokecolor="windowText [64]" o:insetmode="auto">
+  <v:path shadowok="t" strokeok="t" fillok="t"/>
+  <o:lock v:ext="edit" rotation="t"/>
+  <v:textbox style='mso-direction-alt:auto' o:singleclick="f">
+   <div style='text-align:left'><font face="Tahoma" size="160" color="#000000">CCO</font></div>
+  </v:textbox>
+  <x:ClientData ObjectType="Checkbox">
+   <x:SizeWithCells/>
+   <x:Anchor>
+    12, 3, 5, 23, 12, 61, 7, 4</x:Anchor>
+   <x:AutoFill>False</x:AutoFill>
+   <x:AutoLine>False</x:AutoLine>
+   <x:TextVAlign>Center</x:TextVAlign>
+   <x:NoThreeD/>
+  </x:ClientData>
+ </v:shape><v:shape id="_x0000_s1060" type="#_x0000_t201" style='position:absolute;
+  margin-left:93.75pt;margin-top:199.5pt;width:85.5pt;height:17.25pt;z-index:3;
+  mso-wrap-style:tight' filled="f" fillcolor="window [65]" stroked="f"
+  strokecolor="windowText [64]" o:insetmode="auto">
+  <v:path shadowok="t" strokeok="t" fillok="t"/>
+  <o:lock v:ext="edit" rotation="t"/>
+  <v:textbox style='mso-direction-alt:auto' o:singleclick="f">
+   <div style='text-align:left'><font face="Segoe UI" size="160" color="#000000">Pesquisador
+   ICT</font></div>
+  </v:textbox>
+  <x:ClientData ObjectType="Radio">
+   <x:SizeWithCells/>
+   <x:Anchor>
+    0, 125, 12, 0, 1, 51, 12, 23</x:Anchor>
+   <x:AutoFill>False</x:AutoFill>
+   <x:AutoLine>False</x:AutoLine>
+   <x:TextVAlign>Center</x:TextVAlign>
+   {% if bolsista.get_vinculo_outros_display == "Pesquisador ICT" %} <x:Checked>1</x:Checked> {% endif %}
+   <x:NoThreeD/>
+   <x:FirstButton/>
+  </x:ClientData>
+ </v:shape><v:shape id="_x0000_s1061" type="#_x0000_t201" style='position:absolute;
+  margin-left:183pt;margin-top:199.5pt;width:147pt;height:18pt;z-index:4;
+  mso-wrap-style:tight' filled="f" fillcolor="window [65]" stroked="f"
+  strokecolor="windowText [64]" o:insetmode="auto">
+  <v:path shadowok="t" strokeok="t" fillok="t"/>
+  <o:lock v:ext="edit" rotation="t"/>
+  <v:textbox style='mso-direction-alt:auto' o:singleclick="f">
+   <div style='text-align:left'><font face="Segoe UI" size="160" color="#000000"><span
+   style='mso-spacerun:yes'> </span>Profissionais extensão TEC/PI/TT </font></div>
+  </v:textbox>
+  <x:ClientData ObjectType="Radio">
+   <x:SizeWithCells/>
+   <x:Anchor>
+    1, 56, 12, 0, 6, 24, 12, 24</x:Anchor>
+   <x:AutoFill>False</x:AutoFill>
+   <x:AutoLine>False</x:AutoLine>
+   <x:TextVAlign>Center</x:TextVAlign>
+   {% if bolsista.get_vinculo_outros_display == "Profissionais extensão TEC/PI/TT" %} <x:Checked>1</x:Checked> {% endif %}
+   <x:NoThreeD/>
+  </x:ClientData>
+ </v:shape><v:shape id="_x0000_s1063" type="#_x0000_t201" style='position:absolute;
+  margin-left:334.5pt;margin-top:199.5pt;width:256.5pt;height:15.75pt;
+  z-index:5;mso-wrap-style:tight' filled="f" fillcolor="window [65]" stroked="f"
+  strokecolor="windowText [64]" o:insetmode="auto">
+  <v:path shadowok="t" strokeok="t" fillok="t"/>
+  <o:lock v:ext="edit" rotation="t"/>
+  <v:textbox style='mso-direction-alt:auto' o:singleclick="f">
+   <div style='text-align:left'><font face="Segoe UI" size="160" color="#000000">Prof. ensino fundamental e médio da rede pública</font></div>
+  </v:textbox>
+  <x:ClientData ObjectType="Radio">
+   <x:SizeWithCells/>
+   <x:Anchor>
+    6, 30, 12, 0, 12, 8, 12, 21</x:Anchor>
+   <x:AutoFill>False</x:AutoFill>
+   <x:AutoLine>False</x:AutoLine>
+   <x:TextVAlign>Center</x:TextVAlign>
+   {% if bolsista.get_vinculo_outros_display == "Prof. ensino fundamental e médio da rede pública" %} <x:Checked>1</x:Checked> {% endif %}
+   <x:NoThreeD/>
+  </x:ClientData>
+ </v:shape><v:shape id="_x0000_s1066" type="#_x0000_t201" style='position:absolute;
+  margin-left:93.75pt;margin-top:181.5pt;width:61.5pt;height:16.5pt;z-index:6;
+  mso-wrap-style:tight' filled="f" fillcolor="window [65]" stroked="f"
+  strokecolor="windowText [64]" o:insetmode="auto">
+  <v:path shadowok="t" strokeok="t" fillok="t"/>
+  <o:lock v:ext="edit" rotation="t"/>
+  <v:textbox style='mso-direction-alt:auto' o:singleclick="f">
+   <div style='text-align:left'><font face="Segoe UI" size="160" color="#000000">Professor</font></div>
+  </v:textbox>
+  <x:ClientData ObjectType="Radio">
+   <x:SizeWithCells/>
+   <x:Anchor>
+    0, 125, 10, 16, 1, 19, 11, 18</x:Anchor>
+   <x:AutoFill>False</x:AutoFill>
+   <x:AutoLine>False</x:AutoLine>
+   <x:TextVAlign>Center</x:TextVAlign>
+   {% if bolsista.get_vinculo_unb_display == "Professor" %} <x:Checked>1</x:Checked> {% endif %}
+   <x:NoThreeD/>
+  </x:ClientData>
+ </v:shape><v:shape id="_x0000_s1067" type="#_x0000_t201" style='position:absolute;
+  margin-left:157.5pt;margin-top:182.25pt;width:66pt;height:17.25pt;z-index:7;
+  mso-wrap-style:tight' filled="f" fillcolor="window [65]" stroked="f"
+  strokecolor="windowText [64]" o:insetmode="auto">
+  <v:path shadowok="t" strokeok="t" fillok="t"/>
+  <o:lock v:ext="edit" rotation="t"/>
+  <v:textbox style='mso-direction-alt:auto' o:singleclick="f">
+   <div style='text-align:left'><font face="Segoe UI" size="160" color="#000000">Pesquisador</font></div>
+  </v:textbox>
+  <x:ClientData ObjectType="Radio">
+   <x:SizeWithCells/>
+   <x:Anchor>
+    1, 22, 10, 17, 2, 19, 12, 0</x:Anchor>
+   <x:AutoFill>False</x:AutoFill>
+   <x:AutoLine>False</x:AutoLine>
+   <x:TextVAlign>Center</x:TextVAlign>
+   {% if bolsista.get_vinculo_unb_display == "Pesquisador" %} <x:Checked>1</x:Checked> {% endif %}
+   <x:NoThreeD/>
+  </x:ClientData>
+ </v:shape><v:shape id="_x0000_s1068" type="#_x0000_t201" style='position:absolute;
+  margin-left:232.5pt;margin-top:180.75pt;width:60pt;height:17.25pt;z-index:8;
+  mso-wrap-style:tight' filled="f" fillcolor="window [65]" stroked="f"
+  strokecolor="windowText [64]" o:insetmode="auto">
+  <v:path shadowok="t" strokeok="t" fillok="t"/>
+  <o:lock v:ext="edit" rotation="t"/>
+  <v:textbox style='mso-direction-alt:auto' o:singleclick="f">
+   <div style='text-align:left'><font face="Segoe UI" size="160" color="#000000">Técnico</font></div>
+  </v:textbox>
+  <x:ClientData ObjectType="Radio">
+   <x:SizeWithCells/>
+   <x:Anchor>
+    2, 31, 10, 15, 4, 9, 11, 18</x:Anchor>
+   <x:AutoFill>False</x:AutoFill>
+   <x:AutoLine>False</x:AutoLine>
+   <x:TextVAlign>Center</x:TextVAlign>
+   {% if bolsista.get_vinculo_unb_display == "Técnico" %} <x:Checked>1</x:Checked> {% endif %}
+   <x:NoThreeD/>
+  </x:ClientData>
+ </v:shape><v:shape id="_x0000_s1069" type="#_x0000_t201" style='position:absolute;
+  margin-left:292.5pt;margin-top:181.5pt;width:57pt;height:17.25pt;z-index:9;
+  mso-wrap-style:tight' filled="f" fillcolor="window [65]" stroked="f"
+  strokecolor="windowText [64]" o:insetmode="auto">
+  <v:path shadowok="t" strokeok="t" fillok="t"/>
+  <o:lock v:ext="edit" rotation="t"/>
+  <v:textbox style='mso-direction-alt:auto' o:singleclick="f">
+   <div style='text-align:left'><font face="Segoe UI" size="160" color="#000000">Estudante</font></div>
+  </v:textbox>
+  <x:ClientData ObjectType="Radio">
+   <x:SizeWithCells/>
+   <x:Anchor>
+    4, 9, 10, 16, 6, 50, 11, 19</x:Anchor>
+   <x:AutoFill>False</x:AutoFill>
+   <x:AutoLine>False</x:AutoLine>
+   <x:TextVAlign>Center</x:TextVAlign>
+   {% if bolsista.get_vinculo_unb_display == "Estudante" %} <x:Checked>1</x:Checked> {% endif %}
+   <x:NoThreeD/>
+  </x:ClientData>
+ </v:shape><v:shape id="_x0000_s1070" type="#_x0000_t201" style='position:absolute;
+  margin-left:533.25pt;margin-top:183pt;width:51.75pt;height:15.75pt;z-index:10;
+  mso-wrap-style:tight' filled="f" fillcolor="window [65]" stroked="f"
+  strokecolor="windowText [64]" o:insetmode="auto">
+  <v:path shadowok="t" strokeok="t" fillok="t"/>
+  <o:lock v:ext="edit" rotation="t"/>
+  <v:textbox style='mso-direction-alt:auto' o:singleclick="f">
+   <div style='text-align:left'><font face="Segoe UI" size="160" color="#000000">Professor</font></div>
+  </v:textbox>
+  <x:ClientData ObjectType="Radio">
+   <x:SizeWithCells/>
+   <x:Anchor>
+    10, 18, 10, 18, 12, 0, 11, 19</x:Anchor>
+   <x:AutoFill>False</x:AutoFill>
+   <x:AutoLine>False</x:AutoLine>
+   <x:TextVAlign>Center</x:TextVAlign>
+   {% if bolsista.get_vinculo_ies_display == "Professor" %} <x:Checked>1</x:Checked> {% endif %}
+   <x:NoThreeD/>
+  </x:ClientData>
+ </v:shape><v:shape id="_x0000_s1071" type="#_x0000_t201" style='position:absolute;
+  margin-left:588.75pt;margin-top:182.25pt;width:62.25pt;height:17.25pt;
+  z-index:11;mso-wrap-style:tight' filled="f" fillcolor="window [65]"
+  stroked="f" strokecolor="windowText [64]" o:insetmode="auto">
+  <v:path shadowok="t" strokeok="t" fillok="t"/>
+  <o:lock v:ext="edit" rotation="t"/>
+  <v:textbox style='mso-direction-alt:auto' o:singleclick="f">
+   <div style='text-align:left'><font face="Segoe UI" size="160" color="#000000">Estudante</font></div>
+  </v:textbox>
+  <x:ClientData ObjectType="Radio">
+   <x:SizeWithCells/>
+   <x:Anchor>
+    12, 5, 10, 17, 12, 88, 12, 0</x:Anchor>
+   <x:AutoFill>False</x:AutoFill>
+   <x:AutoLine>False</x:AutoLine>
+   <x:TextVAlign>Center</x:TextVAlign>
+   {% if bolsista.get_vinculo_ies_display == "Estudante" %} <x:Checked>1</x:Checked> {% endif %}
+   <x:NoThreeD/>
+  </x:ClientData>
+ </v:shape></xml>
