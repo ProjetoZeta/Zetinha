@@ -11,4 +11,6 @@ urlpatterns = [
     url(r'sigilodocx/(?P<pk>[0-9]+)$', views.docx_sigilo,name='relatorio-gerar-doc-sigilo'),
     url(r'termocompromissoxlsx/(?P<pk>[0-9]+)$', views.xlsx_termo_compromisso,name='relatorio-gerar-xlsx-tc'),
     url(r'declaracaoresidenciadocx/(?P<pk>[0-9]+)$', views.docx_declaracao_residencia,name='relatorio-residencia-xlsx'),
+
+    url(r'^$', views.relatorios, name='relatorios'),
 ]
