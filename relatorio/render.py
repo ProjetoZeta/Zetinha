@@ -2,6 +2,7 @@ from io import BytesIO
 from django.http import HttpResponse
 from django.template.loader import get_template
 import xhtml2pdf.pisa as pisa
+from cadastro.models import Bolsista
 
 from django import template
 
@@ -24,3 +25,17 @@ class Render:
 		context = template.Context(context)
 		t = template.Template(text)
 		return t.render(context)
+
+
+	@staticmethod
+	def bolsista_dict(pk):
+		bolsista = Bolsista.objects.get(pk=pk)
+		participacoes = bolsista.participante_set.filter(ic_ativo=True)
+		participante = participacoes.first() if participacoes.count() else None
+		projeto = participante.projeto if participante else None
+
+		return {
+			'bolsista': bolsista,
+			'projeto': projeto,
+			'participante': participante,
+		}
