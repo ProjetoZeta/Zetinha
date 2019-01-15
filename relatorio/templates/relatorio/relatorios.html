@@ -50,8 +50,8 @@
 
 
 				<div class="form-group row">
-					<label for="inputValue" class="col-md-2 control-label">Projeto:</label>
-					<div class="col-md-10">
+					<label for="inputValue" class="col-md-1 control-label">Projeto:</label>
+					<div class="col-md-11">
 						
 						<select name="meta" class="form-control" id="id_projetos_select" required="">
 							<option value="">Selecione uma opção</option>
@@ -67,11 +67,11 @@
 				</div>
 
 				<div class="form-group row">
-					<label for="inputValue" class="col-md-2 control-label">Bolsista:</label>
-					<div class="col-md-10" id="container-atividades">
+					<label for="inputValue" class="col-md-1 control-label">Bolsista:</label>
+					<div class="col-md-11" id="container-atividades">
 
-						<select name="atividade" class="form-control" id="id_atividade_select" required="">
-							<option value="" >Selecione uma opção</option>
+						<select name="atividade" class="form-control" id="id_atividade_select" required="" disabled="">
+							<option value="" ></option>
 							{% for atividade in atividadespormeta %}
 								<option value="{{ atividade.pk }}">{{ atividade.titulo }}</option>
 							{% endfor %}
@@ -82,55 +82,67 @@
 					</div>
 				</div>
 
-
-				<div id='panel_participantes'>
-										
-					<div class="panel panel-info">
-						<!-- Default panel contents -->
-					
-						<ul id="container-participantes" class="list-group custom-checkboxes">
-
-							<li class="list-group-item">
-
-									<b> TODOS </b>
-
-									<div class="material-switch pull-right">
-
-										<input type="checkbox" id="todos_id" name="participantes" value="{{ tipo.id }}" {% if participante in instanceatividade.participantes.all %} checked="" {% endif %} />
-
-										<label for="todos_id" class="label-info"></label>
-
-									</div>
-								</li>
-
-							{% for tipo in tipos %}
+				<div class="col-sm-6">
+					<div id='panel_participantes'>
+											
+						<div class="panel panel-info">
+							<!-- Default panel contents -->
+						
+							<ul id="container-participantes" class="list-group custom-checkboxes">
 
 								<li class="list-group-item">
 
-									{{ tipo.nome }}
+										<b> TODOS </b>
 
-									<div class="material-switch pull-right">
+										<div class="material-switch pull-right">
 
-										<input type="checkbox" id="option_participante_{{ tipo.id }}" name="participantes" value="{{ tipo.id }}" {% if participante in instanceatividade.participantes.all %} checked="" {% endif %} />
+											<input type="checkbox" id="todos_id" />
 
-										<label for="option_participante_{{ tipo.id }}" class="label-info"></label>
+											<label for="todos_id" class="label-info"></label>
 
-									</div>
-								</li>
+										</div>
+									</li>
 
-							{% endfor %}
+								{% for tipo in tipos %}
 
-						</ul>
-						
-					</div> 
+									<li class="list-group-item">
 
+										{{ tipo|choice:1 }}
+
+										<div class="material-switch pull-right">
+
+											<input class="cbox" type="checkbox" id="option_participante_{{ tipo|choice:0 }}" name="participantes" value="{{ tipo|choice:0 }}" {% if participante in instanceatividade.participantes.all %} checked="" {% endif %} />
+
+											<label for="option_participante_{{ tipo|choice:0 }}" class="label-info"></label>
+
+										</div>
+									</li>
+
+								{% endfor %}
+
+							</ul>
+							
+						</div> 
+
+					</div>
+				</div>
+		
+				<div class="col-sm-6">
+					<div id='panel_config'>
+											
+						<div class="panel panel-info">
+							<div class="panel-heading">Configuração</div>
+							<div class="panel-body">
+								
+
+
+							</div>
+						</div>
+
+					</div>
 				</div>
 
-		
 
-			<div class="btn-group">
-				<button class="btn btn-info">Gerar relatório(s)</button>
-			</div>
 
 		</div>
 

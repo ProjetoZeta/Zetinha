@@ -15,3 +15,4 @@ def class_verbose(object):
 @register.simple_tag
 def class_verbose_plural(object):
     return object._meta.verbose_name_plural.title()
+

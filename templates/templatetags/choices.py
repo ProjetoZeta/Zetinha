@@ -5,7 +5,7 @@ from django import template
 register = template.Library()
 
 @register.filter
-def getattr (obj, args):
+def choice (obj, args):
     """ Try to get an attribute from an object.
 
     Example: {% if block|getattr:"editable,True" %}
@@ -25,8 +25,3 @@ def getattr (obj, args):
          return  obj.__dict__.get(attribute, default)
     except:
         return default
-
-
-@register.filter
-def choice (choices, pos):
-    return choices[pos]

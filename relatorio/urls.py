@@ -12,5 +12,7 @@ urlpatterns = [
     url(r'termocompromissoxlsx/(?P<pk>[0-9]+)$', views.xlsx_termo_compromisso,name='relatorio-gerar-xlsx-tc'),
     url(r'declaracaoresidenciadocx/(?P<pk>[0-9]+)$', views.docx_declaracao_residencia,name='relatorio-residencia-xlsx'),
 
+    url(r'projeto/(?P<pk>[0-9]+)/participantes_select$', views.get_participantes, name='get-participantes-select-relatorio-ajax'),
+
     url(r'^$', views.relatorios, name='relatorios'),
 ]

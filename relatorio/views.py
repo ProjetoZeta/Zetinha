@@ -1,21 +1,11 @@
 from django.shortcuts import render
 from cadastro.models import Bolsista, Meta, Projeto 
+from .forms import ParticipantesSelect
 from django.utils import timezone
 from django.http import JsonResponse, HttpResponse
 
-from relatorio.render import Render
+from relatorio.render import Render, Relatorio
 from relatorio.msoffice import Word, Excel
-
-TIPOS = [
-	{'id': '0', 'nome': 'Plano de Trabalho'},
-	{'id': '1', 'nome': 'Plano Individual'},
-	{'id': '2', 'nome': 'Termo de Abertura'},
-	{'id': '3', 'nome': 'Declaração de Sigilo'},
-	{'id': '4', 'nome': 'Declaração de Ciência de Bolsa'},
-	{'id': '5', 'nome': 'Declaração de Residência'},
-	{'id': '6', 'nome': 'Termo de Responsabilidade de uso da rede'},
-	{'id': '7', 'nome': 'Declaração de recebimento de Bolsa de Pesquisa'},
-]
 
 def schedule_data(request, pkprojeto):
 	projeto = Projeto.objects.get(pk=pkprojeto)
@@ -90,11 +80,8 @@ def xlsx_termo_compromisso(request, pk):
 
 def relatorios(request):
 
-	return render(request, 'relatorio/relatorios.html', {'content_title': 'Gerar Relatórios', 'projetos': Projeto.objects.all(), 'tipos': TIPOS})
+	return render(request, 'relatorio/relatorios.html', {'content_title': 'Gerar Relatórios', 'projetos': Projeto.objects.all(), 'tipos': Relatorio.TIPOS})
 
-
-def get_projeto_participantes(self, pk):
-    projeto = Projeto.objects.get(pk=pk)
-    form = AtividadeBolsistaSelect(pkprojeto=atividade.meta.projeto.pk, instance=AtividadeModel.objects.get(pk=pk))
-    return JsonResponse({'form': str(form.as_raw_html()), 'action': {'projeto': atividade.meta.projeto.pk, 'meta': atividade.meta.pk, 'atividade': atividade.pk}})
-        
+def get_participantes(self, pk):
+    form = ParticipantesSelect(pkprojeto=pk)
+    return HttpResponse(form)

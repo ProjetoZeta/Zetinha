@@ -1,79 +1,36 @@
-function handle_bolsistas_panel(form=null){
-
-	if (form) {
-		$( "#container-participantes" ).html(form)
-		$( "#panel_participantes" ).fadeIn( "slow");
-	} else {
-		$( "#panel_participantes" ).fadeOut( "slow");
-	}
-
-}
-
-function bind_atividade_on_change_select_event(){
-	$( "#id_atividade_select" ).change(function() {
-
-		var atividade_pk = this.value
-
-		handle_bolsistas_panel()
-
-		if (atividade_pk != ""){
-
-			$.ajax({
-			  url: '/cadastro/atividade/' + atividade_pk + '/participantes_select',
-			  type: "get", //send it through get method
-			  success: function(response) {
-				var action = response.action
-				var action_url = '/cadastro/atividade/' + action.atividade + '/vincularparticipantes'
-				
-				handle_bolsistas_panel(response.form)
-				$( "#form-vinculo-atividade-participante" ).attr('action', action_url)
-			  },
-			  error: function(xhr) {
-				alert('AJAX falhou')
-			  }
-			});
-
-		}			
-
-	});
-}
-
 $(document).ready(function () {
 
-	bind_atividade_on_change_select_event()
+	$( "#id_projetos_select" ).change(function(){
 
-	$( "#id_projetos_select" ).change(function() {
+		var projetopk = this.value
 
-		var projeto_pk = this.value
+		if (projetopk != ""){
 
-		if (projeto_pk != ""){
-			 $.ajax({
-			  url: '/cadastro/meta/' + projeto_pk + '/atividades_select',
+			$.ajax({
+			  url: `/relatorio/projeto/${ projetopk }/participantes_select`,
 			  type: "get", //send it through get method
 			  success: function(response) {
-				$( "#container-atividades" ).html(response + '<div class="help-block"></div>')
-				bind_atividade_on_change_select_event()
-				handle_bolsistas_panel()
+
+				document.getElementById("container-atividades").innerHTML = response + '<div class="help-block"></div>'
+
 			  },
 			  error: function(xhr) {
 				alert('AJAX falhou')
 			  }
 			});
+
+		} else {
+
+			document.getElementById("container-atividades").innerHTML = '<select name="atividade" class="form-control" id="id_atividade_select" required="" disabled=""><option value="" ></option></select><div class="help-block"></div>'
+
 		}
 	});
 
-	$(".countries a").click(function(e) {
-	  e.preventDefault();
-	  $("[href='#first']").tab('show');
-	  $("[href='#second']").tab('show');
-	});
 
-
-	// Javascript to enable link to tab
-	var url = document.location.toString();
-	if (url.match('#')) {
-		$('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
-	} 
+	var todos_cb = document.getElementById("todos_id")
+	todos_cb.addEventListener('click', function(){
+		$(".cbox").prop('checked', todos_cb.checked);
+	})
 
 })
 

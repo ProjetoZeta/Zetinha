@@ -39,3 +39,16 @@ class Render:
 			'projeto': projeto,
 			'participante': participante,
 		}
+
+class Relatorio:
+
+	TIPOS = (
+		('0', 'Plano de Trabalho'),
+		('1', 'Plano Individual'),
+		('2', 'Termo de Abertura'),
+		('3', 'Declaração de Sigilo'),
+		('4', 'Declaração de Ciência de Bolsa'),
+		('5', 'Declaração de Residência'),
+		('6', 'Termo de Responsabilidade de uso da rede'),
+		('7', 'Declaração de recebimento de Bolsa de Pesquisa'),
+	)
